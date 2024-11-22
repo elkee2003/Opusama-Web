@@ -1,0 +1,53 @@
+.h-wrapper{
+    background: transparent;
+    color: white;
+    position: sticky;
+    top:0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+
+.h-wrapper.scrolled {
+    background: white; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    /* color:rgb(4, 4, 32) */
+}
+
+
+.h-container{
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--secondary)
+}
+
+.h-menu{
+    gap:2rem;
+    color:white;
+    transition: color 0.3s ease;
+}
+.h-wrapper.scrolled .h-menu a {
+    color: rgb(0, 0, 0); 
+}
+
+.button {
+    font-weight: 500;
+    padding: 0.6rem 1.4rem;
+    color: white; 
+    background: var(--blue-gradient); 
+    border: none;
+    border-radius: 4px;
+    transition: all 300ms ease-in;
+    margin-left: 2rem;
+}
+
+.button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.h-wrapper.scrolled .h-menu .button {
+    color: rgb(243, 243, 243) !important; 
+    background: var(--blue-gradient) !important; 
+}

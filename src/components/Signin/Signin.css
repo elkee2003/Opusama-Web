@@ -1,0 +1,71 @@
+/* Container styles */
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--offWhite); /* You can use your CSS variables */
+    padding: 1rem;
+}
+  
+/* Form styles */
+.signin-form {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+/* Title styles */
+.signin-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+  
+/* Label styles */
+.signin-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+  
+/* Input styles */
+.signin-input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+  
+.signin-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+  
+/* Button styles */
+.signin-button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--blue);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+  
+.signin-button:hover {
+    background-color: var(--primary);
+}

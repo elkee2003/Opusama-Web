@@ -1,0 +1,71 @@
+/* Background styling for the hero section */
+.hero-background {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
+    width: 100%;
+    padding-bottom: 2rem; 
+    transition: background-image 0.3s ease-in-out;
+  }
+  
+
+/* Button container styling */
+.hero-btn-container {
+    position: absolute; 
+    bottom: 8rem; 
+    display: flex; 
+    gap: 1.5rem;
+}
+
+
+  /* Styling for the button */
+  .hero-button {
+    padding: 0.8rem 1.5rem; 
+    font-size: 1rem; 
+    font-weight: 600; 
+    color: white;
+    background: var(--green-gradient); 
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease; 
+    text-transform: capitalize; 
+    margin-left: 2rem;
+  }
+  
+  /* Button hover effect */
+  .hero-button:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: var(--blue-gradient); /* Darker shade on hover */
+  }
+
+/* For smaller devices, ensure responsiveness */
+
+@media (min-width: 250px) and (max-width: 900px) {
+    .hero-btn-container {
+        /* visibility: hidden; */
+        position: absolute; 
+        left: 50%;
+        transform: translateX(-50%); 
+        bottom: 8rem; 
+        display: flex; 
+        gap: 1.5rem;
+    }
+    .hero-button {
+        padding: 0.2rem 1.5rem;
+        width:8rem; 
+        font-size: 1rem; 
+        font-weight: 600; 
+        color: white;
+        background: var(--green-gradient); 
+        border: none;
+        border-radius: 4px;
+        transition: all 0.3s ease; 
+        text-transform: capitalize; 
+        margin-left: 0.5rem;
+        cursor: pointer;
+    }
+}
+
