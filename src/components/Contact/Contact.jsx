@@ -46,7 +46,7 @@ const Contact = () => {
                 {/* Instagram */}
                 <div className="contact-item">
                     <FaInstagram className="contact-icon" />
-                    <span>@opusama</span>
+                    <span>@opusamaapp</span>
                 </div>
             </div>
           </div>

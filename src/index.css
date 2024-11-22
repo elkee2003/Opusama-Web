@@ -3,7 +3,7 @@
   --secondary: rgba(39, 35, 104, 0.78);
   --black: #131110;
   --offWhite: rgb(248, 248, 248);
-  --green-gradient: linear-gradient(60.05deg, #00fd15 45.76%, #181c2e 100%);
+  --green-gradient: linear-gradient(290.05deg, #00fd15 75.76%, #1b3f12 100%);
   --blue-gradient: linear-gradient(97.05deg, #040c2e 5.76%, #132675 100%);
   --orange-gradient: linear-gradient(270deg, #ffb978 0%, #ff922d 100%);
   --blue: #083eb3;
@@ -73,7 +73,7 @@ a {
 .primaryText {
   color: #050524;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .secondaryText {

@@ -6,6 +6,7 @@ import "./Hero.css";
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
   
+    // useEffect to check media query to display background images
     useEffect(() => {
       const mediaQueryList = window.matchMedia(query);
       const listener = (event) => setMatches(event.matches);
@@ -18,6 +19,8 @@ const useMediaQuery = (query) => {
 }
 
 const Hero = () => {
+
+    const [currentImage, setCurrentImage] = useState(0);
 
      // Detect screen size using multiple queries
     const isLargeScreen = useMediaQuery("(min-width: 1100px)");
@@ -57,8 +60,6 @@ const Hero = () => {
         images = [];
     }
 
-    const [currentImage, setCurrentImage] = useState(0);
-
     // Function to change the image every 5 seconds
     useEffect(() => {
         const interval = setInterval(() => {
@@ -76,24 +77,13 @@ const Hero = () => {
         backgroundImage: `url(${images[currentImage]})`,
       }} 
     >
-        {/* <div className="hero-content">
-            <h1 className="hero-title">
-                Welcome to Opusama
-            </h1>
-            <p className="hero-subtitle">
-                Discover your next adventure
-            </p> */}
+        <Header />
 
-
-            {/* Include Header inside the Hero */}
-            <Header />
-
-            {/* Button container */}
-            <div className="hero-btn-container">
-                <button className="hero-button">Download App</button>
-                <button className="hero-button">Sign In</button>
-            </div>
-        {/* </div> */}
+        {/* Button container */}
+        <div className="hero-btn-container">
+            <button className="hero-button">Download App</button>
+            <button className="hero-button">Sign In</button>
+        </div>
     </div>
   )
 }

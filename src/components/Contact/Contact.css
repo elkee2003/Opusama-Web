@@ -35,3 +35,16 @@
     font-size: 0.95rem;
     color: var(--black);
 }
+
+@media (max-width: 768px) {
+    .contact-row {
+        display: flex;
+        gap:0.5rem;
+        flex-direction: column;
+    }
+    .contact-details {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+  }

@@ -12,13 +12,8 @@
     margin: 0 auto;
     padding: 2rem;
   }
-  
-  .primaryText {
-    font-size: 2.5rem;
-    color: var(--primary);
-    font-weight: bold;
-  }
-  
+
+
   .secondaryText {
     color: var(--secondary);
     font-size: 1.2rem;
@@ -31,7 +26,7 @@
   }
   
   .section-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--primary);
     margin-bottom: 1rem;
   }

@@ -1,10 +1,50 @@
 /* Container styles */
+.signin-title-left {
+    text-align: left; 
+    width: 100%;
+    margin-bottom: 2rem; 
+    padding-left: 1rem; 
+    /* box-sizing: border-box;  */
+}
+
+/* Switcher styles */
+.signin-switcher {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.switcher-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: var(--primary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.switcher-button.active {
+  color: var(--blue);
+  border-bottom: 2px solid var(--green);
+}
+
+.switcher-button:hover {
+  color: var(--blue);
+}
+
+/* Adjust spacing for the form */
+.signin-form {
+  transition: all 0.3s ease;
+}
 .signin-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: var(--offWhite); /* You can use your CSS variables */
+    background-color: var(--offWhite);
     padding: 1rem;
 }
   
