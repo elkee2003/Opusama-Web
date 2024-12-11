@@ -6,7 +6,7 @@ const Footer = () => {
         <footer className="footer-container">
             <div className="footer-content">
                 <p className="footer-text">
-                    &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+                    &copy; {new Date().getFullYear()} Opusama. All rights reserved.
                 </p>
                 <div className="footer-links">
                     <a href="/terms" className="footer-link">Terms of Service</a>

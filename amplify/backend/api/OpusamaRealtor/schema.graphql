@@ -1,0 +1,110 @@
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  VIEWING
+  VIEWED
+  SOLD
+  PAID
+  RECEIVED
+  DENIED
+}
+
+type RealtorReview @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  rating: Float
+  review: String
+  userID: ID! @index(name: "byUser")
+}
+
+type PostReview @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  rating: Float
+  review: String
+  postID: ID! @index(name: "byPost")
+  userID: ID! @index(name: "byUser")
+}
+
+type Booking @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  adults: String
+  kids: String
+  infants: String
+  clientFirstName: String
+  clientLastName: String
+  clientPhoneNumber: String
+  purpose: String
+  duration: String
+  checkInDate: String
+  checkOutDate: String
+  propertyType: String
+  accommodationType: String
+  nameOfType: String
+  totalPrice: Float
+  realtorPrice: Float
+  bookingLat: Float
+  bookingLng: Float
+  status: BookingStatus
+  userID: ID! @index(name: "byUser")
+  realtorID: ID! @index(name: "byRealtor")
+  PostID: String
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  sub: String!
+  firstName: String!
+  lastName: String
+  profilePic: String
+  phoneNumber: String
+  address: String
+  PostReviews: [PostReview] @hasMany(indexName: "byUser", fields: ["id"])
+  RealtorReviews: [RealtorReview] @hasMany(indexName: "byUser", fields: ["id"])
+  push_token: String
+  Bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type Realtor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  sub: String!
+  firstName: String
+  lastName: String
+  myDescription: String
+  profilePic: String
+  email: String
+  address: String
+  phoneNumber: String
+  bankname: String
+  accountName: String
+  accountNumber: String
+  Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
+  push_token: String
+  Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  propertyType: String!
+  type: String!
+  nameOfType: String
+  availableDocs: String
+  accommodationParts: String
+  media: [String]
+  description: String!
+  available: Boolean
+  address: String!
+  lat: Float
+  lng: Float
+  price: Float!
+  cautionFee: Float
+  totalPrice: Float!
+  bed: String
+  bedrooms: String
+  amenities: String
+  policies: String
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
+  country: String!
+  state: String
+  city: String
+  realtorID: ID! @index(name: "byRealtor")
+}
+ 

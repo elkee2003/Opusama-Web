@@ -13,10 +13,7 @@
 
 /* Button container styling */
 .hero-btn-container {
-    position: absolute; 
-    bottom: 8rem; 
-    display: flex; 
-    gap: 1.5rem;
+  padding-top: 70vh;
 }
 
 
@@ -46,17 +43,16 @@
 /* For smaller devices, ensure responsiveness */
 
 @media (min-width: 250px) and (max-width: 900px) {
-    .hero-btn-container {
-        /* visibility: hidden; */
-        position: absolute; 
-        left: 50%;
-        transform: translateX(-50%); 
-        bottom: 8rem; 
-        display: flex; 
-        gap: 1.5rem;
+    
+    .hero-btn-container{
+      padding-top: 60vh;
+      padding-left: 30%;
+      display: flex;
+      flex-direction: column;
+      gap:10px;
     }
     .hero-button {
-        padding: 0.2rem 1.5rem;
+        padding: 0.5rem 1.5rem;
         width:8rem; 
         font-size: 1rem; 
         font-weight: 600; 

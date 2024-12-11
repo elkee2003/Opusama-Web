@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3opusamastoragef8b382aa",
+  "bucketName": "opusama-storage-f8b382aa",
+  "policyUUID": "b0f1f3c2",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ",
+    "CREATE_AND_UPDATE",
+    "DELETE"
+  ]
+}

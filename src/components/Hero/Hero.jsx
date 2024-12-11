@@ -32,6 +32,7 @@ const Hero = () => {
         "/hero2.png",
         "/hero3.png",
         "/hero4.png",
+        "/hero5.png",
     ];
 
     const mediumScreenImages = [
@@ -39,6 +40,7 @@ const Hero = () => {
         'hero2medium.png',
         'hero3medium.png',
         'hero4medium.png',
+        'hero5medium.png',
     ]
 
     const smallScreenImages = [
@@ -46,6 +48,7 @@ const Hero = () => {
         'hero2small.png',
         'hero3small.png',
         'hero4small.png',
+        'hero5small.png',
     ]
 
     // Choose images based on screen size

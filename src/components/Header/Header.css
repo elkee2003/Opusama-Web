@@ -1,10 +1,17 @@
 .h-wrapper{
-    background: transparent;
-    color: white;
-    position: sticky;
+    /* position: sticky;
     top:0;
     z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    background: transparent;
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: transparent;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    color: white;
 }
 
 
@@ -16,15 +23,18 @@
 
 
 .h-container{
+    display: flex;
     justify-content: space-between;
     padding-top: 1rem;
     padding-bottom: 1rem;
     color: var(--secondary)
 }
 
-.h-menu{
-    gap:2rem;
+.h-menu a {
+    /* gap:2rem; */
     color:white;
+    text-decoration: none;
+    margin: 0 1rem;
     transition: color 0.3s ease;
 }
 .h-wrapper.scrolled .h-menu a {
@@ -47,7 +57,89 @@
     transform: scale(1.1);
 }
 
+/* Hamburger menu */
+.hamburger {
+    display: none;
+    position: absolute;
+    top:40px;
+    right: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 1.87rem;
+    height: 1.313rem;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
 .h-wrapper.scrolled .h-menu .button {
     color: rgb(243, 243, 243) !important; 
     background: var(--blue-gradient) !important; 
+}
+
+/* Responsive styles */
+@media screen and (max-width: 900px) {
+
+    .h-wrapper.scrolled .h-menu a {
+        color: white; 
+    }
+
+    .button {
+        display: none;
+    }
+
+    .h-container{
+        background: var(--gold-gradient);
+        position: absolute;
+        height: 6rem;
+    }
+
+    .h-container img{
+        top:25px;
+        left: 30px;
+        width:120px;
+        position:absolute;
+        z-index: 200;
+        color:white;
+    }
+
+    .hamburger {
+      display: flex;
+      z-index: 200;
+    }
+  
+    .h-menu {
+      position: absolute;
+      top: -25rem;
+      left: 0;
+      flex-direction: column;
+      background: var(--gold-gradient);
+      width: 100%;
+      padding: 3rem 0;
+      gap: 2rem;
+      transition: all 0.3s ease;
+    }
+  
+    .h-menu.open {
+      top:0;
+    }
+  
+    .h-menu a,
+    .h-menu .button {
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  
+    .h-menu .button {
+      background: white;
+      color: var(--blue-gradient);
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
 }

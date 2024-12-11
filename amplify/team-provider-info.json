@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-opusamarealtor-staging-b73ca-authRole",
+      "UnauthRoleArn": "arn:aws:iam::533267162650:role/amplify-opusamarealtor-staging-b73ca-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::533267162650:role/amplify-opusamarealtor-staging-b73ca-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
+      "UnauthRoleName": "amplify-opusamarealtor-staging-b73ca-unauthRole",
+      "StackName": "amplify-opusamarealtor-staging-b73ca",
+      "StackId": "arn:aws:cloudformation:eu-north-1:533267162650:stack/amplify-opusamarealtor-staging-b73ca/9a37a2d0-619a-11ef-8943-0e9f263c2757",
+      "AmplifyAppId": "d8g63pie0uwz7"
+    },
+    "categories": {
+      "auth": {
+        "OpusamaRealtor": {}
+      },
+      "storage": {
+        "s3opusamastoragef8b382aa": {}
+      }
+    }
+  }
+}

@@ -1,13 +1,13 @@
 .offer-wrapper {
     width: 100%;
     background-color: var(--offWhite);
-    display: flex; /* Flex to center content vertically */
+    display: flex; 
     align-items: center;
   }
   
   .offer-container {
-    text-align: center;
-    gap: 2rem;
+    /* text-align: center; */
+    gap: 1rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;

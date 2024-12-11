@@ -99,7 +99,7 @@
     padding: 0.8rem;
     font-size: 1rem;
     color: white;
-    background-color: var(--blue);
+    background: var(--skyblue-gradient);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -107,5 +107,5 @@
 }
   
 .signin-button:hover {
-    background-color: var(--primary);
+    background: var(--blue-gradient);
 }
