@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Signin.css';
+import { useNavigate } from 'react-router-dom';
 
-const Sigin = () => {
+const Signin = () => {
     const [activeUserType, setActiveUserType] = useState('client');
     const [formData, setFormData] = useState({
         email: '',
@@ -21,8 +22,22 @@ const Sigin = () => {
         // Add logic for form submission (e.g., API call)
     };
 
+    // useNavigation
+    const navigate = useNavigate();
+
+    const navigateToCreateAccount = () => {
+        navigate('/signup');
+    };
+
+    const navigateToForgotPassword = () => {
+        console.log("Redirecting to Forgot Password");
+    };
+
   return (
-    <div className="signin-container">
+    <div
+        id='signin'
+        className="signin-container"
+    >
 
         {/* Title Section */}
         <h1 className="primaryText signin-title-left">Sign In Screen</h1>
@@ -80,9 +95,19 @@ const Sigin = () => {
                 <button type="submit" className="signin-button">
                 Sign In
                 </button>
+
+                {/* Create Account and Forgot Password buttons */}
+                <div className="secondary-button-container">
+                    <button type="button" className="secondary-button" onClick={navigateToForgotPassword}>
+                        Forgot Password?
+                    </button>
+                    <button type="button" className="secondary-button" onClick={navigateToCreateAccount}>
+                        Create Account
+                    </button>
+                </div>
         </form>
     </div>
   )
 }
 
-export default Sigin
+export default Signin

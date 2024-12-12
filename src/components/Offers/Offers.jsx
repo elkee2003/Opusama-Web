@@ -4,7 +4,10 @@ import { FaHome, FaLandmark, FaBuilding, FaHotel, FaUserTie } from 'react-icons/
 
 const Offers = () => {
   return (
-    <section className="offer-wrapper">
+    <section
+        id='offers'
+        className="offer-wrapper"
+    >
         <div className="paddings innerWidth flexColStart offer-container">
             <h1 className="primaryText">What We Offer</h1>
             <p className="secondaryText">

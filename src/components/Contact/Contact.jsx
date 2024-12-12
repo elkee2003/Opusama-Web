@@ -4,7 +4,10 @@ import './Contact.css'
 
 const Contact = () => {
   return (
-    <section className="c-wrapper">
+    <section
+      id='contact'
+      className="c-wrapper"
+    >
       <div className="paddings innerWidth flexCenter c-container">
         <div className="flexColStart c-left">
           <span className="greenText">Our Contacts</span>

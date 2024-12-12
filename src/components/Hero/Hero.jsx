@@ -75,10 +75,11 @@ const Hero = () => {
 
   return (
     <div
-    className="hero-background"
-    style={{
-        backgroundImage: `url(${images[currentImage]})`,
-      }} 
+        id='hero'
+        className="hero-background"
+        style={{
+            backgroundImage: `url(${images[currentImage]})`,
+        }} 
     >
         <Header />
 

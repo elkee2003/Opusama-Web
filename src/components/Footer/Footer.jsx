@@ -9,9 +9,27 @@ const Footer = () => {
                     &copy; {new Date().getFullYear()} Opusama. All rights reserved.
                 </p>
                 <div className="footer-links">
-                    <a href="/terms" className="footer-link">Terms of Service</a>
-                    <a href="/privacy" className="footer-link">Privacy Policy</a>
-                    <a href="/contact" className="footer-link">Contact Us</a>
+                    <a 
+                        href="https://sites.google.com/view/opusama-termsofservice/home"
+                        className="footer-link"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                    >
+                        Terms of Service
+                    </a>
+
+                    <a 
+                        href="https://sites.google.com/view/opusama/home"
+                        className="footer-link"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                    >
+                        Privacy Policy
+                    </a>
+
+                    <a href="/contact" className="footer-link">
+                        Contact Us
+                    </a>
                 </div>
             </div>
         </footer>

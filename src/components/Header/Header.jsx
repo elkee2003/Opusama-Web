@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import './Header.css';
+import { Link } from 'react-scroll';
 
 
 const Header = () => {
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 800);
 
+    // useeffect to calculate for the navbar to be fixed
     useEffect(() => {
-        // const handleScroll = () => {
-        //   const header = document.querySelector(".h-wrapper");
-        //   if (window.scrollY > 100) {
-        //     header.classList.add("scrolled");
-        //     setIsScrolled(true);
-        //   } else {
-        //     header.classList.remove("scrolled");
-        //     setIsScrolled(false);
-        //   }
-        // };
-
         const handleScroll = () => {
           if (window.scrollY > 100 && window.innerWidth > 800) {
             setIsScrolled(true);
@@ -34,6 +26,8 @@ const Header = () => {
         };
     }, []);
 
+
+    // Functions for the hamburger menu
     const toggleMenu = () => {
       setMenuOpen(!menuOpen);
     };
@@ -42,12 +36,17 @@ const Header = () => {
       setMenuOpen(false)
     }
 
+    // useeffect for calculating the size of the width of the screen to close the hamburger menu.
     useEffect(()=>{
       const handleResize = ()=>{
-          if (window.innerWidth <= 800){
-              closeMenu()
-          }
-      }
+        const isMobile = window.innerWidth <= 800;
+        setIsMobileView(isMobile);
+        
+        if (isMobile) {
+          closeMenu();
+        }
+      };
+
       window.addEventListener('resize', handleResize)
 
       return ()=>{
@@ -64,11 +63,19 @@ const Header = () => {
   return (
     <section className={`h-wrapper ${isScrolled ? "scrolled" : ""}`}>
       <div className={`flexCenter paddings innerWidth h-container`}>
-          <img 
-              src={isScrolled ? './opusama.png' : './opusamawhite.png'}
-              alt="logo" 
-              width={150} 
-          />
+          <Link 
+            to="hero" 
+            smooth={true} 
+            duration={500}
+            offset={-70}
+            onClick={closeMenu}
+          >
+            <img 
+                src={isScrolled ? './opusama.png' : './opusamawhite.png'}
+                alt="logo" 
+                width={150} 
+            />
+          </Link>
 
           <div className="hamburger" onClick={toggleMenu}>
             <span className="line"></span>
@@ -78,15 +85,51 @@ const Header = () => {
 
           <div className="flexCenter">
               <nav className={`h-menu flexCenter ${menuOpen ? "open" : ""}`}>
-              <a href="">
-                  Home
-              </a>
-              <a href="">
-                  Offers
-              </a>
-              <a href="">
-                  Get Started
-              </a>
+
+                {/* Hero */}
+                <Link 
+                  to="hero" 
+                  smooth={true} 
+                  duration={500}
+                  offset={-70}
+                  onClick={closeMenu}
+                >
+                    Home
+                </Link>
+
+                {/* Offers */}
+                <Link 
+                  to="offers" 
+                  smooth={true} 
+                  duration={500}
+                  offset={-70}
+                  onClick={closeMenu}
+                >
+                    Offers
+                </Link>
+
+                {/* Sign-in / Get Started */}
+                <Link 
+                  to="signin" 
+                  smooth={true} 
+                  duration={500}
+                  offset={-90}
+                  onClick={closeMenu}
+                >
+                    Get Started
+                </Link>
+
+                {isMobileView && (
+                  <Link 
+                    to="contact" 
+                    smooth={true} 
+                    duration={500}
+                    offset={-70}
+                    onClick={closeMenu}
+                  >
+                      Contact Us
+                  </Link>
+                )}
               </nav>
               <button 
                   className='button'
@@ -95,7 +138,15 @@ const Header = () => {
                       background: "var(--blue-gradient)",
                   }}
               >
-                  <a href="">Contact Us</a>
+                  <Link 
+                    to="contact" 
+                    smooth={true} 
+                    duration={500}
+                    offset={-70}
+                    onClick={closeMenu}
+                  >
+                    Contact Us
+                  </Link>
               </button>
           </div>
       </div>

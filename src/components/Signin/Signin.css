@@ -109,3 +109,23 @@
 .signin-button:hover {
     background: var(--blue-gradient);
 }
+
+.secondary-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.secondary-button {
+  font-size: 0.9rem;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.secondary-button:hover {
+  color: var(--blue);
+}
