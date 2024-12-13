@@ -30,7 +30,7 @@
     color: var(--secondary)
 }
 
-.h-menu a {
+.h-menu a, .h-menu span {
     /* gap:2rem; */
     color:white;
     text-decoration: none;
@@ -38,8 +38,19 @@
     cursor: pointer;
     transition: color 0.3s ease;
 }
-.h-wrapper.scrolled .h-menu a {
-    color: rgb(0, 0, 0); 
+
+.h-menu a:hover, .h-menu span:hover {
+    color:var(--green);
+}
+
+.h-wrapper.scrolled .h-menu a, .h-wrapper.scrolled .h-menu span {
+    color: var(--darkBlue); 
+    transition: color 0.3s ease;
+}
+
+.h-wrapper.scrolled .h-menu a, .h-wrapper.scrolled .h-menu span:hover {
+    color: var(--green); 
+    transition: color 0.3s ease;
 }
 
 .button {
@@ -57,6 +68,17 @@
     cursor: pointer;
     transform: scale(1.1);
 }
+
+/* Styling for dark screens (e.g., signup screen) */
+.h-wrapper.dark-screen .h-menu span {
+    color: var(--darkBlue);
+    transition: color 0.3s ease;
+}
+
+.h-wrapper.dark-screen .h-menu span:hover {
+    color:var(--green);
+}
+
 
 /* Hamburger menu */
 .hamburger {
@@ -86,10 +108,21 @@
 /* Responsive styles */
 @media screen and (max-width: 900px) {
 
-    .h-wrapper.scrolled .h-menu a {
+    .h-wrapper.scrolled .h-menu a, .h-wrapper.scrolled .h-menu span {
         color: white; 
     }
 
+    /* Styling for dark screens (e.g., signup screen) */
+    .h-wrapper.dark-screen .h-menu span {
+        color: rgb(250, 249, 249); 
+        transition: color 0.3s ease;
+    }
+
+    .h-wrapper.dark-screen .h-menu span:hover {
+        color:var(--green);
+    }
+
+    /* Back to normal */
     .button {
         display: none;
     }

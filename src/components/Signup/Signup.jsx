@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -31,8 +33,20 @@ const Signup = () => {
         // Add logic for form submission (e.g., API call)
     };
 
+    // useNavigation
+    const navigate = useNavigate();
+
+    const navigateToConfirmEmail = () => {
+        navigate('/confirmemail');
+    };
+
     return (
         <div id='signup' className="signup-container">
+
+            {/* Nav Header */}
+            <Header/>
+
+            {/* Signup section */}
             <h1 className="primaryText signup-title">Create Account</h1>
             <form onSubmit={handleSubmit} className="signup-form">
                 <label htmlFor="email" className="signup-label">
@@ -86,7 +100,11 @@ const Signup = () => {
                     </label>
                 </div>
 
-                <button type="submit" className="signup-button">
+                <button 
+                    type="submit"
+                    className="signup-button"
+                    onClick={navigateToConfirmEmail}
+                >
                     Sign Up
                 </button>
             </form>

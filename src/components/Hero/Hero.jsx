@@ -85,8 +85,14 @@ const Hero = () => {
 
         {/* Button container */}
         <div className="hero-btn-container">
-            <button className="hero-button">Download App</button>
-            <button className="hero-button">Sign In</button>
+
+            <button className="hero-button">
+                Download App
+            </button>
+            
+            <button className="hero-button">
+                Sign In
+            </button>
         </div>
     </div>
   )

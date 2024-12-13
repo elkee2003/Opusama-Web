@@ -30,7 +30,7 @@ const Signin = () => {
     };
 
     const navigateToForgotPassword = () => {
-        console.log("Redirecting to Forgot Password");
+        navigate('/forgotpassword');
     };
 
   return (
