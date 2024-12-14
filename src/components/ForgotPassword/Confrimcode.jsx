@@ -77,7 +77,7 @@ const ConfirmCode = () => {
               />
               <button
                   type="button"
-                  className="eye-icon"
+                  className="eye-icon-confirmcode"
                   onClick={() => setIsPasswordVisible(!isPasswordVisible)}
               >
                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}

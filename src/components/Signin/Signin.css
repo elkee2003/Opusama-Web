@@ -109,7 +109,7 @@
     position: relative;
 }
 
-.eye-icon {
+.eye-icon-signin {
     position: absolute;
     right: 1rem;
     top: 50% !important;
@@ -122,7 +122,7 @@
     transition: color 0.3s ease;
 }
 
-.eye-icon:hover {
+.eye-icon-signin:hover {
     color: var(--blue);
 }
   

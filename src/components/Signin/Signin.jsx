@@ -96,7 +96,7 @@ const Signin = () => {
                     />
                     <button
                         type="button"
-                        className="eye-icon"
+                        className="eye-icon-signin"
                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                     >
                         {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}

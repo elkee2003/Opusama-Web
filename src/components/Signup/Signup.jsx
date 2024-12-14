@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
+
 const Signup = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -80,7 +81,7 @@ const Signup = () => {
                     />
                     <button
                         type="button"
-                        className="eye-icon"
+                        className="eye-icon-signup"
                         onClick={() => setIsPasswordVisible1(!isPasswordVisible1)}
                     >
                         {isPasswordVisible1 ? <FaEyeSlash /> : <FaEye />}
@@ -102,7 +103,7 @@ const Signup = () => {
                     />
                     <button
                         type="button"
-                        className="eye-icon"
+                        className="eye-icon-signup"
                         onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
                     >
                         {isPasswordVisible2 ? <FaEyeSlash /> : <FaEye />}
