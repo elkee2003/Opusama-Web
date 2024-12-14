@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Signup.css';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ const Signup = () => {
     });
 
     const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const [isPasswordVisible1, setIsPasswordVisible1] = useState(false);
+    const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -65,29 +68,48 @@ const Signup = () => {
                 <label htmlFor="password" className="signup-label">
                     Password
                 </label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="signup-input"
-                    required
-                />
+                <div className="password-container">
+                    <input
+                        type={isPasswordVisible1 ? 'text' : 'password'}
+                        name="password"
+                        id="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="signup-input"
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="eye-icon"
+                        onClick={() => setIsPasswordVisible1(!isPasswordVisible1)}
+                    >
+                        {isPasswordVisible1 ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                </div>
 
                 <label htmlFor="confirmPassword" className="signup-label">
                     Confirm Password
                 </label>
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="signup-input"
-                    required
-                />
+                <div className="password-container">
+                    <input
+                        type={isPasswordVisible2 ? 'text' : 'password'}
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className="signup-input"
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="eye-icon"
+                        onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
+                    >
+                        {isPasswordVisible2 ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                </div>
 
+                {/* Signup terms */}
                 <div className="signup-terms">
                     <input
                         type="checkbox"
@@ -96,7 +118,29 @@ const Signup = () => {
                         onChange={() => setAcceptedTerms(!acceptedTerms)}
                     />
                     <label htmlFor="terms" className="signup-terms-label">
-                        I accept the <a href="/terms">Terms and Conditions</a>.
+                        <span>
+                            I accept the <a 
+                                href="https://sites.google.com/view/opusama-termsofservice/home"
+                                className="terms"
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                            >
+                                Terms of Use
+                            </a>
+                        </span>
+                        {' '}
+                        and
+                        {' '}
+                        <span>
+                        <a 
+                            href="https://sites.google.com/view/opusama/home"
+                            className="terms"
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            Privacy Policy
+                        </a>
+                        </span>
                     </label>
                 </div>
 

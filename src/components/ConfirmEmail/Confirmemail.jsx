@@ -24,7 +24,7 @@ const ConfirmEmail = () => {
             // Simulating the confirmSignUp logic
             console.log('Confirming sign up:', username, confirmationCode);
             alert('Sign-up confirmed successfully!');
-            navigate('/login');
+            navigate(-2); // Navigate two steps back
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
@@ -46,30 +46,29 @@ const ConfirmEmail = () => {
     };
 
     return (
-        <div className="confirm-email-container">
-            {/* Nav Header */}
-            <Header/>
-
-            {/* Confirm Email Section */}
-            <h1>Confirm Your Email</h1>
-            <form onSubmit={handleConfirm}>
-                <label htmlFor="confirmationCode">Enter Code</label>
+        <div className="auth-container">
+            <Header />
+            <h1 className="auth-title">Confirm Your Email</h1>
+            <form onSubmit={handleConfirm} className="auth-form">
+                <label htmlFor="confirmationCode" className="auth-label">
+                    Confirmation Code
+                </label>
                 <input
                     type="text"
                     id="confirmationCode"
                     value={confirmationCode}
                     onChange={(e) => setConfirmationCode(e.target.value)}
                     placeholder="Enter the code sent to your email"
+                    className="auth-input"
                     required
                 />
-                <button type="submit" disabled={loading}>
+                <button type="submit" className="auth-button" disabled={loading}>
                     {loading ? 'Confirming...' : 'Confirm'}
                 </button>
             </form>
-            <button onClick={handleResendCode} disabled={resendLoading}>
-                {resendLoading ? 'Resending...' : 'Resend Code'}
+            <button onClick={handleResendCode} className="auth-secondary-button">
+                Resend Code
             </button>
-            <button onClick={() => navigate('/signin')}>Back to Login</button>
         </div>
     );
 };

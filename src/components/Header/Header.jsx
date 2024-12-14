@@ -101,7 +101,7 @@ const Header = () => {
             />
           </Link>
 
-          <div className="hamburger" onClick={toggleMenu}>
+          <div className="hamburger" onClick={toggleMenu} aria-label="Toggle navigation menu" role="button" tabIndex="0">
             <span className="line"></span>
             <span className="line"></span>
             <span className="line"></span>

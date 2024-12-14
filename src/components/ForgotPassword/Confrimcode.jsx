@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import "./ForgotPassword.css";
+import Header from '../Header/Header';
 
 const ConfirmCode = () => {
   const [code, setCode] = useState('');
@@ -40,7 +42,7 @@ const ConfirmCode = () => {
         newPassword,
       });
       alert('Password has been reset successfully!');
-      navigate('/login'); // Navigate to login page after successful reset
+      navigate(-1); // Navigate to login page after successful reset
     } catch (error) {
       setError(error.message || 'Error confirming reset password');
       console.error('Error confirming reset password:', error);
@@ -50,64 +52,52 @@ const ConfirmCode = () => {
   };
 
   return (
-    <div className="confirm-code-container">
+    <div className="auth-container">
       {/* Header */}
-      <div className="title-container">
-        <h1>Reset Password</h1>
-      </div>
+      <Header/>
 
-      {/* Input Section */}
-      <div className="input-section">
-        {/* Confirmation Code */}
-        <label htmlFor="code">Confirmation Code</label>
-        <input
-          type="text"
-          id="code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Enter code sent to your email"
-        />
-
-        {/* New Password */}
-        <label htmlFor="newPassword">New Password</label>
-        <div className="password-container">
+      <h1>Reset Password</h1>
+      <form className="auth-form">
+          <label htmlFor="code">Confirmation Code</label>
           <input
-            type={isPasswordVisible ? 'text' : 'password'}
-            id="newPassword"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Enter your new password"
+              type="text"
+              id="code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              placeholder="Enter code sent to your email"
           />
+          <label htmlFor="newPassword">New Password</label>
+          <div className="password-container">
+              <input
+                  type={isPasswordVisible ? 'text' : 'password'}
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter your new password"
+              />
+              <button
+                  type="button"
+                  className="eye-icon"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                   {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+          </div>
+          {error && <div className="error-message">{error}</div>}
           <button
-            type="button"
-            className="eye-icon"
-            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              type="submit"
+              onClick={handleConfirmResetPassword}
+              disabled={loading}
           >
-            {isPasswordVisible ? 'Hide' : 'Show'}
+              {loading ? 'Submitting...' : 'Submit'}
           </button>
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {error && <div className="error-message">{error}</div>}
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="submit-btn"
-        onClick={handleConfirmResetPassword}
-        disabled={loading}
-      >
-        {loading ? 'Submitting...' : 'Submit'}
-      </button>
-
-      {/* Back to Sign In */}
-      <button
-        className="back-to-signin-btn"
-        onClick={() => navigate('/login')}
-      >
-        Back to Sign In
-      </button>
+          <button
+              className="back-to-signin-btn"
+              onClick={() => navigate(-1)}
+          >
+              Back to Sign In
+          </button>
+      </form>
     </div>
   );
 };

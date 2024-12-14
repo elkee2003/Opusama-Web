@@ -2,6 +2,15 @@ import React from 'react';
 import './Footer.css';
 
 const Footer = () => {
+
+    const navigateToContact = () => {
+        const signInElement = document.getElementById('contact');
+        if (signInElement) {
+            const elementTop = signInElement.getBoundingClientRect().top + window.scrollY - 80; // Adjust for any fixed headers
+            window.scrollTo({ top: elementTop, behavior: 'smooth' });
+        }
+    };
+
     return (
         <footer className="footer-container">
             <div className="footer-content">
@@ -27,9 +36,11 @@ const Footer = () => {
                         Privacy Policy
                     </a>
 
-                    <a href="/contact" className="footer-link">
+                    
+                    <button className="footer-link"
+                    onClick={navigateToContact}>
                         Contact Us
-                    </a>
+                    </button>
                 </div>
             </div>
         </footer>

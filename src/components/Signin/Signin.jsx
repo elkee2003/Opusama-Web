@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Signin.css';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 const Signin = () => {
     const [activeUserType, setActiveUserType] = useState('client');
@@ -8,6 +9,7 @@ const Signin = () => {
         email: '',
         password: '',
     });
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     // function for form onchange
     const handleChange = (e) => {
@@ -82,16 +84,55 @@ const Signin = () => {
                 <label htmlFor="password" className="signin-label">
                 Password
                 </label>
-                <input
-                type="password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="signin-input"
-                required
-                />
+                <div className="password-container">
+                    <input
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        name="password"
+                        id="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="signin-input"
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="eye-icon"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                    >
+                        {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                </div>
 
+                {/* Signin Terms */}
+                <div className="signin-terms">
+                    <div className="signin-terms-label">
+                        <span>
+                            By Sigining in you accept the <a 
+                                href="https://sites.google.com/view/opusama-termsofservice/home"
+                                className="terms"
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                            >
+                                Terms of Use
+                            </a>
+                        </span>
+                        {' '}
+                        and
+                        {' '}
+                        <span>
+                        <a 
+                            href="https://sites.google.com/view/opusama/home"
+                            className="terms"
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            Privacy Policy
+                        </a>
+                        </span>
+                    </div>
+                </div>
+
+                {/* Sign-in Button */}
                 <button type="submit" className="signin-button">
                 Sign In
                 </button>

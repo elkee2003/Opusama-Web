@@ -19,7 +19,7 @@ const ForgotPassword = () => {
             // Simulating forgotPassword logic
             console.log('Sending reset instructions to:', email);
             alert('Reset instructions sent!');
-            navigate('/reset-password'); // Navigate to reset password page
+            navigate('/confirmcode'); // Navigate to reset password page
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
@@ -27,14 +27,14 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="forgot-password-container">
+        <div className="auth-container">
             
             {/* Nav Header */}
             <Header/>
 
             {/* Forgot Password Section */}
             <h1>Forgot Password</h1>
-            <form onSubmit={handleForgotPassword}>
+            <form className="auth-form" onSubmit={handleForgotPassword}>
                 <label htmlFor="email">Email Address</label>
                 <input
                     type="email"

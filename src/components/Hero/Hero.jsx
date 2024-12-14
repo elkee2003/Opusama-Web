@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Header from '../Header/Header'
 import "./Hero.css";
 
 // Custom hook to check screen width
@@ -73,6 +72,14 @@ const Hero = () => {
         return () => clearInterval(interval);
     }, [images.length]);
 
+    const navigateToSignIn = () => {
+        const signInElement = document.getElementById('signin');
+        if (signInElement) {
+            const elementTop = signInElement.getBoundingClientRect().top + window.scrollY - 80; // Adjust for any fixed headers
+            window.scrollTo({ top: elementTop, behavior: 'smooth' });
+        }
+    };
+
   return (
     <div
         id='hero'
@@ -81,7 +88,6 @@ const Hero = () => {
             backgroundImage: `url(${images[currentImage]})`,
         }} 
     >
-        <Header />
 
         {/* Button container */}
         <div className="hero-btn-container">
@@ -90,7 +96,7 @@ const Hero = () => {
                 Download App
             </button>
             
-            <button className="hero-button">
+            <button className="hero-button" onClick={navigateToSignIn}>
                 Sign In
             </button>
         </div>
