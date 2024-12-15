@@ -87,19 +87,15 @@ const Header = () => {
   return (
     <section className={`h-wrapper ${isScrolled ? "scrolled" : ""} ${isDarkScreen ? "dark-screen" : ""} `}>
       <div className={`flexCenter paddings innerWidth h-container`}>
-          <Link 
-            to="hero" 
-            smooth={true} 
-            duration={500}
-            offset={-70}
-            onClick={closeMenu}
+          <span
+            onClick={() => navigateAndScroll('/', 'hero')}
           >
             <img 
                 src={isScrolled ? './opusama.png' : './opusamawhite.png'}
                 alt="logo" 
                 width={150} 
             />
-          </Link>
+          </span>
 
           <div className="hamburger" onClick={toggleMenu} aria-label="Toggle navigation menu" role="button" tabIndex="0">
             <span className="line"></span>
@@ -175,6 +171,7 @@ const Header = () => {
                       color: "white",
                       background: "var(--blue-gradient)",
                   }}
+                  onClick={() => navigateAndScroll('/', 'contact')}
               >
                   <Link 
                     to="contact" 

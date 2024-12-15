@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./ForgotPassword.css";
-import Header from '../Header/Header';
+import Header from '../../Header/Header';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -33,7 +33,9 @@ const ForgotPassword = () => {
             <Header/>
 
             {/* Forgot Password Section */}
-            <h1>Forgot Password</h1>
+            <h1>Forgot Password (Realtor)</h1>
+
+            {/* Form */}
             <form className="auth-form" onSubmit={handleForgotPassword}>
                 <label htmlFor="email">Email Address</label>
                 <input

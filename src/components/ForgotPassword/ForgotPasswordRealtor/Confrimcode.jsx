@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import "./ForgotPassword.css";
-import Header from '../Header/Header';
+import Header from '../../Header/Header';
 
 const ConfirmCode = () => {
   const [code, setCode] = useState('');
@@ -56,7 +56,10 @@ const ConfirmCode = () => {
       {/* Header */}
       <Header/>
 
+      {/* Title */}
       <h1>Reset Password</h1>
+
+      {/* Form */}
       <form className="auth-form">
           <label htmlFor="code">Confirmation Code</label>
           <input

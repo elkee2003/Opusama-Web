@@ -7,10 +7,13 @@ import Signin from './components/Signin/Signin'
 // import Offers from './components/Offers/Offers';
 // import Footer from './components/Footer/Footer';
 import Home from './components/HomeScreen';
-import Signup from './components/Signup/Signup';
-import ConfirmEmail from './components/ConfirmEmail/Confirmemail';
-import ForgotPassword from './components/ForgotPassword/Forgotpassword';
-import ConfirmCode from './components/ForgotPassword/Confrimcode';
+import SignupClient from './components/Signup/SignupClient/Signup';
+import SignupRealtor from './components/Signup/SignupRealtor/Signup';
+import ConfirmEmailClient from './components/ConfirmEmail/ConfirmEmailClient/Confirmemail';
+import ConfirmEmailRealtor from './components/ConfirmEmail/ConfirmEmailRealtor/Confirmemail';
+import ForgotPasswordClient from './components/ForgotPassword/ForgotPasswordClient/Forgotpassword';
+import ForgotPasswordRealtor from './components/ForgotPassword/ForgotPasswordRealtor/Forgotpassword';
+import ConfirmCode from './components/ForgotPassword/ForgotPasswordClient/Confrimcode';
 
 
 function App() {
@@ -24,11 +27,16 @@ function App() {
           
           {/* <Route path="/signin" element={<Signin />} /> */}
 
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signupclient" element={<SignupClient />} />
 
-          <Route path="/confirmemail" element={<ConfirmEmail />} />
+          <Route path="/signuprealtor" element={<SignupRealtor />} />
 
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/confirmemailclient" element={<ConfirmEmailClient />} />
+          <Route path="/confirmemailrealtor" element={<ConfirmEmailRealtor />} />
+
+          <Route path="/forgotpasswordclient" element={<ForgotPasswordClient />} />
+
+          <Route path="/forgotpasswordrealtor" element={<ForgotPasswordRealtor />} />
 
           <Route path="/confirmcode" element={<ConfirmCode />} />
 

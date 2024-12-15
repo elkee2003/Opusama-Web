@@ -4,12 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 const Signin = () => {
+    // useNavigation
+    const navigate = useNavigate();
     const [activeUserType, setActiveUserType] = useState('client');
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     // function for form onchange
     const handleChange = (e) => {
@@ -17,22 +21,63 @@ const Signin = () => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    // Validate password function
+    const validatePassword = (password) => {
+        return password.length >= 8 && /\d/.test(password);
+    };
+
     // function for form to submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`${activeUserType} form submitted:`, formData);
-        // Add logic for form submission (e.g., API call)
+
+        if (loading) return;
+
+        const { email, password } = formData;
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
+        // Validate password
+        if (!validatePassword(password)) {
+            setError('Password must be at least 8 characters long and include at least one number.');
+            return;
+        }
+
+        // Clear error if all validations pass
+        setError('');
+        setLoading(true);
+
+        try {
+            // Validation logic and API call
+            console.log(`${activeUserType} form submitted:`, formData);
+            // Navigate to the next page or show success
+        } catch (error) {
+            setError(error.message || 'Something went wrong.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // useNavigation
-    const navigate = useNavigate();
-
+    // Navigation function to Create Account
     const navigateToCreateAccount = () => {
-        navigate('/signup');
+        if (activeUserType === 'client') {
+            navigate('/signupclient');
+        } else {
+            navigate('/signuprealtor');
+        }
     };
 
+    // Navigation function to forgot password
     const navigateToForgotPassword = () => {
-        navigate('/forgotpassword');
+        if (activeUserType === 'client') {
+            navigate('/forgotpasswordclient');
+        } else {
+            navigate('/forgotpasswordrealtor');
+        }
     };
 
   return (
@@ -53,10 +98,10 @@ const Signin = () => {
             Client
             </button>
             <button
-            className={`switcher-button ${activeUserType === 'agent' ? 'active' : ''}`}
-            onClick={() => setActiveUserType('agent')}
+            className={`switcher-button ${activeUserType === 'realtor' ? 'active' : ''}`}
+            onClick={() => setActiveUserType('realtor')}
             >
-            Agent
+            Realtor
             </button>
         </div>
 
@@ -64,7 +109,7 @@ const Signin = () => {
         <form onSubmit={handleSubmit} className="signin-form">
                 <h2 className="signin-title">
                     {
-                        activeUserType === 'client' ? 'Client Sign In' : 'Agent Sign In'
+                        activeUserType === 'client' ? 'Client Sign In' : 'Realtor Sign In'
                     }
                 </h2>
 
@@ -103,6 +148,13 @@ const Signin = () => {
                     </button>
                 </div>
 
+                {/* Error message */}
+                {error && (
+                    <div className="error-message">
+                    {error}
+                    </div>
+                )}
+
                 {/* Signin Terms */}
                 <div className="signin-terms">
                     <div className="signin-terms-label">
@@ -133,8 +185,8 @@ const Signin = () => {
                 </div>
 
                 {/* Sign-in Button */}
-                <button type="submit" className="signin-button">
-                Sign In
+                <button type="submit" className="signin-button" disabled={loading}>
+                    {loading ? "Signing In..." : "Sign In"}
                 </button>
 
                 {/* Create Account and Forgot Password buttons */}

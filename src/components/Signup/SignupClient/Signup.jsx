@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Signup.css';
-import Header from '../Header/Header';
+import Header from '../../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
@@ -15,33 +15,67 @@ const Signup = () => {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const [isPasswordVisible1, setIsPasswordVisible1] = useState(false);
     const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    // useNavigation
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-
-        if (!acceptedTerms) {
-            alert("You must accept the Terms and Conditions!");
-            return;
-        }
-
-        console.log("Sign-up form submitted:", formData);
-        // Add logic for form submission (e.g., API call)
+    // Validate password function
+    const validatePassword = (password) => {
+        return password.length >= 8 && /\d/.test(password);
     };
 
-    // useNavigation
-    const navigate = useNavigate();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const navigateToConfirmEmail = () => {
-        navigate('/confirmemail');
+        if (loading) return;
+
+        const { email, password, confirmPassword } = formData;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
+        // Validate password
+        if (!validatePassword(password)) {
+            setError('Password must be at least 8 characters long and include at least one number.');
+            return;
+        }
+
+        // Ensure passwords match
+        if (password !== confirmPassword) {
+            setError("Passwords do not match!");
+            return;
+        }
+
+        // Ensure terms are accepted
+        if (!acceptedTerms) {
+            setError("Kindly accept the Terms of Use and Privacy Policy.");
+            return;
+        }
+
+        // Clear error if all validations pass
+        setError('');
+        setLoading(true);
+
+        try {
+            console.log("Sign-up form submitted:", formData);
+            // Add logic for form submission (e.g., API call)
+
+            navigate('/confirmemailclient');
+        } catch (error) {
+            setError(error.message || 'Something went wrong.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -51,7 +85,9 @@ const Signup = () => {
             <Header/>
 
             {/* Signup section */}
-            <h1 className="primaryText signup-title">Create Account</h1>
+            <h1 className="primaryText signup-title">Create Account (Client)</h1>
+
+            {/* Form */}
             <form onSubmit={handleSubmit} className="signup-form">
                 <label htmlFor="email" className="signup-label">
                     Email
@@ -110,6 +146,13 @@ const Signup = () => {
                     </button>
                 </div>
 
+                {/* Error message */}
+                {error && (
+                    <div className="error-message">
+                    {error}
+                    </div>
+                )}
+
                 {/* Signup terms */}
                 <div className="signup-terms">
                     <input
@@ -148,9 +191,9 @@ const Signup = () => {
                 <button 
                     type="submit"
                     className="signup-button"
-                    onClick={navigateToConfirmEmail}
+                    disabled={loading}
                 >
-                    Sign Up
+                    {loading ? "Signing Up..." : "Sign Up"}
                 </button>
             </form>
         </div>

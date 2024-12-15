@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ConfirmEmail.css';
-import Header from '../Header/Header';
+import Header from '../../Header/Header';
 
 const ConfirmEmail = () => {
     const [confirmationCode, setConfirmationCode] = useState('');
@@ -48,7 +48,9 @@ const ConfirmEmail = () => {
     return (
         <div className="auth-container">
             <Header />
-            <h1 className="auth-title">Confirm Your Email</h1>
+            <h1 className="auth-title">Confirm Your Email (Client)</h1>
+
+            {/* Form */}
             <form onSubmit={handleConfirm} className="auth-form">
                 <label htmlFor="confirmationCode" className="auth-label">
                     Confirmation Code
