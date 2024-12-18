@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./ForgotPassword.css";
 import Header from '../../Header/Header';
+import { resetPassword } from 'aws-amplify/auth';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -16,10 +17,11 @@ const ForgotPassword = () => {
 
         setLoading(true);
         try {
-            // Simulating forgotPassword logic
-            console.log('Sending reset instructions to:', email);
-            alert('Reset instructions sent!');
-            navigate('/confirmcode'); // Navigate to reset password page
+            const response = await resetPassword({ username: email });
+            alert('Reset code sent!');
+
+            // Navigate to the confirm code screen and pass email as a parameter
+            navigate('/confirmcodeclient', { state: { email } });
         } catch (error) {
             alert(`Error: ${error.message}`);
         }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Signin.css';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { signIn } from 'aws-amplify/auth';
 
 const Signin = () => {
     // useNavigation
@@ -27,7 +28,7 @@ const Signin = () => {
     };
 
     // function for form to submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (loading) return;
@@ -52,9 +53,13 @@ const Signin = () => {
         setLoading(true);
 
         try {
-            // Validation logic and API call
-            console.log(`${activeUserType} form submitted:`, formData);
-            // Navigate to the next page or show success
+            const { isSignedIn, nextStep } = await signIn({ username:email, password });
+
+            if(activeUserType === 'client'){
+                navigate('/clientcontent')
+            }else{
+                navigate('/realtorcontent')
+            };
         } catch (error) {
             setError(error.message || 'Something went wrong.');
         } finally {

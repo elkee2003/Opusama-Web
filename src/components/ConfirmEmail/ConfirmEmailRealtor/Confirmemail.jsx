@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ConfirmEmail.css';
 import Header from '../../Header/Header';
+import { confirmSignUp, resendSignUpCode } from 'aws-amplify/auth';
 
 const ConfirmEmail = () => {
     const [confirmationCode, setConfirmationCode] = useState('');
@@ -11,7 +12,7 @@ const ConfirmEmail = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Assuming the username is passed via state
+    // Extract username (email) from the passed state
     const username = location.state?.username || '';
 
     const handleConfirm = async (e) => {
@@ -22,11 +23,11 @@ const ConfirmEmail = () => {
         setLoading(true);
         try {
             // Simulating the confirmSignUp logic
-            console.log('Confirming sign up:', username, confirmationCode);
+            await confirmSignUp({ username, confirmationCode });
             alert('Sign-up confirmed successfully!');
             navigate(-2); // Navigate two steps back
         } catch (error) {
-            alert(`Error: ${error.message}`);
+            alert(`Error confirming sign-up: ${error.message || 'An unknown error occurred'}`);
         }
         setLoading(false);
     };
@@ -36,11 +37,11 @@ const ConfirmEmail = () => {
 
         setResendLoading(true);
         try {
-            // Simulating the resendSignUpCode logic
-            console.log('Resending code to:', username);
-            alert('Verification code sent!');
+            // Call Amplify's resendSignUpCode with username
+            await resendSignUpCode({ username });
+            alert('Verification code sent to your email.');
         } catch (error) {
-            alert(`Error: ${error.message}`);
+            alert(`Error resending code: ${error.message || 'An unknown error occurred'}`);
         }
         setResendLoading(false);
     };
@@ -68,8 +69,12 @@ const ConfirmEmail = () => {
                     {loading ? 'Confirming...' : 'Confirm'}
                 </button>
             </form>
-            <button onClick={handleResendCode} className="auth-secondary-button">
-                Resend Code
+
+            {/* Resend code */}
+            <button onClick={handleResendCode}
+            disabled={resendLoading} 
+            className="auth-secondary-button">
+                {resendLoading ? 'Resending...' : 'Resend Code'}
             </button>
         </div>
     );

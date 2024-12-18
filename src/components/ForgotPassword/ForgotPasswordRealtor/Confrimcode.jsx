@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import "./ForgotPassword.css";
 import Header from '../../Header/Header';
+import { confirmResetPassword } from 'aws-amplify/auth';
 
 const ConfirmCode = () => {
   const [code, setCode] = useState('');
@@ -13,7 +14,11 @@ const ConfirmCode = () => {
   
   const navigate = useNavigate();
   const location = useLocation();
-  const email = new URLSearchParams(location.search).get('email'); // Get email from query params
+
+  const { email } = location.state || {}; // Get email from query params
+  
+  // const email = new URLSearchParams(location.search).get('email'); // Get email from query params
+  
 
   // Handle the password reset confirmation
   const handleConfirmResetPassword = async (e) => {
@@ -42,13 +47,13 @@ const ConfirmCode = () => {
         newPassword,
       });
       alert('Password has been reset successfully!');
-      navigate(-1); // Navigate to login page after successful reset
+      navigate(-2); // Navigate to login page after successful reset
     } catch (error) {
       setError(error.message || 'Error confirming reset password');
       console.error('Error confirming reset password:', error);
+    }finally{
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -86,7 +91,11 @@ const ConfirmCode = () => {
                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </button>
           </div>
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
           <button
               type="submit"
               onClick={handleConfirmResetPassword}
@@ -96,7 +105,7 @@ const ConfirmCode = () => {
           </button>
           <button
               className="back-to-signin-btn"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate(-2)}
           >
               Back to Sign In
           </button>

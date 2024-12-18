@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const useDarkScreen = () => {
     const location = useLocation();
-    return ['/signup', '/confirmemail', '/forgotpassword', '/confirmcode'].includes(location.pathname);
+    return ['/signupclient', '/signuprealtor', '/confirmemailclient', '/confirmemailrealtor', '/forgotpasswordclient', '/forgotpasswordrealtor', '/confirmcodeclient', '/confirmcoderealtor'].includes(location.pathname);
 };
 
 export default useDarkScreen;

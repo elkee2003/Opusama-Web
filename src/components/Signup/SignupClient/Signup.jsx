@@ -3,6 +3,7 @@ import './Signup.css';
 import Header from '../../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { signUp } from 'aws-amplify/auth';
 
 
 const Signup = () => {
@@ -20,6 +21,9 @@ const Signup = () => {
     // useNavigation
     const navigate = useNavigate();
 
+    // Automatically assign a role (for user app example)
+    const role = "user";
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -30,7 +34,7 @@ const Signup = () => {
         return password.length >= 8 && /\d/.test(password);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (loading) return;
@@ -67,10 +71,20 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            console.log("Sign-up form submitted:", formData);
-            // Add logic for form submission (e.g., API call)
+            const { isSignUpComplete, userId, nextStep } = await signUp({
+                username:email,
+                password,
+                options: {
+                  userAttributes: {
+                    email,
+                    'custom:role': role, // Automatically add the custom role attribute
+                  },
+                  autoSignIn: true 
+                }
+            });
 
-            navigate('/confirmemailclient');
+            // Pass email as state while navigating
+            navigate('/confirmemailclient', { state: { username: email } });
         } catch (error) {
             setError(error.message || 'Something went wrong.');
         } finally {
