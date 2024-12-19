@@ -1,0 +1,21 @@
+/* Layout container */
+.layout {
+    display: flex;
+  }
+  
+  /* Main content area */
+  .main-content {
+    margin-left: 270px; /* Same as sidebar width + 20px for padding */
+    padding: 20px;
+    flex: 1;
+    background-color: #f8f9fa; /* Light background for content */
+    min-height: 100vh; /* Full page height */
+    color: #333; /* Dark text color */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .main-content {
+      margin-left: 0; /* Collapse sidebar for small screens */
+    }
+  }

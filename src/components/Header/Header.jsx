@@ -60,7 +60,7 @@ const Header = () => {
       closeMenu();
     };
 
-    // useeffect for calculating the size of the width of the screen to close the hamburger menu.
+    // useEffect for calculating the size of the width of the screen to close the hamburger menu.
     useEffect(()=>{
       const handleResize = ()=>{
         const isMobile = window.innerWidth <= 800;
@@ -107,59 +107,21 @@ const Header = () => {
               <nav className={`h-menu flexCenter ${menuOpen ? "open" : ""}`}>
 
                 {/* Hero */}
-                {/* <Link 
-                  to="hero" 
-                  smooth={true} 
-                  duration={500}
-                  offset={-70}
-                  onClick={closeMenu}
-                >
-                    Home
-                </Link> */}
                 <span onClick={() => navigateAndScroll('/', 'hero')}>
                   Home
                 </span>
 
                 {/* Offers */}
-                {/* <Link 
-                  to="offers" 
-                  smooth={true} 
-                  duration={500}
-                  offset={-70}
-                  onClick={closeMenu}
-                >
-                    Offers
-                </Link> */}
-
                 <span onClick={() => navigateAndScroll('/', 'offers')}>
                   Offers
                 </span>
 
                 {/* Sign-in / Get Started */}
-                {/* <Link 
-                  to="signin" 
-                  smooth={true} 
-                  duration={500}
-                  offset={-90}
-                  onClick={closeMenu}
-                >
-                    Get Started
-                </Link> */}
-
                 <span onClick={() => navigateAndScroll('/', 'signin')}>
                   Get Started
                 </span>
 
                 {isMobileView && (
-                  // <Link 
-                  //   to="contact" 
-                  //   smooth={true} 
-                  //   duration={500}
-                  //   offset={-70}
-                  //   onClick={closeMenu}
-                  // >
-                  //     Contact Us
-                  // </Link>
                   <span onClick={() => navigateAndScroll('/', 'contact')}>
                     Contact Us
                   </span>

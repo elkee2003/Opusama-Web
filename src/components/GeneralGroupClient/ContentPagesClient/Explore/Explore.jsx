@@ -2,7 +2,7 @@ import React from 'react'
 
 function Explore() {
   return (
-    <div>
+    <div >
       <h1>Explore</h1>
     </div>
   )

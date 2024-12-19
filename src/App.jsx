@@ -1,14 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Header from './components/Header/Header';
-// import Hero from './components/Hero/Hero';
-import Signin from './components/Signin/Signin'
-// import Contact from './components/Contact/Contact';
-// import Offers from './components/Offers/Offers';
-// import Footer from './components/Footer/Footer';
 import Home from './components/HomeScreen';
-import ContentClientTabs from './components/ContentTabsClient';
-import ContentRealtorTabs from './components/ContentTabsRealtor';
+
 import SignupClient from './components/Signup/SignupClient/Signup';
 import SignupRealtor from './components/Signup/SignupRealtor/Signup';
 import ConfirmEmailClient from './components/ConfirmEmail/ConfirmEmailClient/Confirmemail';
@@ -17,6 +10,20 @@ import ForgotPasswordClient from './components/ForgotPassword/ForgotPasswordClie
 import ForgotPasswordRealtor from './components/ForgotPassword/ForgotPasswordRealtor/Forgotpassword';
 import ConfirmCodeClient from './components/ForgotPassword/ForgotPasswordClient/Confrimcode';
 import ConfirmCodeRealtor from './components/ForgotPassword/ForgotPasswordRealtor/Confrimcode';
+
+// import Layout and Sidebar for client
+import ClientLayout from './components/GeneralGroupClient/ContentLayout'
+import HomeClient from './components/GeneralGroupClient/ContentPagesClient/Home/Home';
+import Explore from './components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
+import Bookings from './components/GeneralGroupClient/ContentPagesClient/Bookings/Bookings';
+import ClientProfile from './components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
+
+// import Layout and Sidebar Pages for Realtor
+import RealtorLayout from './components/GeneralGroupRealtor/ContentLayout';
+import HomeRealtor from './components/GeneralGroupRealtor/ContentPagesRealtor/Home/Home';
+import Upload from './components/GeneralGroupRealtor/ContentPagesRealtor/Upload/Upload';
+import Alert from './components/GeneralGroupRealtor/ContentPagesRealtor/Alert/Alert';
+import RealtorProfile from './components/GeneralGroupRealtor/ContentPagesRealtor/Profile/Profile';
 
 
 function App() {
@@ -27,10 +34,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Home/>} />
-          
-          <Route path="/clientcontent" element={<ContentClientTabs />} />
-
-          <Route path="/realtorcontent" element={<ContentRealtorTabs />} />
+      
 
           <Route path="/signupclient" element={<SignupClient />} />
 
@@ -46,6 +50,13 @@ function App() {
           <Route path="/confirmcodeclient" element={<ConfirmCodeClient />} />
 
           <Route path="/confirmcoderealtor" element={<ConfirmCodeRealtor />} />
+
+          {/* <Route path='/clientcontent' element={<ClientLayout/>} >
+            <Route path='home' element={<HomeClient />} />
+            <Route path='explore' element={<Explore />} />
+            <Route path='bookings' element={<Bookings />} />
+            <Route path='profile' element={<ClientProfile />} />
+          </Route> */}
 
         </Routes>
       </Router>
