@@ -97,7 +97,7 @@ const Header = () => {
             />
           </span>
 
-          <div className="hamburger" onClick={toggleMenu} aria-label="Toggle navigation menu" role="button" tabIndex="0">
+          <div className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Toggle navigation menu" role="button" tabIndex="0">
             <span className="line"></span>
             <span className="line"></span>
             <span className="line"></span>

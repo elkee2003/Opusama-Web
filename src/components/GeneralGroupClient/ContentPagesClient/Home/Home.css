@@ -1,0 +1,20 @@
+.tabs-container {
+    border-bottom: 1px solid #e0e0e0; /* Divider line below tabs */
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent tabs from wrapping to the next line */
+    display: flex; /* Ensure the tabs align in a row */
+    width: 100%; /* Make the tabs container fit the screen width */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+  
+.tab-panel {
+    padding: 16px; /* Padding for the tab content */
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none;
+}
+.tabs-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}

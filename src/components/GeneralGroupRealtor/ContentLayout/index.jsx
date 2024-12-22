@@ -2,6 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom"; 
 import ContentTabsRealtor from "../ContentTabsRealtor";
+import './ContentLayout.css';
 
 const Layout = () => {
   return (

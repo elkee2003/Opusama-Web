@@ -56,9 +56,9 @@ const Signin = () => {
             const { isSignedIn, nextStep } = await signIn({ username:email, password });
 
             if(activeUserType === 'client'){
-                navigate('/clientcontent')
+                navigate('/clientcontent/home')
             }else{
-                navigate('/realtorcontent')
+                navigate('/realtorcontent/home')
             };
         } catch (error) {
             setError(error.message || 'Something went wrong.');
