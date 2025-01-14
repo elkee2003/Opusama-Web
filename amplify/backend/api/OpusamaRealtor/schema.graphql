@@ -2,17 +2,24 @@ enum BookingStatus {
   PENDING
   ACCEPTED
   VIEWING
+  CHECKED_IN
+  VISITING
   VIEWED
+  CHECKED_OUT
+  VISITED
   SOLD
   PAID
   RECEIVED
   DENIED
+  REMOVED_CLIENT
+  REMOVED_REALTOR
 }
 
 type RealtorReview @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Float
   review: String
+  realtorID: ID! @index(name: "byRealtor")
   userID: ID! @index(name: "byUser")
 }
 
@@ -22,6 +29,7 @@ type PostReview @model @auth(rules: [{allow: public}]) {
   review: String
   postID: ID! @index(name: "byPost")
   userID: ID! @index(name: "byUser")
+  realtorID: String
 }
 
 type Booking @model @auth(rules: [{allow: public}]) {
@@ -79,6 +87,7 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
   push_token: String
   Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
+  RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
@@ -97,11 +106,13 @@ type Post @model @auth(rules: [{allow: public}]) {
   price: Float!
   cautionFee: Float
   totalPrice: Float!
+  inspectionFee: Float
+  timeFrame: String
   bed: String
   bedrooms: String
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   amenities: String
   policies: String
-  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   country: String!
   state: String
   city: String

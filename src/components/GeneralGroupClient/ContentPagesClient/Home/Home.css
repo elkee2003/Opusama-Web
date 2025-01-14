@@ -1,20 +1,52 @@
-.tabs-container {
-    border-bottom: 1px solid #e0e0e0; /* Divider line below tabs */
-    overflow-x: auto;
-    white-space: nowrap; /* Prevent tabs from wrapping to the next line */
-    display: flex; /* Ensure the tabs align in a row */
-    width: 100%; /* Make the tabs container fit the screen width */
-    box-sizing: border-box; /* Include padding and border in width calculation */
-}
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
   
-.tab-panel {
-    padding: 16px; /* Padding for the tab content */
-}
-
-.tabs-container::-webkit-scrollbar {
-    display: none;
-}
-.tabs-container {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-}
+  /* Header */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #0d0342;
+    font-weight: 600;
+    text-align: center;
+    flex: 1; /* Each tab takes equal space */
+  }
+  
+  .tab.active {
+    border-bottom: 2px solid #1da1f2;
+    color: #000000;
+  }
+  
+  /* Body Content */
+  .content {
+    padding: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      justify-content: space-around; /* Space tabs evenly on mobile */
+    }
+  
+    .tab {
+      font-size: 14px; /* Adjust font size for smaller screens */
+    }
+  
+    .content {
+      padding: 15px;
+    }
+  }
+  

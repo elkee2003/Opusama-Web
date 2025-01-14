@@ -33,7 +33,10 @@ const Signin = () => {
 
         if (loading) return;
 
-        const { email, password } = formData;
+        // const { email, password } = formData;
+
+        const email = formData.email.trim(); 
+        const password = formData.password;
         
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -97,16 +100,16 @@ const Signin = () => {
         {/* Buttons for selecting user type */}
         <div className="signin-switcher">
             <button
-            className={`switcher-button ${activeUserType === 'client' ? 'active' : ''}`}
-            onClick={() => setActiveUserType('client')}
+                className={`switcher-button ${activeUserType === 'client' ? 'active' : ''}`}
+                onClick={() => setActiveUserType('client')}
             >
-            Client
+                Client
             </button>
             <button
-            className={`switcher-button ${activeUserType === 'realtor' ? 'active' : ''}`}
-            onClick={() => setActiveUserType('realtor')}
+                className={`switcher-button ${activeUserType === 'realtor' ? 'active' : ''}`}
+                onClick={() => setActiveUserType('realtor')}
             >
-            Realtor
+                Realtor
             </button>
         </div>
 

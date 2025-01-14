@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
-
+import React, {useState} from 'react';
+import './styles.css';
+import Post from './Post'
 
 function HouseRent() {
   return (
     <div >
-      <h1>House Rent</h1>
+      <h3>Trying it out House Rent</h3>
     </div>
   )
 }

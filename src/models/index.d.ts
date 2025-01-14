@@ -6,11 +6,17 @@ export enum BookingStatus {
   PENDING = "PENDING",
   ACCEPTED = "ACCEPTED",
   VIEWING = "VIEWING",
+  CHECKED_IN = "CHECKED_IN",
+  VISITING = "VISITING",
   VIEWED = "VIEWED",
+  CHECKED_OUT = "CHECKED_OUT",
+  VISITED = "VISITED",
   SOLD = "SOLD",
   PAID = "PAID",
   RECEIVED = "RECEIVED",
-  DENIED = "DENIED"
+  DENIED = "DENIED",
+  REMOVED_CLIENT = "REMOVED_CLIENT",
+  REMOVED_REALTOR = "REMOVED_REALTOR"
 }
 
 
@@ -23,6 +29,7 @@ type EagerRealtorReview = {
   readonly id: string;
   readonly rating?: number | null;
   readonly review?: string | null;
+  readonly realtorID: string;
   readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -36,6 +43,7 @@ type LazyRealtorReview = {
   readonly id: string;
   readonly rating?: number | null;
   readonly review?: string | null;
+  readonly realtorID: string;
   readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -57,6 +65,7 @@ type EagerPostReview = {
   readonly review?: string | null;
   readonly postID: string;
   readonly userID: string;
+  readonly realtorID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -71,6 +80,7 @@ type LazyPostReview = {
   readonly review?: string | null;
   readonly postID: string;
   readonly userID: string;
+  readonly realtorID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -215,6 +225,7 @@ type EagerRealtor = {
   readonly Post?: (Post | null)[] | null;
   readonly push_token?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
+  readonly RealtorReview?: (RealtorReview | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -239,6 +250,7 @@ type LazyRealtor = {
   readonly Post: AsyncCollection<Post>;
   readonly push_token?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
+  readonly RealtorReview: AsyncCollection<RealtorReview>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -269,11 +281,13 @@ type EagerPost = {
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
+  readonly inspectionFee?: number | null;
+  readonly timeFrame?: string | null;
   readonly bed?: string | null;
   readonly bedrooms?: string | null;
+  readonly PostReviews?: (PostReview | null)[] | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;
-  readonly PostReviews?: (PostReview | null)[] | null;
   readonly country: string;
   readonly state?: string | null;
   readonly city?: string | null;
@@ -302,11 +316,13 @@ type LazyPost = {
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
+  readonly inspectionFee?: number | null;
+  readonly timeFrame?: string | null;
   readonly bed?: string | null;
   readonly bedrooms?: string | null;
+  readonly PostReviews: AsyncCollection<PostReview>;
   readonly amenities?: string | null;
   readonly policies?: string | null;
-  readonly PostReviews: AsyncCollection<PostReview>;
   readonly country: string;
   readonly state?: string | null;
   readonly city?: string | null;

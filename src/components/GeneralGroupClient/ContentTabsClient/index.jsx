@@ -9,7 +9,12 @@ function ContentTabsClient (){
         <>
             {/* Sidebar for larger screens */}
             <div className="sidebar">
-                <h2>Opusama</h2>
+                {/* <h2>Opusama</h2> */}
+                <img 
+                    src={'/opusama.png'}
+                    alt="logo" 
+                    width={150} 
+                />
                 <nav>
                     <ul>
                         <li>
