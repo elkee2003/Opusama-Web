@@ -1,99 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import './PostList.css';
+import PostFeed from '../Post/Post';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { DataStore } from 'aws-amplify';
-import { Realtor, Post } from '@/src/models';
-import PostFeed from '../PostFeed';
-import './PostList.css'; // Import the corresponding CSS file for styles
+import { DataStore } from 'aws-amplify/datastore'
+import {Realtor, Post} from '../../../../../../models'
 
-const PostList = () => {
-  const [realtorPosts, setRealtorPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+function PostList() {
+    const navigate = useNavigate();
+    const [realtorPosts, setRealtorPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
-  const fetchRealtorsAndPosts = async () => {
-    try {
-      setLoading(true);
+    // Alternative to for loop
+    const fetchRealtorsAndPosts = async () => {
+        try {
+        setLoading(true);
 
-      const realtors = await DataStore.query(Realtor);
+        // Step 1: Query all realtors
+        const realtors = await DataStore.query(Realtor);
 
-      const allPosts = await Promise.all(
-        realtors.map(async (realtor) => {
-          const posts = await DataStore.query(Post, (p) =>
-            p.and((p) => [
-              p.realtorID.eq(realtor.id),
-              p.available.eq(true),
-            ])
-          );
-          const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent');
+        // Step 2: Use map and Promise.all to fetch posts for each realtor in parallel
+        const allPosts = await Promise.all(
+            realtors.map(async (realtor) => {
+            // Query posts for each realtor
+            const posts = await DataStore.query(Post, (p) => p.and((p)=>[
+                p.realtorID.eq(realtor.id),
+                p.available.eq(true)
+            ]));
+            const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent');
 
-          return filteredPosts.map((post) => ({
-            ...post,
-            realtorId: realtor.id,
-            firstName: realtor.firstName,
-            lastName: realtor.lastName,
-            email: realtor.email,
-            profilepic: realtor.profilePic,
-            phoneNumber: realtor.phoneNumber,
-          }));
-        })
-      );
+            // Map the realtor details to each post
+            return filteredPosts.map((post) => ({
+                ...post,
+                realtorId: realtor.id,
+                firstName: realtor.firstName,
+                lastName: realtor.lastName,
+                email: realtor.email,
+                profilepic: realtor.profilePic,
+                phoneNumber: realtor.phoneNumber,
+            }));
+            })
+        );
 
-      const flatPosts = allPosts.flat().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setRealtorPosts(flatPosts);
-    } catch (error) {
-      console.error('Error fetching realtors and posts', error);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
+        // Flatten the array of arrays and sort posts by createdAt or updatedAt
+        const flatPosts = allPosts.flat().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  useEffect(() => {
-    fetchRealtorsAndPosts();
+        setRealtorPosts(flatPosts);
+        } catch (error) {
+        console.error('Error fetching realtors and posts', error);
+        } finally {
+        setLoading(false);
+        setRefreshing(false);
+        }
+    };
 
-    const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
-      if (opType === 'UPDATE') {
+    useEffect(()=>{
         fetchRealtorsAndPosts();
-      }
-    });
 
-    return () => subscription.unsubscribe();
-  }, []);
+        const subscription = DataStore.observe(Post).subscribe(({opType})=>{
+        if(opType === "UPDATE"){
+            fetchRealtorsAndPosts();
+        }
+        });
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    fetchRealtorsAndPosts();
-  };
+        return () => subscription.unsubscribe();
+    },[])
+
+    const handleRefresh = () => {
+        setRefreshing(true); // Start the refreshing spinner
+        fetchRealtorsAndPosts();
+    };
 
   return (
-    <div className="post-list-container">
-        <button 
-            className="search-bar"
-            onClick={()=> navigate("/search/housesearch")}
-        >
-            <i className="fa fa-search" aria-hidden="true"></i>
-            <span className="search-btn-text">Search for Houses</span>
-        </button>
+    <div className='container' >
+
+        {/* Search Bar */}
+        <div>
+            <button 
+                className="searchBtn"
+                onClick={()=>navigate('/searchhouse')}
+            >
+                <FontAwesomeIcon icon={faSearch} size="lg" />
+                <span className="searchBtnTxt">Search for Houses</span>
+            </button>
+        </div>
 
         {realtorPosts && realtorPosts.length > 0 ? (
-            <div className="post-list">
-            {realtorPosts.map((post) => (
-                <PostFeed key={post.id} post={post} />
-            ))}
+            <div>
+                {realtorPosts.map((post) => (
+                    <PostFeed key={post.id} post={post} />
+                ))}
             </div>
         ) : (
-            <p className="no-listings">No House listings</p>
+            <p className="noListings">No House listings</p>
         )}
-
-        <button
-            className="refresh-btn"
-            onClick={handleRefresh}
-            disabled={refreshing || loading}
-        >
-            {refreshing ? 'Refreshing...' : 'Refresh'}
-        </button>
+        {refreshing && (
+            <div className="loading-container">
+                <div className="spinner" />
+                <h2>Loading...</h2>
+            </div>
+        )}
     </div>
-  );
-};
+  )
+}
 
 export default PostList;

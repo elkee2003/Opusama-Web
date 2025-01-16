@@ -7,7 +7,7 @@ import PropertySale from './PropertySaleComponent';
 import OfficeSpace from './OfficeSpaceComponent';
 
 function Tabs() {
-  const [activeTab, setActiveTab] = useState('Home');
+  const [activeTab, setActiveTab] = useState('House (Rent)');
 
   const tabs = ['House (Rent)', 'Hotel / Shortlet', 'Property Sale', 'Student Accommodation', 'Office Space' ];
 

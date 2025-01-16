@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useContext, createContext} from 'react';
 import {useAuthContext} from './AuthProvider';
 
-const BookingContext = createContext({})
+const BookingShowingContext = createContext({})
 
-const BookingContextProvider = ({children}) => {
+const BookingShowingContextProvider = ({children}) => {
 
+    // Booking Hotel/Shortlet
     const [bookings, setBookings] = useState('');
     const [adults, setAdults] = useState(0);
     const [kids, setKids] = useState(0);
@@ -17,7 +18,7 @@ const BookingContextProvider = ({children}) => {
     const [propertyType, setPropertyType] = useState('');
     const [nameOfType, setNameOfType] = useState('');
     const [accommodationType, setAccommodationType] = useState('');
-    const [purpose, setPurpose] = useState('');
+    const [note, setNote] = useState('');
     const [bookingLat, setBookingLat] = useState(0);
     const [bookingLng, setBookingLng] = useState(0);
     const [realtorContext, setRealtorContext] = useState(null);
@@ -32,8 +33,9 @@ const BookingContextProvider = ({children}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const {dbUser} = useAuthContext();
 
-        const validateInput = () => {
-            setErrorMessage(''); // Clear previous errors
+        // Hotel Validation
+        const validateHotelInput = () => {
+            setErrorMessage(''); 
 
             if (adults === 0 && kids === 0 && infants === 0) {
                 setErrorMessage('Please add the number of guests');
@@ -58,8 +60,38 @@ const BookingContextProvider = ({children}) => {
             return true;
         };
 
-        const onValidateInput = () =>{
-            if(validateInput()){
+        const onValidateHotelInput = () =>{
+            if(validateHotelInput()){
+            return true;
+            }else {
+            return false;
+            }
+        }
+
+        // Property Validation
+        const validatePropertyInput = () => {
+            setErrorMessage(''); 
+        
+            if (!guestFirstName) {
+                setErrorMessage('First Name is Required');
+                return false;
+            }
+        
+            if (!guestLastName) {
+                setErrorMessage('Last Name is Required');
+                return false;
+            }
+        
+            if (guestPhoneNumber.length < 10) {
+                setErrorMessage('Phone Number must be at least 10 digits');
+                return false;
+            }
+        
+            return true;
+        };
+
+        const onValidatePropertyInput = () =>{
+            if(validatePropertyInput()){
             return true;
             }else {
             return false;
@@ -76,12 +108,12 @@ const BookingContextProvider = ({children}) => {
 
 
   return (
-    <BookingContext.Provider value={{bookings, setBookings, adults, setAdults, kids, setKids, infants, setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, purpose, setPurpose, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice}}>
+    <BookingShowingContext.Provider value={{bookings, setBookings, adults, setAdults, kids, setKids, infants, setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice}}>
         {children}
-    </BookingContext.Provider>
+    </BookingShowingContext.Provider>
   )
 }
 
-export default BookingContextProvider;
+export default BookingShowingContextProvider;
 
-export const useBookingContext = () => useContext(BookingContext)
+export const useBookingShowingContext = () => useContext(BookingShowingContext)
