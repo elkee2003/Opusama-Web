@@ -7,6 +7,8 @@ import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/E
 import Bookings from '../../../components/GeneralGroupClient/ContentPagesClient/Bookings/Bookings';
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
+import UserReviews from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/UsersReviews';
+import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
 
 const ClientRoutes = () => (
     <Routes>
@@ -16,6 +18,8 @@ const ClientRoutes = () => (
             <Route path="bookings" element={<Bookings />} />
             <Route path="profile" element={<ClientProfile />} />
             <Route path="detailedpost/:postId" element={<DetailedPost />} />
+            <Route path="reviews/:postId" element={<UserReviews />} />
+            <Route path="gallery/:postId" element={<PostGallery />} />
         </Route>
     </Routes>
 );

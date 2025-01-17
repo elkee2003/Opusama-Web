@@ -19,7 +19,6 @@ const AuthProvider = ({ children }) => {
   const [sub, setSub] = useState(null);
   const [userMail, setUserMail] = useState(null);
 
-  console.log('Current Sub:', sub, 'Database User:', dbUser, 'Database Realtor:', dbRealtor);
 
   // Fetch the currently authenticated user
   const currentAuthenticatedUser = async () =>{

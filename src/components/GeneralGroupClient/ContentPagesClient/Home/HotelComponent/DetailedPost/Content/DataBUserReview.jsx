@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faRegStar } from '@fortawesome/free-solid-svg-icons';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { PostReview, Booking } from '../../../../../../../models';
@@ -127,21 +126,21 @@ const ReviewSection = ({ post, dbUser }) => {
       {canReview && (
         <div>
           {/* dbUser Rating */}
-          <div className="rate-container">
-            <p className="rate-text">Rate</p>
-            <div className="star-container">
+          <div className="rateContainer">
+            <p className="rateTxt">Rate</p>
+            <div className="starContainer">
               {[1, 2, 3, 4, 5].map((index) => (
                 <button key={index} onClick={() => handleRating(index)}>
-                  <FontAwesomeIcon
-                    icon={index <= userRating ? faStar : faRegStar}
-                    size="2x"
-                    color="#07021f"
-                  />
+                  {index <= userRating ? (
+                    <FaStar color="#07021f" size={24} />
+                  ) : (
+                    <FaRegStar color="#07021f" size={24} />
+                  )}
                 </button>
               ))}
             </div>
             <textarea
-              className="review-input"
+              className="reviewInput"
               value={review}
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write Review"
@@ -150,11 +149,11 @@ const ReviewSection = ({ post, dbUser }) => {
           </div>
 
           <button
-            className="submit-review-btn"
+            className="submitReviewBtn"
             onClick={saveReview}
             disabled={loading}
           >
-            <span className="submit-review-text">
+            <span className="submitReviewText">
               {loading ? "Submitting..." : "Submit Review"}
             </span>
           </button>

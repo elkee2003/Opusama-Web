@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './styles.css';
-
+import HPostList from './PostList/PostList';
 
 function Hotel() {
   return (
     <div >
-      <h1>Hotel</h1>
+      <HPostList/>
     </div>
   )
 }
