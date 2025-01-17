@@ -1,0 +1,121 @@
+/* General container for the gallery */
+.galleryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa; /* Light background */
+    padding: 10px;
+    box-sizing: border-box;
+}
+  
+/* Back button container */
+.backIconContainer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+  
+.backIconContainer:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
+}
+  
+/* Swiper container styling */
+.swiper {
+    width: 100%;
+    max-width: 900px; /* Set a max width for larger screens */
+    height: 90vh; /* Set height for the swiper */
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #000; /* Black background for contrast */
+}
+  
+/* Swiper slide styling */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #f00404;
+}
+  
+/* Gallery image styling */
+.galleryImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    border-radius: 5px;
+    display: flex;
+    background-color: #000000; /* Light grey background for loading/fallback */
+}
+  
+/* Pagination styling */
+.swiper-pagination-bullet {
+    background: #fff !important;
+    opacity: 0.7;
+}
+  
+.swiper-pagination-bullet-active {
+    background: #00ec00 !important; /* Active bullet color */
+    opacity: 1 !important;;
+}
+  
+/* Navigation buttons */
+.swiper-button-prev,
+.swiper-button-next {
+    color: #fff !important;;
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent buttons */
+    padding: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+  
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
+}
+  
+/* Loading message styling */
+.galleryContainer p {
+    font-size: 16px;
+    color: #6c757d; /* Subtle grey text */
+    margin-top: 20px;
+}
+  
+/* Responsive styling */
+@media (max-width: 1200px) {
+    .swiper {
+      height: 80vh; /* Adjust swiper height for smaller screens */
+      width: 70vw;
+    }
+}
+@media (max-width: 768px) {
+    .swiper {
+      height: 80vh; /* Adjust swiper height for smaller screens */
+      width: 85vw;
+    }
+}
+  
+@media (max-width: 480px) {
+    .swiper {
+      height: 85vh; /* Further reduce swiper height for mobile */
+      width: 85vw;
+    }
+  
+    .backIconContainer {
+      padding: 8px; /* Reduce padding for smaller screens */
+    }
+}

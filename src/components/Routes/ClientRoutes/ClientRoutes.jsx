@@ -9,6 +9,10 @@ import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesCl
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
 import UserReviews from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/UsersReviews';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
+import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
+
+// HotelDetailedPost Import
+import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
 
 const ClientRoutes = () => (
     <Routes>
@@ -20,6 +24,10 @@ const ClientRoutes = () => (
             <Route path="detailedpost/:postId" element={<DetailedPost />} />
             <Route path="reviews/:postId" element={<UserReviews />} />
             <Route path="gallery/:postId" element={<PostGallery />} />
+            <Route path="clientdetails/:postId" element={<ClientInfo/>} />
+
+            {/* Hotel Route */}
+            <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
         </Route>
     </Routes>
 );

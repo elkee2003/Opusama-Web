@@ -16,21 +16,6 @@ const Gallery = ({ media }) => {
   const navigate = useNavigate();
 
   const fetchMediaUrls = async () => {
-    // try {
-    //   const result = await getUrl({
-    //     path: media,
-    //     options: {
-    //       validateObjectExistence: true, 
-    //       expiresIn: null, // No expiration limit
-    //     },
-    //   });
-
-    //   if (result.url) {
-    //     setMediaUri(result.url.toString());
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching media URL:', error);
-    // }
     try {
       const urls = await Promise.all(
         media.map(async (item) => {

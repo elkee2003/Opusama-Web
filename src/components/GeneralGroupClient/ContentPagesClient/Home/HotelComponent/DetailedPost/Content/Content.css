@@ -1,4 +1,4 @@
-.hotelContainer {
+.contentContainer {
     display: flex;
     flex-direction: column;
     width: 95%;
@@ -302,13 +302,17 @@ button {
 }
 
 .reviewerName {
+    text-align: start;
     font-weight: bold;
     font-size: 17px;
+    margin-bottom: 5px;
 }
 
 .reviewText {
+    text-align: start !important;
     color: #0e0d0d;
     font-size: 15px;
+    margin-top: 5px;
     margin-bottom: 10px;
 }
 
@@ -321,15 +325,15 @@ button {
 }
 
 .bookContainer {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     right: 10px;
-    left: 10px;
+    left: 18rem;
     height: 60px;
-    bottom: 20px;
-    background-color: #19ad25;
+    bottom: 0.7rem;
+    background-color: #1eda0d;
     border-radius: 30px;
 }
 
@@ -340,17 +344,29 @@ button {
 }
 
 @media (max-width: 900px) {
-    .container{
+    .contentContainer{
         width: 90%;
+    }
+    .bookContainer {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 20px;
+        left: 20px;
+        height: 60px;
+        bottom: 5rem;
+        background-color: #1eda0d;
+        border-radius: 30px;
     }
 }
 @media (max-width: 700px) {
-    .container{
+    .contentContainer{
         width: 95%;
     }
 }
 @media (max-width: 600px) {
-    .container{
+    .contentContainer{
         width: 95%;
     }
 }

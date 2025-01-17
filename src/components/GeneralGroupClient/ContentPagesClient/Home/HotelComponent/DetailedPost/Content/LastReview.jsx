@@ -86,7 +86,7 @@ const LastReview = ({ post, dbUser }) => {
         <div className="lastReviewsContainer">
           {usersReviews.map((item) => (
             <div key={item?.id}>
-              <span className="reviewerName">{item?.userName}</span>
+              <h4 className="reviewerName">{item?.userName}</h4>
               <div className="usersStarContainer">
                 {[1, 2, 3, 4, 5].map((index) => (
                   // Use FaStar for filled stars and FaRegStar for empty stars

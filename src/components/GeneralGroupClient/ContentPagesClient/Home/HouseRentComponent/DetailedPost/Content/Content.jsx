@@ -78,7 +78,7 @@ function Content({post, realtor,}) {
 
     // Navigate function
     const handleNavigate = () => {
-      navigate(authUser ? "/realtor/houserealtor/clientinfo" : "/");
+      navigate(authUser ? `/clientcontent/clientdetails/${post.id}`: "/");
     };
 
     // useEffect for realtime update
@@ -97,7 +97,7 @@ function Content({post, realtor,}) {
     },[post.id])
 
   return (
-    <div className='container'>
+    <div className='contentContainer'>
         <button 
           className='bckContainer' 
           onClick={() => navigate(-1)}

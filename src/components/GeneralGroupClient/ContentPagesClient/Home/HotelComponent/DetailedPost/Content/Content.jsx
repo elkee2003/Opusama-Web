@@ -78,7 +78,7 @@ function Content({post, realtor,}) {
 
     // Navigate function
     const handleNavigate = () => {
-      navigate(authUser ? "/realtor/houserealtor/clientinfo" : "/");
+      navigate(authUser ? `/clientcontent/clientdetails/${post.id}` : "/");
     };
 
     // useEffect for realtime update
@@ -97,7 +97,7 @@ function Content({post, realtor,}) {
     },[post.id])
 
   return (
-    <div className='hotelContainer'>
+    <div className='contentContainer'>
         <button 
           className='bckContainer' 
           onClick={() => navigate(-1)}
@@ -241,7 +241,7 @@ function Content({post, realtor,}) {
 
         {/* Pricing */}
         <div className='priceRoww'>
-          <p className='sub'>Price:</p>
+          <p className='sub'>Rent:</p>
           <p className='price'>
             ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
           </p>
@@ -325,7 +325,10 @@ function Content({post, realtor,}) {
         </button>
 
         {/* Get In Touch Container */}
-        <button className='bookContainer' onClick={handleNavigate}>
+        <button 
+          className='bookContainer' 
+          onClick={handleNavigate}
+        >
             <p className='bookTxt'>Book</p>
         </button>
 

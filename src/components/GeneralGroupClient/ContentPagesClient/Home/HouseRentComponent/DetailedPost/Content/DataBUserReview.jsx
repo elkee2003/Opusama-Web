@@ -18,7 +18,7 @@ const ReviewSection = ({ post, dbUser }) => {
   // Save or update review of dbUser
   const saveReview = async () => {
     if (!review || userRating === 0) {
-      alert("Incomplete", "Please provide a rating and review.");
+      alert("Incomplete, Please provide a rating and review.");
       return;
     }
 
@@ -153,7 +153,7 @@ const ReviewSection = ({ post, dbUser }) => {
             onClick={saveReview}
             disabled={loading}
           >
-            <span className="submitReviewText">
+            <span className="submitReviewTxt">
               {loading ? "Submitting..." : "Submit Review"}
             </span>
           </button>

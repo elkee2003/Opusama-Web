@@ -5,12 +5,12 @@ import { DataStore } from "aws-amplify/datastore";
 import {Post, Realtor} from '../../../../../../models';
 import Content from './Content/Content';
 import {useProfileContext} from '../../../../../../../Providers/ClientProvider/ProfileProvider';
-import {useBookingContext} from '../../../../../../../Providers/ClientProvider/BookingProvider';
+import {useShowingContext} from '../../../../../../../Providers/ClientProvider/ShowingProvider';
 
 function DetailedPost() {
     const { postId } = useParams();
     const {setPostData} = useProfileContext();
-    const {setRealtorContext, setPropertyDetails} = useBookingContext();
+    const {setRealtorContext, setPropertyDetails} = useShowingContext();
     const [post, setPost] = useState(null);
     const [realtor, setRealtor] = useState(null);  
     const [loading, setLoading] = useState(true);

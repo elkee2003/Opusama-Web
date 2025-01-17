@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { PostReview, User } from '../../../../../../../models';
+import { useParams} from "react-router-dom";
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import './Content.css'; 
 
-const UserReviews = ({ post, dbUser }) => {
+const UserReviews = () => {
+  const { postId } = useParams();
   const [usersReviews, setUsersReviews] = useState([]);
   const [users, setUsers] = useState([]);
 
   // Fetch all reviews
   const fetchReviews = async () => {
     try {
-      const fetchedReviews = await DataStore.query(PostReview, (c) => c.postID.eq(post?.id));
+      const fetchedReviews = await DataStore.query(PostReview, (c) => c.postID.eq(postId));
 
       // Sort reviews by createdAt in ascending order (oldest first)
       const sortedReviews = fetchedReviews.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -54,10 +56,10 @@ const UserReviews = ({ post, dbUser }) => {
 
   // useEffect for realtime update
   useEffect(() => {
-    if (!post) return;
+    if (!postId) return;
 
     const subscription = DataStore.observe(PostReview).subscribe(({ opType, element }) => {
-      if (element.postID === post?.id) {
+      if (element.postID === postId) {
         if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
           fetchReviews();
           fetchUsers();
@@ -66,7 +68,7 @@ const UserReviews = ({ post, dbUser }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [post?.id]);
+  }, [postId]);
 
   return (
     <div className="reviewsContainer">

@@ -74,7 +74,7 @@ function PostList() {
     };
 
   return (
-    <div className='hContainer' >
+    <div className='container' >
 
         {/* Search Bar */}
         <div>
