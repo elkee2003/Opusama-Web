@@ -324,17 +324,18 @@ button {
     text-align: center;
 }
 
-.getinTouchContainer {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    right: 10px;
-    left: 18rem;
-    height: 60px;
-    bottom: 0.7rem;
-    background-color: #020425;
-    border-radius: 30px;
+.getinTouchContainer  {
+  position: fixed;
+  background-color: #020425;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  left: 680px;
+  right: 380px;
+  margin-top: 20px;
+  bottom: 0.7rem;
+  border-radius: 20px;
 }
 
 .getInTouchTxt {
@@ -343,21 +344,25 @@ button {
     font-weight: bold;
 }
 
+@media (max-width: 1300px) {
+  .getinTouchContainer {
+    left: 480px;
+    right: 180px;
+  }
+}
+
 @media (max-width: 900px) {
     .contentContainer{
         width: 90%;
     }
+
     .getinTouchContainer {
         position: fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        right: 20px;
-        left: 20px;
-        height: 60px;
-        bottom: 5rem;
-        background-color: #020425;
-        border-radius: 30px;
+        padding: 2px;
+        right: 160px;
+        left: 160px;
+        margin-top: 20px;
+        margin-bottom: 5rem;
     }
 }
 @media (max-width: 700px) {
@@ -369,4 +374,11 @@ button {
     .contentContainer{
         width: 95%;
     }
+}
+
+@media (max-width: 500px) {
+  .getinTouchContainer {
+    right: 100px;
+    left: 100px;
+  }
 }

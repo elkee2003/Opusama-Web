@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { DataStore } from "aws-amplify/datastore";
 import { Booking } from "../../../../../../../../models";
 import "./ReviewShowing.css"; 
@@ -149,6 +151,19 @@ const ReviewClientDetails = () => {
   return (
     <div className="reviewContainer">
       <h1 className="header">Review Info</h1>
+
+      {/* Backbutton */}
+      <button 
+        className='detailBkContainer' 
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon 
+          icon={faArrowLeft}
+          className='detailBckIcon' 
+          size="2x"
+        />
+      </button>
+
       <div className="scrollContainer">
         <div className="guestUnit">
           {adults > 0 && (

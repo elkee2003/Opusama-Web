@@ -6,6 +6,8 @@ import HomeClient from '../../../components/GeneralGroupClient/ContentPagesClien
 import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
 import Bookings from '../../../components/GeneralGroupClient/ContentPagesClient/Bookings/Bookings';
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
+import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
+import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
 import UserReviews from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/UsersReviews';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
@@ -19,10 +21,23 @@ import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/
 const ClientRoutes = () => (
     <Routes>
         <Route path="/" element={<ClientLayout />}>
+            {/* Home */}
             <Route path="home" element={<HomeClient />} />
+
+            {/* Explore */}
             <Route path="explore" element={<Explore />} />
+
+            {/* Bookings */}
             <Route path="bookings" element={<Bookings />} />
+
+            {/* Profile */}
             <Route path="profile" element={<ClientProfile />} />
+
+            {/* Edit Profile */}
+            <Route path="editprofile" element={<EditProfile />} />
+
+            {/* Review Edit */}
+            <Route path="reviewedit" element={<ReviewClientProfile />} />
             <Route path="detailedpost/:postId" element={<DetailedPost />} />
             <Route path="reviews/:postId" element={<UserReviews />} />
             <Route path="gallery/:postId" element={<PostGallery />} />

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -12,6 +12,17 @@
     font-size: 30px;
     font-weight: bold;
     text-align: center;
+}
+
+.detailBkContainer {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+.detailBckIcon {
+    font-size: 30px;
+    color: black;
 }
 
 .card {

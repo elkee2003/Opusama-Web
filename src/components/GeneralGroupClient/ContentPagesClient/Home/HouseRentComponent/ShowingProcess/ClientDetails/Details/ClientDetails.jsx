@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './ClientDetails.css'; // Assuming you're using CSS modules
+import './ClientDetails.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useBookingShowingContext } from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,6 +44,18 @@ const ClientDetails = ({ post }) => {
       <h1 className='header'>
         {post?.propertyType === 'Hotel / Shortlet' ? 'Guest Details' : 'Client Details'}
       </h1>
+
+      {/* Backbutton */}
+      <button 
+        className='detailBkContainer' 
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon 
+          icon={faArrowLeft}
+          className='detailBckIcon' 
+          size="2x"
+        />
+      </button>
 
       <div className='scrollContainer'>
         {post?.propertyType === 'Hotel / Shortlet' && (
