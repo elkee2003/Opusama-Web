@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import ExplorePostList from './ExplorePostList/PostList';
 
 function Explore() {
   return (
     <div >
-      <h1>Explore</h1>
+      <ExplorePostList/>
     </div>
   )
 }

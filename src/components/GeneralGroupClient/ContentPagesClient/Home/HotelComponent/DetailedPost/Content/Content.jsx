@@ -8,6 +8,7 @@ import DbUserReviewSection from './DataBUserReview'
 import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
 import {useAuthContext} from '../../../../../../../../Providers/ClientProvider/AuthProvider';
+import {useBookingShowingContext} from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { getUrl } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
@@ -15,6 +16,9 @@ import {PostReview} from '../../../../../../../models';
 
 function Content({post, realtor,}) {
     const navigate = useNavigate();
+
+    const {setPostPrice, setPostCautionFee, setPostTotalPrice} = useBookingShowingContext();
+
     const {dbUser, authUser} = useAuthContext();
     const {setRealtorID} = useProfileContext();
     const [readMore, setReadMore] = useState(false);
@@ -75,6 +79,13 @@ function Content({post, realtor,}) {
 
       calculateAverageRating();
     }, [post.id]);
+
+    // Run this effect when these values change
+    useEffect(() => {
+      setPostTotalPrice(post?.totalPrice);
+      setPostPrice(post?.price);
+      setPostCautionFee(post?.cautionFee);
+    }, [formattedTotalPrice, realtor.id]);
 
     // Navigate function
     const handleNavigate = () => {

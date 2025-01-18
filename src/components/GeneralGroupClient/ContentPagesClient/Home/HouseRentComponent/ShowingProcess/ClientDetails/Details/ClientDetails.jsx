@@ -28,11 +28,11 @@ const ClientDetails = ({ post }) => {
   const handleProceedToBooking = () => {
     if (post?.propertyType === 'Hotel / Shortlet') {
       if (onValidateHotelInput()) {
-        navigate(`/explore/bookinginfo/${post.id}`);
+        navigate(`/clientcontent/bookingdetails`);
       }
     } else {
       if (onValidatePropertyInput()) {
-        navigate(`/explore/reviewclientinfo`);
+        navigate(`/clientcontent/reviewinfo`);
       }
     }
   };
@@ -136,7 +136,10 @@ const ClientDetails = ({ post }) => {
           />
         </div>
       </div>
-      <p className='error'>{errorMessage}</p>
+      <p className='error'>
+        {errorMessage}
+      </p>
+
       <button 
         className='nxtBtn' 
         style={{

@@ -1,0 +1,128 @@
+.bookingContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-inline: 10px;
+  /* align-items: center;
+  justify-content: center; */
+  
+}
+
+.bookingHeader {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calendar {
+  margin-top: 25px;
+  width: 90%; /* Increase width */
+  max-width: 600px;
+}
+
+.react-datepicker__day--selected {
+  background-color: #ff3300 !important; 
+  color: white !important; 
+  border-radius: 50%;
+}
+
+.react-datepicker__day--in-range {
+  background-color: #07da11 !important; 
+  color: #141414 !important; 
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--in-range:hover {
+  background-color: #74b300 !important; 
+  color: white !important;
+}
+
+
+.selectedDates {
+  font-size: 17px;
+  font-weight: bold;
+  gap: 5px;
+  margin-block: 10px;
+}
+
+.range {
+  font-size: 17px;
+}
+
+.rangeBold {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.selectCheck {
+  font-size: 16px;
+  font-style: italic;
+  color: grey;
+}
+
+.priceLabel {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.priceValue {
+  font-size: 18px;
+  text-decoration: underline;
+  margin-bottom: 2rem;
+}
+
+.bookingNxtBtn {
+  position: fixed;
+  background-color: #23a508;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  left: 680px;
+  right: 380px;
+  margin-top: 20px;
+  bottom: 0.7rem;
+  border-radius: 20px;
+}
+
+.bookingNxtIcon {
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+}
+@media (max-width: 1200px) {
+  .bookingNxtBtn {
+    left: 480px;
+    right: 180px;
+  }
+}
+@media (max-width: 900px) {
+  .bookingNxtBtn {
+      position: fixed;
+      background-color: #23a508;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
+      right: 220px;
+      left: 220px;
+      margin-top: 20px;
+      margin-bottom: 5rem;
+      border-radius: 20px;
+  }
+  .priceValue {
+    margin-bottom: 5rem;
+  }
+}
+@media (max-width: 500px) {
+  .bookingHeader {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .bookingNxtBtn {
+    right: 120px;
+    left: 120px;
+  }
+}

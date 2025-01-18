@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import './styles.css';
+import PostList from './PostList/PostList';
 
 
 function StudentAccommodation() {
   return (
     <div >
-      <h1>Student Accommodation</h1>
+      <PostList/>
     </div>
   )
 }
