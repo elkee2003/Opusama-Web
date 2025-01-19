@@ -90,7 +90,12 @@ function Content({post, realtor,}) {
 
     // Navigate function
     const handleNavigate = () => {
-      navigate(authUser ? `/clientcontent/clientdetails/${post.id}`: "/");
+      if(authUser){
+        navigate(`/clientcontent/clientdetails/${post.id}`);
+      }else{
+        alert('Sign In to access')
+        navigate('/')
+      }
     };
 
     // useEffect for realtime update

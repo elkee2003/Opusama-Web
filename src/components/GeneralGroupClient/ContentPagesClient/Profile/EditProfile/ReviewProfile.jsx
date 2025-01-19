@@ -162,7 +162,7 @@ const ReviewDetails = () => {
   };
 
   return (
-    <div className='reviewContainer'>
+    <div className='reviewProContainer'>
       <h1 className='title'>Review Profile</h1>
 
       <button onClick={() => window.history.back()} className='bckBtnCon'>

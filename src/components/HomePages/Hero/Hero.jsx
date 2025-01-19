@@ -1,4 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import "./Hero.css";
 
 // Custom hook to check screen width
@@ -18,6 +21,8 @@ const useMediaQuery = (query) => {
 }
 
 const Hero = () => {
+
+    const navigate = useNavigate();
 
     const [currentImage, setCurrentImage] = useState(0);
 
@@ -98,6 +103,25 @@ const Hero = () => {
             
             <button className="hero-button" onClick={navigateToSignIn}>
                 Sign In
+            </button>
+        </div>
+
+        {/* Search */}
+        <div>
+            <button 
+                className="heroSearchBtn"
+                onClick={()=>navigate('/clientcontent/home')}
+            >
+                <FontAwesomeIcon
+                    icon={faSearch}
+                    size="lg" 
+                    className='searchIcon'
+                />
+
+                <p className="heroSearchBtnTxt">
+                    {/* Property, Gym, Park... */}
+                    Search for properties...
+                </p>
             </button>
         </div>
     </div>

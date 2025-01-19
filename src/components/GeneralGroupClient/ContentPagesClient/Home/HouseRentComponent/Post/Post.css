@@ -11,6 +11,7 @@
   border-radius: 20px;
   overflow: hidden;
   background-color: #15141a;
+  cursor: pointer;
 }
 
 .image {

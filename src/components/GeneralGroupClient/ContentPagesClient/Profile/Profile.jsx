@@ -1,14 +1,19 @@
 import React from 'react';
 import './Profile.css';
+import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 import EditProfile from './EditProfile/index';
-import { useNavigate } from 'react-router-dom';
-
+import MainProfile from './MainProfile/MainProfile';
 
 function Profile() {
-  const navigate = useNavigate();
+  const {dbUser} = useAuthContext();
+
   return (
     <div >
-      <EditProfile/>
+      {dbUser ?
+        <MainProfile/>
+      :
+        <EditProfile/>
+      }
     </div>
   )
 }

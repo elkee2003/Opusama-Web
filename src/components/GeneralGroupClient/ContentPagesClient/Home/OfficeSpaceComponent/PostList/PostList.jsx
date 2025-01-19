@@ -102,6 +102,11 @@ function PostList() {
                 <h2>Loading...</h2>
             </div>
         )}
+
+        {/* Refresh Button */}
+        <button onClick={handleRefresh} className='refreshButton'>
+            {refreshing ? "Refreshing..." : "Refresh"}
+        </button>
     </div>
   )
 }

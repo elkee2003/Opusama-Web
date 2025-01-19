@@ -68,7 +68,7 @@ function PostList() {
         return () => subscription.unsubscribe();
     },[])
 
-    const handleRefresh = () => {
+    const handleRefreshHouse = () => {
         setRefreshing(true); // Start the refreshing spinner
         fetchRealtorsAndPosts();
     };
@@ -102,6 +102,9 @@ function PostList() {
                 <h2>Loading...</h2>
             </div>
         )}
+        <button onClick={handleRefreshHouse} className='refreshButton'>
+            {refreshing ? "Refreshing..." : "Refresh"}
+        </button>
     </div>
   )
 }

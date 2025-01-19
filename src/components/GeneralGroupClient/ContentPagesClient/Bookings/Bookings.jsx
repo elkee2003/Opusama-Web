@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import BookingList from './BookingList/BookingList';
 
 function Bookings() {
   return (
     <div >
-      <h1>Bookings</h1>
+      <BookingList/>
     </div>
   )
 }

@@ -2,16 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
   margin-left: 10px;
   margin-right: 10px;
+  margin-bottom: 90px;
 }
-.reviewContainer {
+.reviewProContainer {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   margin-left: 10px;
   margin-right: 10px;
 }
+
 
 .title {
   font-size: 30px;
@@ -35,7 +38,21 @@
   position: relative;
 }
 
+.profilePicContainerEdit {
+  position: relative;
+  justify-self: center;
+  height: 150px;
+  width: 150px;
+  border-radius: 75px;
+  background-color: #d6d6d6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .profilePicContainer {
+  position: relative;
   justify-self: center;
   height: 150px;
   width: 150px;
@@ -90,7 +107,8 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: white;
-  padding: 15px;
+  padding: 10px;
+  border: 2px solid rgb(3, 3, 48);
   border-radius: 5px;
 }
 
@@ -182,31 +200,46 @@
 }
 
 /* Empty items for users not signed in */
+.emptyProfileCon {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin-bottom: 30px; */
+}
+
 .emptyInputCon {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .emptyInput {
+  min-width: 350px;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: rgb(179, 179, 179);
   padding: 25px;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .emptyBtnCon {
   background-color: #0c052e;
+  min-width: 140px;
   margin-top: 10px;
   padding: 10px;
   margin-left: 80px;
   margin-right: 80px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   text-align: center;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 .emptyBtnTxt {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   color: #e9e6e6;
 }

@@ -72,13 +72,13 @@ const EditProfile = () => {
     if (authUser) {
       onSignout(); // Call the sign-out function if the user is authenticated
     } else {
-      onSignIn();
+      navigate('/');
     }
   };
 
   if (!authUser) {
     return (
-      <div className="profileContainer">
+      <div className="emptyProfileCon">
         <h1 className="title">Sign In</h1>
         {/* Sign In */}
         <button className="signoutBtn" onClick={handleAuthAction}>
@@ -98,9 +98,9 @@ const EditProfile = () => {
         </div>
         <button
           className="emptyBtnCon"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate('/')}
         >
-          Sign In
+          <p className="emptyBtnTxt">Sign In</p>
         </button>
       </div>
     );
@@ -113,7 +113,7 @@ const EditProfile = () => {
           <h1 className="title">Edit Profile</h1>
 
           {/* Upload Profile Picture */}
-          <div className="profilePicContainer">
+          <div className="profilePicContainerEdit">
             {profilePic && <img src={profilePic} alt="Profile" className="img" />}
             <div className="plusIconContainer">
               <input
@@ -150,33 +150,37 @@ const EditProfile = () => {
           </button>
 
           <div className="formContainer">
-            <input
+            
+            <textarea
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name / Company name"
               className="profileInput"
+              // rows={2} 
             />
 
-            <input
+            <textarea
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Surname (Optional)"
               className="profileInput"
+              // rows={2} 
             />
 
-            <input
+            <textarea
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Phone Number"
               className="profileInput"
-              type="tel"
+              // rows={2} 
             />
 
-            <input
+            <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Input Address"
               className="profileInput"
+              // rows={2} 
             />
           </div>
 
