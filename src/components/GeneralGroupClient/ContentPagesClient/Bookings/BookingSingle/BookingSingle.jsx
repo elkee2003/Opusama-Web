@@ -8,15 +8,18 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
   const navigate = useNavigate();
 
-  const handleViewingClick = () => {
+  const handleViewingClick = (e) => {
+    e.stopPropagation();
     onUpdateStatus(booking.id, 'VIEWING');
   };
 
-  const handleViewedClick = () => {
+  const handleViewedClick = (e) => {
+    e.stopPropagation();
     onUpdateStatus(booking.id, 'VIEWED');
   };
 
-  const handleRemove = () => {
+  const handleRemove = (e) => {
+    e.stopPropagation();
     if (
       ['VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'SOLD'].includes(
         booking.status
@@ -67,13 +70,18 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
       )}
 
       {/* Navigate to Booking Details */}
-      <div onClick={() => navigate(`/bookings/bookingdetail/fulldetails/${booking.id}`)}>
+      <div onClick={() => navigate(`/clientcontent/bookingdetails/${booking.id}`)}>
         <h3 className="subHeading">Realtor:</h3>
         <p className="detail">{booking?.realtor?.firstName}</p>
 
         {/* Property Details */}
-        <div onClick={() => navigate(`/bookings/bookedproperty/propertydetails/${booking.PostID}`)}>
-          <h4 className="subHeading">Accommodation Type (Click to view):</h4>
+        <div onClick={(e) => {
+          e.stopPropagation(); // Prevent the event from propagating to the parent div
+          navigate(`/clientcontent/detailedpost/${booking.PostID}`);
+          }}>
+          <h4
+            className="subHeadingClick"
+          >Accommodation Type (Click to view):</h4>
           <p className="detail">{booking?.propertyType}</p>
         </div>
 
@@ -117,7 +125,8 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
         {booking.status === 'PENDING' && (
           <button
             className="deleteButton"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               if (window.confirm('Are you sure you want to delete this booking?')) {
                 onDelete();
               }
@@ -130,7 +139,10 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
         {booking.status === 'ACCEPTED' && validPropertyTypes.includes(booking.propertyType) && (
           <div className="actionRow">
             {booking.post?.inspectionFee ? (
-              <button className="actionButton" onClick={() => navigate(`/bookings/bookingdetail/fulldetails/${booking.id}`)}>
+              <button className="actionButton" onClick={(e) =>{
+                  e.stopPropagation();
+                  navigate(`/bookings/bookingdetail/fulldetails/${booking.id}`)
+                }}>
                 Make Payment
               </button>
             ) : (
@@ -158,7 +170,10 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
             <button className="actionButton" onClick={handleViewedClick}>
               Viewed
             </button>
-            <button className="infoButton" onClick={() => alert('Click on "Viewed" once you are done viewing the property.')}>
+            <button className="infoButton" onClick={(e) => {
+              e.stopPropagation();
+              alert('Click on "Viewed" once you are done viewing the property.')
+              }}>
               <FontAwesomeIcon icon={faInfoCircle} />
             </button>
           </div>
@@ -167,7 +182,8 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
         {['VIEWED', 'CHECKED_OUT', 'VISITED', 'SOLD', 'RECEIVED'].includes(booking.status) && (
           <button
             className="deleteButton"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               if (window.confirm('Are you sure you want to remove this booking?')) {
                 handleRemove();
               }

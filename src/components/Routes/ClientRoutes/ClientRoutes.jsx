@@ -14,6 +14,11 @@ import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseR
 import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
 import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/Booking/BookingInfo';
 import ReviewClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ReviewShowing/ReviewClientInfo';
+import BookingFullDetails from '../../GeneralGroupClient/ContentPagesClient/Bookings/BookingFullDetails/BookingFullDetails';
+import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/ReviewProfile/ReviewProfile';
+import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
+import DeleteAccount from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
+import RealtorProfile from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/RealtorProfile';
 
 // HotelDetailedPost Import
 import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
@@ -44,6 +49,11 @@ const ClientRoutes = () => (
             <Route path="clientdetails/:postId" element={<ClientInfo/>} />
             <Route path="bookingdetails" element={<BookingInfo/>} />
             <Route path="reviewinfo" element={<ReviewClientInfo/>} />
+            <Route path="bookingdetails/:postId" element={<BookingFullDetails/>} />
+            <Route path="reviewprofile" element={<ReviewProfile/>} />
+            <Route path="support" element={<Support/>} />
+            <Route path="deleteaccount" element={<DeleteAccount/>} />
+            <Route path="realtorprofile/:realtorId" element={<RealtorProfile/>} />
 
             {/* Hotel Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />

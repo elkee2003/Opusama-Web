@@ -104,32 +104,44 @@ const ProfilePage = () => {
         <p className='txt'>{address}</p>
       </div>
       <div className='profileSubrow'>
-        <button onClick={() => navigate('/clientcontent/editprofile')} className='subHeader'>
+        <button onClick={() => navigate('/clientcontent/editprofile')} className='mainSubHeader'>
           Edit Profile
         </button>
-        <button onClick={() => navigate('/profile/reviewinfo')} className='subHeader'>
+        <button onClick={() => navigate('/clientcontent/reviewprofile')} className='mainSubHeader'>
           View Info
         </button>
       </div>
+
+      {/* Other Btns */}
       <div className='scrollable'>
-        <button onClick={() => navigate('/termsandconditions')} className='btnCard'>
-          Terms and Conditions
+        <button onClick={() => window.open('https://sites.google.com/view/opusama-termsofservice/home', '_blank')} className='btnCard'>
+          <p className='proBtnTxt'>
+            Terms and Conditions
+          </p>
           <MdNavigateNext size={24} />
         </button>
-        <button onClick={() => navigate('/privacypolicy')} className='btnCard'>
-          Privacy Policy
+        <button onClick={() => window.open('https://sites.google.com/view/opusama/home', '_blank')} className='btnCard'>
+          <p className='proBtnTxt'>
+            Privacy Policy
+          </p>
           <MdNavigateNext size={24} />
         </button>
-        <button onClick={() => navigate('/profilebuttons/support')} className='btnCard'>
-          Support
+        <button onClick={() => navigate('/clientcontent/support')} className='btnCard'>
+          <p className='proBtnTxt'>
+            Support
+          </p>
           <MdNavigateNext size={24} />
         </button>
         <button onClick={onSignout} className='btnCard'>
-          Sign Out
+          <p className='proBtnTxt'>
+            Sign Out
+          </p>
           <MdNavigateNext size={24} />
         </button>
-        <button onClick={() => navigate('/profilebuttons/deleteaccount')} className='btnCard'>
-          Delete Account
+        <button onClick={() => navigate('/clientcontent/deleteaccount')} className='btnCard'>
+          <p className='proBtnTxt'>
+            Delete Account
+          </p>
           <MdNavigateNext size={24} />
         </button>
       </div>

@@ -45,7 +45,7 @@ function Post({post}) {
         {/* Image Container */}
         <div 
             className={'imageContainer'}
-            onClick={()=>navigate(`/clientcontent/detailedpost/${post.id}`)}
+            onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
         >
           {/* Image */}
           {imageUris[0] ? (

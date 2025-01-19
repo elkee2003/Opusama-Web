@@ -96,6 +96,7 @@
   color: rgba(3, 3, 59, 0.7);
   background-color: transparent;
   font-size: 60px;
+  cursor: pointer;
 }
 .formContainer {
   display: flex;
@@ -191,6 +192,7 @@
   margin-top: 20px;
   bottom: 0.7rem;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .saveBtnTxt {

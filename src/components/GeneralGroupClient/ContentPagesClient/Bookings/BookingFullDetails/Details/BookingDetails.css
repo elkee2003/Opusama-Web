@@ -1,0 +1,123 @@
+.bookingDetailsContainer {
+    margin-top: 35px;
+    margin-inline: 10px;
+}
+
+.bookingDetailsHeader {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.bookingDetailsSubHeader {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.details {
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 17px;
+    margin-bottom: 15px;
+    background-color: #0b0b29;
+}
+
+.detailsRealtor {
+    color: white;
+    padding: 8px;
+    border: 2px solid #0b0b29;
+    border-radius: 10px;
+    background-color: #747272;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.guestUnit {
+    display: flex;
+    justify-content: space-between;
+}
+
+.unitTxt {
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    background-color: #0b0b29;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-block: 5px;
+}
+
+.status {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.greenIcon {
+    width: 13px;
+    height: 13px;
+    border-radius: 5px;
+    background-color: #03eb03;
+}
+
+.redIcon {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #eb1e03;
+}
+
+.viewConInfoRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.infoIconCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.infoIcon {
+    font-size: 20px;
+}
+
+/* Buttons */
+.view {
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0ac00a;
+    border-radius: 20px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    margin-inline: auto;
+}
+
+.sold {
+    padding: 10px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0ac00a;
+    border-radius: 20px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    margin-inline: auto;
+}
+
+.btnTxt {
+    font-size: 20px;
+    font-weight: bold;
+}

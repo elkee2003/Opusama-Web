@@ -177,5 +177,6 @@
         margin-top: 20px;
         margin-bottom: 5rem;
         border-radius: 20px;
+        cursor: pointer;
     }
 }

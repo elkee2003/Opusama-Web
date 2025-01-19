@@ -58,7 +58,7 @@ function Post({post}) {
         {/* Username */}
         <div 
             className={'contact'}
-            onClick={()=>navigate('/realtor/realtorprofilepage')}
+            onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
         >
             <p className={'name'}>{post.firstName}</p>
         </div>

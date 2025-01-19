@@ -10,6 +10,8 @@ import { uploadData, remove } from 'aws-amplify/storage';
 import "./Styles.css"; 
 
 const ReviewDetails = () => {
+  const navigate = useNavigate();
+
   const { firstName, lastName, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
 
   const { dbUser, setDbUser, sub } = useAuthContext();
@@ -148,13 +150,13 @@ const ReviewDetails = () => {
   const handleSave = async () => {
     if (dbUser) {
       await updateUser();
-      navigate("/profile"); // Simulating navigation
+      navigate("/clientcontent/profile"); 
       setTimeout(() => {
         navigate('/clientcontent/home');
       }, 1000);
     } else {
       await createUser();
-      navigate("/profile");
+      navigate("/clientcontent/profile");
       setTimeout(() => {
         navigate('/clientcontent/home');
       }, 1000);

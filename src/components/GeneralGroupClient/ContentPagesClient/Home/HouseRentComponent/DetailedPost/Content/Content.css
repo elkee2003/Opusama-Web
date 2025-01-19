@@ -57,6 +57,7 @@ button {
     font-weight: bold;
     color: var(--heading-color);
     letter-spacing: 0.8px;
+    cursor: pointer;
 }
 
 .realtorStar {
