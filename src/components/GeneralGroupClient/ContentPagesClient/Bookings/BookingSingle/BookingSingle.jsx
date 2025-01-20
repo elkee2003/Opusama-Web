@@ -64,7 +64,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
     <div className="bookingSingleContainer">
       {/* Remove Button */}
       {booking.status === 'DENIED' && (
-        <button className="removeButton" onClick={onDelete}>
+        <button className="removebtn" onClick={onDelete}>
           <FontAwesomeIcon icon={faRemove} />
         </button>
       )}
@@ -85,6 +85,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           <p className="detail">{booking?.propertyType}</p>
         </div>
 
+        {/* Conditions to show if it is hotels/shortlets */}
         {booking.nameOfType && (
           <>
             <h4 className="subHeading">Accommodation Name:</h4>
@@ -110,21 +111,29 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
         <h4 className="subHeading">Status:</h4>
         <div className="statusRow">
           <p className="detail">{getStatusText(booking.status)}</p>
-          <div
-            className={`statusIcon ${
-              ['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'RECEIVED'].includes(
-                booking.status
-              )
-                ? 'green'
-                : 'red'
-            }`}
-          ></div>
+          {(booking.status === 'ACCEPTED' || booking.status === 'VIEWING' || booking.status === 'CHECKED_IN' || booking.status === 'VISITING' || booking.status === 'VIEWED' || booking.status === 'CHECKED_OUT' || booking.status === 'VISITED' || booking.status === 'PAID' || booking.status === 'RECEIVED') ? (
+              <div className='greenIcon'/>
+            ):(
+              <div className='redIcon'/>
+          )}
         </div>
 
-        {/* Conditional Buttons */}
+        {/* if status is PENDING */}
+        {booking.status === 'PENDING' && (
+          <p className='wait'>Kindly wait for response of Realtor to get contact</p>
+        )}
+
+        {/* if status is ACCEPTED */}
+        {booking.status === 'ACCEPTED' && (
+          <p className='wait'>Kindly click on card to get Realtor's contact</p>
+        )}
+
+        {/* Button Section */}
+
+        {/* If booking status is PENDING */}
         {booking.status === 'PENDING' && (
           <button
-            className="deleteButton"
+            className="deleteButtonCon"
             onClick={(e) => {
               e.stopPropagation();
               if (window.confirm('Are you sure you want to delete this booking?')) {
@@ -132,26 +141,32 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
               }
             }}
           >
-            {booking.propertyType === 'Hotel / Shortlet' ? 'Delete Booking' : 'Delete Showing'}
+            <p className='deleteButtonTxt'>
+              {booking.propertyType === 'Hotel / Shortlet' ? 'Delete Booking' : 'Delete Showing'}
+            </p>
           </button>
         )}
 
         {booking.status === 'ACCEPTED' && validPropertyTypes.includes(booking.propertyType) && (
-          <div className="actionRow">
+          <div className="viewConInfoRow">
             {booking.post?.inspectionFee ? (
-              <button className="actionButton" onClick={(e) =>{
+              <button className="viewCon" onClick={(e) =>{
                   e.stopPropagation();
                   navigate(`/bookings/bookingdetail/fulldetails/${booking.id}`)
                 }}>
-                Make Payment
+                  <p className='viewTxt'>
+                    Make Payment
+                  </p>    
               </button>
             ) : (
-              <button className="actionButton" onClick={handleViewingClick}>
-                Viewing
+              <button className="viewCon" onClick={handleViewingClick}>
+                <p className='viewTxt'>Viewing</p>
               </button>
             )}
+
+            {/* Info Icon */}
             <button
-              className="infoButton"
+              className="infoIconCon"
               onClick={() =>
                 alert(
                   booking.post?.inspectionFee
@@ -160,28 +175,32 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
                 )
               }
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FontAwesomeIcon icon={faInfoCircle} className='infoIcon'/>
             </button>
           </div>
         )}
 
         {booking.status === 'VIEWING' && validPropertyTypes.includes(booking.propertyType) && (
-          <div className="actionRow">
-            <button className="actionButton" onClick={handleViewedClick}>
-              Viewed
+          <div className="viewConInfoRow">
+            <button className="viewCon" onClick={handleViewedClick}>
+              <p className='viewTxt'>
+                Viewed
+              </p>
             </button>
-            <button className="infoButton" onClick={(e) => {
+
+            {/* Info Icon */}
+            <button className="infoIconCon" onClick={(e) => {
               e.stopPropagation();
               alert('Click on "Viewed" once you are done viewing the property.')
               }}>
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <FontAwesomeIcon icon={faInfoCircle} className='infoIcon' />
             </button>
           </div>
         )}
 
         {['VIEWED', 'CHECKED_OUT', 'VISITED', 'SOLD', 'RECEIVED'].includes(booking.status) && (
           <button
-            className="deleteButton"
+            className="delCon"
             onClick={(e) => {
               e.stopPropagation();
               if (window.confirm('Are you sure you want to remove this booking?')) {
@@ -189,7 +208,9 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
               }
             }}
           >
-            Remove
+            <p className='removeTxt'>
+              Remove
+            </p>
           </button>
         )}
       </div>
