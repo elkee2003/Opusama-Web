@@ -26,24 +26,23 @@
     border-radius: 75px;
 }
 
-.row {
+.pRow {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 10px;
     margin-bottom: 3px;
     align-items: center;
 }
 
-.name {
-    flex: 1;
-    font-size: 20px;
+.pName {
+    font-size: 2rem;
     font-weight: bold;
     color: #01011b;
 }
 
-.txt {
-    flex: 1;
-    font-size: 15px;
+.pTxt {
+    font-size: 1.3rem;
     color: #01011b;
 }
 
@@ -141,6 +140,14 @@
 @media (max-width: 900px) {
     .mainContainer{
         min-width: 85vw;
+    }
+
+    .pName {
+        font-size: 1.5rem;
+    }
+
+    .pTxt {
+        font-size: 1.2rem;
     }
 
     .btnCard {

@@ -59,6 +59,9 @@ const ClientRoutes = () => (
 
             {/* Hotel Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
+
+            {/* for invalid route */}
+            <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
         </Route>
     </Routes>
 );

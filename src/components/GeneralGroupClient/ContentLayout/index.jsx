@@ -6,7 +6,7 @@ import './ContentLayout.css';
 
 const Layout = () => {
   return (
-    <div className="layout">
+    <div className="layoutCon">
       {/* Sidebar */}
       <ContentTabsClient />
       

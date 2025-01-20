@@ -21,6 +21,9 @@ const AuthRoutes = () => (
         <Route path="/forgotpasswordrealtor" element={<ForgotPasswordRealtor />} />
         <Route path="/confirmcodeclient" element={<ConfirmCodeClient />} />
         <Route path="/confirmcoderealtor" element={<ConfirmCodeRealtor />} />
+
+        {/* for invalid route */}
+        <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
     </Routes>
 );
 

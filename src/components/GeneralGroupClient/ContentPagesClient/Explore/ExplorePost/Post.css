@@ -1,8 +1,7 @@
 /* styles.css */
-.container {
-  margin-top: 35px;
-  margin-left: 20px;
-  margin-right: 20px;
+.explorePostContainer {
+  margin-top: 25px;
+  width: 70%;
 }
 
 .imageContainer {
@@ -55,6 +54,18 @@
   margin-bottom: 3rem;
 }
 
+@media (max-width: 1300px) {
+  .explorePostContainer{
+    width: 75%;
+  }
+}
 @media (max-width: 900px) {
-  
+  .explorePostContainer{
+    width: 90%;
+  }
+}
+@media (max-width: 500px) {
+  .explorePostContainer{
+    width: 100%;
+  }
 }

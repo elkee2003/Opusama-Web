@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
+// important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer
+
 function PostList() {
     const navigate = useNavigate();
     const [realtorPosts, setRealtorPosts] = useState([]);
@@ -74,16 +76,16 @@ function PostList() {
     };
 
   return (
-    <div className='container' >
+    <div className='pListContainer' >
 
         {/* Search Bar */}
         <div>
             <button 
-                className="searchBtn"
+                className="homeSearchBtn"
                 onClick={()=>navigate('/searchhouse')}
             >
-                <FontAwesomeIcon icon={faSearch} size="lg" />
-                <span className="searchBtnTxt">Search for Houses</span>
+                <FontAwesomeIcon icon={faSearch} size="2x" />
+                <span className="homeSearchBtnTxt">Search for Houses</span>
             </button>
         </div>
 

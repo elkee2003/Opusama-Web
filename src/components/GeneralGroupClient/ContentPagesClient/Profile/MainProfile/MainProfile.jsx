@@ -91,17 +91,17 @@ const ProfilePage = () => {
           <img src={profilePic} alt="Profile" className='img' />
         )}
       </div>
-      <div className='row'>
+      <div className='pRow'>
         <IoPerson size={24} />
-        <p className='name'>{firstName}</p>
+        <p className='pName'>{firstName}</p>
       </div>
-      <div className='row'>
+      <div className='pRow'>
         <FaPhone size={24} />
-        <p className='txt'>{phoneNumber}</p>
+        <p className='pTxt'>{phoneNumber}</p>
       </div>
-      <div className='row'>
+      <div className='pRow'>
         <MdLocationOn size={24} />
-        <p className='txt'>{address}</p>
+        <p className='pTxt'>{address}</p>
       </div>
       <div className='profileSubrow'>
         <button onClick={() => navigate('/clientcontent/editprofile')} className='mainSubHeader'>

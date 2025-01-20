@@ -1,4 +1,4 @@
-.container {
+.pListContainer{
   display: flex;
   flex-direction: column;
   margin-bottom: 3.5rem;
@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.searchBtn {
+/* .searchBtn {
   margin-bottom: 10px;
   background-color: #ffffff;
   height: 60px;
@@ -19,13 +19,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
+} */
 
-.searchBtnTxt {
+/* .searchBtnTxt {
   font-size: 16px;
   font-weight: bold;
   margin: 15px;
-}
+} */
 
 .noListings {
   text-align: center;

@@ -74,16 +74,16 @@ function PostList() {
     };
 
   return (
-    <div className='container' >
+    <div className='pListContainer' >
 
         {/* Search Bar */}
         <div>
             <button 
-                className="searchBtn"
+                className="homeSearchBtn"
                 onClick={()=>navigate('/searchhouse')}
             >
                 <FontAwesomeIcon icon={faSearch} size="lg" />
-                <span className="searchBtnTxt">Search for Student Accommodation</span>
+                <span className="homeSearchBtnTxt">Search for Student Acc...</span>
             </button>
         </div>
 

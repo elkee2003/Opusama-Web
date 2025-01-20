@@ -1,21 +1,21 @@
 /* Layout container */
-.layout {
+.layoutCon {
     display: flex;
-  }
+}
   
-  /* Main content area */
-  .main-content {
+/* Main content area */
+.main-content {
     margin-left: 270px; /* Same as sidebar width + 20px for padding */
     padding: 20px;
-    flex: 1;
     background-color: #fff; 
     min-height: 100vh; 
     color: #333;
-  }
+}
   
-  /* Responsive adjustments */
-  @media (max-width: 900px) {
+/* Responsive adjustments */
+@media (max-width: 900px) {
     .main-content {
       margin-left: 0; 
+      padding: 30;
     }
-  }
+}

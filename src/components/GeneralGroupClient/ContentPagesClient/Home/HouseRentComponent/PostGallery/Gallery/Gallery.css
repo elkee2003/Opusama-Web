@@ -4,9 +4,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  /* width: 100%;
   height: 100%;
-  background-color: #f8f9fa; /* Light background */
+  background-color: #0680fa;  */
   padding: 10px;
   box-sizing: border-box;
 }
@@ -16,7 +16,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -26,7 +26,7 @@
 }
 
 .backIconContainer:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
+  background-color: rgba(0, 0, 0, 0.7); 
 }
 
 /* Swiper container styling */
@@ -76,17 +76,17 @@
 .swiper-button-prev,
 .swiper-button-next {
   color: #fff !important;;
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent buttons */
+  /* background-color: rgba(0, 0, 0, 0.1);  */
   padding: 5px;
   border-radius: 50%;
   width: 40px;
   height: 40px;
 }
 
-.swiper-button-prev:hover,
+/* .swiper-button-prev:hover,
 .swiper-button-next:hover {
-  background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
-}
+  background-color: rgba(0, 0, 0, 0.8); 
+} */
 
 /* Loading message styling */
 .galleryContainer p {

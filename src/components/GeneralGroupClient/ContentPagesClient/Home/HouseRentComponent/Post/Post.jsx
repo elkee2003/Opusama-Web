@@ -3,6 +3,8 @@ import './Post.css';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'aws-amplify/storage';
 
+// important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer
+
 function Post({post}) {
     const navigate = useNavigate();
     const [imageUris, setImageUris] = useState([]);
@@ -41,7 +43,7 @@ function Post({post}) {
     }, [post.media]);
 
   return (
-    <div >
+    <div className='singlePostContainer'>
         {/* Image Container */}
         <div 
             className={'imageContainer'}

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 3.5rem;
-  width: 85%;
+  /* width: 85%; */
   justify-content: center;
 }
 
@@ -73,17 +73,11 @@ to {
 
 @media (max-width: 900px) {
   .exploreContainer{
-      width: 90%;
       margin-bottom: 4.5rem;
   }
 }
 @media (max-width: 700px) {
-  .exploreContainer{
-      width: 85%;
-  }
+
 }
 @media (max-width: 600px) {
-  .exploreContainer{
-      width: 90%;
-  }
 }

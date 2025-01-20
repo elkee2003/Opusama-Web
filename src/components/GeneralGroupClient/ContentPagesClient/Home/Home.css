@@ -1,9 +1,45 @@
+.tabs-container {
+    border-bottom: 1px solid #e0e0e0; /* Divider line below tabs */
+    overflow-x: auto; /* Allow horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping of tabs */
+    display: flex; /* Align tabs in a row */
+    width: 100vw; /* Full viewport width */
+    box-sizing: border-box; /* Include padding and borders in width */
+    scroll-snap-type: x mandatory; /* Smooth scrolling */
+    padding-right: 16px;
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbars on WebKit browsers */
+}
+
+.tabs-container {
+    -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+}
+
+.tab-panel {
+    padding: 16px; /* Padding for tab content */
+    width: 100%; /* Make tab content fit screen */
+    box-sizing: border-box; /* Include padding and borders in width */
+}
+
 body {
+    margin: 0; /* Remove body margin to prevent extra space */
+    overflow-x: hidden; /* Prevent horizontal overflow on the entire page */
+}
+
+
+
+
+
+
+
+/* body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
   }
   
-  /* Header */
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -22,7 +58,7 @@ body {
     color: #0d0342;
     font-weight: 600;
     text-align: center;
-    flex: 1; /* Each tab takes equal space */
+    flex: 1; 
   }
   
   .tab.active {
@@ -30,23 +66,21 @@ body {
     color: #000000;
   }
   
-  /* Body Content */
   .content {
     padding: 20px;
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .navbar {
-      justify-content: space-around; /* Space tabs evenly on mobile */
+      justify-content: space-around; 
     }
   
     .tab {
-      font-size: 14px; /* Adjust font size for smaller screens */
+      font-size: 14px; 
     }
   
     .content {
       padding: 15px;
     }
   }
-  
+   */

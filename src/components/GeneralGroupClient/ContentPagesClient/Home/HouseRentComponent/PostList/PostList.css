@@ -1,17 +1,18 @@
-.container {
+/* important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer */
+.pListContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 3.5rem;
-  width: 85%;
+  /* width: 85%; */
   justify-content: center;
 }
 
-.searchBtn {
+.homeSearchBtn {
   margin-bottom: 10px;
-  background-color: #ffffff;
+  background-color: rgb(245, 245, 245, 0.5);
   height: 60px;
-  width: 100%;
-  margin-left: 10px;
+  width: 70%;
+  margin-left: 0px;
   margin-right: 10px;
   border: 2px solid rgb(3, 3, 34);
   border-radius: 20px;
@@ -21,10 +22,11 @@
   cursor: pointer;
 }
 
-.searchBtnTxt {
+.homeSearchBtnTxt {
   font-size: 16px;
   font-weight: bold;
-  margin: 15px;
+  margin: 30px;
+  color:rgb(105, 104, 104)
 }
 
 .noListings {
@@ -71,18 +73,20 @@ to {
 }
 }
 
+@media (max-width: 1300px) {
+  .homeSearchBtn {
+    width: 75%;
+  }
+}
 @media (max-width: 900px) {
-  .container{
-      width: 90%;
+  .homeSearchBtn {
+    width: 90%;
   }
 }
 @media (max-width: 700px) {
-  .container{
-      width: 80%;
-  }
 }
-@media (max-width: 600px) {
-  .container{
-      width: 60%;
+@media (max-width: 500px) {
+  .homeSearchBtn {
+    width: 100%;
   }
 }
