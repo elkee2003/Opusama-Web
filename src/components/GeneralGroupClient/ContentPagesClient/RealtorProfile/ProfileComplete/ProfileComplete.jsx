@@ -1,11 +1,12 @@
 import React, { useMemo, useRef } from 'react';
+import './ProfileComplete.css'
 import MediaGrid from '../MediaGrid/MediaGrid';
 import RealtorProfileHead from '../RealtorProfileHead/RealtorProfileHead';
 
 const RealtorProfileComplete = ({ realtor, posts }) => {
 
   return (
-    <div>
+    <div className='completeProCon'>
         {/* Realtor Profile Header */}
         <RealtorProfileHead realtor={realtor} />
 

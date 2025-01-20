@@ -23,7 +23,7 @@ const RealtorProfileHead = ({ realtor }) => {
 
   // Navigate to Rating & Review
   const handleNavigate = () => {
-    navigate(`/realtor/realtorratings/${realtor.id}`);
+    navigate(`/clientcontent/realtorusersreview/${realtor.id}`);
   };
 
   // Function to calculate average ratings
@@ -137,8 +137,8 @@ const RealtorProfileHead = ({ realtor }) => {
 
       <div className="details">
         {/* Name */}
-        <div className="row">
-          <span className="name">{realtor.firstName}</span>
+        <div className="realtorRow">
+          <span className="realtorName">{realtor.firstName}</span>
 
           {/* Medium of Review Star */}
           <button className="reviewIconRow" onClick={() => alert('A combination of ratings of properties under the realtor and realtor rating ')}>
@@ -152,6 +152,7 @@ const RealtorProfileHead = ({ realtor }) => {
             {readMoreDescription || realtor?.myDescription?.length <= descriptionMaxLength
               ? realtor?.myDescription
               : truncatedDescription}
+              
             {realtor.myDescription?.length > descriptionMaxLength && (
               <span
                 onClick={() => setReadMoreDescription(!readMoreDescription)}
@@ -166,10 +167,12 @@ const RealtorProfileHead = ({ realtor }) => {
 
       {/* Contact & Rating & Review */}
       <div className="profileBtnCon">
-        {/* ratings and review */}
-        <button className="rateReviewBtn" onClick={handleNavigate}>
-          Ratings & Review
-        </button>
+            {/* ratings and review */}
+            <button className="rateReviewBtn" onClick={handleNavigate}>
+                <p className='rateReviewBtnTxt'>
+                    Ratings & Review
+                </p>
+            </button>
       </div>
     </div>
   );

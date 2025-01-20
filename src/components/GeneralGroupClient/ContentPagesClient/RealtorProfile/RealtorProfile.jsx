@@ -29,6 +29,10 @@ const RealtorProfilePageScreen = () => {
     fetchRealtor();
   }, [realtorId]); 
 
+  if (!realtor) {
+    return <div>Loading...</div>; // Show a loading state or an appropriate message
+  }
+
   return (
     <div>
       {realtor && posts.length > 0 ? (

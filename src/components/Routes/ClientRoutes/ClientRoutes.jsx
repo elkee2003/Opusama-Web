@@ -19,6 +19,7 @@ import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/R
 import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
 import DeleteAccount from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import RealtorProfile from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/RealtorProfile';
+import RealtorUserReviews from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/UsersReview/RealtorRatings'
 
 // HotelDetailedPost Import
 import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
@@ -54,6 +55,7 @@ const ClientRoutes = () => (
             <Route path="support" element={<Support/>} />
             <Route path="deleteaccount" element={<DeleteAccount/>} />
             <Route path="realtorprofile/:realtorId" element={<RealtorProfile/>} />
+            <Route path="realtorusersreview/:realtorId" element={<RealtorUserReviews/>} />
 
             {/* Hotel Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />

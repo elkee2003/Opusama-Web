@@ -81,7 +81,6 @@ const UserReviews = () => {
               <h4 className="reviewerName">{item?.userName}</h4>
               <div className="usersStarContainer">
                 {[1, 2, 3, 4, 5].map((index) => (
-                  // Use FaStar for filled stars and FaRegStar for empty stars
                   index <= item?.rating ? (
                     <FaStar key={index} size={20} color="#07021f" />
                   ) : (

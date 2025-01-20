@@ -1,0 +1,11 @@
+.completeProCon{
+    display: flex;
+    flex-direction: column;
+
+}
+
+@media (max-width: 900px) {
+    /* .completeProCon { */
+        /* width: 90vw; */
+    /* } */
+}
