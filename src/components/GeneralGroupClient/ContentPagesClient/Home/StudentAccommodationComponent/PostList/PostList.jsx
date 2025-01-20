@@ -80,9 +80,9 @@ function PostList() {
         <div>
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate('/searchhouse')}
+                onClick={()=>navigate(`/clientcontent/search_student_acc`)}
             >
-                <FontAwesomeIcon icon={faSearch} size="lg" />
+                <FontAwesomeIcon icon={faSearch} size="2x" />
                 <span className="homeSearchBtnTxt">Search for Student Acc...</span>
             </button>
         </div>

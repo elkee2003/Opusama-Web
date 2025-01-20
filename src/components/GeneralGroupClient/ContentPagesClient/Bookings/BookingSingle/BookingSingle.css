@@ -15,7 +15,7 @@
   z-index: 1;
 }
 
-.removebtn {
+.bkRemoveBtn {
   color: #c70f0f;
   font-size: 25px;
 }
@@ -75,6 +75,9 @@
   border-radius: 5px;
   background-color: #03eb03;
 }
+.middleCon {
+  justify-self: center;
+}
 
 .redIcon {
   width: 10px;
@@ -86,7 +89,7 @@
 .deleteButtonCon {
   padding: 10px;
   margin-top: 10px;
-  align-self: center;
+  /* align-self: center; */
   display: flex;
   align-items: center;
   justify-content: center;

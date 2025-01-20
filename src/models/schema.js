@@ -1018,6 +1018,7 @@ export const schema = {
                 "PAID",
                 "RECEIVED",
                 "DENIED",
+                "OCCUPIED",
                 "REMOVED_CLIENT",
                 "REMOVED_REALTOR"
             ]

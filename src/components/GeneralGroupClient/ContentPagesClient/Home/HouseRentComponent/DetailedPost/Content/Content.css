@@ -378,8 +378,11 @@ button {
 }
 
 @media (max-width: 500px) {
-  .getinTouchContainer {
-    right: 100px;
-    left: 100px;
-  }
+    .getinTouchContainer {
+        right: 100px;
+        left: 100px;
+    }
+    .getInTouchTxt {
+        font-size: 20px;
+    }
 }

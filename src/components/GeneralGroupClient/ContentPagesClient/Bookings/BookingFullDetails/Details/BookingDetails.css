@@ -1,20 +1,22 @@
-.bookingDetailsContainer {
-    margin-top: 35px;
-    margin-inline: 10px;
+.bkDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.bookingDetailsHeader {
+.header {
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.bookingDetailsSubHeader {
+.bkSubHeader {
     font-size: 17px;
     font-weight: bold;
 }
 
-.details {
+.bkDetails {
     color: white;
     padding: 8px;
     border-radius: 10px;
@@ -33,12 +35,12 @@
     margin-bottom: 15px;
 }
 
-.guestUnit {
+.bkGuestUnit {
     display: flex;
     justify-content: space-between;
 }
 
-.unitTxt {
+.bkUnitTxt {
     text-align: center;
     border-radius: 20px;
     padding: 10px;
@@ -50,7 +52,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-block: 5px;
+    margin: 5px 0;
 }
 
 .status {
@@ -90,7 +92,6 @@
     font-size: 20px;
 }
 
-/* Buttons */
 .view {
     padding: 10px;
     width: 200px;
@@ -99,9 +100,7 @@
     align-items: center;
     background-color: #0ac00a;
     border-radius: 20px;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    margin-inline: auto;
+    margin: 15px auto 25px;
 }
 
 .sold {
@@ -112,12 +111,25 @@
     align-items: center;
     background-color: #0ac00a;
     border-radius: 20px;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    margin-inline: auto;
+    margin: 15px auto 25px;
 }
 
-.btnTxt {
+.bkBtnTxt {
     font-size: 20px;
     font-weight: bold;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .bkDetailsContainer {
+        margin-bottom: 5rem;
+    }
+}
+
+@media (max-width: 500px) {
+}
+
+@media (max-width: 450px) {
 }

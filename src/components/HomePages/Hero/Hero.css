@@ -42,8 +42,8 @@
 
   .heroSearchBtn {
     min-width: 300px;
-    margin-top: -10%;
-    margin-left: 50vw;
+    margin-top: -3.5%;
+    margin-left: 30vw;
     display: flex;
     flex-direction: row;
     background: rgba(255, 255, 255);
@@ -119,16 +119,24 @@
   }
 }
 @media (max-width: 900px) {
+  /* .hero-btn-container {
+  } */
+  .hero-button{
+    margin-left: -3rem;
+  }
   .heroSearchBtn{
     margin-top: -10%;
-    margin-left: 52vw;
+    margin-left: 45vw;
     max-width: 300px
   }
 }
 @media (max-width: 500px) {
+  .hero-button{
+    margin-left: 1.4rem;
+  }
   .heroSearchBtn{
     margin-top: 5%;
-    margin-left: 30vw;
+    margin-left: 15vw;
     max-width: 300px
   }
 }

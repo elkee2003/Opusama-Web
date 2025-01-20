@@ -219,7 +219,7 @@
 }
 
 .emptyInput {
-  min-width: 350px;
+  min-width: 400px;
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: rgb(179, 179, 179);
@@ -308,7 +308,20 @@
   }
 
   .saveBtn  {
-    right: 120px;
-    left: 120px;
+    right: 105px;
+    left: 105px;
+  }
+
+  .saveBtnTxt {
+    font-size: 20px;
+  }
+
+  .emptyInput {
+    min-width: 300px;
+  }
+}
+@media (max-width: 450px) {
+  .emptyInput {
+    min-width: 250px;
   }
 }

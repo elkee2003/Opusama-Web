@@ -337,12 +337,6 @@ button {
     border-radius: 30px;
 }
 
-.getInTouchTxt {
-    color: #dddcdc;
-    font-size: 25px;
-    font-weight: bold;
-}
-
 @media (max-width: 900px) {
     .contentContainer{
         width: 90%;

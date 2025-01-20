@@ -1,0 +1,67 @@
+.payContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.payBckIcon {
+    position: absolute;
+    left:50px;
+    font-size: 20px;
+    color: black;
+    z-index: 3;
+}
+
+.payLogoCon {
+  margin-top: 150px;
+  margin-bottom: 20px;
+  height: 100px;
+  width: 100px;
+  align-self: center;
+}
+
+.payLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.flutterwaveTxt {
+  font-size: 19px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sub {
+    display: flex; 
+    flex-direction: column;
+    align-self: center;
+}
+
+.payInput {
+    /* align-self: center; */
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 20px;
+    margin: 15px 20px;
+    font-size: 18px;
+}
+
+.payBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 150px;
+  background-color: #0aa30a;
+  border-radius: 15px;
+  margin: 0 auto; /* Centers the button */
+}
+
+.payBtnTxt {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
