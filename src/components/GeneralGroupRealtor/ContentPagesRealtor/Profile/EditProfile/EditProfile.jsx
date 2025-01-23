@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './EditProfile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from "aws-amplify/auth";
@@ -9,24 +10,36 @@ import { FiArrowRightCircle } from "react-icons/fi";
 
 
 const EditProfile = () => {
+  const navigate = useNavigate();
   const { authUser, dbRealtor } = useAuthContext();
   const {
     firstName,
     setFirstName,
     lastName,
     setLastName,
+    myDescription, 
+    setMyDescription,
     profilePic,
+    setProfilePic,
     address,
     setAddress,
-    setProfilePic,
     phoneNumber,
     setPhoneNumber,
+    bankname, 
+    setBankname,
+    accountName, 
+    setAccountName, 
+    accountNumber, 
+    setAccountNumber,
     errorMessage,
     onValidateInput,
   } = useProfileContext();
+  
 
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const [loading, setLoading] = useState(false);
+
+  const [remainingWords, setRemainingWords] = useState(150);
+  
 
   // Pick Image function for web
   const pickImage = (e) => {
@@ -41,13 +54,25 @@ const EditProfile = () => {
   // Navigation Function
   const goToNxtPage = () => {
     if (onValidateInput()) {
-      navigate("/clientcontent/reviewedit"); 
+      navigate("/realtorcontent/reviewprofile"); 
       
     }
   };
 
+  // Helper function to count words
+  const countWords = (text) => text.trim().length;
+
+  // Handle text change for myDescription with word limit
+  const handleDescriptionChange = (text) => {
+    const words = countWords(text);
+    if (words <= 150) {
+      setMyDescription(text);
+      setRemainingWords(150 - words);
+    }
+  };
+
   const onSignIn = () => {
-    navigate('/clientcontent/home');
+    navigate('/realtorcontent/home');
     
   };
 
@@ -168,6 +193,14 @@ const EditProfile = () => {
             />
 
             <textarea
+              value={myDescription}
+              onChange={(e) => handleDescriptionChange(e.target.value)}
+              placeholder="A description of yourself(Optional)"
+              className="profileInput"
+            />
+            <p className="wordCount">{remainingWords}</p>
+
+            <textarea
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Phone Number"
@@ -180,7 +213,27 @@ const EditProfile = () => {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Input Address"
               className="profileInput"
-              // rows={2} 
+            />
+
+            <textarea
+              value={bankname}
+              onChange={(e) => setBankname(e.target.value)}
+              placeholder="Bank name"
+              className="profileInput"
+            />
+
+            <textarea
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
+              placeholder="Account name"
+              className="profileInput"
+            />
+
+            <textarea
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value)}
+              placeholder="Account number"
+              className="profileInputLast"
             />
           </div>
 

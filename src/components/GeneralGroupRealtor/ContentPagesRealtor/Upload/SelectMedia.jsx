@@ -10,9 +10,12 @@ const SelectMedia = () => {
   const {setMedia, media} = useUploadContext();
   const navigate = useNavigate();
 
-  const {dbRealtor} = useAuthContext();
+  const {dbRealtor, dbUser} = useAuthContext();
 
   console.log('check:', dbRealtor?.id)
+  console.log('check:', dbRealtor?.firstName)
+  console.log('checkDbUserName:', dbUser?.firstName)
+  console.log('dbUserID:', dbUser?.id)
 
   // Pick Multiple Media Function (Images and Videos)
   const pickMediaAsync = (event) => {

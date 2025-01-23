@@ -192,7 +192,7 @@ const EditProfile = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Input Address"
-              className="profileInput"
+              className="profileInputLast"
               // rows={2} 
             />
           </div>

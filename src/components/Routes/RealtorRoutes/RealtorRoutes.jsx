@@ -12,6 +12,9 @@ import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCo
 import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
 import EditProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/EditProfile';
 import ReviewProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/ReviewProfile';
+import ProfileOptionsPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/MainProfile/ProfileOptions/ProifleOptions';
+import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
+import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
 
 const RealtorRoutes = () => (
     <Routes>
@@ -27,6 +30,9 @@ const RealtorRoutes = () => (
             <Route path="editprofile" element={<EditProfile />} />
             <Route path="reviewprofile" element={<ReviewProfile />} />
             <Route path="profile" element={<EditProfile />} />
+            <Route path="profileoptions" element={<ProfileOptionsPage />} />
+            <Route path="deleteaccount" element={<DeleteAcccount />} />
+            <Route path="support" element={<Support />} />
 
             {/* for invalid route */}
             <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>

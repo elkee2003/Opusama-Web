@@ -1,0 +1,68 @@
+.profileOptContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.proOptHeader {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.proOptBntCon {
+    margin-bottom: 4rem;
+}
+
+.proOptBtnRow {
+  display: flex;
+  margin-top: 40px;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.proOptIcon {
+  font-size: 35px;
+}
+
+.proOptTxt {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .proOptHeader {
+        font-size: 2rem;
+    }
+
+    .proOptIcon {
+        font-size: 30px;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+    .proOptHeader {
+        font-size: 28px;
+    }
+
+    .proOptIcon {
+        font-size: 25px;
+    }
+
+    .proOptTxt {
+        font-size: 1.3rem;
+      }
+
+}

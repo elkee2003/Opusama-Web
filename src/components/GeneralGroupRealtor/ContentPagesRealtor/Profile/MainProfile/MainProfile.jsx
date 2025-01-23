@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import Placeholder from '/placeholder.png';
+import './MainProfile.css'; 
+import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
+import ProfileHead from './ProfileHead/ProfileHead';
+import ProfileMediaList from './ProfileMediaList/ProfileMediaList';
 
-const MainProfile = () => {
+const ProfilePage = () => {
+
+  const { authUser } = useAuthContext();
+
+  if (!authUser) {
+    return (
+      <div className='mainContainer'>
+        <div className='profilePicContainer'>
+          <img src={Placeholder} alt="Placeholder" className='img' />
+        </div>
+        <p className='emptyText'>Sign In</p>
+        <div className='emptyBtnCon'>
+          <button className='emptyBtnTxt' onClick={() => navigate('/')}>
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <p>main</p>
+    <div className='proMainContainer'>
+      <ProfileHead/>
+      <ProfileMediaList/>
     </div>
-  )
-}
+  );
+};
 
-export default MainProfile
+export default ProfilePage;

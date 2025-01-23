@@ -1,0 +1,26 @@
+/* The rest styles are gotten from Client folder */
+.wordCount {
+    text-align:right;
+    margin-bottom:10px;
+    margin-right: 8rem;
+    color:grey;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .wordCount {
+        margin-right: 7px;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+
+}

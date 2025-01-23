@@ -5,20 +5,20 @@ import { IoArrowBack } from "react-icons/io5";
 import { useProfileContext } from '../../../../../../Providers/RealtorProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from 'aws-amplify/datastore';
-import { User } from '../../../../../models';
+import { Realtor } from '../../../../../models';
 import { uploadData, remove } from 'aws-amplify/storage';
 
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const { firstName, lastName, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
+  const {firstName, lastName, profilePic, setProfilePic, address, phoneNumber, bankname, accountName, accountNumber, myDescription} = useProfileContext()
 
   const { dbRealtor, setDbRealtor, sub } = useAuthContext();
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Function to manipulate the image using canvas
+  // Function to manipulate the image using canvas. Then with multiple images I used browserImageCompression 
   const manipulateImage = async (imageUrl) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -78,28 +78,29 @@ const ReviewDetails = () => {
     }
   }
 
-  const deleteProfilePic = async () => {
-    if (!dbRealtor?.profilePic) return;
+  // This function is to delete profile picture. A Realtor is not meant to be without a profile pic
+  // const deleteProfilePic = async () => {
+  //   if (!dbRealtor?.profilePic) return;
 
-    setUploading(true);
-    try {
-      await remove({ path: dbRealtor.profilePic });
-      const updatedUser = await DataStore.save(
-        User.copyOf(dbRealtor, (updated) => {
-          updated.profilePic = null;
-        })
-      );
+  //   setUploading(true);
+  //   try {
+  //     await remove({ path: dbRealtor.profilePic });
+  //     const updatedUser = await DataStore.save(
+  //       User.copyOf(dbRealtor, (updated) => {
+  //         updated.profilePic = null;
+  //       })
+  //     );
 
-      setDbRealtor(updatedUser);
-      alert("Profile Picture Removed");
-      setProfilePic(null);
-    } catch (error) {
-      alert("Error removing profile picture");
-      console.error("Error removing profile picture:", error);
-    } finally {
-      setUploading(false);
-    }
-  };
+  //     setDbRealtor(updatedUser);
+  //     alert("Profile Picture Removed");
+  //     setProfilePic(null);
+  //   } catch (error) {
+  //     alert("Error removing profile picture");
+  //     console.error("Error removing profile picture:", error);
+  //   } finally {
+  //     setUploading(false);
+  //   }
+  // };
 
   const createUser = async () => {
     if (uploading) return;
@@ -108,16 +109,13 @@ const ReviewDetails = () => {
     try {
       const uploadedImagePath = await uploadImage();
       const user = await DataStore.save(
-        new User({
+        new Realtor({
           profilePic: uploadedImagePath,
-          firstName,
-          lastName,
-          address,
-          phoneNumber,
-          sub,
+          firstName, lastName, myDescription, address, phoneNumber, bankname, accountName, accountNumber,
+          sub
         })
       );
-      setDbUser(user);
+      setDbRealtor(user);
     } catch (e) {
       alert(`Error: ${e.message}`);
     }
@@ -130,12 +128,16 @@ const ReviewDetails = () => {
     try {
       const uploadedImagePath = await uploadImage();
       const user = await DataStore.save(
-        User.copyOf(dbRealtor, (updated) => {
+        Realtor.copyOf(dbRealtor, (updated) => {
           updated.firstName = firstName;
           updated.lastName = lastName;
+          updated.myDescription = myDescription;
           updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
+          updated.bankname = bankname;
+          updated.accountName = accountName,
+          updated.accountNumber = accountNumber;
         })
       );
       setDbRealtor(user);
@@ -149,15 +151,15 @@ const ReviewDetails = () => {
   const handleSave = async () => {
     if (dbRealtor) {
       await updateUser();
-      navigate("/clientcontent/profile"); 
+      navigate("/realtorcontent/profile"); 
       setTimeout(() => {
-        navigate('/clientcontent/home');
+        navigate('/realtorcontent/home');
       }, 1000);
     } else {
       await createUser();
-      navigate("/clientcontent/profile");
+      navigate("/realtorcontent/profile");
       setTimeout(() => {
-        navigate('/clientcontent/home');
+        navigate('/realtorcontent/home');
       }, 1000);
     }
   };
@@ -176,13 +178,6 @@ const ReviewDetails = () => {
             <div className='profilePicContainer'>
               <img src={profilePic} alt="Profile" className='img' />
             </div>
-            <button
-              className='removeButtonContainer'
-              disabled={uploading}
-              onClick={deleteProfilePic}
-            >
-              <MdCancel className='removebtn' />
-            </button>
           </div>
         )}
 
@@ -195,8 +190,18 @@ const ReviewDetails = () => {
         <p className='subHeader'>Address:</p>
         <p className='inputReview'>{address?.trim()}</p>
 
+        <p className='subHeader'>My Description:</p>
+        <p className='inputReview'>{myDescription?.trim()}</p>
+        <p className='subHeader'>Address:</p>
+        <p className='inputReview'>{address?.trim()}</p>
         <p className='subHeader'>Phone Number:</p>
-        <p className='inputReviewLast'>{phoneNumber}</p>
+        <p className='inputReview'>{phoneNumber}</p>
+        <p className='subHeader'>Bank Name:</p>
+        <p className='inputReview'>{bankname?.trim()}</p>
+        <p className='subHeader'>Account Name:</p>
+        <p className='inputReview'>{accountName?.trim()}</p>
+        <p className='subHeader'>Account Number:</p>
+        <p className='inputReviewLast'>{accountNumber}</p>
       </div>
 
       <button className='saveBtn' disabled={uploading} onClick={handleSave}>

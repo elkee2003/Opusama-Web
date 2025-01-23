@@ -1,0 +1,123 @@
+.proHeadContainer {
+    position: relative;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.dotCon {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+.dotIcon {
+    font-size: 25px;
+}
+
+.proHeadRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.proHeadIcon {
+    font-size: 35px;
+}
+
+.name {
+    display: flex;
+    flex: 1;
+    font-size: 40px;
+    font-weight: bold;
+    color: #01011b;
+}
+
+.proHeadTxt {
+    flex: 1;
+    font-size: 25px;
+    color: #01011b;
+}
+
+.proHeadTxtDesc {
+    flex: 1;
+    font-size: 25px;
+    font-weight: 600;
+    color: #484849;
+}
+
+.readMoreLess {
+    color: #009b0f;
+    cursor: pointer;
+}
+
+.profileHeadSubrow {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.subHeaderContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 7px 5px;
+}
+
+.subHeaderTxt {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+
+    .proHeadIcon {
+        font-size: 30px;
+    }
+
+    .name {
+        font-size: 35px;
+    }
+
+    .subHeaderTxt {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+    .proHeadIcon {
+        font-size: 25px;
+    }
+
+    .name {
+        font-size: 30px;
+    }
+
+    .proHeadTxt {
+        font-size: 20px;
+    }
+
+    .proHeadTxtDesc {
+        font-size: 17px;
+    }
+
+    .subHeaderTxt {
+        font-size: 18px;
+        font-weight: bold;
+    }
+}

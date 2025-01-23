@@ -341,7 +341,7 @@ button {
 
 .getInTouchTxt {
     color: #dddcdc;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -381,8 +381,9 @@ button {
     .getinTouchContainer {
         right: 100px;
         left: 100px;
+        padding:15px;
     }
     .getInTouchTxt {
-        font-size: 20px;
+        font-size: 25px;
     }
 }

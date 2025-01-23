@@ -340,7 +340,7 @@ button {
 
 .bookTxt {
     color: #dddcdc;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -378,8 +378,9 @@ button {
     .bookContainer {
         right: 100px;
         left: 100px;
+        padding: 10px 15px;
     }
     .bookTxt {
-        font-size: 20px;
+        font-size: 25px;
     }
 }

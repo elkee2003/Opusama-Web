@@ -107,6 +107,17 @@
 .profileInput {
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-right: 7rem;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid rgb(3, 3, 48);
+  border-radius: 5px;
+}
+
+.profileInputLast {
+  margin-top: 10px;
+  margin-bottom: 6rem;
+  margin-right: 7rem;
   background-color: white;
   padding: 10px;
   border: 2px solid rgb(3, 3, 48);
@@ -247,6 +258,15 @@
 }
 
 @media (max-width: 1300px) {
+
+  .profileInput {
+    margin-right: 8rem;
+  }
+
+  .profileInputLast{
+    margin-right: 8rem;
+  }
+
   .profileNxtBtn  {
     left: 480px;
     right: 180px;
@@ -259,6 +279,16 @@
 }
 
 @media (max-width: 900px) {
+
+  .profileInput {
+    margin-right: 0;
+  }
+  
+
+  .profileInputLast {
+    margin-right: 0;
+    /* margin-bottom: 6rem; */
+  }
 
   .formContainer {
     width: 80vw;
