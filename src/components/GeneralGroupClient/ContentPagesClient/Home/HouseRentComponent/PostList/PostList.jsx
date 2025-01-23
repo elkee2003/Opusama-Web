@@ -4,6 +4,7 @@ import PostFeed from '../Post/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider'
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
@@ -11,9 +12,22 @@ import {Realtor, Post} from '../../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
+    const {dbUser, authUser} = useAuthContext()
     const [realtorPosts, setRealtorPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+
+    useEffect(()=>{
+        if(authUser){
+            if(!dbUser){
+                alert(
+                    'Kindly fill in your data to access pages. Thank you.'
+                );
+                navigate('/clientcontent/profile')
+            }
+        };
+        
+    },[dbUser])
 
     // Alternative to for loop
     const fetchRealtorsAndPosts = async () => {

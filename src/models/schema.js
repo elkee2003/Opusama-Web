@@ -1016,11 +1016,13 @@ export const schema = {
                 "VISITED",
                 "SOLD",
                 "PAID",
+                "DELAYED_PAYMENT",
                 "RECEIVED",
                 "DENIED",
                 "OCCUPIED",
                 "REMOVED_CLIENT",
-                "REMOVED_REALTOR"
+                "REMOVED_REALTOR",
+                "REMOVED_REALTOR_PAYMENT_DELAYED"
             ]
         }
     },

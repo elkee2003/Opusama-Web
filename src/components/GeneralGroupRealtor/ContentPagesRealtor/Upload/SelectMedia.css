@@ -1,0 +1,57 @@
+.selectMContainer {
+  display: flex;
+  height: 100vh;
+  margin-top: 20%;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+
+.selectMIcon {
+  font-size: 48px;
+  color: #0d0430;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  display: none;
+}
+
+.disclaimer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #999;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .selectMContainer {
+        margin-bottom: 5rem;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+    .selectMContainer {
+        margin-top: 40%;
+    }
+}
+
+@media (max-width: 500px) {
+    .selectMContainer {
+        margin-top: 75%;
+    }
+}

@@ -1,11 +1,21 @@
-import React from 'react'
+import React from 'react';
+import './Profile.css';
+import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
+import EditProfile from './EditProfile/EditProfile';
+import MainProfile from './MainProfile/MainProfile';
 
 function Profile() {
+  const {dbRealtor} = useAuthContext();
+
   return (
-    <div>
-      <h1>Profile</h1>
+    <div >
+      {dbRealtor ?
+        <MainProfile/>
+      :
+        <EditProfile/>
+      }
     </div>
   )
 }
 
-export default Profile
+export default Profile;

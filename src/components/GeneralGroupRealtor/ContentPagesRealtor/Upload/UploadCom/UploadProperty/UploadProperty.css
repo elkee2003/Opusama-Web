@@ -1,0 +1,57 @@
+.uploadPropContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.uploadPropHeader {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-right: 2rem;
+}
+
+.uploadPropBckBtn {
+    position: absolute;
+    font-size: 40px;
+}
+
+.btnUpload {
+    display: flex;
+    margin:20px 0;
+    align-self: center;
+    padding:20px;
+    min-width: 300px;
+    background: green;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadTxt {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .uploadPropContainer {
+        margin-bottom: 5rem;
+    }
+    
+    .btnUpload {
+        margin-right: 2rem;
+    }
+}
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .btnUpload {
+        margin-right: 5rem;
+    }
+}

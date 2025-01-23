@@ -13,6 +13,18 @@ const BookingList = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  useEffect(()=>{
+      if(authUser){
+          if(!dbUser){
+            alert(
+                'Kindly fill in your data to access pages. Thank you.'
+            );
+            navigate('/clientcontent/profile')
+          }
+      };
+      
+  },[dbUser])
+
   const fetchBookings = async () => {
     setLoading(true);
     try {
@@ -53,7 +65,7 @@ const BookingList = () => {
       );
       setBookings(bookingsWithDetails);
     } catch (e) {
-      alert(`Error fetching bookings: ${e.message}`);
+      <p>Error fetching booking</p>
     } finally {
       setLoading(false);
       setRefreshing(false);

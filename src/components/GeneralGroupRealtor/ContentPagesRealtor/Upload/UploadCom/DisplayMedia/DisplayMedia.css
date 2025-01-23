@@ -1,0 +1,127 @@
+.displayMContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  width: 100%;
+}
+
+/* Container for icons (back and forward buttons) */
+.dispalyMIconContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.dispalyMBackIconContainer,
+.dispalyMForwardIconContainer {
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: #000;
+}
+.dispalyMForwardIconContainer {
+    margin-right: 40px;
+}
+
+.dispalyMIcon {
+  font-size: 30px;
+}
+
+/* Container for the media items */
+.mediaFullDisplayContainer {
+  width: 50%;
+  overflow-y: auto;  /* Enable vertical scrolling */
+  padding: 10px;
+  max-height: 80vh;  /* Set a max height to make scrolling more noticeable */
+}
+
+/* Hide scrollbar */
+.mediaFullDisplayContainer::-webkit-scrollbar {
+  display: none;  /* Hides the scrollbar */
+}
+
+/* Container for images inside the vertical scroll */
+.mediaDivContainer {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+  padding-bottom: 20px;
+}
+
+/* Media item container */
+.dispalyMediaContainer {
+  position: relative;
+}
+
+/* Style for each media image */
+.dispalyMedia {
+  width: 100%;  
+  height: 250px; 
+  object-fit: contain;
+  border-radius: 10px;
+  background-color:rgb(204, 204, 204);
+}
+
+/* Remove button positioning */
+.dispalyMRemoveButtonContainer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dispalyMRemovebtn {
+  font-size: 20px;
+  color: #f00;
+}
+
+/* Styling for the back and forward buttons */
+.dispalyMBackIconContainer,
+.dispalyMForwardIconContainer {
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: #000;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .mediaDivContainer{
+        margin-bottom: 5rem;
+    }
+}
+@media (max-width: 768px) {
+  .dispalyMedia {
+    width: 250px;  /* Adjust width for tablets */
+    height: 250px; /* Adjust height for tablets */
+  }
+
+  .mediaDivContainer {
+    gap: 8px;
+  }
+
+  .dispalyMBackIconContainer,
+  .dispalyMForwardIconContainer {
+    font-size: 25px; /* Adjust icon size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+
+    .mediaFullDisplayContainer {
+        width: 70%;
+    }
+    .dispalyMedia {
+        width: 200px;  /* Adjust width for mobile */
+        height: 250px; /* Adjust height for mobile */
+  }
+
+  .dispalyMBackIconContainer,
+  .dispalyMForwardIconContainer {
+    font-size: 20px; /* Adjust icon size for smaller screens */
+  }
+}

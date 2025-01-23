@@ -1,0 +1,222 @@
+/* General Styles */
+.formContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+}
+
+.formHeader {
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 20rem;
+}
+
+.formBckBtn {
+  position: absolute;
+  font-size: 40px;
+}
+
+
+/* autocomplete */
+.autocompleteContainer {
+    position: relative;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inputAutoComplete {
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    width: 50vw;
+    margin-right: 20rem;
+    height: 50px;
+    padding: 0 12px;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    font-size: 14px;
+    outline: none;
+    text-overflow: ellipsis;
+    margin-top: 30px;
+}
+
+.nxtPageNavCon {
+  margin-top: 15rem;
+  margin-right: 10rem;
+  align-self: center;
+  max-width: 150px;
+  min-width: 150px;
+  padding: 10px;
+  background: rgb(6, 6, 61);
+  border-radius: 20px;
+}
+
+.nxtPageNavTxt {
+  color: white;
+  font-size: 40px;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.header {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.label {
+  color: #02061b;
+  font-size: 15px;
+  font-style: italic;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+
+.input {
+  padding: 8px;
+  border-width: 2px;
+  border-color: #02061b;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.generalRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.genInput {
+  padding: 10px;
+  border-width: 2px;
+  border-color: #02061b;
+  border-radius: 20px;
+  font-size: 15px;
+  width: calc((100% - 5 * 5) / 2); /* Calculate input size dynamically */
+}
+
+.btnReview {
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-radius: 20px;
+  border-width: 2px;
+  border-color: #049618;
+  align-items: center;
+  background-color: #060647;
+}
+
+.btnReviewTxt {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #eeeeee;
+}
+
+.error {
+  margin-left: 5px;
+  margin-bottom: 14px;
+  color: red;
+  font-style: italic;
+}
+
+/* Google Places Style */
+
+
+/* Time Frame Style */
+.timeDropdown {
+  height: 50px;
+  border-color: #02061b;
+  border-width: 2px;
+  border-radius: 20px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 10px;
+}
+
+.timeLabel {
+  position: absolute;
+  background-color: white;
+  left: 22px;
+  top: 8px;
+  z-index: 999;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 14px;
+}
+
+.placeholderStyle {
+  font-size: 16px;
+  color: grey;
+}
+
+.selectedTextStyle {
+  font-size: 16px;
+}
+
+.iconStyle {
+  width: 20px;
+  height: 20px;
+}
+
+.inputSearchStyle {
+  height: 40px;
+  font-size: 16px;
+}
+
+.customInput {
+  border-width: 1px;
+  border-color: #a9a9af;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    /* autocomplete input */
+    .formContainer {
+      margin-bottom: 5rem;
+    }
+    .formHeader {
+        font-size: 2.3rem;
+        margin-right: 2rem;
+    }
+
+    .inputAutoComplete{
+        margin-right: 2rem;
+        width: 70vw;
+    }
+
+    .nxtPageNavCon {
+      margin-right: 0px;
+    }
+}
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    /* autocomplete input */
+    .formHeader {
+        font-size: 2rem;
+        margin-right: 2rem;
+    }
+
+    .inputAutoComplete{
+        margin-right: 2rem;
+        width: 70vw;
+    }
+}

@@ -62,7 +62,7 @@ const DeleteAccount = () => {
       alert('Account has been successfully deleted');
 
       // 4. Redirect to login or home screen
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.log('Error deleting account:', error);
       alert('Failed to delete the account. Please try again.');

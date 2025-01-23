@@ -1,7 +1,7 @@
 .searchContainer {
   display: flex;
   flex-direction: column;
-  margin: 40px 10px;
+  margin: 30px 10px;
   width: 70%;
 }
 
@@ -131,7 +131,7 @@
 }
 @media (max-width: 500px) {
   .searchContainer {
-    width: 100%;
+    width: 95%;
   }
 
   .searchName {

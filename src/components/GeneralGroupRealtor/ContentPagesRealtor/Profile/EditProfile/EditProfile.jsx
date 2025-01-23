@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from "aws-amplify/auth";
 import { useAuthContext } from "../../../../../../Providers/ClientProvider/AuthProvider";
-import { useProfileContext } from "../../../../../../Providers/ClientProvider/ProfileProvider";
+import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
 import { FiArrowRightCircle } from "react-icons/fi"; 
-import "./Styles.css";
+
 
 const EditProfile = () => {
-  const { authUser, dbUser } = useAuthContext();
+  const { authUser, dbRealtor } = useAuthContext();
   const {
     firstName,
     setFirstName,
@@ -105,19 +105,6 @@ const EditProfile = () => {
       </div>
     );
   };
-
-  // I need to add the already existing inputs for this condition and I don't have that time.
-  // if (authUser){
-  //     if (!dbUser) {
-  //         return (
-  //             <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  //             <p style={{ fontSize: 20, fontWeight: 'bold', color: '#afadad' }}>
-  //                 Kindly Fill in your data to to access other pages. Thank you.
-  //             </p>
-  //             </div>
-  //         );
-  //     }
-  // }
 
   return (
     <div className="profileContainer">

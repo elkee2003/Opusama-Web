@@ -1,0 +1,66 @@
+.reviewUploadCon {
+    display: flex;
+    flex-direction: column;
+}
+
+.mediaFullDisplayContainer{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-right: 2rem;
+    background-color: rgb(231, 229, 229);
+    border-radius: 30px;
+    margin-bottom: 2rem;
+}
+
+/* .uploadPropRow{} */
+
+.displayLabel {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.uploadPropInputReview {
+  min-width:460px;
+  padding: 8px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: white;
+  background-color: rgba(4, 8, 43, 0.8);
+  border-radius: 20px;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+
+    .mediaFullDisplayContainer {
+        width: 90%;
+        margin-right: 0rem;
+    }
+
+    .uploadPropInputReview {
+        min-width: 300px;
+    }
+}
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .mediaFullDisplayContainer {
+        width: 90%;
+        margin-right: 0rem;
+    }
+
+    .uploadPropInputReview {
+        min-width: 200px;
+        margin-right: 1.5rem;
+    }
+
+}
