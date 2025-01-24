@@ -64,6 +64,8 @@ const UploadProperty = () => {
     onValidateUpload,
   } = useUploadContext();
 
+  console.log('media:',media)
+
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -97,24 +99,32 @@ const UploadProperty = () => {
   const uploadImages = async () => {
     try {
       const uploadPromises = media.map(async (item) => {
-        // Image manipulation (resize and compress)
+        // Step 1: Fetch the blob from the `uri`
+        const response = await fetch(item.uri);
+        const fileBlob = await response.blob();
+
+        // Step 2: Convert blob into a File object (for compression)
+        const file = new File([fileBlob], item.name, { type: fileBlob.type });
+
+        // Step 3: Image manipulation (resize and compress)
         const options = {
           maxSizeMB: 0.5, // Compress to max 0.5 MB
           maxWidthOrHeight: 600, // Resize to 600px
           useWebWorker: true,
         };
-        const compressedFile = await browserImageCompression(item, options);
 
-        // Create a Blob from the compressed file
-        const blob = new Blob([compressedFile], { type: "image/jpeg" });
+        const compressedFile = await browserImageCompression(file, options);
 
-        // Generate a unique file key
+        // Step 4: Create a Blob from the compressed file
+        const compressedBlob = new Blob([compressedFile], { type: "image/jpeg" });
+
+        // Step 5: Generate a unique file key
         const fileKey = `public/media/${sub}/${crypto.randomUUID()}.jpg`;
 
-        // Upload image to S3
+        // Step 6: Upload image to S3
         const result = await uploadData({
           path: fileKey,
-          data: blob,
+          data: compressedBlob,
           options: {
             contentType: "image/jpeg",
             onProgress: ({ transferredBytes, totalBytes }) => {

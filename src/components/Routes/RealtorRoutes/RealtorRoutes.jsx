@@ -15,6 +15,11 @@ import ReviewProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile
 import ProfileOptionsPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/MainProfile/ProfileOptions/ProifleOptions';
 import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
+import DetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/DetailedPost';
+import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/UsersReviews';
+import PostGallery from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PostGallery/PostGallery';
+import PendingDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/PendingAlerts/DetailedAlert/DetailedAlert';
+import AcceptedDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/AccceptedAlerts/DetailedAlert/DetailedAlert';
 
 const RealtorRoutes = () => (
     <Routes>
@@ -33,6 +38,12 @@ const RealtorRoutes = () => (
             <Route path="profileoptions" element={<ProfileOptionsPage />} />
             <Route path="deleteaccount" element={<DeleteAcccount />} />
             <Route path="support" element={<Support />} />
+            
+            <Route path="postdetails/:postId" element={<DetailedPost/>} />
+            <Route path="postreviews/:postId" element={<UsersReview/>} />
+            <Route path="postgallery/:postId" element={<PostGallery/>} />
+            <Route path="pending_details/:alertId" element={<PendingDetailedAlert/>} />
+            <Route path="accepted_details/:alertId" element={<AcceptedDetailedAlert/>} />
 
             {/* for invalid route */}
             <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>

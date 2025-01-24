@@ -1,0 +1,10 @@
+.noListings {
+    text-align: center;
+    font-weight: bold;
+    color: #afadad;
+    font-size: 30px;
+    position: relative;
+    top: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+}

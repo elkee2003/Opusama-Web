@@ -17,7 +17,7 @@ const UploadContextProvider = ({children}) => {
     const [lng, setLng] = useState(0);
     const [bedrooms, setBedrooms] = useState('');
     const [bed, setBed] = useState('');
-    const [cautionFee, setCautionFee] = useState(0);
+    const [cautionFee, setCautionFee] = useState('');
     const [inspectionFee, setInspectionFee]= useState('')
     const [price, setPrice] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
