@@ -18,7 +18,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
 
   const handleRemove = () => {
     if (
-      ['VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'SOLD'].includes(
+      ['OCCUPIED', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'DELAYED_PAYMENT', 'SOLD'].includes(
         booking.status
       )
     ) {
@@ -42,7 +42,9 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
       VISITED: 'Visited',
       SOLD: 'Sold',
       PAID: 'Paid',
+      DELAYED_PAYMENT: 'Delayed Payment',
       RECEIVED: 'Received',
+      OCCUPIED:'Occupied, try another listing',
       DENIED: 'Denied',
       REMOVED_CLIENT: 'Removed',
     };
@@ -60,7 +62,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
   return (
     <div className="bookingSingleContainer">
       {/* Remove Button */}
-      {booking.status === 'DENIED' && (
+      {(booking.status === 'DENIED' || booking.status === 'OCCUPIED' || booking.status === 'DELAYED_PAYMENT') && (
         <button className="bkRemoveBtn" onClick={(e) =>{
           e.stopPropagation();
           onDelete()
@@ -152,10 +154,14 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
         {booking.status === 'ACCEPTED' && validPropertyTypes.includes(booking.propertyType) && (
           <div className="viewConInfoRow">
             {booking.post?.inspectionFee ? (
-              <button className="viewCon" onClick={(e) =>{
-                  e.stopPropagation();
-                  navigate(`/clientcontent/payment`)
-                }}>
+              <button className="viewCon"
+
+              // When fix fulterwave
+              // onClick={(e) =>{
+              //     e.stopPropagation();
+              //     navigate(`/clientcontent/payment`)
+              //   }}
+              >
                   <p className='viewTxt'>
                     Make Payment
                   </p>    

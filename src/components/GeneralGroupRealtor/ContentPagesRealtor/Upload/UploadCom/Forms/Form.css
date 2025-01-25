@@ -105,6 +105,7 @@
 
 .moneyCon {
   display: flex;
+  flex-direction: column;
   gap:10px
 }
 
@@ -278,7 +279,7 @@
 
     .inputAutoComplete{
         margin-right: -2.5rem;
-        width: 70vw;
+        width: 78vw;
     }
 
     .nxtPageNavCon {
@@ -294,16 +295,16 @@
     }
 
     .moneyInput {
-      max-width: 300px;
+      max-width: 250px;
     }
 
     .formReviewBtnDiv {
-      margin-right: -2rem;
+      margin-right: -1rem;
     }
 
-    .formReview {
+    .formBtnReview {
       min-width: 270px;
-      max-width: 270px;
+      max-width: 270px
     }
 
     .formBtnReviewTxt {

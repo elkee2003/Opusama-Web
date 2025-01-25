@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-top: 40px;
-  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -11,6 +9,7 @@
   font-size: 30px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .dAlatSubHeader {
@@ -20,11 +19,22 @@
 
 .dAlatDetails {
   color: white;
+  min-width:460px;
   padding: 8px;
   border-radius: 10px;
   font-size: 17px;
   margin-bottom: 15px;
   background-color: #0b0b29;
+}
+
+.uploadPropInputReview {
+  min-width:460px;
+  padding: 8px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: white;
+  background-color: rgba(4, 8, 43, 0.8);
+  border-radius: 20px;
 }
 
 .dAlatGuestUnit {
@@ -133,6 +143,10 @@
     .dAlatContainer {
         margin-bottom: 5rem;
     }
+
+    .dAlatDetails {
+      min-width: 360px;
+    }
 }
 @media (max-width: 700px) {
 
@@ -142,5 +156,27 @@
 }
 
 @media (max-width: 500px) {
+  .dAlatContainer {
+      margin-left: -0.7rem;
+  }
+  .dAlatDetails {
+    min-width: 330px;
+    max-width: 330px;
+  }
 
+  .accept {
+    width: 130px;
+  }
+
+  .occupied{
+    width: 130px;
+  }
+
+  .deny {
+    width: 130px;
+  }
+
+  .dAlaBtnTxt {
+    font-size: 18px;
+  }
 }

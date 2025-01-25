@@ -116,6 +116,11 @@
   }
 }
 @media (max-width: 500px) {
+  .bookingContainer {
+    width: 82vw;
+    /* justify-content: center; */
+  }
+
   .bookingHeader {
     font-size: 20px;
     font-weight: bold;

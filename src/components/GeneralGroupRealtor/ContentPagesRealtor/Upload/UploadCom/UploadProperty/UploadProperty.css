@@ -57,4 +57,11 @@
 }
 
 @media (max-width: 500px) {
+    .uploadPropHeader {
+        font-size: 2rem;
+    }
+
+    .btnUpload {
+        min-width: 250px;
+    }
 }

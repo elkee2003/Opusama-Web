@@ -14,6 +14,7 @@ const ShortAlert = ({ notification }) => {
     if (status === 'PAID') return 'Paid';
     if (status === 'DELAYED_PAYMENT') return 'Delayed Payment';
     if (status === 'RECEIVED') return 'Received';
+    if (status === 'OCCUPIED') return 'Occupied, try another listing';
     if (status === 'DENIED') return 'Denied';
     return 'Pending';
   };

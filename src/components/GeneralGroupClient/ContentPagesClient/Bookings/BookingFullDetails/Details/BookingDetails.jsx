@@ -20,7 +20,9 @@ const BookingDetails = ({ notification, onStatusChange }) => {
       VISITED: 'Visited',
       SOLD: 'Sold',
       PAID: 'Paid',
+      DELAYED_PAYMENT: 'Delayed Payment',
       RECEIVED: 'Received',
+      OCCUPIED:'Occupied, try another listing',
       DENIED: 'Denied',
       REMOVED_CLIENT: 'Removed',
     };
@@ -57,9 +59,13 @@ const BookingDetails = ({ notification, onStatusChange }) => {
     onStatusChange('VISITED');
   };
 
+  // Handle Paid button click
+  const handlePaidClick = () => {
+    onStatusChange('PAID');
+  };
+
   // Handle Payment
   const handlePayment = () => {
-    // Redirect to payment page
    navigate('/clientcontent/payment');
   };
 
@@ -109,16 +115,24 @@ const BookingDetails = ({ notification, onStatusChange }) => {
       } else if (notification.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
-            <button className="view" onClick={handlePayment}>
+            <button className="view" onClick={handlePaidClick}>
+              <p className='bkBtnTxt'>
+                Paid
+              </p>
+            </button>
+
+            {/* When I fix flutter wave, I will uncomment */}
+            {/* <button className="view" onClick={handlePayment}>
               <p className='bkBtnTxt'>
                 Make Payment
               </p>
-            </button>
+            </button> */}
 
             {/* Info Icon */}
             <button
               className="infoIconCon"
-              onClick={() => alert('Click on "Make Payment" to pay for your booked accommodation.')}
+              onClick={() => alert('Click on "Paid" When you have transferred the money to account.')}
+              // onClick={() => alert('Click on "Make Payment" to pay for your booked accommodation.')}
             >
               <FaInfoCircle className="infoIcon" />
             </button>

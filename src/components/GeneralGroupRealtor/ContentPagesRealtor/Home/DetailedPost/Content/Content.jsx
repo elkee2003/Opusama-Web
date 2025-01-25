@@ -25,7 +25,8 @@ function Content({post, realtor,}) {
     = useState(false);
     const [isAvailable, setIsAvailable] = useState(post.available);
     const [averageRating, setAverageRating] = useState(0);
-    const [imageUris, setImageUris] = useState([]);  
+    const [imageUris, setImageUris] = useState([]); 
+    const [loading, setLoading] = useState(false); 
 
     const formattedPrice = Number(post?.price)?.toLocaleString();
     const formattedCautionFee = Number(post?.cautionFee)?.toLocaleString();
@@ -45,6 +46,7 @@ function Content({post, realtor,}) {
       if (window.confirm("Are you sure you want to delete this post?")) {
         setLoading(true);
         try {
+           // Delete media from S3
           if (post.media && post.media.length > 0) {
             await Promise.all(
               post.media.map(async (path) => {
@@ -57,11 +59,12 @@ function Content({post, realtor,}) {
             );
           }
 
+          // Query and delete the post
           const postToDelete = await DataStore.query(Post, post.id);
           if (postToDelete) {
             await DataStore.delete(postToDelete);
             alert("Post deleted successfully.");
-            window.history.back();
+            navigate(-1);
           } else {
             alert("Post not found.");
           }
@@ -379,12 +382,14 @@ function Content({post, realtor,}) {
         </button>
 
         {/* Delete btn */}
-        <button 
-        className='deleteCon'
-        // onClick={}
-        >
-            <p className='deleteTxt'>Delete</p>
-        </button>
+        <div className='deleteDiv'>
+          <button 
+          className='deleteCon'
+          onClick={handleDeletePost}
+          >
+              <p className='deleteTxt'>{loading ? 'Deleting...' : 'Delete'}</p>
+          </button>
+        </div>
 
       </div>
 

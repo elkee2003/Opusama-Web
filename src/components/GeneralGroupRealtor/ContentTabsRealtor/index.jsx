@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser } from 'react-icons/fa';
+import { FaHome, FaBell, FaPlusCircle, FaUser } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
 import './Sidebar.css';
 
@@ -28,7 +28,7 @@ function ContentTabsRealtor (){
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='nav-container'>
-                                    <FaSearch /> Upload
+                                    <FaPlusCircle /> Upload
                                 </div>
                             </NavLink>
                         </li>
@@ -38,7 +38,7 @@ function ContentTabsRealtor (){
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='nav-container'>
-                                    <FaCalendarAlt /> Alerts
+                                    <FaBell /> Alerts
                                 </div>
                             </NavLink>
                         </li>
@@ -69,14 +69,14 @@ function ContentTabsRealtor (){
                     to="/realtorcontent/upload"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
-                    <FaSearch /> Upload
+                    <FaPlusCircle /> Upload
                 </NavLink>
 
                 <NavLink 
                     to="/realtorcontent/alerts"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
-                    <FaCalendarAlt /> Alerts
+                    <FaBell /> Alerts
                 </NavLink>
 
                 <NavLink Link 

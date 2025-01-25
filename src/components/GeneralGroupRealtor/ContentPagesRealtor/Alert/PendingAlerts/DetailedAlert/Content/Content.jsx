@@ -22,7 +22,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
   };
 
   return (
-    <div className="dAlattContainer">
+    <div className="dAlatContainer">
       <h2 className="dAlatHeader">Guest Details</h2>
 
       {/* Details */}
