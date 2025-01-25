@@ -9,6 +9,8 @@ const ShortAlertList = () => {
     const { dbRealtor } = useAuthContext();
 
     const [alerts, setAlerts] = useState([]);
+    const [filteredAlerts, setFilteredAlerts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -43,6 +45,7 @@ const ShortAlertList = () => {
                 })
             );
             setAlerts(bookingWithUserID);
+            setFilteredAlerts(bookingWithUserID); 
         } catch (e) {
             <p>Error Fetching bookings</p>;
         } finally {
@@ -78,16 +81,48 @@ const ShortAlertList = () => {
         return () => subscription.unsubscribe();
     }, [[dbRealtor?.id]]);
 
+    // For refresh
     const handleRefresh = () => {
         setRefreshing(true);
         fetchBookings();
     };
 
+    // For search
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (!query) {
+            setFilteredAlerts(alerts);
+            return;
+        }
+
+        const lowercasedQuery = query.toLowerCase();
+        const filtered = alerts.filter((alert) => {
+            const clientFirstName = alert?.clientFirstName?.toLowerCase() || '';
+            const clientLastName = alert?.clientLastName?.toLowerCase() || '';
+            return (
+                clientFirstName.includes(lowercasedQuery) || clientLastName.includes(lowercasedQuery)
+            );
+        });
+
+        setFilteredAlerts(filtered);
+    };
+
+
   return (
     <div className="shortAlertListContainer">
-        {alerts && alerts.length > 0 ? (
+        {/* Search Bar */}
+        <input
+            type="text"
+            placeholder="Search by client name"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="alertInputSearch"
+        />
+
+        {/* Alert List */}
+        {filteredAlerts && filteredAlerts.length > 0 ? (
             <ul className="alertList">
-            {alerts.map((alert) => (
+            {filteredAlerts.map((alert) => (
                 <ShortAlert 
                     key={alert.id}
                     notification={alert} 
@@ -96,11 +131,15 @@ const ShortAlertList = () => {
             ))}
             </ul>
         ) : (
-            <p className="noListings">You have no pending alert</p>
+            <p className="noListings">No pending alert or No matching alerts found</p>
         )}
-        <button onClick={handleRefresh} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+
+        {/* Refresh Btn */}
+        <div className='alertrefreshMidCon'>
+            <button onClick={handleRefresh} className='refreshButton'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   );
 };

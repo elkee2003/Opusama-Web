@@ -22,7 +22,11 @@
   color: #000;
 }
 .dispalyMForwardIconContainer {
-    margin-right: 40px;
+    margin-right: 1rem;
+}
+
+.dispalyMBackIconContainer {
+  margin-left: -2rem;
 }
 
 .dispalyMIcon {
@@ -34,7 +38,8 @@
   width: 50%;
   overflow-y: auto;  /* Enable vertical scrolling */
   padding: 10px;
-  max-height: 80vh;  /* Set a max height to make scrolling more noticeable */
+  max-height: 80vh; 
+  margin-left: -2rem;
 }
 
 /* Hide scrollbar */
@@ -90,9 +95,15 @@
 
 /* Responsive design */
 @media (max-width: 900px) {
-    .mediaDivContainer{
-        margin-bottom: 5rem;
-    }
+
+  .mediaFullDisplayContainer {
+    margin-left: -2.8rem;
+    margin-bottom: 3rem;
+  }
+
+  .mediaDivContainer{
+      margin-bottom: 5rem;
+  }
 }
 @media (max-width: 768px) {
   .dispalyMedia {
@@ -114,6 +125,7 @@
 
     .mediaFullDisplayContainer {
         width: 70%;
+        margin-left: -2.8rem;
     }
     .dispalyMedia {
         width: 200px;  /* Adjust width for mobile */

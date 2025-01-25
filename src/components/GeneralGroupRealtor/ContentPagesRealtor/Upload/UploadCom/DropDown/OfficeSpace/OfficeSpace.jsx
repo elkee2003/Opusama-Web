@@ -45,7 +45,7 @@ const OfficeSpace = () => {
     <div>
       {propertyType === 'Office Space' && (
         <>
-          <label className="labelTxt">Office Space Type</label>
+          <label className="formLabel">Office Space Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={officeData}
@@ -60,7 +60,7 @@ const OfficeSpace = () => {
           {type === 'Other' && (
             <input
               type="text"
-              className="customInput"
+              className="inputField"
               placeholder="Enter Office Space Type"
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}

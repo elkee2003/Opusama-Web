@@ -22,29 +22,29 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="header">Guest Details</h2>
+    <div className="dAlattContainer">
+      <h2 className="dAlatHeader">Guest Details</h2>
 
       {/* Details */}
       <div className="scrollView">
         {/* Guest Units */}
-        <div className="guestUnit">
+        <div className="dAlatGuestUnit">
           {notification?.adults && (
             <div>
-              <h3 className="subHeader">Adults:</h3>
-              <p className="unitTxt">{notification.adults}</p>
+              <h3 className="dAlatSubHeader">Adults:</h3>
+              <p className="dAlatUnitTxt">{notification.adults}</p>
             </div>
           )}
           {notification?.kids && (
             <div>
-              <h3 className="subHeader">Children:</h3>
-              <p className="unitTxt">{notification.kids}</p>
+              <h3 className="dAlatSubHeader">Children:</h3>
+              <p className="dAlatUnitTxt">{notification.kids}</p>
             </div>
           )}
           {notification?.infants && (
             <div>
-              <h3 className="subHeader">Infants:</h3>
-              <p className="unitTxt">{notification.infants}</p>
+              <h3 className="dAlatSubHeader">Infants:</h3>
+              <p className="dAlatUnitTxt">{notification.infants}</p>
             </div>
           )}
         </div>
@@ -52,66 +52,66 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
         {/* Client Info */}
         {notification?.clientFirstName && (
           <>
-            <h3 className="subHeader">Name(s):</h3>
-            <p className="details">{notification.clientFirstName}</p>
+            <h3 className="dAlatSubHeader">Name(s):</h3>
+            <p className="dAlatDetails">{notification.clientFirstName}</p>
           </>
         )}
         {notification?.clientLastName && (
           <>
-            <h3 className="subHeader">Last Name(s):</h3>
-            <p className="details">{notification.clientLastName}</p>
+            <h3 className="dAlatSubHeader">Last Name(s):</h3>
+            <p className="dAlatDetails">{notification.clientLastName}</p>
           </>
         )}
 
         {/* Other Info */}
         {notification?.purpose && (
           <>
-            <h3 className="subHeader">Purpose:</h3>
-            <p className="details">{notification.purpose}</p>
+            <h3 className="dAlatSubHeader">Purpose:</h3>
+            <p className="dAlatDetails">{notification.purpose}</p>
           </>
         )}
         {notification?.duration && (
           <>
-            <h3 className="subHeader">Duration:</h3>
-            <p className="details">{notification.duration}</p>
+            <h3 className="dAlatSubHeader">Duration:</h3>
+            <p className="dAlatDetails">{notification.duration}</p>
           </>
         )}
         {notification?.checkInDate && (
           <>
-            <h3 className="subHeader">Check-in:</h3>
-            <p className="details">{notification.checkInDate}</p>
+            <h3 className="dAlatSubHeader">Check-in:</h3>
+            <p className="dAlatDetails">{notification.checkInDate}</p>
           </>
         )}
         {notification?.checkOutDate && (
           <>
-            <h3 className="subHeader">Check-out:</h3>
-            <p className="details">{notification.checkOutDate}</p>
+            <h3 className="dAlatSubHeader">Check-out:</h3>
+            <p className="dAlatDetails">{notification.checkOutDate}</p>
           </>
         )}
         {notification?.propertyType && (
           <>
-            <h3 className="subHeader">Accommodation Type:</h3>
-            <p className="details">{notification.propertyType}</p>
+            <h3 className="dAlatSubHeader">Accommodation Type:</h3>
+            <p className="dAlatDetails">{notification.propertyType}</p>
           </>
         )}
         {notification?.accommodationType && (
           <>
-            <h3 className="subHeader">
+            <h3 className="dAlatSubHeader">
               {notification.propertyType === 'Hotel / Shortlet' ? 'Room Type:' : 'Property Type'}
             </h3>
-            <p className="details">{notification.accommodationType}</p>
+            <p className="dAlatDetails">{notification.accommodationType}</p>
           </>
         )}
         {notification?.nameOfType && (
           <>
-            <h3 className="subHeader">Room Name:</h3>
-            <p className="details">{notification.nameOfType}</p>
+            <h3 className="dAlatSubHeader">Room Name:</h3>
+            <p className="dAlatDetails">{notification.nameOfType}</p>
           </>
         )}
         {notification?.realtorPrice && (
           <>
-            <h3 className="subHeader">Price:</h3>
-            <p className="details">₦{Number(notification.realtorPrice).toLocaleString()}</p>
+            <h3 className="dAlatSubHeader">Price:</h3>
+            <p className="dAlatDetails">₦{Number(notification.realtorPrice).toLocaleString()}</p>
           </>
         )}
 
@@ -138,7 +138,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
                 navigate(-1);
               }}
             >
-              Accept
+              <p className='dAlaBtnTxt'>
+                Accept
+              </p>
             </button>
             <button
               className="occupied"
@@ -148,7 +150,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
                 ) && onStatusChange('OCCUPIED') && navigate(-1)
               }
             >
-              Try another
+              <p className='dAlaBtnTxt'>
+                Try another
+              </p>
             </button>
           </>
         )}
@@ -165,7 +169,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
               navigate(-1)
             }
           >
-            Deny
+            <p className='dAlaBtnTxt'>
+              Deny
+            </p>
           </button>
         </div>
       )}
@@ -179,7 +185,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
               navigate(-1);
             }}
           >
-            Remove
+            <p className='dAlaBtnTxt'>
+              Remove
+            </p>
           </button>
         </div>
       )}

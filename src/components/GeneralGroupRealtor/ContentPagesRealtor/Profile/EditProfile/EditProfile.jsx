@@ -238,7 +238,7 @@ const EditProfile = () => {
           </div>
 
           {/* Error Message */}
-          <p className="error">{errorMessage}</p>
+          <p className="realtorError">{errorMessage}</p>
 
           <button onClick={goToNxtPage} className="profileNxtBtn">
             <FiArrowRightCircle

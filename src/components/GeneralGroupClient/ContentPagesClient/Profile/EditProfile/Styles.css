@@ -116,7 +116,7 @@
 
 .profileInputLast {
   margin-top: 10px;
-  margin-bottom: 6rem;
+  margin-bottom: 1rem;
   margin-right: 7rem;
   background-color: white;
   padding: 10px;
@@ -283,6 +283,9 @@
   .profileInput {
     margin-right: 0;
   }
+  .profileInputLast {
+    margin-bottom: 7rem;
+  }
   
 
   .profileInputLast {
@@ -338,12 +341,13 @@
   }
 
   .saveBtn  {
+    padding:10px ;
     right: 105px;
     left: 105px;
   }
 
   .saveBtnTxt {
-    font-size: 20px;
+    font-size: 25px;
   }
 
   .emptyInput {

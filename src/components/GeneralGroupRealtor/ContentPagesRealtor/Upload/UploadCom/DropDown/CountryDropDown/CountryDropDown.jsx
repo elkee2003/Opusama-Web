@@ -105,9 +105,9 @@ const LocationDropDown = () => {
   };
 
   return (
-    <div className="container">
+    <div className="formSectionCon">
       {/* Country */}
-      <label className="label">Country</label>
+      <label className="formLabel">Country</label>
       <Select
         className="dropdown"
         options={countryData}
@@ -121,7 +121,7 @@ const LocationDropDown = () => {
       />
 
       {/* State */}
-      <label className="label">State</label>
+      <label className="formLabel">State</label>
       <Select
         className="dropdown"
         options={stateData}
@@ -135,7 +135,7 @@ const LocationDropDown = () => {
       />
 
       {/* City */}
-      <label className="label">City</label>
+      <label className="formLabel">City</label>
       <Select
         className="dropdown"
         options={cityData}

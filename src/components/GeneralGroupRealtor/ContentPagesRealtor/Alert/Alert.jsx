@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './Alert.css'
 import { Tabs, Tab, Box } from '@mui/material';
 import PendingAlertList from './PendingAlerts/ShortAlertList/ShortAlertList'
-import AcceptedAlertList from './AccceptedAlerts/ShortAlertList/ShortAlertList';
+import AcceptedAlertList from './AcceptedAlerts/ShortAlertList/ShortAlertList';
 
 function Alert() {
     const [selectedTab, setSelectedTab] = useState(0);
@@ -13,7 +13,7 @@ function Alert() {
   
   return (
     <div>
-      <div className="tabs-container">
+      <div className="aTabs-container">
         <Tabs
           value={selectedTab}
           onChange={handleTabChange}
@@ -25,7 +25,7 @@ function Alert() {
           <Tab label="Accepted Alert" />
         </Tabs>
       </div>
-      <div className="tab-panel">
+      <div className="aTab-panel">
         {selectedTab === 0 && <PendingAlertList />}
         {selectedTab === 1 && <AcceptedAlertList />}
       </div>

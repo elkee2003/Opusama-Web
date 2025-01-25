@@ -65,6 +65,9 @@ const GooglePlacesAutoCompleteCom = () => {
           <StandaloneSearchBox
             onLoad={(ref) => (autocompleteRef.current = ref)}
             onPlacesChanged={handleOnPlacesChanged}
+            options={{
+              componentRestrictions: { country: ["ng", "gh","us"] },
+            }}
           >
             <input
               type="text"

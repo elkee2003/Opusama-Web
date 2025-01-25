@@ -83,17 +83,17 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
   };
 
   return (
-    <div className="container">
+    <div className="alertContainer">
       <div
-        className="card"
+        className="alertCard"
         onClick={() =>
           navigate(`/realtorcontent/accepted_details/${notification.id}`)
         }
       >
         {/* First Name */}
         {notification.clientFirstName && (
-          <p className="details">
-            <span className="detailsSub">Name:</span>{' '}
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Name:</span>{' '}
             {notification.clientFirstName}
           </p>
         )}
@@ -101,53 +101,54 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
         {/* Property Type */}
         {notification.propertyType && (
           <p
-            className="details"
-            onClick={() => navigate(`/realtorcontent/detailedpost/${notification?.post?.id}`)}
+            className="alertDetails"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/realtorcontent/postdetails/${notification?.post?.id}`);
+            }}
           >
-            <span className="detailsSub">Accommodation Type (click to view):</span>{' '}
+            <span className="alertDetailsSub">Accommodation Type (click to view):</span>{' '}
             {notification.propertyType}
           </p>
         )}
 
         {/* Accommodation Type */}
         {notification.accommodationType && (
-          <p className="details">
-            <span className="detailsSub">Type:</span>{' '}
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Type:</span>{' '}
             {notification.accommodationType}
           </p>
         )}
 
         {/* Check-in */}
         {notification.checkInDate && (
-          <p className="details">
-            <span className="detailsSub">Check-in:</span>{' '}
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Check-in:</span>{' '}
             {notification.checkInDate.substring(0, 17)}
           </p>
         )}
 
         {/* Check-out */}
         {notification.checkOutDate && (
-          <p className="details">
-            <span className="detailsSub">Check-out:</span>{' '}
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Check-out:</span>{' '}
             {notification.checkOutDate.substring(0, 17)}
           </p>
         )}
 
         {/* Realtor Price */}
         {notification.realtorPrice && (
-          <p className="details">
-            <span className="detailsSub">Amount:</span> ₦
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Amount:</span> ₦
             {Number(notification.realtorPrice).toLocaleString()}
           </p>
         )}
 
         {/* Status */}
         <div className="statusRow">
-          <span className="details">{getStatusText(notification.status)}</span>
+          <span className="alertDetails">{getStatusText(notification.status)}</span>
           <div
-            className={
-              notification.status === 'ACCEPTED' ? 'greenIcon' : 'redIcon'
-            }
+            className='greenIcon'
           />
         </div>
 
@@ -162,7 +163,8 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
           notification.status === 'RECEIVED') && (
           <button
             className="removeButton"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               if (
                 window.confirm(
                   'Are you sure you want to remove this booking?'

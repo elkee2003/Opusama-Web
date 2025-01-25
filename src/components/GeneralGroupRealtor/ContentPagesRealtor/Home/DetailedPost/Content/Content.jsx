@@ -145,7 +145,7 @@ function Content({post, realtor,}) {
     },[post.id])
 
   return (
-    <div className='contentContainer'>
+    <div className='realtorContentContainer'>
         <button 
           className='bckContainer' 
           onClick={() => navigate(-1)}
@@ -378,7 +378,7 @@ function Content({post, realtor,}) {
           <p className='seeAllReviewsTxt'>See all reviews</p>
         </button>
 
-        {/* Get In Touch Container */}
+        {/* Delete btn */}
         <button 
         className='deleteCon'
         // onClick={}

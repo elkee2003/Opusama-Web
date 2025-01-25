@@ -6,12 +6,30 @@
     color:grey;
 }
 
+.realtorError {
+    color: #d80b0b;
+    font-size: 1.5;
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 8rem;
+}
+
+
+
 @media (max-width: 1300px) {
 }
 
 @media (max-width: 900px) {
     .wordCount {
         margin-right: 7px;
+    }
+
+    .realtorError {
+        position:fixed;
+        bottom: 3rem;
+        font-size: 1.1rem;
+        margin-bottom: 6.6rem;
     }
 }
 @media (max-width: 700px) {

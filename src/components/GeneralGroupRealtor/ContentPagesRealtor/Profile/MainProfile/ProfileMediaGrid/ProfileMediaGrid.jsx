@@ -47,7 +47,7 @@ const MediaGrid = ({ posts }) => {
       {posts.map((post) => (
         <button
           key={post.id}
-          onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)} // Navigation with React Router
+          onClick={() => navigate(`/realtorcontent/postdetails/${post.id}`)} // Navigation with React Router
           className="gridItem"
         >
           <div className="mediaImageContainer">

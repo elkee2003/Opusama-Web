@@ -58,7 +58,7 @@ const PropertySale = () => {
     <div>
       {propertyType === 'Land Sale' && (
         <>
-          <label className="labelTxt">Land Type</label>
+          <label className="formLabel">Land Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={landData}
@@ -70,7 +70,7 @@ const PropertySale = () => {
           />
           {type === 'Other' && (
             <input
-              className="customInput"
+              className="inputField"
               placeholder="Enter Land Type"
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
@@ -78,18 +78,20 @@ const PropertySale = () => {
             />
           )}
 
-          <label className="labelTxt">Available Documents:</label>
-          <textarea
-            className="input"
-            value={availableDocs}
-            onChange={(e) => setAvailableDocs(e.target.value)}
-            placeholder="Kindly input necessary and available documents"
-          />
+          <div className='accommoDiv'>
+            <label className="formLabel">Available Documents:</label>
+            <textarea
+              className="formInput"
+              value={availableDocs}
+              onChange={(e) => setAvailableDocs(e.target.value)}
+              placeholder="Kindly input necessary and available documents"
+            />
+          </div>
         </>
       )}
       {propertyType === 'House Sale' && (
-        <>
-          <label className="labelTxt">House Type</label>
+        <div className='accommoDiv'>
+          <label className="formLabel">House Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={houseSaleData}
@@ -101,7 +103,7 @@ const PropertySale = () => {
           />
           {type === 'Other' && (
             <input
-              className="customInput"
+              className="inputField"
               placeholder="Enter House Type"
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
@@ -109,31 +111,33 @@ const PropertySale = () => {
             />
           )}
 
-          <label className="labelTxt">Accommodation Parts:</label>
+          <label className="formLabel">Accommodation Parts:</label>
           <textarea
-            className="input"
+            className="formInput"
             value={accommodationParts}
             onChange={(e) => setAccommodationParts(e.target.value)}
             placeholder="e.g., 2 parlours, 3 kitchens (optional)"
           />
 
-          <label className="labelTxt">Bedrooms:</label>
+          <label className="formLabel">Bedrooms:</label>
           <input
-            className="input"
+            className="formInput"
             type="number"
             value={bedrooms}
             onChange={(e) => setBedrooms(e.target.value)}
             placeholder="Number of Bedrooms"
           />
 
-          <label className="labelTxt">Available Documents:</label>
-          <textarea
-            className="input"
-            value={availableDocs}
-            onChange={(e) => setAvailableDocs(e.target.value)}
-            placeholder="Kindly input necessary and available documents"
-          />
-        </>
+          <div className='accommoDiv'>
+            <label className="formLabel">Available Documents:</label>
+            <textarea
+              className="formInput"
+              value={availableDocs}
+              onChange={(e) => setAvailableDocs(e.target.value)}
+              placeholder="Kindly input necessary and available documents"
+            />
+          </div>
+        </div>
       )}
     </div>
   );

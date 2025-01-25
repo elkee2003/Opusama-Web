@@ -18,41 +18,31 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
     }
   };
 
-  const handleCopyPhoneNumber = () => {
-    const phoneNumber = notification?.clientPhoneNumber;
-    if (phoneNumber) {
-      navigator.clipboard.writeText(phoneNumber)
-        .then(() => alert('Phone Number Copied. You can paste it into the dialer to make a call.'))
-        .catch(() => alert('Failed to copy the phone number.'));
-    } else {
-      alert('Phone number is not available.');
-    }
-  };
 
   return (
-    <div className="container">
-      <h1 className="header">Guest Details</h1>
+    <div className="dAlatContainer">
+      <h1 className="dAlatHeader">Guest Details</h1>
 
       {/* Details */}
       <div className="scrollableContent">
         {/* Guest Units */}
-        <div className="guestUnit">
+        <div className="dAlatGuestUnit">
           {notification?.adults && (
             <div>
-              <h3 className="subHeader">Adults:</h3>
-              <p className="unitTxt">{notification.adults}</p>
+              <h3 className="dAlatSubHeader">Adults:</h3>
+              <p className="dAlatUnitTxt">{notification.adults}</p>
             </div>
           )}
           {notification?.kids && (
             <div>
-              <h3 className="subHeader">Children:</h3>
-              <p className="unitTxt">{notification.kids}</p>
+              <h3 className="dAlatSubHeader">Children:</h3>
+              <p className="dAlatUnitTxt">{notification.kids}</p>
             </div>
           )}
           {notification?.infants && (
             <div>
-              <h3 className="subHeader">Infants:</h3>
-              <p className="unitTxt">{notification.infants}</p>
+              <h3 className="dAlatSubHeader">Infants:</h3>
+              <p className="dAlatUnitTxt">{notification.infants}</p>
             </div>
           )}
         </div>
@@ -60,72 +50,72 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
         {/* Client Details */}
         {notification?.clientFirstName && (
           <>
-            <h3 className="subHeader">Name(s):</h3>
-            <p className="details">{notification.clientFirstName}</p>
+            <h3 className="dAlatSubHeader">Name(s):</h3>
+            <p className="dAlatDetails">{notification.clientFirstName}</p>
           </>
         )}
         {notification?.clientLastName && (
           <>
-            <h3 className="subHeader">Last Name(s):</h3>
-            <p className="details">{notification.clientLastName}</p>
+            <h3 className="dAlatSubHeader">Last Name(s):</h3>
+            <p className="dAlatDetails">{notification.clientLastName}</p>
           </>
         )}
         {notification?.clientPhoneNumber && (
           <>
-            <h3 className="subHeader">Phone Number:</h3>
-            <button className="copyButton" onClick={handleCopyPhoneNumber}>
+            <h3 className="dAlatSubHeader">Phone Number:</h3>
+            <p className="dAlatDetails" >
               {notification.clientPhoneNumber}
-            </button>
+            </p>
           </>
         )}
         {notification?.purpose && (
           <>
-            <h3 className="subHeader">Purpose:</h3>
-            <p className="details">{notification.purpose}</p>
+            <h3 className="dAlatSubHeader">Purpose:</h3>
+            <p className="dAlatDetails">{notification.purpose}</p>
           </>
         )}
         {notification?.duration && (
           <>
-            <h3 className="subHeader">Duration:</h3>
-            <p className="details">{notification.duration}</p>
+            <h3 className="dAlatSubHeader">Duration:</h3>
+            <p className="dAlatDetails">{notification.duration}</p>
           </>
         )}
         {notification?.checkInDate && (
           <>
-            <h3 className="subHeader">Check-in:</h3>
-            <p className="details">{notification.checkInDate}</p>
+            <h3 className="dAlatSubHeader">Check-in:</h3>
+            <p className="dAlatDetails">{notification.checkInDate}</p>
           </>
         )}
         {notification?.checkOutDate && (
           <>
-            <h3 className="subHeader">Check-out:</h3>
-            <p className="details">{notification.checkOutDate}</p>
+            <h3 className="dAlatSubHeader">Check-out:</h3>
+            <p className="dAlatDetails">{notification.checkOutDate}</p>
           </>
         )}
         {notification?.propertyType && (
           <>
-            <h3 className="subHeader">Accommodation Type:</h3>
-            <p className="details">{notification.propertyType}</p>
+            <h3 className="dAlatSubHeader">Accommodation Type:</h3>
+            <p className="dAlatDetails">{notification.propertyType}</p>
           </>
         )}
         {notification?.accommodationType && (
           <>
-            <h3 className="subHeader">
+            <h3 className="dAlatSubHeader">
               {notification.propertyType === 'Hotel / Shortlet' ? 'Room Type:' : 'Property Type'}
             </h3>
-            <p className="details">{notification.accommodationType}</p>
+            <p className="dAlatDetails">{notification.accommodationType}</p>
           </>
         )}
         {notification?.nameOfType && (
           <>
-            <h3 className="subHeader">Room Name:</h3>
-            <p className="details">{notification.nameOfType}</p>
+            <h3 className="dAlatSubHeader">Room Name:</h3>
+            <p className="dAlatDetails">{notification.nameOfType}</p>
           </>
         )}
         {notification?.realtorPrice && (
           <>
-            <h3 className="subHeader">Price:</h3>
-            <p className="details">₦{Number(notification.realtorPrice).toLocaleString()}</p>
+            <h3 className="dAlatSubHeader">Price:</h3>
+            <p className="dAlatDetails">₦{Number(notification.realtorPrice).toLocaleString()}</p>
           </>
         )}
         <p className="bookedBy">by: {notification?.user?.firstName}</p>
@@ -150,7 +140,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
                 className="view"
                 onClick={() => onStatusChange('VIEWING')}
               >
-                Viewing
+                <p className='dAlaBtnTxt'>
+                  Viewing
+                </p>
               </button>
               <button
                 className="infoIconCon"
@@ -170,7 +162,9 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             className="view"
             onClick={() => onStatusChange('RECEIVED')}
           >
-            Received
+            <p className='dAlaBtnTxt'>
+              Received
+            </p>
           </button>
           <button
             className="infoIconCon"

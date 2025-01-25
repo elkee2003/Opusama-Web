@@ -66,10 +66,10 @@ const Forms = () => {
         {propertyType === 'Office Space' && <OfficeSpace />}
 
         <div className="general-row">
-          <div>
-            <label className="label">Price:</label>
+          <div className='moneyCon'>
+            <label className="formLabel">Price:</label>
             <input
-              className="input"
+              className="moneyInput"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Price"
@@ -77,10 +77,10 @@ const Forms = () => {
             />
           </div>
           {propertyType !== 'House Sale' && propertyType !== 'Land Sale' && (
-            <div>
-              <label className="label">Caution Fee:</label>
+            <div className='moneyCon'>
+              <label className="formLabel">Caution Fee:</label>
               <input
-                className="input"
+                className="moneyInput"
                 value={cautionFee}
                 onChange={(e) => setCautionFee(e.target.value)}
                 placeholder="Caution Fee"
@@ -91,10 +91,10 @@ const Forms = () => {
         </div>
 
         {propertyType !== 'Hotel / Shortlet' && (
-          <div>
-            <label className="label">Inspection Fee:</label>
+          <div className='moneyCon'>
+            <label className="formLabel">Inspection Fee:</label>
             <input
-              className="input"
+              className="moneyInput"
               value={inspectionFee}
               onChange={(e) => setInspectionFee(e.target.value)}
               placeholder="Inspection Fee (Opt)"
@@ -104,10 +104,10 @@ const Forms = () => {
         )}
 
         {propertyType !== 'House Sale' && propertyType !== 'Land Sale' && (
-          <div>
-            <label className="label">Time Frame:</label>
+          <div className='timeCon'>
+            <label className="formLabel">Time Frame:</label>
             <select
-              className="dropdown"
+              className="timeDropdown"
               value={timeFrame}
               onChange={(e) => setTimeFrame(e.target.value)}
               onFocus={() => setIsFocused(true)}
@@ -129,11 +129,16 @@ const Forms = () => {
         <WriteDescription />
       </div>
 
-      <p className="error">{errors}</p>
+      <p className="formError">{errors}</p>
 
-      <button onClick={goToReview} className="btn-review">
-        Review
-      </button>
+      {/* Form review btn */}
+      <div className='formReviewBtnDiv'>
+        <button onClick={goToReview} className="formBtnReview">
+          <p className='formBtnReviewTxt'>
+            Review
+          </p>
+        </button>
+      </div>
     </div>
   );
 };

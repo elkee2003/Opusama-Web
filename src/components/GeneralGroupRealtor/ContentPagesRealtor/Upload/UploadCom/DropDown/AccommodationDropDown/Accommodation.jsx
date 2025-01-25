@@ -107,7 +107,7 @@ const AccommodationDropDown = () => {
         />
 
         {propertyType === 'House Rent' && (
-            <>
+            <div className='accomoDiv'>
             <label className="formLabel">Accommodation Type</label>
             <Select
                 options={houseData}
@@ -126,27 +126,31 @@ const AccommodationDropDown = () => {
                 />
             )}
 
-            <label className="formLabel">Accommodation Parts</label>
-            <textarea
-                className="textArea"
-                placeholder="e.g., 2 parlours, 3 kitchens (optional)"
-                value={accommodationParts}
-                onChange={(e) => setAccommodationParts(e.target.value)}
-            />
+            <div className='accommoDiv'>
+                <label className="formLabel">Accommodation Parts</label>
+                <textarea
+                    className="accommoTxtArea"
+                    placeholder="e.g., 2 parlours, 3 kitchens (optional)"
+                    value={accommodationParts}
+                    onChange={(e) => setAccommodationParts(e.target.value)}
+                />
+            </div>
 
-            <label className="formLabel">Bedrooms</label>
-            <input
-                className="inputField"
-                placeholder="Number of Bedrooms"
-                value={bedrooms}
-                onChange={(e) => setBedrooms(e.target.value)}
-                type="number"
-            />
-            </>
+            <div className='accommoDiv'>
+                <label className="formLabel">Bedrooms:</label>
+                <input
+                    className="inputField"
+                    placeholder="Number of Bedrooms"
+                    value={bedrooms}
+                    onChange={(e) => setBedrooms(e.target.value)}
+                    type="number"
+                />
+            </div>
+            </div>
         )}
 
         {propertyType === 'Hotel / Shortlet' && (
-            <>
+            <div className='accomoDiv'>
             <label className="formLabel">Accommodation Type</label>
             <Select
                 options={hotelData}
@@ -173,17 +177,19 @@ const AccommodationDropDown = () => {
                 onChange={(e) => setNameOfType(e.target.value)}
             />
 
-            <label className="formLabel">Accommodation Parts</label>
-            <textarea
-                className="textArea"
-                placeholder="e.g., 2 parlours, 3 kitchens (optional)"
-                value={accommodationParts}
-                onChange={(e) => setAccommodationParts(e.target.value)}
-            />
+            <div className='accommoDiv'>
+                <label className="formLabel">Accommodation Parts</label>
+                <textarea
+                    className="accommoTxtArea"
+                    placeholder="e.g., 2 parlours, 3 kitchens (optional)"
+                    value={accommodationParts}
+                    onChange={(e) => setAccommodationParts(e.target.value)}
+                />
+            </div>
 
             <div className="formRow">
                 <div className="formColumn">
-                <label className="formLabel">Bedrooms</label>
+                <label className="formLabel">Bedrooms:</label>
                 <input
                     className="inputField"
                     placeholder="Number of Bedrooms"
@@ -193,7 +199,7 @@ const AccommodationDropDown = () => {
                 />
                 </div>
                 <div className="formColumn">
-                <label className="formLabel">Beds</label>
+                <label className="formLabel">Beds:</label>
                 <input
                     className="inputField"
                     placeholder="Number of Beds"
@@ -203,11 +209,11 @@ const AccommodationDropDown = () => {
                 />
                 </div>
             </div>
-            </>
+            </div>
         )}
 
         {propertyType === 'Student Accommodation' && (
-            <>
+            <div className='accomoDiv'>
             <label className="formLabel">Accommodation Type</label>
             <Select
                 options={studentData}
@@ -226,14 +232,16 @@ const AccommodationDropDown = () => {
                 />
             )}
 
-            <label className="formLabel">Accommodation Parts</label>
-            <textarea
-                className="textArea"
-                placeholder="e.g., 2 parlours, 3 kitchens (optional)"
-                value={accommodationParts}
-                onChange={(e) => setAccommodationParts(e.target.value)}
-            />
-            </>
+            <div className='accommoDiv'>
+                <label className="formLabel">Accommodation Parts</label>
+                <textarea
+                    className="accommoTxtArea"
+                    placeholder="e.g., 2 parlours, 3 kitchens (optional)"
+                    value={accommodationParts}
+                    onChange={(e) => setAccommodationParts(e.target.value)}
+                />
+            </div>
+            </div>
         )}
     </div>
   );

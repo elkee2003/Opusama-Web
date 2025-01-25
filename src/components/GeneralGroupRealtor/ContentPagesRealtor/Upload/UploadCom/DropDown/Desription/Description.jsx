@@ -12,25 +12,25 @@ const WriteDescription = () => {
 
     const renderFields = (type, descriptionPlaceholder, amenitiesPlaceholder, policiesPlaceholder) => (
         <>
-            <label className="label">{type} Description:</label>
+            <label className="formLabel">{type} Description:</label>
             <textarea
-                className="input"
+                className="formInput"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder={descriptionPlaceholder}
                 rows={4}
             />
-            <label className="label">Amenities:</label>
+            <label className="formLabel">Amenities:</label>
             <textarea
-                className="input"
+                className="formInput"
                 value={amenities}
                 onChange={(e) => setAmenities(e.target.value)}
                 placeholder={amenitiesPlaceholder}
                 rows={4}
             />
-            <label className="label">Policies:</label>
+            <label className="formLabel">Policies:</label>
             <textarea
-                className="input input-last"
+                className="formInputLast"
                 value={policies}
                 onChange={(e) => setPolicies(e.target.value)}
                 placeholder={policiesPlaceholder}
@@ -40,7 +40,7 @@ const WriteDescription = () => {
     );
 
     return (
-        <div className="container">
+        <div className="formSectionCon">
             {propertyType === 'House Rent' &&
                 renderFields('House', 'Kindly describe House', 
                 '24/7 Security, Parking, Swimming, Pool, Gym, Building is around banks', 
