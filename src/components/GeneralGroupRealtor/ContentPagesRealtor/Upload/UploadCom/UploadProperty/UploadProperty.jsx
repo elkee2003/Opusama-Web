@@ -232,17 +232,19 @@ const UploadProperty = () => {
       <ReviewUpload />
 
       {/* Upload Button */}
-      <button
-        className="btnUpload"
-        onClick={handleUpload}
-        disabled={uploading}
-      >
-        <p className="uploadTxt">
-            {uploading
-            ? `Uploading... ${uploadProgress}%`
-            : "Upload!"}
-        </p>
-      </button>
+      <div className="uploadBtnCon">
+        <button
+          className="btnUpload"
+          onClick={handleUpload}
+          disabled={uploading}
+        >
+          <p className="uploadTxt">
+              {uploading
+              ? `Uploading... ${uploadProgress}%`
+              : "Upload!"}
+          </p>
+        </button>
+      </div>
     </div>
   );
 };

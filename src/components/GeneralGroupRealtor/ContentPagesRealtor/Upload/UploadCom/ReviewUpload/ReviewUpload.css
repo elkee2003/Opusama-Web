@@ -3,17 +3,21 @@
     flex-direction: column;
 }
 
-.mediaFullDisplayContainer{
+
+.reviewMediaFullDisplayContainer{
     align-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 70%;
+    margin-left: 2rem;
     margin-right: 2rem;
     background-color: rgb(231, 229, 229);
     border-radius: 30px;
     margin-bottom: 2rem;
 }
+
+/* The rest of media display is in DisplayMedia style component */
 
 /* .uploadPropRow{} */
 
@@ -41,10 +45,12 @@
     .mediaFullDisplayContainer {
         width: 90%;
         margin-right: 0rem;
+        margin-left: 0rem;
     }
 
     .uploadPropInputReview {
-        min-width: 300px;
+        min-width: 360px;
+        /* max-width: 360px; */
     }
 }
 @media (max-width: 700px) {
@@ -53,14 +59,13 @@
 }
 
 @media (max-width: 500px) {
-    .mediaFullDisplayContainer {
-        width: 90%;
-        margin-right: 0rem;
+    .reviewMediaFullDisplayContainer {
+        margin-right: 2rem;
     }
 
     .uploadPropInputReview {
-        min-width: 200px;
-        margin-right: 1.5rem;
+        min-width: 360px;
+        max-width: 360px;
     }
 
 }

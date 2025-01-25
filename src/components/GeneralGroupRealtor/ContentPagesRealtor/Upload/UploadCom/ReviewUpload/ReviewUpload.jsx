@@ -31,12 +31,14 @@ const ReviewUpload = () => {
   return (
     <div className='reviewUploadCon'>
       {/* Media Display */}
-      <div className='mediaFullDisplayContainer'>
-        {media.map((mediaItem, index) => (
-          <div key={index} className='mediaContainer'>
-            <img src={mediaItem.uri} alt={`Media ${index}`} className='media' />
-          </div>
-        ))}
+      <div className="reviewMediaFullDisplayContainer">
+        <div className="mediaDivContainer">
+          {media.map((item, index) => (
+            <div className="dispalyMediaContainer" key={index}>
+              <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Data Display */}

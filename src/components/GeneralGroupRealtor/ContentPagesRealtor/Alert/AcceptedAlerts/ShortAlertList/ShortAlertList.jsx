@@ -45,7 +45,10 @@ const ShortAlertList = () => {
                 })
             );
             setAlerts(bookingWithUserID);
-            setFilteredAlerts(bookingWithUserID); 
+            // Preserve filtered state if search is active
+            if (!searchQuery) {
+                setFilteredAlerts(bookingWithUserID);
+            } 
         } catch (e) {
             <p>Error Fetching bookings</p>;
         } finally {

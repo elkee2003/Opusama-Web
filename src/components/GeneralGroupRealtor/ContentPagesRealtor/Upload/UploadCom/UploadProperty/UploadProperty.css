@@ -15,11 +15,17 @@
     font-size: 40px;
 }
 
+.uploadBtnCon {
+    display: flex;
+    justify-content: center;
+    /* background-color: red; */
+}
+
 .btnUpload {
     display: flex;
     margin:20px 0;
     align-self: center;
-    padding:20px;
+    padding:15px;
     min-width: 300px;
     background: green;
     border-radius: 30px;
@@ -51,7 +57,4 @@
 }
 
 @media (max-width: 500px) {
-    .btnUpload {
-        margin-right: 5rem;
-    }
 }

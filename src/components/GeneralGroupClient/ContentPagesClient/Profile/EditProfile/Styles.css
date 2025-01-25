@@ -340,6 +340,15 @@
     left: 120px;
   }
 
+  .inputReview {
+    min-width:340px;
+  }
+  
+  .inputReviewLast {
+    min-width:340px;
+  }
+  
+
   .saveBtn  {
     padding:10px ;
     right: 105px;
