@@ -45,111 +45,111 @@ const ReviewUpload = () => {
       <div className='inputDisplay'>
         <div className='uploadPropRow'>
           <p className='displayLabel'>Property Type:</p>
-          <p className='uploadPropInputReview'>{propertyType}</p>
+          <p className='uploadPropDetails'>{propertyType}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Property Sub Type:</p>
-          <p className='uploadPropInputReview'>{type}</p>
+          <p className='uploadPropDetails'>{type}</p>
         </div>
 
         {nameOfType && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Name of Accommodation:</p>
-            <p className='uploadPropInputReview'>{nameOfType}</p>
+            <p className='uploadPropDetails'>{nameOfType}</p>
           </div>
         )}
 
         {availableDocs && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Available Documents:</p>
-            <p className='uploadPropInputReview'>{availableDocs.trim()}</p>
+            <p className='uploadPropDetails'>{availableDocs.trim()}</p>
           </div>
         )}
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Address:</p>
-          <p className='uploadPropInputReview'>{address?.trim()}</p>
+          <p className='uploadPropDetails'>{address?.trim()}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>City:</p>
-          <p className='uploadPropInputReview'>{city}</p>
+          <p className='uploadPropDetails'>{city}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>State:</p>
-          <p className='uploadPropInputReview'>{state}</p>
+          <p className='uploadPropDetails'>{state}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Country:</p>
-          <p className='uploadPropInputReview'>{country}</p>
+          <p className='uploadPropDetails'>{country}</p>
         </div>
 
         <div className='uploadPropRow'>
       <p className='displayLabel'>Price:</p>
-          <p className='uploadPropInputReview'>₦{formatCurrency(price)}</p>
+          <p className='uploadPropDetails'>₦{formatCurrency(price)}</p>
         </div>
 
         {timeFrame && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Time Frame:</p>
-            <p className='uploadPropInputReview'>{timeFrame}</p>
+            <p className='uploadPropDetails'>{timeFrame}</p>
           </div>
         )}
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Caution Fee:</p>
-          <p className='uploadPropInputReview'>₦{formatCurrency(cautionFee)}</p>
+          <p className='uploadPropDetails'>₦{formatCurrency(cautionFee)}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Total Price:</p>
-          <p className='uploadPropInputReview'>₦{formatCurrency(totalPrice)}</p>
+          <p className='uploadPropDetails'>₦{formatCurrency(totalPrice)}</p>
         </div>
 
         {inspectionFee && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Inspection Fee:</p>
-            <p className='uploadPropInputReview'>₦{formatCurrency(inspectionFee)}</p>
+            <p className='uploadPropDetails'>₦{formatCurrency(inspectionFee)}</p>
           </div>
         )}
 
         {bedrooms && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Number of Rooms:</p>
-            <p className='uploadPropInputReview'>{bedrooms}</p>
+            <p className='uploadPropDetails'>{bedrooms}</p>
           </div>
         )}
 
         {bed && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Number of Beds:</p>
-            <p className='uploadPropInputReview'>{bed}</p>
+            <p className='uploadPropDetails'>{bed}</p>
           </div>
         )}
 
         {accommodationParts && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Accommodation Parts:</p>
-            <p className='uploadPropInputReview'>{accommodationParts}</p>
+            <p className='uploadPropDetails'>{accommodationParts}</p>
           </div>
         )}
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Description:</p>
-          <p className='uploadPropInputReview'>{description?.trim()}</p>
+          <p className='uploadPropDetails'>{description?.trim()}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Amenities:</p>
-          <p className='uploadPropInputReview'>{amenities?.trim()}</p>
+          <p className='uploadPropDetails'>{amenities?.trim()}</p>
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Policies:</p>
-          <p className='uploadPropInputReview'>{policies?.trim()}</p>
+          <p className='uploadPropDetails'>{policies?.trim()}</p>
         </div>
       </div>
     </div>

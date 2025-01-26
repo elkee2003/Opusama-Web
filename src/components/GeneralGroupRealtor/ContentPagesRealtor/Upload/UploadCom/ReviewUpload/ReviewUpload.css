@@ -10,11 +10,14 @@
     flex-direction: column;
     align-items: center;
     width: 70%;
+    height: 70vh;
+    overflow-y: auto; 
+    margin-top: 2rem;
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 2rem;
     background-color: rgb(231, 229, 229);
     border-radius: 30px;
-    margin-bottom: 2rem;
 }
 
 /* The rest of media display is in DisplayMedia style component */
@@ -27,14 +30,13 @@
     margin-top: 20px;
 }
 
-.uploadPropInputReview {
-  min-width:460px;
-  padding: 8px;
-  font-size: 18px;
-  letter-spacing: 0.5px;
-  color: white;
-  background-color: rgba(4, 8, 43, 0.8);
+.uploadPropDetails {
+  background: rgb(4, 4, 49);
   border-radius: 20px;
+  padding: 15px;
+  font-size: 1.2rem;
+  color:white;
+  width:100%;
 }
 
 @media (max-width: 1300px) {
@@ -42,16 +44,13 @@
 
 @media (max-width: 900px) {
 
-    .mediaFullDisplayContainer {
+    .reviewMediaFullDisplayContainer {
         width: 90%;
         margin-right: 0rem;
         margin-left: 0rem;
     }
 
-    .uploadPropInputReview {
-        min-width: 360px;
-        /* max-width: 360px; */
-    }
+    
 }
 @media (max-width: 700px) {
 }
@@ -60,12 +59,8 @@
 
 @media (max-width: 500px) {
     .reviewMediaFullDisplayContainer {
+        height: 50vh;
         margin-right: 2rem;
-    }
-
-    .uploadPropInputReview {
-        min-width: 330px;
-        max-width: 330px;
     }
 
 }
