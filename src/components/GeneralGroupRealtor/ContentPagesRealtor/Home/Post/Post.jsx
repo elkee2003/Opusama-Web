@@ -60,12 +60,17 @@ function Post({post}) {
         </div>
 
         {/* Username */}
-        <div 
+        {/* <div 
             className={'contact'}
         >
             <p className={'name'}>{post.firstName}</p>
-        </div>
+        </div> */}
 
+        {post.type && (
+            <p className='propertType'>{post.propertyType}</p>
+        )}
+
+        {/* Type */}
         {post.type && (
             <p className={'bedroom'}>{post.type}</p>
         )}
