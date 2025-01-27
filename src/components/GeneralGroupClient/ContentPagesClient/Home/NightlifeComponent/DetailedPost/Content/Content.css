@@ -59,6 +59,13 @@ button {
     letter-spacing: 0.8px;
 }
 
+.details {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
+
+.detailedDesc {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
 .realtorStar {
     margin-left: 5px;
     color: #333236;
@@ -202,6 +209,7 @@ button {
 }
 
 .luxPolHeadTxt {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 10px;

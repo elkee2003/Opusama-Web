@@ -1,18 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './ShortAlertList.css'; 
+import { useNavigate } from 'react-router-dom';
 import ShortAlert from '../ShortAlert/ShortAlert';
 import { DataStore } from 'aws-amplify/datastore';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { Booking, User, Post } from '../../../../../../models'; 
 
 const ShortAlertList = () => {
-    const { dbRealtor } = useAuthContext();
+    const navigate = useNavigate();
+    const { dbRealtor, authUser } = useAuthContext();
 
     const [alerts, setAlerts] = useState([]);
     const [filteredAlerts, setFilteredAlerts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+
+    useEffect(()=>{
+          if(authUser){
+              if(!dbRealtor){
+                  alert(
+                      'Kindly fill in your data to access pages. Thank you.'
+                  );
+                  navigate('/realtorcontent/profile')
+              }
+          };
+          
+    },[dbRealtor])
 
     const fetchBookings = async () => {
         setLoading(true);

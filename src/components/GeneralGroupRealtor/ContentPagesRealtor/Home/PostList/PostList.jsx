@@ -10,23 +10,23 @@ import { Post } from '../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
-    const {dbRealtor} = useAuthContext()
+    const {dbRealtor, authUser} = useAuthContext()
     
     const [myPostList, setMyPostList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    // useEffect(()=>{
-    //     if(authUser){
-    //         if(!dbUser){
-    //             alert(
-    //                 'Kindly fill in your data to access pages. Thank you.'
-    //             );
-    //             navigate('/clientcontent/profile')
-    //         }
-    //     };
+    useEffect(()=>{
+        if(authUser){
+            if(!dbRealtor){
+                alert(
+                    'Kindly fill in your data to access pages. Thank you.'
+                );
+                navigate('/realtorcontent/profile')
+            }
+        };
         
-    // },[dbUser])
+    },[dbRealtor])
 
     // fetch posts
     const fetchMyPosts = async () => {

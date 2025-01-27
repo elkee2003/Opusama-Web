@@ -113,7 +113,7 @@
 
 @media (max-width: 1300px) {
   .heroSearchBtn{
-    margin-top: -10%;
+    margin-top: -5%;
     margin-left: 50vw;
     max-width: 300;
   }
@@ -136,7 +136,7 @@
   }
   .heroSearchBtn{
     margin-top: 5%;
-    margin-left: 15vw;
+    margin-left: 13vw;
     max-width: 300px
   }
 }

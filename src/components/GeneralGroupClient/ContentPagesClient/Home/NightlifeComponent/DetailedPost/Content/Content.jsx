@@ -243,7 +243,7 @@ function Content({post, realtor,}) {
           {post.description && (
             <div>
               <h4 className='luxPolHeadTxt'>Description</h4>
-              <p>
+              <p className='lifestyleDetailedDesc'>
                 {readMore || post.description.length <= 150
                   ? post.description
                   : `${post.description.substring(0, 150)}...`}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa'; 
 import './SelectMedia.css'; 
@@ -10,12 +10,21 @@ const SelectMedia = () => {
   const {setMedia, media} = useUploadContext();
   const navigate = useNavigate();
 
-  const {dbRealtor, dbUser} = useAuthContext();
+  const {dbRealtor, authUser} = useAuthContext();
 
-  console.log('check:', dbRealtor?.id)
-  console.log('check:', dbRealtor?.firstName)
-  console.log('checkDbUserName:', dbUser?.firstName)
-  console.log('dbUserID:', dbUser?.id)
+  useEffect(()=>{
+      if(authUser){
+          if(!dbRealtor){
+              alert(
+                  'Kindly fill in your data to access pages. Thank you.'
+              );
+              navigate('/realtorcontent/profile')
+          }
+      };
+      
+  },[dbRealtor])
+
+  
 
   // Pick Multiple Media Function (Images and Videos)
   const pickMediaAsync = (event) => {

@@ -60,6 +60,10 @@ button {
     cursor: pointer;
 }
 
+.details {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
+
 .realtorStar {
     margin-left: 5px;
     color: #333236;
@@ -72,6 +76,7 @@ button {
 }
 
 .bedroom {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
     font-size: 17px;
     color: var(--comments-color);
 }
@@ -142,6 +147,10 @@ button {
     line-height: 25px;
 }
 
+.detailedDesc {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
+
 .price {
     font-size: 18px;
     font-weight: 400;
@@ -210,6 +219,7 @@ button {
 }
 
 .luxPolTxt {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
     font-size: 16px;
     color: var(--comments-color);
     line-height: 23px;

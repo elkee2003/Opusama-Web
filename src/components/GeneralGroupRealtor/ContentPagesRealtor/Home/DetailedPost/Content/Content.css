@@ -20,6 +20,21 @@
     margin-right: 8px;
 }
 
+.realtorSubheader {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--heading-color);
+    line-height: 25px;
+}
+
+.realtorDetailss {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
+
+.realtorPropDesc {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+}
+
 .deleteDiv {
     display: flex;
     justify-content: center;

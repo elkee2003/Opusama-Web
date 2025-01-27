@@ -142,22 +142,40 @@ const ReviewUpload = () => {
           <div className='uploadPropRow'>
             <p className='displayLabel'>Accommodation Parts:</p>
             <p className='uploadPropDetails'>{accommodationParts}</p>
+            {/* <p 
+              className='uploadPropDetails' 
+              dangerouslySetInnerHTML={{ __html: accommodationParts.replace(/\n/g, '<br>') }} 
+            /> */}
           </div>
         )}
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Description:</p>
           <p className='uploadPropDetails'>{description?.trim()}</p>
+          {/* <p 
+            className='uploadPropDetails' 
+            dangerouslySetInnerHTML={{ __html: description?.trim().replace(/\n/g, '<br>') }} 
+          /> */}
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Amenities:</p>
           <p className='uploadPropDetails'>{amenities?.trim()}</p>
+          {/* <p 
+            className='uploadPropDetails' 
+            dangerouslySetInnerHTML={{ __html: amenities?.trim().replace(/\n/g, '<br>') }} 
+          /> */}
         </div>
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Policies:</p>
           <p className='uploadPropDetails'>{policies?.trim()}</p>
+
+          {/* Asides adding white-space: pre-wrap; to styles the code under can be used as a standalone */}
+          {/* <p 
+            className='uploadPropDetails' 
+            dangerouslySetInnerHTML={{ __html: policies?.trim().replace(/\n/g, '<br>') }} 
+          /> */}
         </div>
       </div>
     </div>
