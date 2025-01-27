@@ -273,6 +273,7 @@ type EagerPost = {
   readonly propertyType: string;
   readonly type: string;
   readonly nameOfType?: string | null;
+  readonly packageType?: string | null;
   readonly availableDocs?: string | null;
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
@@ -287,8 +288,8 @@ type EagerPost = {
   readonly inspectionFee?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly bedrooms?: string | null;
   readonly PostReviews?: (PostReview | null)[] | null;
+  readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;
   readonly country: string;
@@ -308,6 +309,7 @@ type LazyPost = {
   readonly propertyType: string;
   readonly type: string;
   readonly nameOfType?: string | null;
+  readonly packageType?: string | null;
   readonly availableDocs?: string | null;
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
@@ -322,8 +324,8 @@ type LazyPost = {
   readonly inspectionFee?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly bedrooms?: string | null;
   readonly PostReviews: AsyncCollection<PostReview>;
+  readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;
   readonly country: string;

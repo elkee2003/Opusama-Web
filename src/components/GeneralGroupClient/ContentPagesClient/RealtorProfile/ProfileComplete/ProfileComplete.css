@@ -1,11 +1,12 @@
 .completeProCon{
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
 
 }
 
 @media (max-width: 900px) {
-    /* .completeProCon { */
-        /* width: 90vw; */
-    /* } */
+    .completeProCon{
+        margin-bottom: 6rem;
+    }
 }

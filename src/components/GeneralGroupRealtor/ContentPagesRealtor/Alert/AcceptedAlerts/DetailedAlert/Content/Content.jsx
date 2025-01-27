@@ -9,11 +9,19 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
       case 'PENDING': return 'Pending';
       case 'ACCEPTED': return 'Accepted';
       case 'VIEWING': return 'Viewing';
+      case 'CHECKED_IN': return 'Checked In';
+      case 'VISITING': return 'Visting';
       case 'VIEWED': return 'Viewed';
+      case 'CHECKED_OUT': return 'Checked Out';
+      case 'VISITED': return 'Visited'
       case 'SOLD': return 'Sold';
+      case 'DELAYED_PAYMENT': return 'Delayed Payment';
       case 'PAID': return 'Paid';
+      case 'OCCUPIED': return 'Occupied, try another listing';
       case 'RECEIVED': return 'Received';
       case 'DENIED': return 'Denied';
+      case 'REMOVED_REALTOR': return 'Removed';
+      case 'REMOVED_REALTOR_PAYMENT_DELAYED': return 'Delayed Payment (Removed)';
       default: return 'Pending';
     }
   };
@@ -124,7 +132,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
       {/* Status */}
       <div className="statusRow">
         <p className="status">{getStatusText(notification.status)}</p>
-        {['ACCEPTED', 'VIEWING', 'VIEWED', 'PAID', 'SOLD', 'RECEIVED'].includes(notification.status) ? (
+        {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'SOLD', 'RECEIVED'].includes(notification.status) ? (
           <div className="greenIcon" />
         ) : (
           <div className="redIcon" />

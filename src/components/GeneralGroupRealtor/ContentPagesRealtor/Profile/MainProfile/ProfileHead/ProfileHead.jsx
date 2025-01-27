@@ -148,8 +148,8 @@ const ProfileHead = () => {
             <span className="subHeaderTxt">Edit Profile</span>
             </button>
 
-            <button className="subHeaderContainer" onClick={comingSoon}>
-            <span className="subHeaderTxt">View Subscription</span>
+            <button className="subHeaderContainer" onClick={() => navigate('/realtorcontent/realtorrating')}>
+            <span className="subHeaderTxt">View Ratings</span>
             </button>
         </div>
     </div>

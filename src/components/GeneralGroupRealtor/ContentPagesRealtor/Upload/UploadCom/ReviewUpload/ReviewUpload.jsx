@@ -6,6 +6,7 @@ const ReviewUpload = () => {
   const {
     propertyType,
     type,
+    packageType,
     nameOfType,
     availableDocs,
     bedrooms,
@@ -52,6 +53,13 @@ const ReviewUpload = () => {
           <p className='displayLabel'>Property Sub Type:</p>
           <p className='uploadPropDetails'>{type}</p>
         </div>
+
+        {packageType && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Type of Package:</p>
+            <p className='uploadPropDetails'>{packageType}</p>
+          </div>
+        )}
 
         {nameOfType && (
           <div className='uploadPropRow'>

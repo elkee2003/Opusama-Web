@@ -6,8 +6,9 @@ const UploadContextProvider = ({children}) => {
 
     const [propertyType, setPropertyType]= useState('')
     const [type, setType] = useState('')
-    const [nameOfType, setNameOfType] = useState('')
-    const [availableDocs, setAvailableDocs] = useState('')
+    const [nameOfType, setNameOfType] = useState('');
+    const [packageType, setPackageType] = useState('');
+    const [availableDocs, setAvailableDocs] = useState('');
     const [customInput, setCustomInput] = useState('');
     const [accommodationParts, setAccommodationParts] = useState('');
     const [media, setMedia] = useState([]);
@@ -207,6 +208,7 @@ const UploadContextProvider = ({children}) => {
         propertyType, setPropertyType,
         type, setType,
         nameOfType, setNameOfType,
+        packageType, setPackageType,
         availableDocs, setAvailableDocs,
         customInput, setCustomInput,
         accommodationParts, setAccommodationParts,

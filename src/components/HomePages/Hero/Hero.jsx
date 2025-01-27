@@ -97,9 +97,9 @@ const Hero = () => {
         {/* Button container */}
         <div className="hero-btn-container">
 
-            <button className="hero-button">
+            {/* <button className="hero-button">
                 Download App
-            </button>
+            </button> */}
             
             <button className="hero-button" onClick={navigateToSignIn}>
                 Sign In

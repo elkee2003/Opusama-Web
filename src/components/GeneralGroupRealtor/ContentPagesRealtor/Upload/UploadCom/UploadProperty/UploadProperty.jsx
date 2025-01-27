@@ -19,6 +19,8 @@ const UploadProperty = () => {
     setPropertyType,
     type,
     setType,
+    packageType, 
+    setPackageType,
     nameOfType,
     setNameOfType,
     availableDocs,
@@ -73,6 +75,7 @@ const UploadProperty = () => {
   const resetFormFields = () => {
     setPropertyType("");
     setType("");
+    setPackageType("");
     setNameOfType("");
     setAvailableDocs("");
     setAccommodationParts("");
@@ -175,6 +178,7 @@ const UploadProperty = () => {
         new Post({
           propertyType,
           type,
+          packageType,
           nameOfType,
           availableDocs,
           accommodationParts,

@@ -786,6 +786,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "packageType": {
+                    "name": "packageType",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "availableDocs": {
                     "name": "availableDocs",
                     "isArray": false,
@@ -885,13 +892,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "bedrooms": {
-                    "name": "bedrooms",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "PostReviews": {
                     "name": "PostReviews",
                     "isArray": true,
@@ -907,6 +907,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "bedrooms": {
+                    "name": "bedrooms",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "amenities": {
                     "name": "amenities",
@@ -1028,5 +1035,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "4e77fc982bd6a965b1eb71a4fe9f91ef"
+    "version": "da545970ab6593b7b7dfb9796d748502"
 };

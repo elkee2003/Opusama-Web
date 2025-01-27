@@ -59,10 +59,18 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
     if (status === 'PENDING') return 'Pending';
     if (status === 'ACCEPTED') return 'Accepted';
     if (status === 'VIEWING') return 'Viewing';
+    if (status === 'CHECKED_IN') return 'Checked In';
+    if (status === 'VISITING') return 'Visting';
     if (status === 'VIEWED') return 'Viewed';
+    if (status === 'CHECKED_OUT') return 'Checked Out';
+    if (status === 'VISITED') return 'Visited';
     if (status === 'SOLD') return 'Sold';
+    if(status === 'DELAYED_PAYMENT') return 'Delayed Payment';
     if (status === 'PAID') return 'Paid';
     if (status === 'RECEIVED') return 'Received';
+    if (status === 'OCCUPIED') return 'Occupied, try another listing';
+    if (status === 'REMOVED_REALTOR') return 'Removed';
+    if (status === 'REMOVED_REALTOR_PAYMENT_DELAYED') return 'Delayed Payment (Removed)';
     if (status === 'DENIED') return 'Denied';
     return 'Pending';
   };
@@ -147,9 +155,11 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
         {/* Status */}
         <div className="statusRow">
           <span className="alertDetails">{getStatusText(notification.status)}</span>
-          <div
-            className='greenIcon'
-          />
+          {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'SOLD', 'RECEIVED'].includes(notification.status) ? (
+            <div className="greenIcon" />
+          ) : (
+            <div className="redIcon" />
+          )}
         </div>
 
         {/* By account owner */}

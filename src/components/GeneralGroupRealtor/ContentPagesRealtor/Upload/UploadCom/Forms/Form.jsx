@@ -5,6 +5,8 @@ import { useUploadContext } from '../../../../../../../Providers/RealtorProvider
 import AccommodationDropDown from '../DropDown/AccommodationDropDown/Accommodation';
 import CountryDropDown from '../DropDown/CountryDropDown/CountryDropDown';
 import PropertySale from '../DropDown/PropertySale/PropertySale';
+import Recreation from '../DropDown/Recreation/Recreation';
+import NightLife from '../DropDown/NightLife/NightLife';
 import WriteDescription from '../DropDown/Desription/Description';
 import OfficeSpace from '../DropDown/OfficeSpace/OfficeSpace';
 // import Shop from '../DropDown/Shop';
@@ -62,7 +64,15 @@ const Forms = () => {
         <AccommodationDropDown />
 
         {propertyType === 'Land Sale' && <PropertySale />}
+
         {propertyType === 'House Sale' && <PropertySale />}
+
+        {propertyType === 'Nightlife' && <NightLife/>}
+
+        {propertyType === 'Recreation' && <Recreation/>}
+
+        
+
         {propertyType === 'Office Space' && <OfficeSpace />}
 
         <div className="general-row">
@@ -76,7 +86,7 @@ const Forms = () => {
               type="number"
             />
           </div>
-          {propertyType !== 'House Sale' && propertyType !== 'Land Sale' && (
+          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
             <div className='moneyCon'>
               <label className="formLabel">Caution Fee:</label>
               <input
@@ -90,7 +100,7 @@ const Forms = () => {
           )}
         </div>
 
-        {propertyType !== 'Hotel / Shortlet' && (
+        {(propertyType !== 'Hotel / Shortlet' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
           <div className='moneyCon'>
             <label className="formLabel">Inspection Fee:</label>
             <input
@@ -103,7 +113,7 @@ const Forms = () => {
           </div>
         )}
 
-        {propertyType !== 'House Sale' && propertyType !== 'Land Sale' && (
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
           <div className='timeCon'>
             <label className="formLabel">Time Frame:</label>
             <select

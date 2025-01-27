@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { Tabs, Tab, Box } from '@mui/material';
 import HouseRent from './HouseRentComponent';
 import Hotel from './HotelComponent';
+import Recreation from './RecreationComponent';
+import NightLife from './NightlifeComponent';
 import StudentAccommodation from './StudentAccommodationComponent';
 import PropertySale from './PropertySaleComponent';
 import OfficeSpace from './OfficeSpaceComponent';
@@ -26,6 +28,8 @@ function Home() {
         >
           <Tab label="House" />
           <Tab label="Hotel / Shortlet" />
+          <Tab label="Recreation" />
+          <Tab label="Nightlife" />
           <Tab label="Student Accommodation" />
           <Tab label="Property Sale" />
           <Tab label="Office Space" />
@@ -34,9 +38,11 @@ function Home() {
       <div className="tab-panel">
         {selectedTab === 0 && <HouseRent />}
         {selectedTab === 1 && <Hotel />}
-        {selectedTab === 2 && <StudentAccommodation />}
-        {selectedTab === 3 && <PropertySale />}
-        {selectedTab === 4 && <OfficeSpace />}
+        {selectedTab === 2 && <Recreation />}
+        {selectedTab === 3 && <NightLife />}
+        {selectedTab === 4 && <StudentAccommodation />}
+        {selectedTab === 5 && <PropertySale />}
+        {selectedTab === 6 && <OfficeSpace />}
       </div>
       {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={selectedTab} onChange={handleTabChange} aria-label="navigation tabs">

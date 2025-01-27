@@ -75,7 +75,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
       setIsPaymentSuccessful(false);
     }
   }, [isPaymentSuccessful]);
-
+  
   const renderButton = () => {
     if (notification.status === 'ACCEPTED') {
       if (
@@ -142,7 +142,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
         return (
           <div className="viewConInfoRow">
             {/* Button */}
-            <button className="view" onPress={handleVisitingClick}>
+            <button className="view" onClick={handleVisitingClick}>
               <p className="bkBtnTxt">Visiting</p>
             </button>
 

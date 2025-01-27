@@ -25,12 +25,17 @@ import PaymentPage from '../../GeneralGroupClient/ContentPagesClient/Payment/Pay
 // SearchPages
 import SearchPageHouse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/Search/Search';
 import SearchPageHotel from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/Search/Search';
+import SearchPageRecreation from '../../GeneralGroupClient/ContentPagesClient/Home/RecreationComponent/Search/Search';
+import SearchPageNightlife from '../../GeneralGroupClient/ContentPagesClient/Home/NightlifeComponent/Search/Search';
 import SearchPageOfficeSpace from '../../GeneralGroupClient/ContentPagesClient/Home/OfficeSpaceComponent/Search/Search';
 import SearchPagePropertySale from '../../GeneralGroupClient/ContentPagesClient/Home/PropertySaleComponent/Search/Search';
 import SearchPageStudentAcc from '../../GeneralGroupClient/ContentPagesClient/Home/StudentAccommodationComponent/Search/Search';
 
 // HotelDetailedPost Import
 import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
+
+// Recreation & Nightlife DetailedPost Import
+import RecreationDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/RecreationComponent/DetailedPost/DetailedPost';
 
 const ClientRoutes = () => (
     <Routes>
@@ -99,6 +104,12 @@ const ClientRoutes = () => (
             {/* Hotel Search */}
             <Route path="search_hotel" element={<SearchPageHotel />} />
 
+            {/* Recreation Search */}
+            <Route path="search_recreation" element={<SearchPageRecreation />} />
+
+            {/* Nightlife Search */}
+            <Route path="search_nightlife" element={<SearchPageNightlife />} />
+
             {/* Office Space Search */}
             <Route path="search_office_space" element={<SearchPageOfficeSpace />} />
 
@@ -108,8 +119,11 @@ const ClientRoutes = () => (
             {/* Student Acc Search */}
             <Route path="search_student_acc" element={<SearchPageStudentAcc />} />
 
-            {/* Hotel Route */}
+            {/* Hotel Detailed Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
+
+            {/* Recreation & Nightlife Detailed Route */}
+            <Route path="lifestyle_detailedpost/:postId" element={<RecreationDetailedPost />} />
 
             {/* for invalid route */}
             <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>

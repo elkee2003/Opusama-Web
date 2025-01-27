@@ -21,6 +21,8 @@ const AccommodationDropDown = () => {
     { label: 'Hotel / Shortlet', value: 'Hotel / Shortlet' },
     { label: 'House Sale', value: 'House Sale' },
     { label: 'Land Sale', value: 'Land Sale' },
+    { label: 'Recreation', value: 'Recreation' },
+    { label: 'Nightlife', value: 'Nightlife' },
     { label: 'Office Space', value: 'Office Space' },
     { label: 'Student Accommodation', value: 'Student Accommodation' },
   ];
@@ -75,7 +77,7 @@ const AccommodationDropDown = () => {
     {label:'Double Room', value:'Double Room'},
     {label:'Suite-Style Room', value:'Suite-Style Room'},
     {label:'Off-Campus Apartment', value:'Off-Campus Apartment'},
-    {label:'Studio Apartment (Off-Campus)', value:'Studio Apartment (Off-Campus'},
+    {label:'Studio Apartment (Off-Campus)', value:'Studio Apartment (Off-Campus)'},
     {label:'One-Bedroom Apartment (Off-Campus)', value:'One-Bedroom Apartment (Off-Campus)'},
     {label:'Shared Apartment (Off-Campus)', value:'Shared Apartment (Off-Campus)'},
     {label:'House', value:'House'},

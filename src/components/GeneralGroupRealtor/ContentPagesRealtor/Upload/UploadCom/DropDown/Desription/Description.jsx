@@ -66,6 +66,15 @@ const WriteDescription = () => {
                 'Advantage of Purchase', 
                 'What potential buyer needs')}
 
+            {propertyType === 'Recreation' &&
+                renderFields('Recreation', 'Describe the services you offer.', 
+                'Advantage of using your services', 
+                'How clients should behave and act while using your service')}
+            {propertyType === 'Nightlife' &&
+                renderFields('Nightlife', 'Describe the services you offer.', 
+                'Advantage of using your services', 
+                'How clients should behave and act while using your service')}
+
             {propertyType === 'Office Space' &&
                 renderFields('Office Space', 'Describe office space.', 
                 'Advantage of Space', 

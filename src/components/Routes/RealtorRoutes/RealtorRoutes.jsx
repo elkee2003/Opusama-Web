@@ -13,6 +13,7 @@ import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload
 import EditProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/EditProfile';
 import ReviewProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/ReviewProfile';
 import ProfileOptionsPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/MainProfile/ProfileOptions/ProifleOptions';
+import UserReviewsProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/UsersReview/UsersReview';
 import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
 import DetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/DetailedPost';
@@ -36,6 +37,7 @@ const RealtorRoutes = () => (
             <Route path="reviewprofile" element={<ReviewProfile />} />
             <Route path="profile" element={<EditProfile />} />
             <Route path="profileoptions" element={<ProfileOptionsPage />} />
+            <Route path="realtorrating" element={<UserReviewsProfile />} />
             <Route path="deleteaccount" element={<DeleteAcccount />} />
             <Route path="support" element={<Support />} />
             
