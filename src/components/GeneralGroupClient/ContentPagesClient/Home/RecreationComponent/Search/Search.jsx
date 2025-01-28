@@ -43,7 +43,7 @@ const HotelSearch = () => {
       const realtors = await DataStore.query(Realtor);
       const posts = await DataStore.query(Post);
 
-      const filteredPosts = posts.filter((post) => post.propertyType === 'Nightlife');
+      const filteredPosts = posts.filter((post) => post.propertyType === 'Recreation');
 
       const recreationPostData = filteredPosts.map((post) => {
         const realtor = realtors.find((r) => r.id === post.realtorID);
@@ -73,7 +73,7 @@ const HotelSearch = () => {
     <div className="searchContainer">
       <input
         className="searchInputt"
-        placeholder="Search Nightlife"
+        placeholder="Search Recreation"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

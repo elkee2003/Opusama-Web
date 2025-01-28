@@ -27,12 +27,9 @@ const GooglePlacesAutoCompleteCom = () => {
       const places = autocompleteRef.current.getPlaces();
       if (places?.length > 0) {
         const place = places[0];
-        const selectedAddress = place.formatted_address;
+        const selectedAddress = `${place?.name}, ${place?.formatted_address}`;
         const selectedLat = place.geometry.location.lat();
         const selectedLng = place.geometry.location.lng();
-
-        console.log('Selected address:', selectedAddress);
-        console.log('Latitude:', selectedLat, 'Longitude:', selectedLng);
 
         setAddress(selectedAddress);
         setLat(selectedLat);

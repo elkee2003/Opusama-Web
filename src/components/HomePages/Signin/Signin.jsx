@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Signin.css';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { getCurrentUser } from 'aws-amplify/auth';
 import { signIn } from 'aws-amplify/auth';
 
 const Signin = () => {
@@ -54,6 +55,23 @@ const Signin = () => {
         // Clear error if all validations pass
         setError('');
         setLoading(true);
+
+        try{
+            const currentUser = await getCurrentUser();
+            if (currentUser) {
+                console.log("User already signed in:", currentUser);
+                if (activeUserType === 'client') {
+                    navigate('/clientcontent/home');
+                } else {
+                    navigate('/realtorcontent/home');
+                }
+                return; // Exit the function early
+            }
+        }catch (authError) {
+                // If the user is not authenticated, proceed with sign-in
+                console.log("No user is currently signed in. Proceeding with sign-in.");
+        }
+        
 
         try {
             const { isSignedIn, nextStep } = await signIn({ username:email, password });

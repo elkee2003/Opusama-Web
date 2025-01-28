@@ -31,14 +31,16 @@ const SelectMedia = () => {
     const files = Array.from(event.target.files); // Convert FileList to an array
     if (files.length < 3) {
       alert('Select at least 3 media files');
-    } else if (files.length > 12) {
-      alert('You can only select up to 12 media files');
+    } else if (files.length > 15) {
+      alert('You can only select up to 15 media files');
     } else {
+      // Map the selected files to an array with their URIs and names
       const selectedMedia = files.map((file) => ({
         uri: URL.createObjectURL(file),
         name: file.name,
       }));
-      setMedia(selectedMedia);
+      // Maintain the selection order by appending new files in the same sequence they were picked
+      setMedia((prevMedia) => [...prevMedia, ...selectedMedia]);
       navigate('/realtorcontent/displaymedia'); 
     }
   };
