@@ -234,6 +234,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "numberOfPeople": {
+                    "name": "numberOfPeople",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "clientFirstName": {
                     "name": "clientFirstName",
                     "isArray": false,
@@ -1035,5 +1042,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "da545970ab6593b7b7dfb9796d748502"
+    "version": "aefef23785c3645ab973007b2a4db7f9"
 };

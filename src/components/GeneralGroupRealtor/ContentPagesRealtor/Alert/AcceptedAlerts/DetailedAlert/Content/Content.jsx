@@ -34,26 +34,41 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
       {/* Details */}
       <div className="scrollableContent">
         {/* Guest Units */}
-        <div className="dAlatGuestUnit">
-          {notification?.adults && (
-            <div>
-              <h3 className="dAlatSubHeader">Adults:</h3>
-              <p className="dAlatUnitTxt">{notification.adults}</p>
-            </div>
-          )}
-          {notification?.kids && (
-            <div>
-              <h3 className="dAlatSubHeader">Children:</h3>
-              <p className="dAlatUnitTxt">{notification.kids}</p>
-            </div>
-          )}
-          {notification?.infants && (
-            <div>
-              <h3 className="dAlatSubHeader">Infants:</h3>
-              <p className="dAlatUnitTxt">{notification.infants}</p>
-            </div>
-          )}
-        </div>
+        {notification?.propertyType === 'Hotel / Shortlet' && (
+          <div className="dAlatGuestUnit">
+            {notification?.adults && (
+              <div>
+                <h3 className="dAlatSubHeader">Adults:</h3>
+                <p className="dAlatUnitTxt">{notification.adults}</p>
+              </div>
+            )}
+            {notification?.kids && (
+              <div>
+                <h3 className="dAlatSubHeader">Children:</h3>
+                <p className="dAlatUnitTxt">{notification.kids}</p>
+              </div>
+            )}
+            {notification?.infants && (
+              <div>
+                <h3 className="dAlatSubHeader">Infants:</h3>
+                <p className="dAlatUnitTxt">{notification.infants}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+
+        {/* For Recreation & Nightlife */}
+        {notification?.propertyType === 'Recreation' && (
+          <div className="dAlatGuestUnit">
+            {notification?.numberOfPeople && (
+              <div>
+                <h3 className="dAlatSubHeader">Number Of People:</h3>
+                <p className="dAlatUnitTxt">{notification?.numberOfPeople}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Client Details */}
         {notification?.clientFirstName && (

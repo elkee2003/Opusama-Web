@@ -103,6 +103,7 @@ type EagerBooking = {
   readonly adults?: string | null;
   readonly kids?: string | null;
   readonly infants?: string | null;
+  readonly numberOfPeople?: string | null;
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;
@@ -134,6 +135,7 @@ type LazyBooking = {
   readonly adults?: string | null;
   readonly kids?: string | null;
   readonly infants?: string | null;
+  readonly numberOfPeople?: string | null;
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;

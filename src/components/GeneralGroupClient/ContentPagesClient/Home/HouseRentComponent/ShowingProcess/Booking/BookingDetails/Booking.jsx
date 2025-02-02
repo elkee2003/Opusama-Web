@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en'; // Ensure dayjs is localized if needed
+import 'dayjs/locale/en'; 
 import { useBookingShowingContext } from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useNavigate } from 'react-router-dom';
-import './Booking.css'; // Include your CSS styles
+import './Booking.css';
 import { AiOutlineArrowRight } from 'react-icons/ai'; 
 import DatePicker from 'react-datepicker'; 
 import 'react-datepicker/dist/react-datepicker.css'; 

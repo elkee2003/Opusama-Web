@@ -72,7 +72,7 @@ const ProfileOptionsPage = () => {
 
             <button
             className="proOptBtnRow"
-            onClick={() => navigate("/profileoptions/deleteaccount")}
+            onClick={() => navigate("/realtorcontent/deleteaccount")}
             >
             <AiFillDelete className="proOptIcon" />
             <span className="proOptTxt">Delete Account</span>

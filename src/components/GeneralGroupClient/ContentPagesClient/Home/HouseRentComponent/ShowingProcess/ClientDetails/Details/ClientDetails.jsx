@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ClientDetails.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,10 @@ const ClientDetails = ({ post }) => {
     setKids,
     infants,
     setInfants,
+    numberOfPeople, 
+    setNumberOfPeople,
+    postTotalPrice, 
+    setOverAllPrice, 
     guestFirstName,
     setGuestFirstName,
     guestLastName,
@@ -24,13 +28,21 @@ const ClientDetails = ({ post }) => {
     setNote,
     errorMessage,
     onValidateHotelInput,
+    onValidateRecreationInput,
     onValidatePropertyInput,
   } = useBookingShowingContext();
+
+  // For PropertyType of Recreation
+  const [temporaryPrice, setTemporaryPrice] = useState(postTotalPrice);
 
   const handleProceedToBooking = () => {
     if (post?.propertyType === 'Hotel / Shortlet') {
       if (onValidateHotelInput()) {
         navigate(`/clientcontent/bookingdetails`);
+      }
+    } else if(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
+      if(onValidateRecreationInput()){
+        navigate(`/clientcontent/reviewinfo`);
       }
     } else {
       if (onValidatePropertyInput()) {
@@ -38,6 +50,14 @@ const ClientDetails = ({ post }) => {
       }
     }
   };
+
+  useEffect(()=>{
+    if (post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
+      const newTotalPrice = postTotalPrice * numberOfPeople;
+      setTemporaryPrice(newTotalPrice);
+      setOverAllPrice(newTotalPrice); // Save for global access
+    }
+  },[numberOfPeople, postTotalPrice, setOverAllPrice, post?.propertyType])
 
   return (
     <div className='clientContainer'>
@@ -110,6 +130,32 @@ const ClientDetails = ({ post }) => {
               </div>
             </div>
             <hr className='divider' />
+          </div>
+        )}
+
+        {/* Counting for Recreation and Nightlife */}
+        {(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') && (
+          <div className='card'>
+            <div className='row'>
+              <div>
+                <p className='guest'>Number of People</p>
+                {/* <p className='age'>Ages 16 or above</p> */}
+              </div>
+              <div className='value'>
+                <button className='btnValue' onClick={() => setNumberOfPeople(Math.max(0, numberOfPeople - 1))}>
+                  -
+                </button>
+                <span className='num'>{numberOfPeople}</span>
+                <button className='btnValue' onClick={() => setNumberOfPeople(numberOfPeople + 1)}>
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className='row'>
+              <p className='age'>Price:</p>
+              <p className='value'>₦{temporaryPrice}</p>
+            </div>
           </div>
         )}
 

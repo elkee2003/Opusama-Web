@@ -19,6 +19,8 @@ const ReviewClientDetails = () => {
     setKids,
     infants,
     setInfants,
+    numberOfPeople, 
+    setNumberOfPeople,
     guestFirstName,
     setGuestFirstName,
     guestLastName,
@@ -61,11 +63,15 @@ const ReviewClientDetails = () => {
     setRealtorPrice,
   } = useBookingShowingContext();
 
-  console.log('realtorContext:',realtorContext?.id)
-
-  console.log('dbuser:',dbUser?.id)
-
   const [loading, setLoading] = useState(false);
+
+  const getPriceLabel = () => {
+    if (propertyDetails?.propertyType === "Hotel / Shortlet" || propertyDetails?.propertyType === "Recreation") {
+      return "Sub Total:";
+    } else {
+      return "Price:";
+    }
+  };
 
   useEffect(() => {
     if (propertyDetails) {
@@ -94,6 +100,7 @@ const ReviewClientDetails = () => {
           adults: String(adults),
           kids: String(kids),
           infants: String(infants),
+          numberOfPeople: String(numberOfPeople),
           clientFirstName: guestFirstName,
           clientLastName: guestLastName,
           clientPhoneNumber: guestPhoneNumber,
@@ -111,7 +118,7 @@ const ReviewClientDetails = () => {
           userID: dbUser.id,
           realtorID: realtorContext.id,
           PostID,
-          status: "PENDING",
+          status: propertyType === "Recreation" ? "ACCEPTED" : "PENDING",
         })
       );
       setBookings(booking);
@@ -121,6 +128,7 @@ const ReviewClientDetails = () => {
       setAdults(0);
       setKids(0);
       setInfants(0);
+      setNumberOfPeople(0);
       setGuestFirstName(dbUser?.firstName);
       setGuestLastName(dbUser?.lastName);
       setGuestPhoneNumber(dbUser?.phoneNumber);
@@ -207,9 +215,7 @@ const ReviewClientDetails = () => {
         {postTotalPrice && (
           <>
             <h4>
-              {propertyDetails?.propertyType === "Hotel / Shortlet"
-                ? "Sub Total:"
-                : "Price:"}
+              {getPriceLabel()}
             </h4>
             <p className="txtInputReview">₦{postTotalPrice?.toLocaleString()}</p>
           </>

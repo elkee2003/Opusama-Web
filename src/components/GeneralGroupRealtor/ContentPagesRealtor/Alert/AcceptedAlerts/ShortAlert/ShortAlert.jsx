@@ -115,7 +115,7 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
               navigate(`/realtorcontent/postdetails/${notification?.post?.id}`);
             }}
           >
-            <span className="alertDetailsSub">Accommodation Type (click to view):</span>{' '}
+            <span className="alertDetailsSubClick">Accommodation Type (click to view):</span>{' '}
             {notification.propertyType}
           </p>
         )}

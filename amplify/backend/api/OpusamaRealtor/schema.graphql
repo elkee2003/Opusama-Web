@@ -40,6 +40,7 @@ type Booking @model @auth(rules: [{allow: public}]) {
   adults: String
   kids: String
   infants: String
+  numberOfPeople: String
   clientFirstName: String
   clientLastName: String
   clientPhoneNumber: String
