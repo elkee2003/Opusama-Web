@@ -1,15 +1,27 @@
 import React from 'react';
 import { FaHome, FaBell, FaPlusCircle, FaUser } from 'react-icons/fa';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import './Sidebar.css';
 
 function ContentTabsRealtor (){
+
+    const navigate = useNavigate();
 
     return (
         <>
             {/* Sidebar for larger screens */}
             <div className="sidebar">
-                <h2>Opusama</h2>
+                <div 
+                    className='logoClick'
+                    onClick={() => navigate('/')}
+                >
+                    <img 
+                        src={'/opusama.png'}
+                        alt="logo" 
+                        width={150} 
+                    />
+                </div>
                 <nav>
                     <ul>
                         <li>
@@ -57,6 +69,7 @@ function ContentTabsRealtor (){
             </div>
 
             {/* Bottom tab navigator for smaller screens */}
+            
             <div className="bottom-nav">
                 <NavLink 
                     to="/realtorcontent/home"

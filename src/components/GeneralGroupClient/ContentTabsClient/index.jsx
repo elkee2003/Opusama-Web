@@ -1,20 +1,27 @@
 import React from 'react';
 import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser } from 'react-icons/fa';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import './Sidebar.css';
 
 function ContentTabsClient (){
+
+    const navigate = useNavigate();
 
     return (
         <>
             {/* Sidebar for larger screens */}
             <div className="sidebar">
                 {/* <h2>Opusama</h2> */}
-                <img 
-                    src={'/opusama.png'}
-                    alt="logo" 
-                    width={150} 
-                />
+                <div 
+                    className='logoClickClient'
+                    onClick={() => navigate('/')}
+                >
+                    <img 
+                        src={'/opusama.png'}
+                        alt="logo" 
+                        width={150} 
+                    />
+                </div>
                 <nav>
                     <ul>
                         <li>

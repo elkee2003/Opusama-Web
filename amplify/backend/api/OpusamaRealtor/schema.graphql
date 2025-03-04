@@ -1,3 +1,24 @@
+type CommunityReply @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  comment: String
+  communitydiscussionID: ID! @index(name: "byCommunityDiscussion")
+  userID: ID! @index(name: "byUser")
+  realtorID: ID! @index(name: "byRealtor")
+}
+
+type CommunityDiscussion @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  category: String
+  title: String
+  content: String
+  instigatorID: String
+  media: [String]
+  likes: Int
+  CommunityReplies: [CommunityReply] @hasMany(indexName: "byCommunityDiscussion", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+  realtorID: ID! @index(name: "byRealtor")
+}
+
 enum BookingStatus {
   PENDING
   ACCEPTED
@@ -73,6 +94,8 @@ type User @model @auth(rules: [{allow: public}]) {
   RealtorReviews: [RealtorReview] @hasMany(indexName: "byUser", fields: ["id"])
   push_token: String
   Bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+  CommunityDiscussions: [CommunityDiscussion] @hasMany(indexName: "byUser", fields: ["id"])
+  CommunityReplies: [CommunityReply] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Realtor @model @auth(rules: [{allow: public}]) {
@@ -92,6 +115,8 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   push_token: String
   Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
   RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
+  CommunityDiscussions: [CommunityDiscussion] @hasMany(indexName: "byRealtor", fields: ["id"])
+  CommunityReplies: [CommunityReply] @hasMany(indexName: "byRealtor", fields: ["id"])
 }
 
 type Post @model @auth(rules: [{allow: public}]) {

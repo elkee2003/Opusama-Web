@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Tabs, Tab, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import HouseRent from './HouseRentComponent';
 import Hotel from './HotelComponent';
 import Recreation from './RecreationComponent';
@@ -10,6 +11,7 @@ import OfficeSpace from './OfficeSpaceComponent';
 import './Home.css';
 
 function Home() {
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
@@ -18,6 +20,18 @@ function Home() {
 
   return (
     <div >
+      {/* logo */}
+      <div 
+          className='logoForSmallScreen'
+      >
+          <img 
+              src={'/opusama.png'}
+              alt="logo" 
+              onClick={() => navigate('/')}
+          />
+      </div>
+
+      {/* Toptab */}
       <div className="tabs-container">
         <Tabs
           value={selectedTab}

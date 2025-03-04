@@ -22,6 +22,8 @@ const DisplayMedia = () => {
     removeMedia(index);
   };
 
+  {console.log("Media Data:", media)} {/* Debugging */}
+
   return (
     <div className="displayMContainer">
       {/* Icon Container */}
@@ -42,7 +44,16 @@ const DisplayMedia = () => {
         <div className="mediaDivContainer">
           {media.map((item, index) => (
             <div className="dispalyMediaContainer" key={index}>
-              <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+              {item.type === 'video' ? (
+                <video className="dispalyMedia" controls>
+                  <source src={item.uri} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+              )}
+
+              {/* Remove Button */}
               <button
                 className="dispalyMRemoveButtonContainer"
                 onClick={() => handleRemove(index)}

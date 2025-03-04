@@ -66,16 +66,16 @@ const ProfileOptionsPage = () => {
             </button>
 
             <button className="proOptBtnRow" onClick={onSignout}>
-            <AiOutlineLogout className="proOptIcon" />
-            <span className="proOptTxt">Sign Out</span>
+                <AiOutlineLogout className="proOptIcon" />
+                <span className="proOptTxt">Sign Out</span>
             </button>
 
             <button
             className="proOptBtnRow"
             onClick={() => navigate("/realtorcontent/deleteaccount")}
             >
-            <AiFillDelete className="proOptIcon" />
-            <span className="proOptTxt">Delete Account</span>
+                <AiFillDelete className="proOptIcon" />
+                <span className="proOptTxt">Delete Account</span>
             </button>
         </div>
     </div>

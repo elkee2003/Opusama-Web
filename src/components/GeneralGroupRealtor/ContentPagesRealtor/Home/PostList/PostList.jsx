@@ -64,6 +64,16 @@ function PostList() {
   return (
     <div className='exploreContainer' >
 
+        <div 
+            className='logoForSmallScreen'  
+        >
+            <img 
+                src={'/opusama.png'}
+                alt="logo" 
+                onClick={() => navigate('/')}
+            />
+        </div>
+
 
         {myPostList && myPostList.length > 0 ? (
             <div >

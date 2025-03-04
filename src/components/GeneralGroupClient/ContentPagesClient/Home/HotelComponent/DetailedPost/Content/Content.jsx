@@ -257,7 +257,7 @@ function Content({post, realtor,}) {
 
         {/* Pricing */}
         <div className='priceRoww'>
-          <p className='sub'>Rent:</p>
+          <p className='sub'>Price:</p>
           <p className='price'>
             ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
           </p>

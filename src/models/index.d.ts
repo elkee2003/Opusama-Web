@@ -24,6 +24,84 @@ export enum BookingStatus {
 
 
 
+type EagerCommunityReply = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityReply, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly comment?: string | null;
+  readonly communitydiscussionID: string;
+  readonly userID: string;
+  readonly realtorID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCommunityReply = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityReply, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly comment?: string | null;
+  readonly communitydiscussionID: string;
+  readonly userID: string;
+  readonly realtorID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CommunityReply = LazyLoading extends LazyLoadingDisabled ? EagerCommunityReply : LazyCommunityReply
+
+export declare const CommunityReply: (new (init: ModelInit<CommunityReply>) => CommunityReply) & {
+  copyOf(source: CommunityReply, mutator: (draft: MutableModel<CommunityReply>) => MutableModel<CommunityReply> | void): CommunityReply;
+}
+
+type EagerCommunityDiscussion = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityDiscussion, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly category?: string | null;
+  readonly title?: string | null;
+  readonly content?: string | null;
+  readonly instigatorID?: string | null;
+  readonly media?: (string | null)[] | null;
+  readonly likes?: number | null;
+  readonly CommunityReplies?: (CommunityReply | null)[] | null;
+  readonly userID: string;
+  readonly realtorID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCommunityDiscussion = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityDiscussion, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly category?: string | null;
+  readonly title?: string | null;
+  readonly content?: string | null;
+  readonly instigatorID?: string | null;
+  readonly media?: (string | null)[] | null;
+  readonly likes?: number | null;
+  readonly CommunityReplies: AsyncCollection<CommunityReply>;
+  readonly userID: string;
+  readonly realtorID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CommunityDiscussion = LazyLoading extends LazyLoadingDisabled ? EagerCommunityDiscussion : LazyCommunityDiscussion
+
+export declare const CommunityDiscussion: (new (init: ModelInit<CommunityDiscussion>) => CommunityDiscussion) & {
+  copyOf(source: CommunityDiscussion, mutator: (draft: MutableModel<CommunityDiscussion>) => MutableModel<CommunityDiscussion> | void): CommunityDiscussion;
+}
+
 type EagerRealtorReview = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<RealtorReview, 'id'>;
@@ -180,6 +258,8 @@ type EagerUser = {
   readonly RealtorReviews?: (RealtorReview | null)[] | null;
   readonly push_token?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
+  readonly CommunityDiscussions?: (CommunityDiscussion | null)[] | null;
+  readonly CommunityReplies?: (CommunityReply | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -200,6 +280,8 @@ type LazyUser = {
   readonly RealtorReviews: AsyncCollection<RealtorReview>;
   readonly push_token?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
+  readonly CommunityDiscussions: AsyncCollection<CommunityDiscussion>;
+  readonly CommunityReplies: AsyncCollection<CommunityReply>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -231,6 +313,8 @@ type EagerRealtor = {
   readonly push_token?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
   readonly RealtorReview?: (RealtorReview | null)[] | null;
+  readonly CommunityDiscussions?: (CommunityDiscussion | null)[] | null;
+  readonly CommunityReplies?: (CommunityReply | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -256,6 +340,8 @@ type LazyRealtor = {
   readonly push_token?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
   readonly RealtorReview: AsyncCollection<RealtorReview>;
+  readonly CommunityDiscussions: AsyncCollection<CommunityDiscussion>;
+  readonly CommunityReplies: AsyncCollection<CommunityReply>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

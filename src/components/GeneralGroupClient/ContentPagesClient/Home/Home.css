@@ -9,6 +9,8 @@
     padding-right: 16px;
 }
 
+/* Styles about the logo in smaller screen is in realtor folder */
+
 .tabs-container::-webkit-scrollbar {
     display: none; /* Hide scrollbars on WebKit browsers */
 }
