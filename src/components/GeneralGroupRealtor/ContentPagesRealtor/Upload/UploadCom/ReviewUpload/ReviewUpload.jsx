@@ -34,9 +34,16 @@ const ReviewUpload = () => {
       {/* Media Display */}
       <div className="reviewMediaFullDisplayContainer">
         <div className="mediaDivContainer">
-          {media.map((item, index) => (
+        {media.map((item, index) => (
             <div className="dispalyMediaContainer" key={index}>
-              <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+              {item.type === 'video' ? (
+                <video className="dispalyMedia" controls>
+                  <source src={item.uri} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+              )}
             </div>
           ))}
         </div>

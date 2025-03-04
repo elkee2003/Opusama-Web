@@ -5,9 +5,6 @@ import './SelectMedia.css';
 import { useUploadContext } from '../../../../../Providers/RealtorProvider/UploadProvider';
 
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-
-const ffmpeg = createFFmpeg({ log: true });
 
 const SelectMedia = () => {
   const {setMedia, media} = useUploadContext();
@@ -26,13 +23,6 @@ const SelectMedia = () => {
       };
       
   },[dbRealtor])
-
-  // Load ffmpeg on component mount
-  useEffect(() => {
-    if (!ffmpeg.isLoaded()) {
-      ffmpeg.load();
-    }
-  }, []);
 
   
 
@@ -66,39 +56,30 @@ const SelectMedia = () => {
   
     // If a video is selected, validate its duration first
     if (videos.length === 1) {
-      const trimmedVideo = await trimVideo(videos[0]);
-      if (!trimmedVideo) {
-        alert('Failed to trim the video. Please try again.');
-        return;
+      const isVideoValid = await checkVideoDuration(videos[0]);
+      if (!isVideoValid) {
+        alert('Video too long. Please trim the video to 30 seconds or less before selecting.');
+        return; // Stop execution
       }
-      finalizeMediaSelection([...images, trimmedVideo]);
-    } else {
-      finalizeMediaSelection(images);
     }
-  };
-
-  const trimVideo = async (videoFile) => {
-    if (!ffmpeg.isLoaded()) {
-      await ffmpeg.load();
-    }
-
-    const inputFileName = 'input.mp4';
-    const outputFileName = 'output.mp4';
-
-    ffmpeg.FS('writeFile', inputFileName, await fetchFile(videoFile));
-
-    await ffmpeg.run(
-      '-i', inputFileName, 
-      '-t', '30',  // Trim to 30 seconds
-      '-c', 'copy',
-      outputFileName
-    );
-
-    const data = ffmpeg.FS('readFile', outputFileName);
-    const trimmedBlob = new Blob([data.buffer], { type: 'video/mp4' });
-    return new File([trimmedBlob], 'trimmed_video.mp4', { type: 'video/mp4' });
+  
+    // Proceed to finalize media selection
+    finalizeMediaSelection([...images, ...videos]);
   };
   
+  // Function to check video duration asynchronously
+  const checkVideoDuration = (videoFile) => {
+    return new Promise((resolve) => {
+      const videoURL = URL.createObjectURL(videoFile);
+      const videoElement = document.createElement('video');
+      videoElement.src = videoURL;
+      videoElement.onloadedmetadata = () => {
+        resolve(videoElement.duration <= 30);
+      };
+    });
+  };
+
+  // Function to finalize media selection
   const finalizeMediaSelection = (files) => {
     const selectedMedia = files.map((file) => ({
       uri: URL.createObjectURL(file),
@@ -109,6 +90,23 @@ const SelectMedia = () => {
     setMedia((prevMedia) => [...prevMedia, ...selectedMedia]);
     navigate('/realtorcontent/displaymedia');
   };
+
+
+  //   if (files.length < 3) {
+  //     alert('Select at least 3 media files');
+  //   } else if (files.length > 15) {
+  //     alert('You can only select up to 15 media files');
+  //   } else {
+  //     // Map the selected files to an array with their URIs and names
+  //     const selectedMedia = files.map((file) => ({
+  //       uri: URL.createObjectURL(file),
+  //       name: file.name,
+  //     }));
+  //     // Maintain the selection order by appending new files in the same sequence they were picked
+  //     setMedia((prevMedia) => [...prevMedia, ...selectedMedia]);
+  //     navigate('/realtorcontent/displaymedia'); 
+  //   }
+  // };
 
   return (
     <div className="selectMContainer">

@@ -10,10 +10,19 @@ const DisplayMedia = () => {
 
   // Function to navigate to forms
   const goToForms = () => {
-    if (media.length >= 3) {
+    const videoCount = media.filter(item => item.type === 'video').length;
+    const imageCount = media.filter(item => item.type === 'image').length;
+    if (videoCount > 1) {
+      alert('Only one video is allowed.');
+      return;
+    }
+
+    if (videoCount === 1 && imageCount <= 10) {
+      navigate('/realtorcontent/selectaddress');
+    } else if (videoCount === 0 && imageCount >= 3) {
       navigate('/realtorcontent/selectaddress');
     } else {
-      alert('Kindly add more media files');
+      alert('Select at least 3 images OR 1 video with any number of images (up to 10).');
     }
   };
 
@@ -21,8 +30,6 @@ const DisplayMedia = () => {
   const handleRemove = (index) => {
     removeMedia(index);
   };
-
-  {console.log("Media Data:", media)} {/* Debugging */}
 
   return (
     <div className="displayMContainer">
