@@ -15,7 +15,7 @@ const Booking = () => {
   });
 
   const [totalPrice, setTotalPrice] = useState(0);
-  const { postTotalPrice, setOverAllPrice, setDuration, setCheckInDate, setCheckOutDate } = useBookingShowingContext();
+  const { postPrice, postCautionFee, postTotalPrice, setOverAllPrice, setDuration, setCheckInDate, setCheckOutDate } = useBookingShowingContext();
 
   const navigate = useNavigate();
 
@@ -36,8 +36,12 @@ const Booking = () => {
       setCheckInDate(formattedCheckInDate);
       setCheckOutDate(formattedCheckOutDate);
 
-      if (postTotalPrice) {
-        setTotalPrice(daysDifference * postTotalPrice);
+      if (postPrice) {
+        let calculatedTotalPrice = daysDifference * postPrice; // Multiply only postPrice
+        if (postCautionFee) {
+          calculatedTotalPrice += postCautionFee; // Add postCautionFee once
+        }
+        setTotalPrice(calculatedTotalPrice);
       }
     }
   }, [range, postTotalPrice]);

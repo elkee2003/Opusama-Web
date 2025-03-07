@@ -60,6 +60,20 @@
   position: relative;
 }
 
+.videoWrapper {
+  position: relative;
+}
+
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 68%;
+  background: transparent;
+  cursor: pointer;
+}
+
 /* Style for each media image */
 .dispalyMedia {
   width: 100%;  
@@ -67,6 +81,7 @@
   object-fit: contain;
   border-radius: 10px;
   background-color:rgb(204, 204, 204);
+  cursor: pointer;
 }
 
 /* Remove button positioning */
@@ -106,6 +121,10 @@
   }
 }
 @media (max-width: 768px) {
+  .videoOverlay {
+    width: 240px;
+  }
+
   .dispalyMedia {
     width: 250px;  /* Adjust width for tablets */
     height: 250px; /* Adjust height for tablets */
@@ -127,6 +146,11 @@
         width: 70%;
         margin-left: -2.8rem;
     }
+
+    .videoOverlay {
+      width: 180px;
+    }
+
     .dispalyMedia {
         width: 200px;  /* Adjust width for mobile */
         height: 250px; /* Adjust height for mobile */

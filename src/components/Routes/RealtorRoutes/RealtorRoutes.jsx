@@ -6,7 +6,8 @@ import HomeRealtor from '../../../components/GeneralGroupRealtor/ContentPagesRea
 import Upload from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Upload/SelectMedia';
 import Alert from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Alert/Alert';
 import RealtorProfile from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Profile/Profile';
-import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/DisplayMedia/DisplayMedia';
+import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
+import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
 import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
 import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
 import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
@@ -30,6 +31,7 @@ const RealtorRoutes = () => (
             <Route path="alerts" element={<Alert />} />
             <Route path="profile" element={<RealtorProfile />} />
             <Route path="displaymedia" element={<DisplayMedia />} />
+            <Route path="view-media" element={<ViewMedia />} />
             <Route path="selectaddress" element={<GooglePlacesAutoCompleteCom />} />
             <Route path="form" element={<Forms />} />
             <Route path="uploadproperty" element={<UploadProperty />} />

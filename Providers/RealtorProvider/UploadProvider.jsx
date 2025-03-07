@@ -151,6 +151,18 @@ const UploadContextProvider = ({children}) => {
       setMedia((prevMedia) => prevMedia.filter((_, idx) => idx !== index));
     };
 
+    // Function for trimmed video (new media)
+    const addMedia = (newMedia) => {
+      setMedia([...media, newMedia]);
+    };
+
+     // Update existing media
+    const updateMedia = (index, newMedia) => {
+      setMedia((prevMedia) =>
+        prevMedia.map((item, i) => (i === index ? newMedia : item))
+      );
+    };
+
     const onValidate = ()=>{
         if (validateInput()) {
           return true;
@@ -231,7 +243,7 @@ const UploadContextProvider = ({children}) => {
         policies, setPolicies,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
-        removeMedia
+        removeMedia, addMedia, updateMedia
     }}>
       {children}
     </UploadContext.Provider>

@@ -2,33 +2,53 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DisplayMedia.css';
 import { FaArrowLeft, FaArrowRight, FaTimesCircle } from 'react-icons/fa';
-import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
+import { useUploadContext } from '../../../../../../../../Providers/RealtorProvider/UploadProvider';
 
 const DisplayMedia = () => {
   const { media, removeMedia } = useUploadContext();
   const navigate = useNavigate();
 
   // Function to navigate to forms
-  const goToForms = () => {
-    const videoCount = media.filter(item => item.type === 'video').length;
+  const goToForms = async () => {
+    const video = media.find(item => item.type === 'video');
     const imageCount = media.filter(item => item.type === 'image').length;
-    if (videoCount > 1) {
-      alert('Only one video is allowed.');
-      return;
+    
+
+    if (video) {
+      const isValid = await checkVideoDuration(video.uri);
+      if (!isValid) {
+        alert('The selected video is longer than 40 seconds. Please trim it before proceeding.');
+        return;
+      }
     }
 
-    if (videoCount === 1 && imageCount <= 10) {
+    if (video && imageCount <= 10) {
       navigate('/realtorcontent/selectaddress');
-    } else if (videoCount === 0 && imageCount >= 3) {
+    } else if (!video && imageCount >= 3) {
       navigate('/realtorcontent/selectaddress');
     } else {
       alert('Select at least 3 images OR 1 video with any number of images (up to 10).');
     }
   };
 
+  // Function to check video duration
+  const checkVideoDuration = (videoUri) => {
+    return new Promise((resolve) => {
+      const videoElement = document.createElement('video');
+      videoElement.src = videoUri;
+      videoElement.onloadedmetadata = () => {
+        resolve(videoElement.duration <= 40);
+      };
+    });
+  };
+
   // Function to remove a specific media item
   const handleRemove = (index) => {
     removeMedia(index);
+  };
+
+  const handleMediaClick = (item, index) => {
+    navigate("/realtorcontent/view-media", { state: { mediaItem: item, index } });
   };
 
   return (
@@ -50,12 +70,23 @@ const DisplayMedia = () => {
       <div className="mediaFullDisplayContainer">
         <div className="mediaDivContainer">
           {media.map((item, index) => (
-            <div className="dispalyMediaContainer" key={index}>
+            <div 
+              className="dispalyMediaContainer" 
+              key={index}
+              onClick={() => handleMediaClick(item, index)}
+            >
               {item.type === 'video' ? (
-                <video className="dispalyMedia" controls>
-                  <source src={item.uri} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <div className="videoWrapper">
+                  <video 
+                  key={item.uri}
+                    className="dispalyMedia"
+                    controls
+                  >
+                    <source src={item.uri} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="videoOverlay" onClick={() => handleMediaClick(item)}></div>
+                </div>
               ) : (
                 <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
               )}
