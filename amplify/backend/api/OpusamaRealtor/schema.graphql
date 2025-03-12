@@ -117,6 +117,11 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
   CommunityDiscussions: [CommunityDiscussion] @hasMany(indexName: "byRealtor", fields: ["id"])
   CommunityReplies: [CommunityReply] @hasMany(indexName: "byRealtor", fields: ["id"])
+  isVerified: Boolean
+  isPartner: Boolean
+  isPremium: Boolean
+  isElite: Boolean
+  isTrusted: Boolean
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
@@ -137,9 +142,13 @@ type Post @model @auth(rules: [{allow: public}]) {
   cautionFee: Float
   totalPrice: Float!
   inspectionFee: Float
+  otherFeesName: String
+  otherFeesPrice: Float
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
+  otherFeesName2: String
+  otherFeesPrice2: Float
   timeFrame: String
   bed: String
-  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   bedrooms: String
   amenities: String
   policies: String

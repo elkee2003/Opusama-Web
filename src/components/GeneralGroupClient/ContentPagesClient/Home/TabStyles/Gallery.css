@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     background-color: #f8f9fa; /* Light background */
-    padding: 10px;
+    padding: 5px;
     box-sizing: border-box;
 }
   
@@ -98,21 +98,21 @@
 /* Responsive styling */
 @media (max-width: 1200px) {
     .swiper {
-      height: 80vh; /* Adjust swiper height for smaller screens */
-      width: 70vw;
+      height: 80vh; 
+      /* width: 70vw; */
     }
 }
 @media (max-width: 768px) {
     .swiper {
-      height: 80vh; /* Adjust swiper height for smaller screens */
-      width: 85vw;
+      height: 80vh;
+      /* width: 85vw; */
     }
 }
   
-@media (max-width: 480px) {
+@media (max-width: 500px) {
     .swiper {
-      height: 85vh; /* Further reduce swiper height for mobile */
-      width: 85vw;
+      height: 90vh;
+      /* width: 85vw; */
     }
   
     .backIconContainer {

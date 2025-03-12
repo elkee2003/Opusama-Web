@@ -11,9 +11,9 @@ function ContentTabsRealtor (){
     return (
         <>
             {/* Sidebar for larger screens */}
-            <div className="sidebar">
+            <div className="realtor-sidebar">
                 <div 
-                    className='logoClick'
+                    className='realtor-logoClick'
                     onClick={() => navigate('/')}
                 >
                     <img 
@@ -29,7 +29,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/home"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                               <div className='nav-container'>
+                               <div className='realtor-nav-container'>
                                     <FaHome /> Home
                                 </div>
                             </NavLink>
@@ -39,7 +39,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/upload"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaPlusCircle /> Upload
                                 </div>
                             </NavLink>
@@ -49,7 +49,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/alerts"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaBell /> Alerts
                                 </div>
                             </NavLink>
@@ -59,7 +59,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/profile"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaUser /> Profile
                                 </div>
                             </NavLink>
@@ -70,7 +70,7 @@ function ContentTabsRealtor (){
 
             {/* Bottom tab navigator for smaller screens */}
             
-            <div className="bottom-nav">
+            <div className="realtor-bottom-nav">
                 <NavLink 
                     to="/realtorcontent/home"
                     className={({ isActive }) => isActive ? 'active-link' : ''}

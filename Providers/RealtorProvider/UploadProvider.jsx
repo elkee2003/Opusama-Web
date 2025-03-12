@@ -19,7 +19,11 @@ const UploadContextProvider = ({children}) => {
     const [bedrooms, setBedrooms] = useState('');
     const [bed, setBed] = useState('');
     const [cautionFee, setCautionFee] = useState('');
-    const [inspectionFee, setInspectionFee]= useState('')
+    const [inspectionFee, setInspectionFee]= useState('');
+    const [otherFeesName, setOtherFeesName] = useState('');
+    const [otherFeesName2, setOtherFeesName2] = useState('');
+    const [otherFeesPrice, setOtherFeesPrice] = useState('');
+    const [otherFeesPrice2, setOtherFeesPrice2] = useState('');
     const [price, setPrice] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
     const [timeFrame, setTimeFrame] = useState('');
@@ -232,6 +236,10 @@ const UploadContextProvider = ({children}) => {
         bed, setBed,
         cautionFee, setCautionFee,
         inspectionFee, setInspectionFee,
+        otherFeesName, setOtherFeesName,
+        otherFeesName2, setOtherFeesName2,
+        otherFeesPrice, setOtherFeesPrice,
+        otherFeesPrice2, setOtherFeesPrice2,
         price, setPrice,
         totalPrice, setTotalPrice,
         timeFrame, setTimeFrame,

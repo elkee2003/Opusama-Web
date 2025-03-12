@@ -1,10 +1,10 @@
 /* Layout container */
-.layout {
+.realtor-layout {
     display: flex;
   }
   
   /* Main content area */
-  .main-content {
+  .realtor-main-content {
     margin-left: 270px; /* Same as sidebar width + 20px for padding */
     padding: 20px;
     flex: 1;
@@ -15,7 +15,7 @@
   
   /* Responsive adjustments */
   @media (max-width: 900px) {
-    .main-content {
+    .realtor-main-content {
       margin-left: 0; 
     }
   }

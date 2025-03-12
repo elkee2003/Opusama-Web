@@ -1,17 +1,18 @@
-.pListContainer{
+/* important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer */
+.postListContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3.5rem;
-  width: 85%;
+  margin-bottom: 4.2rem;
   justify-content: center;
+  padding: 30px;
 }
 
-/* .searchBtn {
+.homeSearchBtn {
   margin-bottom: 10px;
-  background-color: #ffffff;
+  background-color: rgb(245, 245, 245, 0.5);
   height: 60px;
-  width: 100%;
-  margin-left: 10px;
+  width: 70%;
+  margin-left: 0px;
   margin-right: 10px;
   border: 2px solid rgb(3, 3, 34);
   border-radius: 20px;
@@ -19,13 +20,20 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-} */
+}
 
-/* .searchBtnTxt {
+.homeSearchBtnTxt {
   font-size: 16px;
   font-weight: bold;
-  margin: 15px;
-} */
+  margin: 30px;
+  color:rgb(105, 104, 104)
+}
+
+.noListngsCon {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
 
 .noListings {
   text-align: center;
@@ -65,24 +73,48 @@
   animation: spin 1s linear infinite;
 }
 
+.refreshBtnPListCon {
+  display: flex;
+  /* width: 100vw; */
+  justify-content: center;
+}
+
+.refreshBtnPList{
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  max-width: 160px;
+  background-color: #11032b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 @keyframes spin {
 to {
   transform: rotate(360deg);
 }
 }
 
+@media (max-width: 1300px) {
+  .homeSearchBtn {
+    width: 75%;
+  }
+}
 @media (max-width: 900px) {
-  .container{
-      width: 90%;
+  .homeSearchBtn {
+    width: 90%;
+  }
+
+  .postListContainer {
+    padding: 20px;
   }
 }
 @media (max-width: 700px) {
-  .container{
-      width: 80%;
-  }
 }
-@media (max-width: 600px) {
-  .container{
-      width: 60%;
+@media (max-width: 500px) {
+  .homeSearchBtn {
+    width: 100%;
   }
 }

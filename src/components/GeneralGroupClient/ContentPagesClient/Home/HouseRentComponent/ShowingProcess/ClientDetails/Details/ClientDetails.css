@@ -4,8 +4,8 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    margin-left: 10px;
     margin-right: 10px;
+    /* background-color: red; */
 }
 
 .header {
@@ -150,6 +150,10 @@
 }
 
 @media (max-width: 900px) {
+    .clientContainer {
+        width: 100vw;
+    }
+
     .card {
         width:80vw
     }

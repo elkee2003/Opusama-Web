@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  padding:20px;
   /* margin-inline: 20px; */
 }
 
@@ -64,7 +65,7 @@
 }
 @media (max-width: 900px) {
     .deleteAccContainer {
-        max-width: 85vw;
+        /* width: 85vw; */
         margin-bottom: 7rem;
     }
 

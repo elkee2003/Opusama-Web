@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './Post.css';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'aws-amplify/storage';
 
@@ -41,7 +40,7 @@ function Post({post}) {
     }, [post.media]);
 
   return (
-    <div className='explorePostContainer'>
+    <div className='singlePostContainer'>
         {/* Image Container */}
         <div 
             className={'imageContainer'}

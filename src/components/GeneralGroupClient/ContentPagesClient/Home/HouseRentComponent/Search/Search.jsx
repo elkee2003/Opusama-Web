@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Search.css';
 import SearchResults from './SearchResults';
 import { DataStore } from 'aws-amplify/datastore';
 import { Realtor, Post } from '../../../../../../models';

@@ -18,6 +18,10 @@ const ReviewUpload = () => {
     price,
     totalPrice,
     inspectionFee,
+    otherFeesName,
+    otherFeesPrice,
+    otherFeesName2,
+    otherFeesPrice2,
     country,
     state,
     address,
@@ -119,17 +123,31 @@ const ReviewUpload = () => {
           <p className='uploadPropDetails'>₦{formatCurrency(cautionFee)}</p>
         </div>
 
-        <div className='uploadPropRow'>
-          <p className='displayLabel'>Total Price:</p>
-          <p className='uploadPropDetails'>₦{formatCurrency(totalPrice)}</p>
-        </div>
-
         {inspectionFee && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Inspection Fee:</p>
             <p className='uploadPropDetails'>₦{formatCurrency(inspectionFee)}</p>
           </div>
         )}
+
+        {otherFeesPrice && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>{otherFeesName}:</p>
+            <p className='uploadPropDetails'>₦{formatCurrency(otherFeesPrice)}</p>
+          </div>
+        )}
+
+        {otherFeesPrice2 && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>{otherFeesName2}:</p>
+            <p className='uploadPropDetails'>₦{formatCurrency(otherFeesPrice2)}</p>
+          </div>
+        )}
+
+        <div className='uploadPropRow'>
+          <p className='displayLabel'>Total Price:</p>
+          <p className='uploadPropDetails'>₦{formatCurrency(totalPrice)}</p>
+        </div>
 
         {bedrooms && (
           <div className='uploadPropRow'>

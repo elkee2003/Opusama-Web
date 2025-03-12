@@ -3,7 +3,6 @@ import { DataStore } from 'aws-amplify/datastore';
 import { PostReview, User } from '../../../../../../../models';
 import { useParams} from "react-router-dom";
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import './Content.css'; 
 
 const UserReviews = () => {
   const { postId } = useParams();

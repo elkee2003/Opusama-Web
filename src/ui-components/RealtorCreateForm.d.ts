@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -34,6 +34,11 @@ export declare type RealtorCreateFormInputValues = {
     accountName?: string;
     accountNumber?: string;
     push_token?: string;
+    isVerified?: boolean;
+    isPartner?: boolean;
+    isPremium?: boolean;
+    isElite?: boolean;
+    isTrusted?: boolean;
 };
 export declare type RealtorCreateFormValidationValues = {
     sub?: ValidationFunction<string>;
@@ -48,6 +53,11 @@ export declare type RealtorCreateFormValidationValues = {
     accountName?: ValidationFunction<string>;
     accountNumber?: ValidationFunction<string>;
     push_token?: ValidationFunction<string>;
+    isVerified?: ValidationFunction<boolean>;
+    isPartner?: ValidationFunction<boolean>;
+    isPremium?: ValidationFunction<boolean>;
+    isElite?: ValidationFunction<boolean>;
+    isTrusted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RealtorCreateFormOverridesProps = {
@@ -64,6 +74,11 @@ export declare type RealtorCreateFormOverridesProps = {
     accountName?: PrimitiveOverrideProps<TextFieldProps>;
     accountNumber?: PrimitiveOverrideProps<TextFieldProps>;
     push_token?: PrimitiveOverrideProps<TextFieldProps>;
+    isVerified?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isPartner?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isPremium?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isElite?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isTrusted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type RealtorCreateFormProps = React.PropsWithChildren<{
     overrides?: RealtorCreateFormOverridesProps | undefined | null;

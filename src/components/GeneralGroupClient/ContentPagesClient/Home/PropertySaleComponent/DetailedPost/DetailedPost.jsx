@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import './DetailedPost.css'
 import { useParams} from "react-router-dom";
 import { DataStore } from "aws-amplify/datastore";
 import {Post, Realtor} from '../../../../../../models';

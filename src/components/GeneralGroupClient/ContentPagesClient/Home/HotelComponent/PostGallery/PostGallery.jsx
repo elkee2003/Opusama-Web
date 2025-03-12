@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { DataStore } from "aws-amplify/datastore";
 import {Post} from '../../../../../../models';
 import Gallery from './Gallery/Gallery';
-import './PostGallery.css'
+// Style was imported... (I don't know where it was first imported)
 
 
 const PostGallery = () => {
@@ -30,7 +30,7 @@ const PostGallery = () => {
   }, [postId]);
 
   return (
-    <div className="postGalleryContainer">
+    <div className="posttGalleryContainer">
         <Gallery 
             media={media} 
         />

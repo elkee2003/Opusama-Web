@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './PostList.css';
 import PostFeed from '../Post/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -74,7 +73,7 @@ function PostList() {
     };
 
   return (
-    <div className='pListContainer' >
+    <div className='postListContainer' >
 
         {/* Search Bar */}
         <div>
@@ -94,7 +93,9 @@ function PostList() {
                 ))}
             </div>
         ) : (
-            <p className="noListings">No Office Space listings</p>
+            <div className='noListngsCon'>
+                <p className="noListings">No Office Space listings</p>
+            </div>
         )}
         {refreshing && (
             <div className="loading-container">
@@ -104,9 +105,11 @@ function PostList() {
         )}
 
         {/* Refresh Button */}
-        <button onClick={handleRefresh} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className='refreshBtnPListCon'>
+            <button onClick={handleRefresh} className='refreshBtnPList'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   )
 }

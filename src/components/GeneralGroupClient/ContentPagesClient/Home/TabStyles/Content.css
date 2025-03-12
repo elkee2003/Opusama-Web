@@ -6,9 +6,10 @@
     margin-inline: 10px;
     position: relative;
 }
-p {
+
+/* p {
     color:black;
-}
+} */
 
 button {
     border: none;
@@ -57,6 +58,7 @@ button {
     font-weight: bold;
     color: var(--heading-color);
     letter-spacing: 0.8px;
+    cursor: pointer;
 }
 
 .details {
@@ -146,7 +148,7 @@ button {
     line-height: 25px;
 }
 
-.detailedDescHotel {
+.detailedDesc {
     white-space: pre-wrap; /* Preserves whitespace, including newlines */
 }
 
@@ -288,6 +290,7 @@ button {
 .reviewsContainer {
     display: flex;
     height: 100%;
+    width: 100vw;
     flex-direction: column;
     flex:1;
     padding: 0px 10px;
@@ -334,6 +337,9 @@ button {
     text-align: center;
 }
 
+/* b */
+/* e */
+
 .bookContainer  {
   position: fixed;
   background-color: #1eda0d;
@@ -354,17 +360,67 @@ button {
     font-weight: bold;
 }
 
+.getinTouchContainer  {
+  position: fixed;
+  background-color: #020425;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  left: 680px;
+  right: 380px;
+  margin-top: 20px;
+  bottom: 0.7rem;
+  border-radius: 20px;
+}
+
+.getInTouchTxt {
+    color: #dddcdc;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.reserveCon {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 680px;
+    right: 380px;
+    height: 60px;
+    bottom: 0.7rem;
+    background-color: #020425;
+    border-radius: 30px;
+}
+
+.reserveTxt {
+    color: #dddcdc;
+    font-size: 30px;
+    font-weight: bold;
+}
+
 @media (max-width: 1300px) {
-  .bookContainer {
-    left: 480px;
-    right: 180px;
-  }
+    .bookContainer {
+        left: 480px;
+        right: 180px;
+    }
+
+    .getinTouchContainer {
+        left: 480px;
+        right: 180px;
+    }
+
+    .reserveCon{
+        left: 480px;
+        right: 180px;
+    }
 }
 
 @media (max-width: 900px) {
     .contentContainer{
         width: 90%;
     }
+
     .bookContainer {
         position: fixed;
         padding: 2px;
@@ -373,24 +429,69 @@ button {
         margin-top: 20px;
         margin-bottom: 5rem;
     }
+
+    .getinTouchContainer {
+        position: fixed;
+        padding: 2px;
+        right: 160px;
+        left: 160px;
+        margin-top: 20px;
+        margin-bottom: 5rem;
+    }
+
+    .reserveCon {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 160px;
+        left: 160px;
+        height: 60px;
+        bottom: 5rem;
+        background-color: #020425;
+        border-radius: 30px;
+    }
 }
+
 @media (max-width: 700px) {
     .contentContainer{
         width: 95%;
     }
 }
+
 @media (max-width: 600px) {
-    .contentContainer{
-        width: 95%;
+
+    .getinTouchContainer {
+        right: 100px;
+        left: 100px;
+        padding:10px;
+    }
+
+    .getInTouchTxt {
+        font-size: 25px;
+    }
+
+    .reserveTxt {
+        font-size: 25px;
     }
 }
-@media (max-width: 500px) {
+@media (max-width: 400px) {
     .bookContainer {
         right: 100px;
         left: 100px;
         padding: 10px 15px;
     }
     .bookTxt {
+        font-size: 25px;
+    }
+
+    .getinTouchContainer {
+        right: 70px;
+        left: 70px;
+        padding:10px;
+    }
+
+    .getInTouchTxt {
         font-size: 25px;
     }
 }

@@ -6,6 +6,9 @@ import { useUploadContext } from '../../../../../Providers/RealtorProvider/Uploa
 
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 
+import * as ffmpeg from '@ffmpeg/ffmpeg';
+const { createFFmpeg, fetchFile } = ffmpeg;
+
 const SelectMedia = () => {
   const {setMedia, media} = useUploadContext();
   const navigate = useNavigate();

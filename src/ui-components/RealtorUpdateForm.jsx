@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { Realtor } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify/datastore";
@@ -35,6 +41,11 @@ export default function RealtorUpdateForm(props) {
     accountName: "",
     accountNumber: "",
     push_token: "",
+    isVerified: false,
+    isPartner: false,
+    isPremium: false,
+    isElite: false,
+    isTrusted: false,
   };
   const [sub, setSub] = React.useState(initialValues.sub);
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -56,6 +67,11 @@ export default function RealtorUpdateForm(props) {
     initialValues.accountNumber
   );
   const [push_token, setPush_token] = React.useState(initialValues.push_token);
+  const [isVerified, setIsVerified] = React.useState(initialValues.isVerified);
+  const [isPartner, setIsPartner] = React.useState(initialValues.isPartner);
+  const [isPremium, setIsPremium] = React.useState(initialValues.isPremium);
+  const [isElite, setIsElite] = React.useState(initialValues.isElite);
+  const [isTrusted, setIsTrusted] = React.useState(initialValues.isTrusted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = realtorRecord
@@ -73,6 +89,11 @@ export default function RealtorUpdateForm(props) {
     setAccountName(cleanValues.accountName);
     setAccountNumber(cleanValues.accountNumber);
     setPush_token(cleanValues.push_token);
+    setIsVerified(cleanValues.isVerified);
+    setIsPartner(cleanValues.isPartner);
+    setIsPremium(cleanValues.isPremium);
+    setIsElite(cleanValues.isElite);
+    setIsTrusted(cleanValues.isTrusted);
     setErrors({});
   };
   const [realtorRecord, setRealtorRecord] = React.useState(realtorModelProp);
@@ -99,6 +120,11 @@ export default function RealtorUpdateForm(props) {
     accountName: [],
     accountNumber: [],
     push_token: [],
+    isVerified: [],
+    isPartner: [],
+    isPremium: [],
+    isElite: [],
+    isTrusted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -138,6 +164,11 @@ export default function RealtorUpdateForm(props) {
           accountName,
           accountNumber,
           push_token,
+          isVerified,
+          isPartner,
+          isPremium,
+          isElite,
+          isTrusted,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -205,6 +236,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.sub ?? value;
@@ -240,6 +276,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -275,6 +316,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -310,6 +356,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.myDescription ?? value;
@@ -345,6 +396,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.profilePic ?? value;
@@ -380,6 +436,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -415,6 +476,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -450,6 +516,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.phoneNumber ?? value;
@@ -485,6 +556,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.bankname ?? value;
@@ -520,6 +596,11 @@ export default function RealtorUpdateForm(props) {
               accountName: value,
               accountNumber,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.accountName ?? value;
@@ -555,6 +636,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber: value,
               push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.accountNumber ?? value;
@@ -590,6 +676,11 @@ export default function RealtorUpdateForm(props) {
               accountName,
               accountNumber,
               push_token: value,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
             };
             const result = onChange(modelFields);
             value = result?.push_token ?? value;
@@ -604,6 +695,206 @@ export default function RealtorUpdateForm(props) {
         hasError={errors.push_token?.hasError}
         {...getOverrideProps(overrides, "push_token")}
       ></TextField>
+      <SwitchField
+        label="Is verified"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isVerified}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified: value,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isVerified ?? value;
+          }
+          if (errors.isVerified?.hasError) {
+            runValidationTasks("isVerified", value);
+          }
+          setIsVerified(value);
+        }}
+        onBlur={() => runValidationTasks("isVerified", isVerified)}
+        errorMessage={errors.isVerified?.errorMessage}
+        hasError={errors.isVerified?.hasError}
+        {...getOverrideProps(overrides, "isVerified")}
+      ></SwitchField>
+      <SwitchField
+        label="Is partner"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isPartner}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner: value,
+              isPremium,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isPartner ?? value;
+          }
+          if (errors.isPartner?.hasError) {
+            runValidationTasks("isPartner", value);
+          }
+          setIsPartner(value);
+        }}
+        onBlur={() => runValidationTasks("isPartner", isPartner)}
+        errorMessage={errors.isPartner?.errorMessage}
+        hasError={errors.isPartner?.hasError}
+        {...getOverrideProps(overrides, "isPartner")}
+      ></SwitchField>
+      <SwitchField
+        label="Is premium"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isPremium}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium: value,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isPremium ?? value;
+          }
+          if (errors.isPremium?.hasError) {
+            runValidationTasks("isPremium", value);
+          }
+          setIsPremium(value);
+        }}
+        onBlur={() => runValidationTasks("isPremium", isPremium)}
+        errorMessage={errors.isPremium?.errorMessage}
+        hasError={errors.isPremium?.hasError}
+        {...getOverrideProps(overrides, "isPremium")}
+      ></SwitchField>
+      <SwitchField
+        label="Is elite"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isElite}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite: value,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isElite ?? value;
+          }
+          if (errors.isElite?.hasError) {
+            runValidationTasks("isElite", value);
+          }
+          setIsElite(value);
+        }}
+        onBlur={() => runValidationTasks("isElite", isElite)}
+        errorMessage={errors.isElite?.errorMessage}
+        hasError={errors.isElite?.hasError}
+        {...getOverrideProps(overrides, "isElite")}
+      ></SwitchField>
+      <SwitchField
+        label="Is trusted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isTrusted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isTrusted ?? value;
+          }
+          if (errors.isTrusted?.hasError) {
+            runValidationTasks("isTrusted", value);
+          }
+          setIsTrusted(value);
+        }}
+        onBlur={() => runValidationTasks("isTrusted", isTrusted)}
+        errorMessage={errors.isTrusted?.errorMessage}
+        hasError={errors.isTrusted?.hasError}
+        {...getOverrideProps(overrides, "isTrusted")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

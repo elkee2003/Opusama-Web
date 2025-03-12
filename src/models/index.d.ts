@@ -315,6 +315,11 @@ type EagerRealtor = {
   readonly RealtorReview?: (RealtorReview | null)[] | null;
   readonly CommunityDiscussions?: (CommunityDiscussion | null)[] | null;
   readonly CommunityReplies?: (CommunityReply | null)[] | null;
+  readonly isVerified?: boolean | null;
+  readonly isPartner?: boolean | null;
+  readonly isPremium?: boolean | null;
+  readonly isElite?: boolean | null;
+  readonly isTrusted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -342,6 +347,11 @@ type LazyRealtor = {
   readonly RealtorReview: AsyncCollection<RealtorReview>;
   readonly CommunityDiscussions: AsyncCollection<CommunityDiscussion>;
   readonly CommunityReplies: AsyncCollection<CommunityReply>;
+  readonly isVerified?: boolean | null;
+  readonly isPartner?: boolean | null;
+  readonly isPremium?: boolean | null;
+  readonly isElite?: boolean | null;
+  readonly isTrusted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -374,9 +384,13 @@ type EagerPost = {
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly otherFeesName?: string | null;
+  readonly otherFeesPrice?: number | null;
+  readonly PostReviews?: (PostReview | null)[] | null;
+  readonly otherFeesName2?: string | null;
+  readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly PostReviews?: (PostReview | null)[] | null;
   readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;
@@ -410,9 +424,13 @@ type LazyPost = {
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly otherFeesName?: string | null;
+  readonly otherFeesPrice?: number | null;
+  readonly PostReviews: AsyncCollection<PostReview>;
+  readonly otherFeesName2?: string | null;
+  readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly PostReviews: AsyncCollection<PostReview>;
   readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;

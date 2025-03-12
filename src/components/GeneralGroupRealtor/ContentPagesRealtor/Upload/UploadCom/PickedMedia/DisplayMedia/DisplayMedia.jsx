@@ -24,8 +24,10 @@ const DisplayMedia = () => {
 
     if (video && imageCount <= 10) {
       navigate('/realtorcontent/selectaddress');
+      // navigate('/realtorcontent/form');
     } else if (!video && imageCount >= 3) {
       navigate('/realtorcontent/selectaddress');
+      // navigate('/realtorcontent/form');
     } else {
       alert('Select at least 3 images OR 1 video with any number of images (up to 10).');
     }
@@ -37,7 +39,7 @@ const DisplayMedia = () => {
       const videoElement = document.createElement('video');
       videoElement.src = videoUri;
       videoElement.onloadedmetadata = () => {
-        resolve(videoElement.duration <= 40);
+        resolve(videoElement.duration < 41);
       };
     });
   };

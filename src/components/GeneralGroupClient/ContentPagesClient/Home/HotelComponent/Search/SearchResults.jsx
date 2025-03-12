@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DefaultImage from '/defaultImage.png'; 
 import { getUrl } from 'aws-amplify/storage';
-// import './Search.css';
+import '../../TabStyles/Search.css'
 
 const SearchResultCom = ({ post }) => {
   const [imageUris, setImageUris] = useState([]);

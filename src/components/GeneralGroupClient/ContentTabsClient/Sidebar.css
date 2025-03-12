@@ -1,4 +1,4 @@
-.sidebar {
+.client-sidebar {
     width: 250px;
     height: 100vh;
     gap:50px;
@@ -13,7 +13,7 @@
     box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
   }
 
-  .logoClickClient {
+  .client-logoClickClient {
     cursor: pointer;
   }
   
@@ -26,23 +26,23 @@
   } */
   
   /* Navigation links */
-  .sidebar nav ul {
+  .client-sidebar nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
   
-  .sidebar nav ul li {
+  .client-sidebar nav ul li {
     margin: 15px 0;
   }
 
-  .nav-container {
+  .client-nav-container {
     display: flex;
     align-items: center;
     gap:0.5rem;
   }
   
-  .sidebar nav ul li a {
+  .client-sidebar nav ul li a {
     text-decoration: none;
     color: #0c0533;
     font-size: 1.2rem;
@@ -52,18 +52,18 @@
     transition: background 0.3s ease, color 0.3s ease;
   }
   
-  .sidebar nav ul li a:hover {
+  .client-sidebar nav ul li a:hover {
     font-size: 1.3rem;
     background-color: #f0f0f0; 
     color: #26e600; 
   }
 
-  .sidebar nav ul li a svg {
+  .client-sidebar nav ul li a svg {
     font-size: 1.8rem;
   }
 
   /* Bottom tab navigator (hidden by default) */
-.bottom-nav {
+.client-bottom-nav {
     display: none;
     position: fixed;
     z-index: 200;
@@ -77,11 +77,11 @@
     box-shadow: 2px 0 5px rgba(0,0,0,0.3);
   }
 
-  .bottom-nav a svg {
+  .client-bottom-nav a svg {
     font-size: 1.5rem; 
 }
   
-  .bottom-nav a {
+  .client-bottom-nav a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,18 +91,18 @@
     transition: color 0.3s;
   }
   
-  .bottom-nav a:hover {
+  .client-bottom-nav a:hover {
     color: #26e600;
   }
 
-  .active-link {
+  .client-active-link {
     font-weight: bold; /* Make the active link bold */
     border-radius: 5px;
   }
   
   /* Media query for max-width: 900px */
     @media (max-width: 900px) {
-        .sidebar {
+        .client-sidebar {
             display: none;
         }
     
@@ -110,7 +110,7 @@
             margin-left: 0; 
         } */
     
-        .bottom-nav {
+        .client-bottom-nav {
             display: flex; 
         }
     }

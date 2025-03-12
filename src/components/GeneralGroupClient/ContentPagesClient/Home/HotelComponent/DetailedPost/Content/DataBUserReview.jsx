@@ -3,7 +3,7 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { PostReview, Booking } from '../../../../../../../models';
-import './Content.css';
+import '../../../TabStyles/Content.css';
 
 const ReviewSection = ({ post, dbUser }) => {
   const [userRating, setUserRating] = useState(0);

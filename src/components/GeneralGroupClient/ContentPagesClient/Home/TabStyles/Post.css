@@ -1,9 +1,8 @@
-/* styles.css */
-/* .container {
-  margin-top: 35px;
-  margin-left: 20px;
-  margin-right: 20px;
-} */
+.singlePostContainer {
+  /* width: 100vw; */
+  margin-top: 25px;
+  width: 70%;
+}
 
 .imageContainer {
   aspect-ratio: 3/2; /* Aspect ratio for the image */
@@ -56,6 +55,19 @@
   margin-bottom: 3rem;
 }
 
+
+@media (max-width: 1300px) {
+  .singlePostContainer{
+    width: 75%;
+  }
+}
 @media (max-width: 900px) {
-  
+  .singlePostContainer{
+    width: 90%;
+  }
+}
+@media (max-width: 500px) {
+  .singlePostContainer{
+    width: 100%;
+  }
 }

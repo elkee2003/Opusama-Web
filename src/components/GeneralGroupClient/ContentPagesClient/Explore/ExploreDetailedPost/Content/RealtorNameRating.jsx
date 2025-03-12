@@ -4,7 +4,6 @@ import { DataStore } from "aws-amplify/datastore";
 import { PostReview, RealtorReview } from '../../../../../../models'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import './Content.css'; 
 
 const RealtorNameRating = ({ realtor }) => {
   const [averageRealtorRating, setAverageRealtorRating] = useState(0);

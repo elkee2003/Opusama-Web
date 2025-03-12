@@ -1034,6 +1034,41 @@ export const schema = {
                         ]
                     }
                 },
+                "isVerified": {
+                    "name": "isVerified",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isPartner": {
+                    "name": "isPartner",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isPremium": {
+                    "name": "isPremium",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isElite": {
+                    "name": "isElite",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isTrusted": {
+                    "name": "isTrusted",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1199,17 +1234,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "timeFrame": {
-                    "name": "timeFrame",
+                "otherFeesName": {
+                    "name": "otherFeesName",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "bed": {
-                    "name": "bed",
+                "otherFeesPrice": {
+                    "name": "otherFeesPrice",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1228,6 +1263,34 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "otherFeesName2": {
+                    "name": "otherFeesName2",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "otherFeesPrice2": {
+                    "name": "otherFeesPrice2",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "timeFrame": {
+                    "name": "timeFrame",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bed": {
+                    "name": "bed",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "bedrooms": {
                     "name": "bedrooms",
@@ -1356,5 +1419,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "9b08361848249d57fcf420198210533a"
+    "version": "fc838ea3a790906857f1693a244662a3"
 };
