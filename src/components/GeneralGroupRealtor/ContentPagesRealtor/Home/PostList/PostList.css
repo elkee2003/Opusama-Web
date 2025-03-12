@@ -8,50 +8,56 @@
   margin-right: 0;
 }
 
-.logoForSmallScreen {
+.realtorLogoForSmallScreen {
   display: none;
   /* justify-content: center; */
+  margin-top: 10px;
   align-items: center;
-  margin-left: 250px;
+  /* margin-left: 250px; */
   cursor: pointer;
 }
 
-.logoForSmallScreen img {
+.realtorLogoForSmallScreen img {
   width: 200px;
+}
+
+.realtorRefreshBtnCon {
+  display: flex;
+  justify-content: center;
 }
 
 
 @media (max-width: 900px) {
-  .logoForSmallScreen {
+  .realtorLogoForSmallScreen {
     display: flex;
   }
 }
 
 @media (max-width: 800px) {
-  .logoForSmallScreen {
+  .realtorLogoForSmallScreen {
     margin-left: 160px;
   }
 }
 
 @media (max-width: 700px) {
-  .logoForSmallScreen {
+  .realtorLogoForSmallScreen {
     margin-left: 180px;
   }
 }
 @media (max-width: 600px) {
 
-  .logoForSmallScreen {
+  .realtorLogoForSmallScreen {
     margin-left: 120px;
   }
 
-  .logoForSmallScreen img {
+  .realtorLogoForSmallScreen img {
     width: 150px;
   }
 
 }
 
 @media (max-width: 500px) {
-  .logoForSmallScreen {
+  .realtorLogoForSmallScreen {
     margin-left: 95px;
   }
 }

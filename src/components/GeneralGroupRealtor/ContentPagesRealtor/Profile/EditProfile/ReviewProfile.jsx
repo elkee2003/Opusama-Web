@@ -165,7 +165,7 @@ const ReviewDetails = () => {
   };
 
   return (
-    <div className='reviewProContainer'>
+    <div className='realtorReviewProContainer'>
       <h1 className='title'>Review Profile</h1>
 
       <button onClick={() => window.history.back()} className='bckBtnCon'>
@@ -182,26 +182,26 @@ const ReviewDetails = () => {
         )}
 
         <p className='subHeader'>First Name:</p>
-        <p className='inputReview'>{firstName?.trim()}</p>
+        <p className='realtorInputReview'>{firstName?.trim()}</p>
 
         <p className='subHeader'>Last Name:</p>
-        <p className='inputReview'>{lastName?.trim()}</p>
+        <p className='realtorInputReview'>{lastName?.trim()}</p>
 
         <p className='subHeader'>Address:</p>
-        <p className='inputReview'>{address?.trim()}</p>
+        <p className='realtorInputReview'>{address?.trim()}</p>
 
         <p className='subHeader'>My Description:</p>
-        <p className='inputReview'>{myDescription?.trim()}</p>
+        <p className='realtorInputReview'>{myDescription?.trim()}</p>
         <p className='subHeader'>Address:</p>
-        <p className='inputReview'>{address?.trim()}</p>
+        <p className='realtorInputReview'>{address?.trim()}</p>
         <p className='subHeader'>Phone Number:</p>
-        <p className='inputReview'>{phoneNumber}</p>
+        <p className='realtorInputReview'>{phoneNumber}</p>
         <p className='subHeader'>Bank Name:</p>
-        <p className='inputReview'>{bankname?.trim()}</p>
+        <p className='realtorInputReview'>{bankname?.trim()}</p>
         <p className='subHeader'>Account Name:</p>
-        <p className='inputReview'>{accountName?.trim()}</p>
+        <p className='realtorInputReview'>{accountName?.trim()}</p>
         <p className='subHeader'>Account Number:</p>
-        <p className='inputReviewLast'>{accountNumber}</p>
+        <p className='realtorInputReviewLast'>{accountNumber}</p>
       </div>
 
       <button className='saveBtn' disabled={uploading} onClick={handleSave}>

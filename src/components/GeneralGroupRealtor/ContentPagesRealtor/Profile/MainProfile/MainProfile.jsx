@@ -26,7 +26,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className='proMainContainer'>
+    <div className='profileMainContainer'>
       <ProfileHead/>
       <ProfileMediaList/>
     </div>
