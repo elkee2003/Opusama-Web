@@ -45,7 +45,8 @@ const DisplayMedia = () => {
   };
 
   // Function to remove a specific media item
-  const handleRemove = (index) => {
+  const handleRemove = (event, index) => {
+    event.stopPropagation();
     removeMedia(index);
   };
 
@@ -55,53 +56,55 @@ const DisplayMedia = () => {
 
   return (
     <div className="displayMContainer">
-      {/* Icon Container */}
-      <div className="dispalyMIconContainer">
-        {/* Back Icon */}
-        <button className="dispalyMBackIconContainer" onClick={() => navigate(-1)}>
-          <FaArrowLeft className="dispalyMIcon" />
-        </button>
+      <div className='displayInnerCon'>
+        {/* Icon Container */}
+        <div className="dispalyMIconContainer">
+          {/* Back Icon */}
+          <button className="dispalyMBackIconContainer" onClick={() => navigate(-1)}>
+            <FaArrowLeft className="dispalyMIcon" />
+          </button>
 
-        {/* Forward Icon */}
-        <button className="dispalyMForwardIconContainer" onClick={goToForms}>
-          <FaArrowRight className="dispalyMIcon" />
-        </button>
-      </div>
+          {/* Forward Icon */}
+          <button className="dispalyMForwardIconContainer" onClick={goToForms}>
+            <FaArrowRight className="dispalyMIcon" />
+          </button>
+        </div>
 
-      {/* Media Display */}
-      <div className="mediaFullDisplayContainer">
-        <div className="mediaDivContainer">
-          {media.map((item, index) => (
-            <div 
-              className="dispalyMediaContainer" 
-              key={index}
-              onClick={() => handleMediaClick(item, index)}
-            >
-              {item.type === 'video' ? (
-                <div className="videoWrapper">
-                  <video 
-                  key={item.uri}
-                    className="dispalyMedia"
-                    controls
-                  >
-                    <source src={item.uri} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <div className="videoOverlay" onClick={() => handleMediaClick(item)}></div>
-                </div>
-              ) : (
-                <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
-              )}
-
-              {/* Remove Button */}
-              <button
-                className="dispalyMRemoveButtonContainer"
-                onClick={() => handleRemove(index)}
+        {/* Media Display */}
+        <div className="mediaFullDisplayContainer">
+          <div className="mediaDivContainer">
+            {media.map((item, index) => (
+              <div 
+                className="dispalyMediaContainer" 
+                key={index}
+                onClick={() => handleMediaClick(item, index)}
               >
-                <FaTimesCircle className="dispalyMRemovebtn" />
-              </button>
-            </div>
-          ))}
+                {item.type === 'video' ? (
+                  <div className="videoWrapper">
+                    <video 
+                    key={item.uri}
+                      className="dispalyMedia"
+                      controls
+                    >
+                      <source src={item.uri} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                    <div className="videoOverlay" onClick={() => handleMediaClick(item)}></div>
+                  </div>
+                ) : (
+                  <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+                )}
+
+                {/* Remove Button */}
+                <button
+                  className="dispalyMRemoveButtonContainer"
+                  onClick={(event) => handleRemove(event, index)}
+                >
+                  <FaTimesCircle className="dispalyMRemovebtn" />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

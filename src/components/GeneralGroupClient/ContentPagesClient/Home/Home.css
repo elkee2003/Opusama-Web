@@ -4,6 +4,7 @@
 }
 
 .client-logoForSmallScreen {
+  margin-top: 10px;
   display: none;
   justify-content: center;
   align-items: center;

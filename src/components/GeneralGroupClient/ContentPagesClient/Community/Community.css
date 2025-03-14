@@ -1,4 +1,4 @@
-.aTabs-container {
+.communityTabs-container {
     border-bottom: 1px solid #e0e0e0;
     overflow-x: auto; /* Allow horizontal scrolling */
     white-space: nowrap; /* Prevent wrapping of tabs */
@@ -10,19 +10,41 @@
     padding-right: 26rem;
 }
 
-.aTabs-container::-webkit-scrollbar {
+.communityTabs-container::-webkit-scrollbar {
     display: none; /* Hide scrollbars on WebKit browsers */
 }
 
-.aTabs-container {
+.communityTabs-container {
     -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
     scrollbar-width: none; /* Hide scrollbar on Firefox */
 }
 
-.aTab-panel {
+.communityTab-panel {
     padding: 16px; /* Padding for tab content */
     width: 100%; /* Make tab content fit screen */
     box-sizing: border-box; /* Include padding and borders in width */
+}
+
+.addIconCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 70%; 
+    right: 10px; 
+    transform: translateY(-70%);
+    z-index: 1000; 
+    /* width:40px;
+    height:40px; */
+    padding:10px;
+    background: var( --blue-gradient);
+    color:white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.addIcon {
+    font-size: 28px;
 }
 
 body {
@@ -34,17 +56,16 @@ body {
 }
 
 @media (max-width: 900px) {
-    .aTabs-container {
-        padding-right: 0px;
+    .communityTabs-container {
+        padding-right: 0;
     }
 }
+
 @media (max-width: 700px) {
-
 }
-@media (max-width: 600px) {
 
+@media (max-width: 600px) {
 }
 
 @media (max-width: 500px) {
-
 }

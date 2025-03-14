@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser } from 'react-icons/fa';
+import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser, FaUsers } from 'react-icons/fa';
 import { NavLink, useNavigate } from "react-router-dom";
 import './Sidebar.css';
 
@@ -56,6 +56,16 @@ function ContentTabsClient (){
                         </li>
                         <li>
                             <NavLink 
+                                to="/clientcontent/community"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='client-nav-container'>
+                                    <FaUsers /> Community
+                                </div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
                                 to="/clientcontent/profile"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
@@ -89,6 +99,13 @@ function ContentTabsClient (){
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaCalendarAlt /> Bookings
+                </NavLink>
+
+                <NavLink 
+                    to="/clientcontent/community"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaUsers /> Community
                 </NavLink>
 
                 <NavLink Link 

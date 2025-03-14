@@ -295,13 +295,19 @@
     margin-right: 0;
   }
 
-  .profileInput {
-    margin-right: 0;
+  .emptyProfileCon {
+    width: 100vw;
     margin-left: 0;
+    margin-right: 0;
+  }
+
+  .profileInput {
+    margin-right: 10px;
+    margin-left: 10px;
   }
   .profileInputLast {
-    margin-right: 0;
-    margin-left: 0;
+    margin-right: 10px;
+    margin-left: 10px;
     margin-bottom: 7rem;
   }
 

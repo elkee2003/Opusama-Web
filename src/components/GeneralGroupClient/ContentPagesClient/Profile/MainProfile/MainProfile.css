@@ -160,9 +160,6 @@
 }
 
 @media (max-width: 600px) {
-    .mainContainer{
-        width: 100vw;
-    }
 
     .mainProfilePicContainer {
         height: 120px;

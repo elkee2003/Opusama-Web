@@ -17,22 +17,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "like": {
+                    "name": "like",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "commenterID": {
+                    "name": "commenterID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "communitydiscussionID": {
                     "name": "communitydiscussionID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "realtorID": {
-                    "name": "realtorID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -68,24 +68,6 @@ export const schema = {
                         "name": "byCommunityDiscussion",
                         "fields": [
                             "communitydiscussionID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRealtor",
-                        "fields": [
-                            "realtorID"
                         ]
                     }
                 },
@@ -153,13 +135,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "likes": {
-                    "name": "likes",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "CommunityReplies": {
                     "name": "CommunityReplies",
                     "isArray": true,
@@ -175,20 +150,6 @@ export const schema = {
                             "communitydiscussionID"
                         ]
                     }
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "realtorID": {
-                    "name": "realtorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -213,24 +174,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRealtor",
-                        "fields": [
-                            "realtorID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -786,38 +729,6 @@ export const schema = {
                         ]
                     }
                 },
-                "CommunityDiscussions": {
-                    "name": "CommunityDiscussions",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityDiscussion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userID"
-                        ]
-                    }
-                },
-                "CommunityReplies": {
-                    "name": "CommunityReplies",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityReply"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userID"
-                        ]
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -991,38 +902,6 @@ export const schema = {
                     "isArray": true,
                     "type": {
                         "model": "RealtorReview"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
-                },
-                "CommunityDiscussions": {
-                    "name": "CommunityDiscussions",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityDiscussion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
-                },
-                "CommunityReplies": {
-                    "name": "CommunityReplies",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityReply"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1419,5 +1298,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "fc838ea3a790906857f1693a244662a3"
+    "version": "b49bd29ed44805cba653da28b77f2e50"
 };
