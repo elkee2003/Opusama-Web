@@ -26,6 +26,7 @@ function PostList() {
         { label: 'General Real Estate Discussion', value: 'General Real Estate Discussion' },
     ];
 
+    // useEffect to complete profile
     useEffect(()=>{
         if(authUser){
             if(!dbUser){
@@ -97,6 +98,7 @@ function PostList() {
         }
     };
 
+    // UseEffect to update
     useEffect(()=>{
         fetchInstigatorAndPost();
 
@@ -109,6 +111,12 @@ function PostList() {
         return () => subscription.unsubscribe();
     },[]);
 
+    // function to deletepost by dbUser
+    const handlePostDelete = (postId) => {
+        setPosts((prevPosts) => prevPosts.filter(post => post.id !== postId));
+    };
+
+    // function to refresh post
     const handleRefreshPost = () => {
         setRefreshing(true);
         fetchInstigatorAndPost();
@@ -144,7 +152,11 @@ function PostList() {
         ) : (posts && posts.length > 0 ? (
         <div>
             {posts.map(post => (
-            <Post key={post.id} post={post}/>
+            <Post 
+                key={post.id} 
+                post={post}
+                onDelete={handlePostDelete}
+            />
             ))}
         </div>
         ) : (

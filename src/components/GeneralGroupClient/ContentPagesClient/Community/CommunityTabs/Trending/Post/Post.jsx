@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../CommunityTabs.css';
+import { MdDelete } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { formatDistanceStrict } from "date-fns";
 import Select from 'react-select';
+import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, Realtor, User } from '../../../../../../../models';
 
-function Post({post}) {
+function Post({post, onDelete}) {
 
     const [isFocus, setIsFocus] = useState(false);
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([])
+    const { dbUser } = useAuthContext();
     const [category, setCategory] = useState('');
     const [readMore, setReadMore] = useState(false);
     const [moreName, setMoreName] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     // Time format
     const formattedTime = post.createdAt
@@ -39,6 +39,21 @@ function Post({post}) {
         .replace(" years", "y")
         .replace(" year", "y")
     : "Just now";
+
+    // Delete Post Function
+    const handleDelete = async (e) => {
+        e.stopPropagation(); // Prevent navigating when clicking delete
+
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+        if (!confirmDelete) return;
+
+        try {
+            await DataStore.delete(CommunityDiscussion, post.id);
+            onDelete(post.id); // Update UI after deletion
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        }
+    };
 
     // const categoryData = [
     //     { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
@@ -77,46 +92,60 @@ function Post({post}) {
 
             {/* Category */}
             <p className='postCategory'>
-            {post.category}
+                {post.category}
             </p>
 
             {/* Post Username and Time */}
-            <div className='postUserTimeCon '>
-            <p className='postUsername'>
-                {moreName || post.instigatorName.length <= 10
-                ? post.instigatorName
-                : `${post.instigatorName.substring(0, 12)}...`}
-            </p>
-            <p className='postTime'>
-                {formattedTime}
-            </p>
+            <div className='postUserTimeDeltCon'>
+                {/* Username & Time */}
+                <div className='postUserTimeCon'>
+                    <p className='postUsername'>
+                        {moreName || post.instigatorName.length <= 10
+                        ? post.instigatorName
+                        : `${post.instigatorName.substring(0, 12)}...`}
+                    </p>
+                    <p className='postTime'>
+                        {formattedTime}
+                    </p>
+                </div>
+
+                {/* Delete Button */}
+                {dbUser?.id === post.instigatorID && (
+                    <div 
+                    className='deletePostBtnCon'
+                    onClick={handleDelete}
+                    >
+                        <MdDelete className='deletePostIcon' />
+                    </div>
+                )}
             </div>
 
             {/* Title */}
             <div className="postTitleCon">
-            <p className='postTitle'>
-                {post.title}
-            </p> 
+                <p className='postTitle'>
+                    {post.title}
+                </p> 
             </div>
 
             {/* Content */}
             <p className='postContent'>
-            {readMore || post.content.length <= 150
-                ? post.content
-                : `${post.content.substring(0, 150)}...`}
-            {post.content.length > 150 && (
-                <button
-                className={readMore ? 'readLessBtnCommun' : 'readMoreBtnCommun'}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    setReadMore(!readMore)
-                }}
-                >
-                {readMore ? 'Show Less' : 'Read More'}
-                </button>
-            )}
+                {readMore || post.content.length <= 150
+                    ? post.content
+                    : `${post.content.substring(0, 150)}...`}
+                {post.content.length > 150 && (
+                    <button
+                    className={readMore ? 'readLessBtnCommun' : 'readMoreBtnCommun'}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setReadMore(!readMore)
+                    }}
+                    >
+                    {readMore ? 'Show Less' : 'Read More'}
+                    </button>
+                )}
             </p>
 
+            {/* Post Engagment */}
             <div className='postEngagementCon'>
             <div className="engagementrow">
                 <FaRegCommentDots className='engagementIcon'/>

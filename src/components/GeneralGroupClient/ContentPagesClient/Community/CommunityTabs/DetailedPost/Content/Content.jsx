@@ -3,17 +3,19 @@ import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 import './Content.css'; 
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useNavigate} from "react-router-dom";
 import { formatDistanceStrict } from "date-fns";
 import UsersComment from './UsersComment';
 import { DataStore } from "aws-amplify/datastore";
+import { CommunityDiscussion } from '../../../../../../../models';
 
-const Content = ({post}) => {
+const Content = ({post, onDelete}) => {
     const navigate = useNavigate();
     const [readMore, setReadMore] = useState(false);
-    const {authUser} = useAuthContext();
+    const {authUser, dbUser} = useAuthContext();
 
     // Time format
     const formattedTime = post.createdAt
@@ -33,6 +35,22 @@ const Content = ({post}) => {
         .replace(" years", "y")
         .replace(" year", "y")
     : "Just now";
+
+    // Delete Post Function
+    const handleDelete = async (e) => {
+        e.stopPropagation(); // Prevent unintended navigation
+
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+        if (!confirmDelete) return;
+
+        try {
+            await DataStore.delete(CommunityDiscussion, post.id);
+            onDelete(post.id); 
+            navigate(-1);
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        }
+    };
 
     // Navigate function
     const handleNavigate = () => {
@@ -62,11 +80,20 @@ const Content = ({post}) => {
         </p>
 
         {/* Post Username and Time */}
-        <div className="detPostUserTimeCon">
+        <div className="detPostUserTimeDeltCon">
+          <div className="detPostUserTimeCon">
             <p>{post.instigatorName}</p>
             <p className='detPostTime'>
               {formattedTime}
             </p>
+          </div>
+
+          {/* Delete Button */}
+          {dbUser?.id === post.instigatorID && (
+              <div className='deltContentCon' onClick={handleDelete}>
+                  <MdDelete className='deltContentIcon' />
+              </div>
+          )}
         </div>
 
         {/* Title */}
@@ -97,20 +124,20 @@ const Content = ({post}) => {
         {/* Post Engagment */}
         <div className='detPostEngagementCon'>
             <div className="detEngagementrow">
-            <FaRegCommentDots className='detEngagementIcon'/>
-            <p className='detEngagementNum'>
-              {post.numComments}
-            </p>
+              <FaRegCommentDots className='detEngagementIcon'/>
+              <p className='detEngagementNum'>
+                {post.numComments}
+              </p>
             </div>
 
             <div className="detEngagementrow">
-            <FaRegHeart className='detEngagementIcon'/>
+              <FaRegHeart className='detEngagementIcon'/>
 
-            {/* This one is a filled heart it will be used to show that the dbuser like the particular post */}
-            {/* <GoHeartFill className='detEngagementFilledHeart'/> */}
-            <p className='detEngagementNum'>
-              {post.totalLikes}
-            </p>
+              {/* This one is a filled heart it will be used to show that the dbuser like the particular post */}
+              {/* <GoHeartFill className='detEngagementFilledHeart'/> */}
+              <p className='detEngagementNum'>
+                {post.totalLikes}
+              </p>
             </div>
         </div>
 

@@ -12,6 +12,13 @@
     color: #1c1e41;
 }
 
+.detPostUserTimeDeltCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 .detPostUserTimeCon {
     display: flex;
     gap:10px;
@@ -26,6 +33,15 @@
 .detPostTime {
     font-style: italic;
     color: #afadad;
+}
+
+.deltContentCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.deltContentIcon {
+    font-size: 1.5rem;
 }
 
 .detPostTitleCon {
@@ -152,6 +168,21 @@
     white-space: pre-wrap;
     font-size: 16px;
     margin-bottom: 8px;
+}
+
+.commentRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteCommentCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.deleteCommentIcon {
+    font-size: 1.5rem;
 }
 
 .commentBorder {

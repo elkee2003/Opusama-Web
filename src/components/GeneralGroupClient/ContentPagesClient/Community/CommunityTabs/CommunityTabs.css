@@ -34,10 +34,25 @@
     color: #1c1e41;
 }
 
+.postUserTimeDeltCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .postUserTimeCon {
     display: flex;
     gap:10px;
     margin-bottom: 5px;
+}
+
+.deletePostBtnCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.deletePostIcon {
+    font-size: 1.5rem;
 }
 
 .postUsername {

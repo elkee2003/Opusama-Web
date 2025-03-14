@@ -74,6 +74,16 @@ const DetailedPost = () => {
     useEffect(() => {
         fetchPost();
     }, [postId]);
+
+    // function to deletepost by dbUser
+    const handlePostDelete = async (postId) => {
+      try {
+        await DataStore.delete(CommunityDiscussion, postId);
+        setPost(null); // Set post to null after deletion
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    };
   
   return (
     <div>
@@ -83,7 +93,7 @@ const DetailedPost = () => {
           <h2>Loading...</h2>
         </div>
       ) : (
-        <Content post={post} />
+        <Content post={post} onDelete={handlePostDelete}/>
       )}
     </div>
   );
