@@ -2,17 +2,29 @@ import React, {useState} from 'react';
 import './Community.css'
 import { Tabs, Tab, Box } from '@mui/material';
 import { IoMdAdd } from "react-icons/io";
+import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import Trending from './CommunityTabs/Trending/Trending';
 import Latest from './CommunityTabs/Latest/Latest';
 
 function Community() {
     const navigate = useNavigate();
+    const {authUser} = useAuthContext();
 
     const [selectedTab, setSelectedTab] = useState(0);
   
     const handleTabChange = (event, newValue) => {
       setSelectedTab(newValue);
+    };
+
+    // Navigate function
+    const handleNavigate = () => {
+      if(authUser){
+        navigate('/clientcontent/create_post');
+      }else{
+        alert('Sign In to access')
+        navigate('/')
+      }
     };
   
   return (
@@ -36,7 +48,7 @@ function Community() {
 
       <div 
         className='addIconCon'
-        onClick={()=>navigate('/clientcontent/create_post')}
+        onClick={handleNavigate}
       >
         <IoMdAdd className='addIcon'/>
       </div>

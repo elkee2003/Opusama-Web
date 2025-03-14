@@ -108,7 +108,7 @@ const ClientRoutes = () => (
             <Route path="community_post/:postId" element={<CommunityDetailedPost />} />
 
             {/* Response Community Post */}
-            <Route path="response_post" element={<CommunityPostResponse />} />
+            <Route path="response_post/:postId" element={<CommunityPostResponse />} />
 
             {/* Payment */}
             <Route path="payment" element={<PaymentPage />} />

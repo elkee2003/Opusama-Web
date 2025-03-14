@@ -151,14 +151,18 @@
 .detComment {
     white-space: pre-wrap;
     font-size: 16px;
+    margin-bottom: 8px;
 }
 
 .commentBorder {
-    border: 1px solid rgb(235, 235, 235);
-    margin: 10px 0;
+    border: 1px solid rgb(241, 241, 241);
+    margin-bottom: 20px;
 }
 
 @media (max-width: 900px) {
+    .communityDetailedPostCon {
+        width: 100vw;
+    }
     .detCommentsCon {
         margin-bottom: 10rem;
     }

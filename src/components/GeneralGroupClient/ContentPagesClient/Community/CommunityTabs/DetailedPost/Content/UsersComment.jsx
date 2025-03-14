@@ -1,45 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate} from "react-router-dom";
+import { formatDistanceStrict } from "date-fns";
 import { DataStore } from "aws-amplify/datastore";
 
-const UsersComment = () => {
+const UsersComment = ({replies}) => {
     const navigate = useNavigate();
     const [readMore, setReadMore] = useState(false);
 
-    // delete later
-
-    const post = {
-        comment: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, ullam. Reprehenderit repudiandae, provident omnis assumenda dolore maiores excepturi exercitationem commodi aperiam rem. Atque, magnam at error dolores qui praesentium nobis reprehenderit explicabo quas? Reprehenderit, repudiandae? Quis, praesentium corrupti neque exercitationem nisi error eveniet omnis non debitis, vitae quibusdam sunt ut, sapiente ab rem sed officiis. Est inventore voluptatum totam id? Ipsa est unde optio inventore numquam veritatis voluptate aspernatur magni!'
-      }
+    if (!replies || replies.length === 0) {
+        return <p className="noCommentsText">No Comments</p>;
+    }
 
   return (
     <div className='detCommentsCon'>
         <p className='detCommentsHeader'>Comments:</p>
 
-        <div className='detCommentUserTimeCon'>
-            <p className='detCommentUsername'>Juicy</p>
-            <p className='detCommentTime'>2h</p>
-        </div>
-        <p className='detComment'>
-            {readMore || post.comment.length <= 250
-            ? post.comment
-            : `${post.comment.substring(0, 250)}...`}
-            
-            {post.comment.length > 250 && (
-                <button
-                className={readMore ? 'readLessBtnComment' : 'readMoreBtnComment'}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    setReadMore(!readMore)
-                }}
-                >
-                {readMore ? 'Show Less' : 'Read More'}
-                </button>
-            )}
-        </p>
+        {replies.map(reply => (
+            <div>
+                <div className='detCommentUserTimeCon'>
+                    <p className='detCommentUsername'>
+                        {reply.commenterName}
+                    </p>
+                    <p className='detCommentTime'>
+                        {reply.createdAt 
+                        ? formatDistanceStrict(new Date(reply.createdAt), new Date(), { unit: "minute" })
+                            .replace(" seconds", "s")
+                            .replace(" second", "s")
+                            .replace(" minutes", "m")
+                            .replace(" minute", "m")
+                            .replace(" hours", "h")
+                            .replace(" hour", "h")
+                            .replace(" days", "d")
+                            .replace(" day", "d")
+                            .replace(" weeks", "w")
+                            .replace(" week", "w")
+                            .replace(" months", "mo")
+                            .replace(" month", "mo")
+                            .replace(" years", "y")
+                            .replace(" year", "y")
+                        : "Just now"}
+                        {/* {reply.createdAt ? formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true }) : "Just now"} */}
+                    </p>
+                </div>
+                <p className='detComment'>
 
-        {/* Border */}
-        <div className='commentBorder'/>
+                    {readMore || (reply?.comment ? reply.comment.length <= 250 : true)
+                    ? (reply.comment ? reply.comment : "No comment available")
+                    : `${reply.comment.substring(0, 250)}...`}
+
+                    
+                    {reply.comment && reply?.comment.length > 250 && (
+                        <button
+                            className={readMore ? 'readLessBtnComment' : 'readMoreBtnComment'}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setReadMore(!readMore)
+                            }}
+                        >
+                            {readMore ? 'Show Less' : 'Read More'}
+                        </button>
+                    )}
+                </p>
+                {/* Border */}
+                <div className='commentBorder'/>
+            </div>
+        ))} 
     </div>
   );
 };

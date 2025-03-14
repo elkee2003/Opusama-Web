@@ -3,48 +3,88 @@ import {useParams} from "react-router-dom";
 import './DetailedPost.css'; 
 import Content from './Content/Content';
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityDiscussion } from '../../../../../../models';
+import { CommunityDiscussion, CommunityReply, Realtor, User } from '../../../../../../models';
 
 const DetailedPost = () => {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
 
-
     // Fetch the post data based on the id
     const fetchPost = async () => {
-        try {
-        if (postId) {
-            // Query DataStore for the specific post with the given ID
-            const foundPost = await DataStore.query(CommunityDiscussion, postId);
+      try {
+        setLoading(true);
 
-            if (foundPost) {
-            setPost(foundPost);
+        if (!postId) return;
 
-            // Fetch the related realtor using the realtorID
-            // const foundRealtor = await DataStore.query(Realtor, foundPost.realtorID);
-            // setRealtor(foundRealtor); 
-            }
+        // Query DataStore for the specific post with the given ID
+
+        const foundPost = await DataStore.query(CommunityDiscussion, postId);
+
+        if (!foundPost) {
+            console.error("Post not found");
+            return;
         }
-        } catch (error) {
+
+        // Fetch Realtors and Users
+        const realtors = await DataStore.query(Realtor); 
+
+        const users = await DataStore.query(User);
+
+        // Fetch instigator details
+        const instigator = realtors.find((r) => r.id === foundPost.instigatorID) || 
+        users.find((u) => u.id === foundPost.instigatorID);
+
+        // Fetch replies related to this post
+        const replies = (await DataStore.query(CommunityReply, (r) => r.communitydiscussionID.eq(foundPost.id))) || [];
+
+
+        // Count comments and likes
+        const numComments = replies.filter(reply => reply.comment && reply.comment.trim() !== "").length;
+
+        const totalLikes = replies.reduce((sum, reply) => sum + (reply.like || 0), 0);
+
+        // Fetch commenter details for each reply
+        const repliesWithCommenters = await Promise.all(
+          replies.map(async (reply) => {
+            const commenter = realtors.find((r) => r.id === reply.commenterID) || users.find((u) => u.id === reply.commenterID);
+
+            return {
+              ...reply,
+              commenterName: commenter ? commenter.firstName : "Unknown",
+              commenterProfilePic: commenter ? commenter.profilePic : null,
+            };
+          })
+        );
+        setPost({
+          ...foundPost,
+          instigatorName: instigator ? instigator.firstName : 'Unknown',
+          numComments,
+          totalLikes,
+          replies: repliesWithCommenters || []
+        }); 
+
+      } catch (error) {
         console.error('Error fetching post', error);
-        } finally {
+      } finally {
         setLoading(false);
-        }
+      }
     };
 
     useEffect(() => {
         fetchPost();
     }, [postId]);
-
-    // useEffect(()=>{
-    //     setRealtorContext(realtor)
-    //     setPropertyDetails(post)
-    // }, [realtor, post])
   
   return (
     <div>
-      <Content  post={post}/>
+      {loading ? (
+        <div className="communLoading-container">
+          <div className="communSpinner" />
+          <h2>Loading...</h2>
+        </div>
+      ) : (
+        <Content post={post} />
+      )}
     </div>
   );
 };

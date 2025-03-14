@@ -4,38 +4,76 @@ import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import './Content.css'; 
-import { useNavigate, useParams} from "react-router-dom";
+import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
+import { useNavigate} from "react-router-dom";
+import { formatDistanceStrict } from "date-fns";
 import UsersComment from './UsersComment';
 import { DataStore } from "aws-amplify/datastore";
 
-const Content = () => {
-    const { postId } = useParams();
+const Content = ({post}) => {
     const navigate = useNavigate();
     const [readMore, setReadMore] = useState(false);
+    const {authUser} = useAuthContext();
 
-    // delete later
-  const post = {
-    content: 'I just moved to trans amadi, what should I expect in terms of security and amenities? Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet suscipit corporis rerum accusamus deleniti pariatur molestiae aperiam. Ipsum, ullam. Veniam asperiores ullam atque error aspernatur enim sequi! Doloremque, repudiandae placeat Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, culpa possimus, fugiat optio non eos, voluptatem eum ipsa minima error modi corporis officiis. Sapiente ab omnis impedit aperiam, dolor doloribus ea provident. Cupiditate pariatur eveniet totam itaque temporibus atque autem dicta nemo deleniti dolorum, molestias, consequuntur nostrum non sint repellendus, laborum architecto aut dolor. Officiis molestias necessitatibus molestiae eum dictafugiat optio non eos, voluptatem eum ipsa minima error modi corporis officiis. Sapiente ab omnis impedit aperiam, dolor doloribus ea provident. Cupiditate pariatur eveniet totam itaque temporibus atque autem dicta nemo deleniti dolorum, molestias, consequuntur nostrum non sint repellendus, laborum architecto aut dolor. Officiis molestias necessitatibus molestiae eum dicta!!!!',
-    instigatorID: 'Lilian Tariah Ijeoma'
-  }
+    // Time format
+    const formattedTime = post.createdAt
+    ? formatDistanceStrict(new Date(post.createdAt), new Date(), { addSuffix: true })
+        .replace(" seconds", "s")
+        .replace(" second", "s")
+        .replace(" minutes", "m")
+        .replace(" minute", "m")
+        .replace(" hours", "h")
+        .replace(" hour", "h")
+        .replace(" days", "d")
+        .replace(" day", "d")
+        .replace(" weeks", "w")
+        .replace(" week", "w")
+        .replace(" months", "mo")
+        .replace(" month", "mo")
+        .replace(" years", "y")
+        .replace(" year", "y")
+    : "Just now";
+
+    // Navigate function
+    const handleNavigate = () => {
+      if(authUser){
+        navigate('/clientcontent/create_post');
+      }else{
+        alert('Sign In to access')
+        navigate('/')
+      }
+    };
+
+    const handleNavigateToReply = () => {
+      if(authUser){
+        navigate(`/clientcontent/response_post/${post.id}`);
+      }else{
+        alert('Sign In to access')
+        navigate('/')
+      }
+    };
 
   return (
     <div className="communityDetailedPostCon">
 
         {/* Category */}
         <p className='detPostCategory'>
-            Neigbhourhood Insights
+            {post.category}
         </p>
 
         {/* Post Username and Time */}
         <div className="detPostUserTimeCon">
-            <p>{post.instigatorID}</p>
-            <p className='detPostTime'>3 months</p>
+            <p>{post.instigatorName}</p>
+            <p className='detPostTime'>
+              {formattedTime}
+            </p>
         </div>
 
         {/* Title */}
         <div className="detPostTitleCon">
-          <p className='detPostTitle'>How is the Power supply in Town?</p> 
+          <p className='detPostTitle'>
+            {post.title}
+          </p> 
         </div>
 
         {/* Post Content */}
@@ -60,7 +98,9 @@ const Content = () => {
         <div className='detPostEngagementCon'>
             <div className="detEngagementrow">
             <FaRegCommentDots className='detEngagementIcon'/>
-            <p className='detEngagementNum'>3</p>
+            <p className='detEngagementNum'>
+              {post.numComments}
+            </p>
             </div>
 
             <div className="detEngagementrow">
@@ -68,19 +108,21 @@ const Content = () => {
 
             {/* This one is a filled heart it will be used to show that the dbuser like the particular post */}
             {/* <GoHeartFill className='detEngagementFilledHeart'/> */}
-            <p className='detEngagementNum'>10</p>
+            <p className='detEngagementNum'>
+              {post.totalLikes}
+            </p>
             </div>
         </div>
 
         <div className='detCommentBorder'/>
 
         {/* Users Comments */}
-        <UsersComment/>
+        <UsersComment replies={post.replies}/>
 
         {/* Place holder to write comment */}
         <div 
             className="writeResCon"
-            onClick={()=>navigate('/clientcontent/response_post')}
+            onClick={handleNavigateToReply}
         >
             <p className='writeRes'>Write comment...</p>
         </div>
@@ -89,7 +131,7 @@ const Content = () => {
         {/* Floating Create Post Icon */}
         <div 
             className='addIconCon'
-            onClick={()=>navigate('/clientcontent/create_post')}
+            onClick={handleNavigate}
         >
             <IoMdAdd className='addIcon'/>
         </div>
