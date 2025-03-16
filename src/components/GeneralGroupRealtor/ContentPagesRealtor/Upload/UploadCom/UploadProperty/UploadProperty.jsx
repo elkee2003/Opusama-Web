@@ -41,6 +41,14 @@ const UploadProperty = () => {
     setTimeFrame,
     inspectionFee,
     setInspectionFee,
+    otherFeesName, 
+    setOtherFeesName,
+    otherFeesName2, 
+    setOtherFeesName2,
+    otherFeesPrice, 
+    setOtherFeesPrice,
+    otherFeesPrice2, 
+    setOtherFeesPrice2,
     price,
     setPrice,
     totalPrice,
@@ -90,6 +98,10 @@ const UploadProperty = () => {
     setTimeFrame("");
     setPrice("");
     setInspectionFee("");
+    setOtherFeesName("");
+    setOtherFeesPrice("");
+    setOtherFeesName2("");
+    setOtherFeesPrice2("");
     setTotalPrice("");
     setCountry("");
     setState("");
@@ -98,54 +110,59 @@ const UploadProperty = () => {
     setAmenities("");
   };
 
-  // Compress and upload images
-  const uploadImages = async () => {
+  // Function to upload images and videos
+  const uploadMedia = async () => {
     try {
       const uploadPromises = media.map(async (item) => {
-        // Step 1: Fetch the blob from the `uri`
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
 
-        // Step 2: Convert blob into a File object (for compression)
-        const file = new File([fileBlob], item.name, { type: fileBlob.type });
+        if (item.type.startsWith("image")) {
+          // Compress Image
+          const file = new File([fileBlob], item.name, { type: fileBlob.type });
+          const options = { maxSizeMB: 0.5, maxWidthOrHeight: 600, useWebWorker: true };
+          const compressedFile = await browserImageCompression(file, options);
+          const compressedBlob = new Blob([compressedFile], { type: "image/jpeg" });
 
-        // Step 3: Image manipulation (resize and compress)
-        const options = {
-          maxSizeMB: 0.5, // Compress to max 0.5 MB
-          maxWidthOrHeight: 600, // Resize to 600px
-          useWebWorker: true,
-        };
+          const fileKey = `public/media/${sub}/${crypto.randomUUID()}.jpg`;
 
-        const compressedFile = await browserImageCompression(file, options);
-
-        // Step 4: Create a Blob from the compressed file
-        const compressedBlob = new Blob([compressedFile], { type: "image/jpeg" });
-
-        // Step 5: Generate a unique file key
-        const fileKey = `public/media/${sub}/${crypto.randomUUID()}.jpg`;
-
-        // Step 6: Upload image to S3
-        const result = await uploadData({
-          path: fileKey,
-          data: compressedBlob,
-          options: {
-            contentType: "image/jpeg",
-            onProgress: ({ transferredBytes, totalBytes }) => {
-              if (totalBytes) {
-                const progress = Math.round(
-                  (transferredBytes / totalBytes) * 100
-                );
-                setUploadProgress(progress); // Update upload progress
-                console.log(`Upload progress: ${progress}%`);
-              }
+          const result = await uploadData({
+            path: fileKey,
+            data: compressedBlob,
+            options: {
+              contentType: "image/jpeg",
+              onProgress: ({ transferredBytes, totalBytes }) => {
+                if (totalBytes) {
+                  setUploadProgress(Math.round((transferredBytes / totalBytes) * 100));
+                }
+              },
             },
-          },
-        }).result;
+          }).result;
 
-        return result.path;
+          return result.path;
+        } 
+        else if (item.type.startsWith("video")) {
+          // Compress Video
+          const fileKey = `public/media/${sub}/${crypto.randomUUID()}.mp4`;
+          const compressedBlob = await compressVideo(fileBlob);
+
+          const result = await uploadData({
+            path: fileKey,
+            data: compressedBlob,
+            options: {
+              contentType: "video/mp4",
+              onProgress: ({ transferredBytes, totalBytes }) => {
+                if (totalBytes) {
+                  setUploadProgress(Math.round((transferredBytes / totalBytes) * 100));
+                }
+              },
+            },
+          }).result;
+
+          return result.path;
+        }
       });
 
-      // Wait for all uploads to complete
       const mediaUrls = await Promise.all(uploadPromises);
       return mediaUrls;
     } catch (e) {
@@ -153,6 +170,41 @@ const UploadProperty = () => {
       alert("Failed to upload media. Please try again.");
       return [];
     }
+  };
+
+  // Video Compression Helper Function
+  const compressVideo = async (videoBlob) => {
+    return new Promise((resolve, reject) => {
+      const videoElement = document.createElement("video");
+      videoElement.src = URL.createObjectURL(videoBlob);
+      videoElement.muted = true;
+      videoElement.play();
+
+      videoElement.onloadedmetadata = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = videoElement.videoWidth / 2;
+        canvas.height = videoElement.videoHeight / 2;
+        const ctx = canvas.getContext("2d");
+
+        const stream = canvas.captureStream();
+        const mediaRecorder = new MediaRecorder(stream, {
+          mimeType: "video/webm",
+          videoBitsPerSecond: 500000, 
+        });
+
+        const chunks = [];
+        mediaRecorder.ondataavailable = (event) => chunks.push(event.data);
+        mediaRecorder.onstop = () => {
+          const compressedBlob = new Blob(chunks, { type: "video/mp4" });
+          resolve(compressedBlob);
+        };
+
+        mediaRecorder.start();
+        setTimeout(() => mediaRecorder.stop(), Math.min(videoElement.duration, 5000));
+      };
+
+      videoElement.onerror = (err) => reject(err);
+    });
   };
 
   // Handle the upload process for all media and save post in DataStore
@@ -166,7 +218,7 @@ const UploadProperty = () => {
     }
 
     try {
-      const mediaUrls = await uploadImages();
+      const mediaUrls = await uploadMedia();
 
       if (mediaUrls.length === 0) {
         alert("Failed to upload media. Please try again.");
@@ -191,6 +243,10 @@ const UploadProperty = () => {
           timeFrame,
           inspectionFee: parseFloat(inspectionFee),
           cautionFee: parseFloat(cautionFee),
+          otherFeesName,
+          otherFeesPrice: parseFloat(otherFeesPrice),
+          otherFeesName2,
+          otherFeesPrice2: parseFloat(otherFeesPrice2),
           price: parseFloat(price),
           totalPrice: parseFloat(totalPrice),
           bed,

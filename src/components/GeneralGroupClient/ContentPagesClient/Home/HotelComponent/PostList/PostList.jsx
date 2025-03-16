@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import './PostList.css';
 import PostFeed from '../Post/Post';
+import '../../TabStyles/PostList.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -74,7 +74,7 @@ function PostList() {
     };
 
   return (
-    <div className='pListContainer' >
+    <div className='postListContainer' >
 
         {/* Search Bar */}
         <div>
@@ -94,7 +94,9 @@ function PostList() {
                 ))}
             </div>
         ) : (
-            <p className="noListings">No Hotel / Shortlet listings</p>
+            <div className='noListngsCon'>
+                <p className="noListings">No Hotel / Shortlet listings</p>
+            </div>
         )}
         {refreshing && (
             <div className="loading-container">
@@ -103,9 +105,11 @@ function PostList() {
             </div>
         )}
 
-        <button onClick={handleRefreshHotel} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className='refreshBtnPListCon'>
+            <button onClick={handleRefreshHotel} className='refreshBtnPList'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   )
 }

@@ -45,7 +45,7 @@ function Post({post}) {
     }, [post.media]);
 
   return (
-    <div className='explorePostContainer'>
+    <div className='realtorPostContainer'>
         {/* Image Container */}
         <div 
             className={'imageContainer'}

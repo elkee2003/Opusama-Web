@@ -20,6 +20,14 @@ const Forms = () => {
     propertyType,
     cautionFee,
     setCautionFee,
+    otherFeesName, 
+    setOtherFeesName,
+    otherFeesName2, 
+    setOtherFeesName2,
+    otherFeesPrice, 
+    setOtherFeesPrice,
+    otherFeesPrice2, 
+    setOtherFeesPrice2,
     price,
     setPrice,
     inspectionFee,
@@ -108,6 +116,44 @@ const Forms = () => {
               value={inspectionFee}
               onChange={(e) => setInspectionFee(e.target.value)}
               placeholder="Inspection Fee (Opt)"
+              type="number"
+            />
+          </div>
+        )}
+
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale') && (
+          <div className='moneyCon'>
+            <label className="formLabel">Other Fees:</label>
+            <textarea
+              className="formInput"
+              value={otherFeesName}
+              onChange={(e) => setOtherFeesName(e.target.value)}
+              placeholder="Name of any other fee client pays (Opt)"
+            />
+            <input
+              className="moneyInput"
+              value={otherFeesPrice}
+              onChange={(e) => setOtherFeesPrice(e.target.value)}
+              placeholder="Amount of other fee (Opt)"
+              type="number"
+            />
+          </div>
+        )}
+
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale') && (
+          <div className='moneyCon'>
+            <label className="formLabel">2nd Other Fees:</label>
+            <textarea
+              className="formInput"
+              value={otherFeesName2}
+              onChange={(e) => setOtherFeesName2(e.target.value)}
+              placeholder="Name of any other 2nd fee client pays (Opt)"
+            />
+            <input
+              className="moneyInput"
+              value={otherFeesPrice2}
+              onChange={(e) => setOtherFeesPrice2(e.target.value)}
+              placeholder="Amount of other 2nd fee (Opt)"
               type="number"
             />
           </div>

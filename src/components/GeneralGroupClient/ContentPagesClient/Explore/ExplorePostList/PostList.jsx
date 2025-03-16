@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './PostList.css';
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
 import ExplorePostFeed from '../ExplorePost/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -82,7 +81,7 @@ function PostList() {
     };
 
   return (
-    <div className='exploreContainer' >
+    <div className='postListContainer' >
 
         {/* Search Bar */}
         {/* <div>
@@ -102,7 +101,9 @@ function PostList() {
                 ))}
             </div>
         ) : (
-            <p className="noListings">No listings</p>
+            <div className='noListngsCon'>
+                <p className="noListings">No listings</p>
+            </div>
         )}
         {refreshing && (
             <div className="loading-container">
@@ -111,9 +112,11 @@ function PostList() {
             </div>
         )}
 
-        <button onClick={handleRefreshExplore} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className='refreshBtnPListCon'>
+            <button onClick={handleRefreshExplore} className='refreshBtnPList'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   )
 }

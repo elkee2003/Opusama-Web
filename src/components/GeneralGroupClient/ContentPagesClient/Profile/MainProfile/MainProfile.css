@@ -2,10 +2,9 @@
     display: flex;
     /* height: 100vh; */
     flex-direction: column;
-    margin-left: 20px;
-    margin-right: 20px;
+    padding:20px;
     margin-bottom: 90px;
-    max-width: 80vw;
+    width: 80vw;
 }
 
 .mainProfilePicContainer {
@@ -139,7 +138,7 @@
 
 @media (max-width: 900px) {
     .mainContainer{
-        min-width: 85vw;
+        width: 100vw;
     }
 
     .mainProfilePicContainer {
@@ -161,9 +160,6 @@
 }
 
 @media (max-width: 600px) {
-    .mainContainer{
-        min-width: 80vw;
-    }
 
     .mainProfilePicContainer {
         height: 120px;

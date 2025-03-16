@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { DataStore } from "aws-amplify/datastore";
 import {Post} from '../../../../../../models';
 import Gallery from './Gallery/Gallery';
-import './PostGallery.css'
 
 
 const PostGallery = () => {

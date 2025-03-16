@@ -1,5 +1,73 @@
-/* The rest of the styles is in explore Post */
+.realtorPostContainer {
+  margin-top: 25px;
+  width: 70%;
+}
 
+.imageContainer {
+  aspect-ratio: 3/2; /* Aspect ratio for the image */
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #15141a;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bedroom,
+.location {
+  font-size: 15.5px;
+  color: var(--comments-color);
+}
+
+.contact {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+  color: #141414;
+}
+
+.description {
+  font-size: 17px;
+  line-height: 22px;
+  color: var(--primary-color);
+}
+
+.price {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.priceRow {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1300px) {
+  .realtorPostContainer{
+    width: 75%;
+  }
+}
+@media (max-width: 900px) {
+  .realtorPostContainer{
+    padding:10px
+  }
+}
+@media (max-width: 500px) {
+  .realtorPostContainer{
+    width: 100%;
+  }
+}
 .propertType {
     font-size: 19px;
     font-weight: bold;

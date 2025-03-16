@@ -1,88 +1,70 @@
-.tabs-container {
-    border-bottom: 1px solid #e0e0e0; /* Divider line below tabs */
+.client-HomeMain-Con{
+  display: flex;
+  flex-direction: column;
+}
+
+.client-logoForSmallScreen {
+  margin-top: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.client-logoForSmallScreen img {
+  width: 200px;
+}
+
+
+.client-tabs-container {
     overflow-x: auto; /* Allow horizontal scrolling */
-    white-space: nowrap; /* Prevent wrapping of tabs */
-    display: flex; /* Align tabs in a row */
-    width: 100vw; /* Full viewport width */
-    box-sizing: border-box; /* Include padding and borders in width */
+    white-space: nowrap; 
+    display: flex;
+    width: 100vw; 
+    box-sizing: border-box;
     scroll-snap-type: x mandatory; /* Smooth scrolling */
     padding-right: 16px;
 }
 
 /* Styles about the logo in smaller screen is in realtor folder */
 
-.tabs-container::-webkit-scrollbar {
+.client-tabs-container::-webkit-scrollbar {
     display: none; /* Hide scrollbars on WebKit browsers */
 }
 
-.tabs-container {
+.client-tabs-container {
     -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
     scrollbar-width: none; /* Hide scrollbar on Firefox */
 }
 
-.tab-panel {
-    padding: 16px; /* Padding for tab content */
-    width: 100%; /* Make tab content fit screen */
-    box-sizing: border-box; /* Include padding and borders in width */
+.client-tab-panel {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 body {
     margin: 0; /* Remove body margin to prevent extra space */
-    overflow-x: hidden; /* Prevent horizontal overflow on the entire page */
 }
 
-
-
-
-
-
-
-/* body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .navbar {
+@media (max-width: 900px) {
+  .client-logoForSmallScreen {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e6e6e6;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
   }
-  
-  .tab {
-    padding: 10px 15px;
-    cursor: pointer;
-    color: #0d0342;
-    font-weight: 600;
-    text-align: center;
-    flex: 1; 
+}
+
+@media (max-width: 800px) {
+}
+
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+  .client-logoForSmallScreen img {
+    width: 150px;
   }
-  
-  .tab.active {
-    border-bottom: 2px solid #1da1f2;
-    color: #000000;
-  }
-  
-  .content {
-    padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .navbar {
-      justify-content: space-around; 
-    }
-  
-    .tab {
-      font-size: 14px; 
-    }
-  
-    .content {
-      padding: 15px;
-    }
-  }
-   */
+
+}
+
+@media (max-width: 500px) {
+}
+
+/* Styles for PostList for all the Top Tabs */

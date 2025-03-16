@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import './Content.css'
 import DefaultImage from "/defaultImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -240,7 +239,7 @@ function Content({post, realtor,}) {
           {post.description && (
             <div>
               <h4 className='luxPolHeadTxt'>Description</h4>
-              <p className='exploreDetailedDesc'>
+              <p className='detailedDesc'>
                 {readMore || post.description.length <= 150
                   ? post.description
                   : `${post.description.substring(0, 150)}...`}

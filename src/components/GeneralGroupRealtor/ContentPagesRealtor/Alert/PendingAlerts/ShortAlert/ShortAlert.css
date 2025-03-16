@@ -3,8 +3,6 @@
     flex-direction: column;
 }
 
-
-
 .alertCard {
     display: flex;
     width: 60vw;
@@ -58,16 +56,12 @@
   font-style: italic;
 }
 
-.alertCard {
-  width:80vw
-}
-
 @media (max-width: 1300px) {
 }
 
 @media (max-width: 900px) {
   .alertCard {
-    width:80vw
+    width:100%;
   }
 }
 @media (max-width: 700px) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser } from 'react-icons/fa';
+import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser, FaUsers } from 'react-icons/fa';
 import { NavLink, useNavigate } from "react-router-dom";
 import './Sidebar.css';
 
@@ -10,10 +10,10 @@ function ContentTabsClient (){
     return (
         <>
             {/* Sidebar for larger screens */}
-            <div className="sidebar">
+            <div className="client-sidebar">
                 {/* <h2>Opusama</h2> */}
                 <div 
-                    className='logoClickClient'
+                    className='client-logoClickClient'
                     onClick={() => navigate('/')}
                 >
                     <img 
@@ -29,7 +29,7 @@ function ContentTabsClient (){
                                 to="/clientcontent/home"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='client-nav-container'>
                                 <FaHome /> Home
                                 </div>
                             </NavLink>
@@ -39,7 +39,7 @@ function ContentTabsClient (){
                                 to="/clientcontent/explore"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='client-nav-container'>
                                     <FaSearch /> Explore
                                 </div>
                             </NavLink>
@@ -49,8 +49,18 @@ function ContentTabsClient (){
                                 to="/clientcontent/bookings"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='client-nav-container'>
                                     <FaCalendarAlt /> Bookings
+                                </div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/clientcontent/community"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='client-nav-container'>
+                                    <FaUsers /> Community
                                 </div>
                             </NavLink>
                         </li>
@@ -59,7 +69,7 @@ function ContentTabsClient (){
                                 to="/clientcontent/profile"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='client-nav-container'>
                                     <FaUser /> Profile
                                 </div>
                             </NavLink>
@@ -69,7 +79,7 @@ function ContentTabsClient (){
             </div>
 
             {/* Bottom tab navigator for smaller screens */}
-            <div className="bottom-nav">
+            <div className="client-bottom-nav">
                 <NavLink 
                     to="/clientcontent/home"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
@@ -89,6 +99,13 @@ function ContentTabsClient (){
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaCalendarAlt /> Bookings
+                </NavLink>
+
+                <NavLink 
+                    to="/clientcontent/community"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaUsers /> Community
                 </NavLink>
 
                 <NavLink Link 

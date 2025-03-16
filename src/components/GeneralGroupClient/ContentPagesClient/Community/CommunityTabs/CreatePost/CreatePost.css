@@ -1,0 +1,97 @@
+.createPostCon{
+    display: flex;
+    flex-direction: column;
+}
+
+.createPostHeader {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    color: #0d1333;
+    margin-bottom: 2rem;
+}
+
+.dropDownCreatePost {
+    align-self: center;
+    border: 1px solid #02061b;
+    border-radius: 10px;
+    padding:2px;
+    margin-bottom: 10px;
+    max-width: 600px;
+    min-width: 600px;
+}
+
+.formCommunTitle {
+    padding: 10px;
+    max-width: 600px;
+    min-width: 600px;
+    border-radius: 10px;
+    border-width: 1px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.formCommunContent {
+    padding: 10px;
+    max-width: 600px;
+    min-width: 600px;
+    height: 300px;
+    border-width: 1px;
+    border-color: #060c29;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.communityPostCon {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.communityPostBtn {
+    background: var(--blue-gradient);
+    font-size: 20px;
+    padding: 10px 30px;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .createPostCon {
+        width: 100vw;
+        padding:15px;
+    }
+
+    .dropDownCreatePost {
+        align-self: stretch;
+        min-width: 300px;
+    }
+
+    .formCommunTitle {
+        align-self: stretch;
+        min-width: 300px;
+    }
+
+    .formCommunContent {
+        align-self: stretch;
+        min-width: 300px;
+    }
+
+    .communityPostCon {
+        margin-bottom: 5rem;
+    }
+}
+
+@media (max-width: 800px) {
+}
+
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}

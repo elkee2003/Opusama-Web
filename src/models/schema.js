@@ -1,5 +1,87 @@
 export const schema = {
     "models": {
+        "CommunityLike": {
+            "name": "CommunityLike",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "like": {
+                    "name": "like",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "likedByID": {
+                    "name": "likedByID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "communitydiscussionID": {
+                    "name": "communitydiscussionID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "CommunityLikes",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCommunityDiscussion",
+                        "fields": [
+                            "communitydiscussionID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "CommunityReply": {
             "name": "CommunityReply",
             "fields": {
@@ -17,22 +99,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "commenterID": {
+                    "name": "commenterID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "communitydiscussionID": {
                     "name": "communitydiscussionID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "realtorID": {
-                    "name": "realtorID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -68,24 +143,6 @@ export const schema = {
                         "name": "byCommunityDiscussion",
                         "fields": [
                             "communitydiscussionID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRealtor",
-                        "fields": [
-                            "realtorID"
                         ]
                     }
                 },
@@ -153,13 +210,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "likes": {
-                    "name": "likes",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "CommunityReplies": {
                     "name": "CommunityReplies",
                     "isArray": true,
@@ -176,19 +226,21 @@ export const schema = {
                         ]
                     }
                 },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "realtorID": {
-                    "name": "realtorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
+                "CommunityLikes": {
+                    "name": "CommunityLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "CommunityLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "communitydiscussionID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -213,24 +265,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRealtor",
-                        "fields": [
-                            "realtorID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -786,38 +820,6 @@ export const schema = {
                         ]
                     }
                 },
-                "CommunityDiscussions": {
-                    "name": "CommunityDiscussions",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityDiscussion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userID"
-                        ]
-                    }
-                },
-                "CommunityReplies": {
-                    "name": "CommunityReplies",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityReply"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userID"
-                        ]
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1002,37 +1004,40 @@ export const schema = {
                         ]
                     }
                 },
-                "CommunityDiscussions": {
-                    "name": "CommunityDiscussions",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityDiscussion"
-                    },
+                "isVerified": {
+                    "name": "isVerified",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
+                    "attributes": []
                 },
-                "CommunityReplies": {
-                    "name": "CommunityReplies",
-                    "isArray": true,
-                    "type": {
-                        "model": "CommunityReply"
-                    },
+                "isPartner": {
+                    "name": "isPartner",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
+                    "attributes": []
+                },
+                "isPremium": {
+                    "name": "isPremium",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isElite": {
+                    "name": "isElite",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isTrusted": {
+                    "name": "isTrusted",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1199,17 +1204,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "timeFrame": {
-                    "name": "timeFrame",
+                "otherFeesName": {
+                    "name": "otherFeesName",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "bed": {
-                    "name": "bed",
+                "otherFeesPrice": {
+                    "name": "otherFeesPrice",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1228,6 +1233,34 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "otherFeesName2": {
+                    "name": "otherFeesName2",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "otherFeesPrice2": {
+                    "name": "otherFeesPrice2",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "timeFrame": {
+                    "name": "timeFrame",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bed": {
+                    "name": "bed",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "bedrooms": {
                     "name": "bedrooms",
@@ -1356,5 +1389,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "9b08361848249d57fcf420198210533a"
+    "version": "b8be3fadb8b32b1f7d619223b8430e62"
 };

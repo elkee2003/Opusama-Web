@@ -132,7 +132,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="profileContainer">
+    <div className="realtorProfContainer">
       {authUser && (
         <div>
           <h1 className="title">Edit Profile</h1>
@@ -180,7 +180,7 @@ const EditProfile = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name / Company name"
-              className="profileInput"
+              className="realtorProfileInput"
               // rows={2} 
             />
 
@@ -188,7 +188,7 @@ const EditProfile = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Surname (Optional)"
-              className="profileInput"
+              className="realtorProfileInput"
               // rows={2} 
             />
 
@@ -196,7 +196,7 @@ const EditProfile = () => {
               value={myDescription}
               onChange={(e) => handleDescriptionChange(e.target.value)}
               placeholder="A description of yourself(Optional)"
-              className="profileInput"
+              className="realtorProfileInput"
             />
             <p className="wordCount">{remainingWords}</p>
 
@@ -204,7 +204,7 @@ const EditProfile = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Phone Number"
-              className="profileInput"
+              className="realtorProfileInput"
               // rows={2} 
             />
 
@@ -212,28 +212,28 @@ const EditProfile = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Input Address"
-              className="profileInput"
+              className="realtorProfileInput"
             />
 
             <textarea
               value={bankname}
               onChange={(e) => setBankname(e.target.value)}
               placeholder="Bank name"
-              className="profileInput"
+              className="realtorProfileInput"
             />
 
             <textarea
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
               placeholder="Account name"
-              className="profileInput"
+              className="realtorProfileInput"
             />
 
             <textarea
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
               placeholder="Account number"
-              className="profileInputLast"
+              className="realtorProfileInputLast"
             />
           </div>
 

@@ -24,6 +24,38 @@ export enum BookingStatus {
 
 
 
+type EagerCommunityLike = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityLike, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly like?: boolean | null;
+  readonly likedByID?: string | null;
+  readonly communitydiscussionID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCommunityLike = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CommunityLike, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly like?: boolean | null;
+  readonly likedByID?: string | null;
+  readonly communitydiscussionID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CommunityLike = LazyLoading extends LazyLoadingDisabled ? EagerCommunityLike : LazyCommunityLike
+
+export declare const CommunityLike: (new (init: ModelInit<CommunityLike>) => CommunityLike) & {
+  copyOf(source: CommunityLike, mutator: (draft: MutableModel<CommunityLike>) => MutableModel<CommunityLike> | void): CommunityLike;
+}
+
 type EagerCommunityReply = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<CommunityReply, 'id'>;
@@ -31,9 +63,8 @@ type EagerCommunityReply = {
   };
   readonly id: string;
   readonly comment?: string | null;
+  readonly commenterID?: string | null;
   readonly communitydiscussionID: string;
-  readonly userID: string;
-  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -45,9 +76,8 @@ type LazyCommunityReply = {
   };
   readonly id: string;
   readonly comment?: string | null;
+  readonly commenterID?: string | null;
   readonly communitydiscussionID: string;
-  readonly userID: string;
-  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -69,10 +99,8 @@ type EagerCommunityDiscussion = {
   readonly content?: string | null;
   readonly instigatorID?: string | null;
   readonly media?: (string | null)[] | null;
-  readonly likes?: number | null;
   readonly CommunityReplies?: (CommunityReply | null)[] | null;
-  readonly userID: string;
-  readonly realtorID: string;
+  readonly CommunityLikes?: (CommunityLike | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -88,10 +116,8 @@ type LazyCommunityDiscussion = {
   readonly content?: string | null;
   readonly instigatorID?: string | null;
   readonly media?: (string | null)[] | null;
-  readonly likes?: number | null;
   readonly CommunityReplies: AsyncCollection<CommunityReply>;
-  readonly userID: string;
-  readonly realtorID: string;
+  readonly CommunityLikes: AsyncCollection<CommunityLike>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -258,8 +284,6 @@ type EagerUser = {
   readonly RealtorReviews?: (RealtorReview | null)[] | null;
   readonly push_token?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
-  readonly CommunityDiscussions?: (CommunityDiscussion | null)[] | null;
-  readonly CommunityReplies?: (CommunityReply | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -280,8 +304,6 @@ type LazyUser = {
   readonly RealtorReviews: AsyncCollection<RealtorReview>;
   readonly push_token?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
-  readonly CommunityDiscussions: AsyncCollection<CommunityDiscussion>;
-  readonly CommunityReplies: AsyncCollection<CommunityReply>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -313,8 +335,11 @@ type EagerRealtor = {
   readonly push_token?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
   readonly RealtorReview?: (RealtorReview | null)[] | null;
-  readonly CommunityDiscussions?: (CommunityDiscussion | null)[] | null;
-  readonly CommunityReplies?: (CommunityReply | null)[] | null;
+  readonly isVerified?: boolean | null;
+  readonly isPartner?: boolean | null;
+  readonly isPremium?: boolean | null;
+  readonly isElite?: boolean | null;
+  readonly isTrusted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -340,8 +365,11 @@ type LazyRealtor = {
   readonly push_token?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
   readonly RealtorReview: AsyncCollection<RealtorReview>;
-  readonly CommunityDiscussions: AsyncCollection<CommunityDiscussion>;
-  readonly CommunityReplies: AsyncCollection<CommunityReply>;
+  readonly isVerified?: boolean | null;
+  readonly isPartner?: boolean | null;
+  readonly isPremium?: boolean | null;
+  readonly isElite?: boolean | null;
+  readonly isTrusted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -374,9 +402,13 @@ type EagerPost = {
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly otherFeesName?: string | null;
+  readonly otherFeesPrice?: number | null;
+  readonly PostReviews?: (PostReview | null)[] | null;
+  readonly otherFeesName2?: string | null;
+  readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly PostReviews?: (PostReview | null)[] | null;
   readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;
@@ -410,9 +442,13 @@ type LazyPost = {
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly otherFeesName?: string | null;
+  readonly otherFeesPrice?: number | null;
+  readonly PostReviews: AsyncCollection<PostReview>;
+  readonly otherFeesName2?: string | null;
+  readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
   readonly bed?: string | null;
-  readonly PostReviews: AsyncCollection<PostReview>;
   readonly bedrooms?: string | null;
   readonly amenities?: string | null;
   readonly policies?: string | null;

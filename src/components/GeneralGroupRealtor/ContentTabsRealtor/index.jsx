@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBell, FaPlusCircle, FaUser } from 'react-icons/fa';
+import { FaHome, FaBell, FaPlusCircle, FaUser, FaUsers } from 'react-icons/fa';
 import { NavLink, useNavigate } from "react-router-dom";
 
 import './Sidebar.css';
@@ -11,9 +11,9 @@ function ContentTabsRealtor (){
     return (
         <>
             {/* Sidebar for larger screens */}
-            <div className="sidebar">
+            <div className="realtor-sidebar">
                 <div 
-                    className='logoClick'
+                    className='realtor-logoClick'
                     onClick={() => navigate('/')}
                 >
                     <img 
@@ -29,7 +29,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/home"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                               <div className='nav-container'>
+                               <div className='realtor-nav-container'>
                                     <FaHome /> Home
                                 </div>
                             </NavLink>
@@ -39,7 +39,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/upload"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaPlusCircle /> Upload
                                 </div>
                             </NavLink>
@@ -49,8 +49,18 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/alerts"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaBell /> Alerts
+                                </div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/realtorcontent/community"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='realtor-nav-container'>
+                                    <FaUsers /> Community
                                 </div>
                             </NavLink>
                         </li>
@@ -59,7 +69,7 @@ function ContentTabsRealtor (){
                                 to="/realtorcontent/profile"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
-                                <div className='nav-container'>
+                                <div className='realtor-nav-container'>
                                     <FaUser /> Profile
                                 </div>
                             </NavLink>
@@ -70,7 +80,7 @@ function ContentTabsRealtor (){
 
             {/* Bottom tab navigator for smaller screens */}
             
-            <div className="bottom-nav">
+            <div className="realtor-bottom-nav">
                 <NavLink 
                     to="/realtorcontent/home"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
@@ -90,6 +100,13 @@ function ContentTabsRealtor (){
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaBell /> Alerts
+                </NavLink>
+
+                <NavLink 
+                    to="/realtorcontent/community"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaUsers /> Community
                 </NavLink>
 
                 <NavLink Link 

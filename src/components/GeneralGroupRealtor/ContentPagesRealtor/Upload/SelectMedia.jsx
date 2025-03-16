@@ -6,6 +6,9 @@ import { useUploadContext } from '../../../../../Providers/RealtorProvider/Uploa
 
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 
+import * as ffmpeg from '@ffmpeg/ffmpeg';
+const { createFFmpeg, fetchFile } = ffmpeg;
+
 const SelectMedia = () => {
   const {setMedia, media} = useUploadContext();
   const navigate = useNavigate();
@@ -27,11 +30,12 @@ const SelectMedia = () => {
   
 
   // Pick Multiple Media Function (Images and Videos)
+  // Pick Multiple Media Function (Images and Videos)
   const pickMediaAsync = async (event) => {
     const files = Array.from(event.target.files);
     const images = [];
     const videos = [];
-  
+
     // Classify the files into images and videos
     files.forEach((file) => {
       if (file.type.startsWith('image/')) {
@@ -40,12 +44,13 @@ const SelectMedia = () => {
         videos.push(file);
       }
     });
-  
+
+    // Enforce media selection conditions
     if (videos.length > 1) {
       alert('You can only select one video.');
-      return; // Stop execution
+      return;
     }
-  
+
     if (images.length + videos.length > 10) {
       alert('You can select up to 10 images and videos combined.');
       return;
@@ -53,20 +58,19 @@ const SelectMedia = () => {
       alert('Select at least 3 images or 1 video and any number of images.');
       return;
     }
-  
-    // If a video is selected, validate its duration first
+
+    // If a video is selected, check its duration
     if (videos.length === 1) {
       const isVideoValid = await checkVideoDuration(videos[0]);
       if (!isVideoValid) {
-        alert('Video too long. Please trim the video to 30 seconds or less before selecting.');
-        return; // Stop execution
+        alert('The video you selected is longer than 40 seconds. Please trim it when you get to the next page.');
       }
     }
-  
+
     // Proceed to finalize media selection
     finalizeMediaSelection([...images, ...videos]);
   };
-  
+
   // Function to check video duration asynchronously
   const checkVideoDuration = (videoFile) => {
     return new Promise((resolve) => {
@@ -74,7 +78,7 @@ const SelectMedia = () => {
       const videoElement = document.createElement('video');
       videoElement.src = videoURL;
       videoElement.onloadedmetadata = () => {
-        resolve(videoElement.duration <= 30);
+        resolve(videoElement.duration <= 40);
       };
     });
   };
@@ -91,34 +95,17 @@ const SelectMedia = () => {
     navigate('/realtorcontent/displaymedia');
   };
 
-
-  //   if (files.length < 3) {
-  //     alert('Select at least 3 media files');
-  //   } else if (files.length > 15) {
-  //     alert('You can only select up to 15 media files');
-  //   } else {
-  //     // Map the selected files to an array with their URIs and names
-  //     const selectedMedia = files.map((file) => ({
-  //       uri: URL.createObjectURL(file),
-  //       name: file.name,
-  //     }));
-  //     // Maintain the selection order by appending new files in the same sequence they were picked
-  //     setMedia((prevMedia) => [...prevMedia, ...selectedMedia]);
-  //     navigate('/realtorcontent/displaymedia'); 
-  //   }
-  // };
-
   return (
     <div className="selectMContainer">
       <label className="upload-label">
         <FaCamera className="selectMIcon" />
         <input
           type="file"
-          accept="image/*,video/*" // Allow both images and videos
+          accept="image/*,video/*"
           multiple
           className="file-input"
           onChange={pickMediaAsync}
-          style={{ display: 'none' }} // Hide the default file input
+          style={{ display: 'none' }}
         />
         <p>Click here</p>
         <span>Upload Images of Property</span>

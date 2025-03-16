@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SearchResults from './SearchResults';
 import { DataStore } from 'aws-amplify/datastore';
 import { Realtor, Post } from '../../../../../../models';
+import '../../TabStyles/Search.css';
 
 const HotelSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');

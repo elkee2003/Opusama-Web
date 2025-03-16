@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { DataStore } from "aws-amplify/datastore";
 import { PostReview, RealtorReview } from '../../../../../../../models'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import './Content.css'; 
+import { faStar } from '@fortawesome/free-solid-svg-icons'; 
 
 const RealtorNameRating = ({ realtor }) => {
   const [averageRealtorRating, setAverageRealtorRating] = useState(0);

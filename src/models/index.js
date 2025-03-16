@@ -22,9 +22,10 @@ const BookingStatus = {
   "REMOVED_REALTOR_PAYMENT_DELAYED": "REMOVED_REALTOR_PAYMENT_DELAYED"
 };
 
-const { CommunityReply, CommunityDiscussion, RealtorReview, PostReview, Booking, User, Realtor, Post } = initSchema(schema);
+const { CommunityLike, CommunityReply, CommunityDiscussion, RealtorReview, PostReview, Booking, User, Realtor, Post } = initSchema(schema);
 
 export {
+  CommunityLike,
   CommunityReply,
   CommunityDiscussion,
   RealtorReview,

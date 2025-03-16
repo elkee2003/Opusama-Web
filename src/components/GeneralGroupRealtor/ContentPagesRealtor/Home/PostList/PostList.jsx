@@ -65,7 +65,7 @@ function PostList() {
     <div className='exploreContainer' >
 
         <div 
-            className='logoForSmallScreen'  
+            className='realtorLogoForSmallScreen'  
         >
             <img 
                 src={'/opusama.png'}
@@ -91,9 +91,11 @@ function PostList() {
             </div>
         )}
 
-        <button onClick={handleRefresh} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className='realtorRefreshBtnCon'>
+            <button onClick={handleRefresh} className='refreshButton'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   )
 }

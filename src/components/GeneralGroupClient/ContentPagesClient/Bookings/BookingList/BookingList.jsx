@@ -132,7 +132,7 @@ const BookingList = () => {
     } 
 
   return (
-    <div className='bookingContainer'>
+    <div className='bookingTabContainer'>
       <h1 className='header'>Bookings</h1>
 
       {loading ? (

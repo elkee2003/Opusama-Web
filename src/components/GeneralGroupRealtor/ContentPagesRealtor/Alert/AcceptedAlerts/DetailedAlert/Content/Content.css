@@ -1,24 +1,32 @@
 .dAlatAcceptedContainer {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin-right: 10px;
+  width: 100vw;
+  align-items: center;
+  padding-right: 15rem;
 }
 
 @media (max-width: 900px) {
     .dAlatAcceptedContainer {
-        margin-bottom: 5rem;
+      width: 100vw;
+      margin-right: 0;
+      margin-bottom: 5rem;
+      padding:10px
     }
 }
 @media (max-width: 700px) {
 
 }
 @media (max-width: 600px) {
-
+  .dAlatAcceptedContainer {
+    width: 100vw;
+    align-items: stretch;
+  }
 }
 
 @media (max-width: 500px) {
   .dAlatAcceptedContainer {
-      margin-left: -10px;
+    min-width: 100%;
+    max-width: 100%;
   }
 }

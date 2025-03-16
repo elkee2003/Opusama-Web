@@ -1,0 +1,43 @@
+.communityNoListings {
+    text-align: center;
+    font-weight: bold;
+    color: #afadad;
+    font-size: 30px;
+    position: relative;
+    top: 50%;
+    margin-right: 8rem;
+}
+
+
+.refreshCommunCon{
+    display: flex;
+    justify-content: center;
+    margin-right: 10rem;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+   .communityNoListings {
+    margin-right: 0;
+   } 
+
+   /* .refreshCommunCon {
+    margin-right: 3.5rem;
+   } */
+   .refreshCommunCon {
+    margin-right: 0;
+   }
+}
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .refreshCommunCon {
+        margin-right: 0;
+    }
+}

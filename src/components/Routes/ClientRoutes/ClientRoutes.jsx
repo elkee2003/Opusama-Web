@@ -5,6 +5,7 @@ import ClientLayout from '../../../components/GeneralGroupClient/ContentLayout'
 import HomeClient from '../../../components/GeneralGroupClient/ContentPagesClient/Home/Home';
 import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
 import Bookings from '../../../components/GeneralGroupClient/ContentPagesClient/Bookings/Bookings';
+import ClientCommunity from '../../../components/GeneralGroupClient/ContentPagesClient/Community/Community';
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
 import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
@@ -19,7 +20,10 @@ import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/R
 import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
 import DeleteAccount from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import RealtorProfile from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/RealtorProfile';
-import RealtorUserReviews from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/UsersReview/RealtorRatings'
+import RealtorUserReviews from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/UsersReview/RealtorRatings';
+import CreatePost from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/CreatePost/CreatePost';
+import CommunityDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/DetailedPost/DetailedPost';
+import CommunityPostResponse from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/DetailedPost/Content/Response/Response';
 import PaymentPage from '../../GeneralGroupClient/ContentPagesClient/Payment/Payment';
 
 // SearchPages
@@ -48,6 +52,9 @@ const ClientRoutes = () => (
 
             {/* Bookings */}
             <Route path="bookings" element={<Bookings />} />
+
+            {/* Community */}
+            <Route path="community" element={<ClientCommunity />} />
 
             {/* Profile */}
             <Route path="profile" element={<ClientProfile />} />
@@ -94,6 +101,15 @@ const ClientRoutes = () => (
             {/* Realtor Users Reviews */}
             <Route path="realtorusersreview/:realtorId" element={<RealtorUserReviews/>} />
 
+            {/* Create Post */}
+            <Route path="create_post" element={<CreatePost />} />
+
+            {/* Community Detailed Post */}
+            <Route path="community_post/:postId" element={<CommunityDetailedPost />} />
+
+            {/* Response Community Post */}
+            <Route path="response_post/:postId" element={<CommunityPostResponse />} />
+
             {/* Payment */}
             <Route path="payment" element={<PaymentPage />} />
 
@@ -126,7 +142,7 @@ const ClientRoutes = () => (
             <Route path="lifestyle_detailedpost/:postId" element={<RecreationDetailedPost />} />
 
             {/* for invalid route */}
-            <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
+            <Route path='*' element={<div style={{display: 'flex', width:'100vw', marginTop:'200px', paddingLeft:'20%',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
         </Route>
     </Routes>
 );

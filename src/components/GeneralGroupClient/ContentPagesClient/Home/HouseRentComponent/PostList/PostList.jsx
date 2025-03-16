@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './PostList.css';
 import PostFeed from '../Post/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -7,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider'
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
-
-// important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer
 
 function PostList() {
     const navigate = useNavigate();
@@ -90,7 +87,7 @@ function PostList() {
     };
 
   return (
-    <div className='pListContainer' >
+    <div className='postListContainer' >
 
         {/* Search Bar */}
         <div>
@@ -110,7 +107,9 @@ function PostList() {
                 ))}
             </div>
         ) : (
-            <p className="noListings">No House listings</p>
+            <div className='noListngsCon'>
+                <p className="noListings">No House listings</p>
+            </div>
         )}
         {refreshing && (
             <div className="loading-container">
@@ -118,9 +117,11 @@ function PostList() {
                 <h2>Loading...</h2>
             </div>
         )}
-        <button onClick={handleRefreshHouse} className='refreshButton'>
-            {refreshing ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className='refreshBtnPListCon'>
+            <button onClick={handleRefreshHouse} className='refreshBtnPList'>
+                {refreshing ? "Refreshing..." : "Refresh"}
+            </button>
+        </div>
     </div>
   )
 }

@@ -1,21 +1,23 @@
 /* Layout container */
-.layout {
+.realtor-layout {
     display: flex;
   }
   
   /* Main content area */
-  .main-content {
+  .realtor-main-content {
     margin-left: 270px; /* Same as sidebar width + 20px for padding */
-    padding: 20px;
-    flex: 1;
-    background-color: #fff; 
-    min-height: 100vh; 
+    /* padding: 20px; */
+    min-height: 100vh;
+    max-width: 100%;
+    /* width: 100vw; */
+    overflow: hidden;
     color: #333;
   }
   
   /* Responsive adjustments */
   @media (max-width: 900px) {
-    .main-content {
+    .realtor-main-content {
       margin-left: 0; 
+      padding: 30;
     }
   }

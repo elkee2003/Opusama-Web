@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import DefaultImage from "/defaultImage.png";
 import { IoArrowBack } from "react-icons/io5";
 import { getUrl } from 'aws-amplify/storage';
-import './Gallery.css'; 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';

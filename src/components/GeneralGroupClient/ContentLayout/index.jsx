@@ -6,12 +6,12 @@ import './ContentLayout.css';
 
 const Layout = () => {
   return (
-    <div className="layoutCon">
+    <div className="client-layoutCon">
       {/* Sidebar */}
       <ContentTabsClient />
       
       {/* Main Content */}
-      <div className="main-content">
+      <div className="client-main-content">
         <Outlet />
       </div>
     </div>

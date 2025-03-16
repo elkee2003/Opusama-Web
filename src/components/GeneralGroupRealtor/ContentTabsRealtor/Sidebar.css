@@ -1,6 +1,7 @@
-.sidebar {
+.realtor-sidebar {
   width: 250px;
   height: 100vh;
+  gap:50px;
   background-color: #fff; 
   color: #0b0431;
   position: fixed;
@@ -12,36 +13,36 @@
   box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
 }
 
-.logoClick {
+.realtor-logoClick {
   cursor: pointer;
 }
 
 /* Dashboard heading */
-.sidebar h2 {
+.realtor-sidebar h2 {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #040842; /* Highlighted heading color */
+  color: #040842; 
   text-align: center;
 }
 
 /* Navigation links */
-.sidebar nav ul {
+.realtor-sidebar nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar nav ul li {
+.realtor-sidebar nav ul li {
   margin: 15px 0;
 }
 
-.nav-container {
+.realtor-nav-container {
   display: flex;
   align-items: center;
   gap:0.5rem;
 }
 
-.sidebar nav ul li a {
+.realtor-sidebar nav ul li a {
   text-decoration: none;
   color: #0c0533;
   font-size: 1.2rem;
@@ -51,18 +52,18 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-.sidebar nav ul li a:hover {
+.realtor-sidebar nav ul li a:hover {
   font-size: 1.3rem;
   background-color: #f0f0f0; 
   color: #26e600; 
 }
 
-.sidebar nav ul li a svg {
+.realtor-sidebar nav ul li a svg {
   font-size: 1.8rem;
 }
 
 /* Bottom tab navigator (hidden by default) */
-.bottom-nav {
+.realtor-bottom-nav {
   display: none;
   position: fixed;
   bottom: 0;
@@ -72,14 +73,15 @@
   color: #0b0431;
   justify-content: space-around;
   padding: 15px 0;
+  z-index: 1000;
   box-shadow: 2px 0 5px rgba(0,0,0,0.3);
 }
 
-.bottom-nav a svg {
+.realtor-bottom-nav a svg {
   font-size: 1.5rem; 
 }
 
-.bottom-nav a {
+.realtor-bottom-nav a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +91,7 @@
   transition: color 0.3s;
 }
 
-.bottom-nav a:hover {
+.realtor-bottom-nav a:hover {
   color: #26e600;
 }
 
@@ -100,7 +102,7 @@
 
 /* Media query for max-width: 900px */
   @media (max-width: 900px) {
-      .sidebar {
+      .realtor-sidebar {
           display: none;
       }
   
@@ -108,7 +110,7 @@
           margin-left: 0; 
       } */
   
-      .bottom-nav {
+      .realtor-bottom-nav {
           display: flex; 
       }
   }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import './Content.css'
 import DefaultImage from "/defaultImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';

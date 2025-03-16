@@ -2,7 +2,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-inline: 10px;
+  /* margin-inline: 10px; */
+  padding:20px;
+  /* background-color: yellow; */
   /* align-items: center;
   justify-content: center; */
   
@@ -98,6 +100,17 @@
   }
 }
 @media (max-width: 900px) {
+  .bookingContainer {
+    width: 100vw;
+  }
+  .calendar {
+    display: flex;
+    margin-top: 25px;
+    /* background-color: red; */
+    max-width: 600px;
+    justify-self: center;
+  }
+  
   .bookingNxtBtn {
       position: fixed;
       background-color: #23a508;
@@ -116,10 +129,8 @@
   }
 }
 @media (max-width: 500px) {
-  .bookingContainer {
-    width: 82vw;
-    /* justify-content: center; */
-  }
+  /* .bookingContainer {
+  } */
 
   .bookingHeader {
     font-size: 20px;

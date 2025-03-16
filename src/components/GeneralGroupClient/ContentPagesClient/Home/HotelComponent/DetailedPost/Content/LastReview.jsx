@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { DataStore } from 'aws-amplify/datastore';
 import { PostReview, User } from '../../../../../../../models';
-import './Content.css'; 
+import '../../../TabStyles/Content.css';
 
 const LastReview = ({ post, dbUser }) => {
   const [usersReviews, setUsersReviews] = useState([]);

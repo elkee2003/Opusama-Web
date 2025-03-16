@@ -19,10 +19,10 @@ function Home() {
   };
 
   return (
-    <div >
+    <div className='client-HomeMain-Con'>
       {/* logo */}
       <div 
-          className='logoForSmallScreen'
+          className='client-logoForSmallScreen'
       >
           <img 
               src={'/opusama.png'}
@@ -32,7 +32,7 @@ function Home() {
       </div>
 
       {/* Toptab */}
-      <div className="tabs-container">
+      <div className="client-tabs-container">
         <Tabs
           value={selectedTab}
           onChange={handleTabChange}
@@ -49,7 +49,8 @@ function Home() {
           <Tab label="Office Space" />
         </Tabs>
       </div>
-      <div className="tab-panel">
+      
+      <div className="client-tab-panel">
         {selectedTab === 0 && <HouseRent />}
         {selectedTab === 1 && <Hotel />}
         {selectedTab === 2 && <Recreation />}
@@ -58,22 +59,6 @@ function Home() {
         {selectedTab === 5 && <PropertySale />}
         {selectedTab === 6 && <OfficeSpace />}
       </div>
-      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="navigation tabs">
-          <Tab label="House" />
-          <Tab label="Hotel/Shortlet" />
-          <Tab label="Student Accommodation" />
-          <Tab label="Property Sale" />
-          <Tab label="Office Space" />
-        </Tabs>
-      </Box> */}
-      {/* <Box sx={{ padding: 2 }}>
-        {selectedTab === 0 && <House />}
-        {selectedTab === 1 && <HotelShortlet />}
-        {selectedTab === 2 && <StudentAccommodation />}
-        {selectedTab === 3 && <PropertySale />}
-        {selectedTab === 4 && <OfficeSpace />}
-      </Box> */}
     </div>
   )
 }
