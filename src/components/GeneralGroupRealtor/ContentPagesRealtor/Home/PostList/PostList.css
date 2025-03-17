@@ -1,3 +1,18 @@
+.postListContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4.2rem;
+  justify-content: center;
+  padding: 30px;
+}
+
+.realtorNoListngsCon {
+  display: flex;
+  margin-top: 3.5rem;
+  width: 70vw;
+  justify-content: center;
+}
+
 .realtorNoListings {
   text-align: center;
   font-weight: bold;
@@ -5,15 +20,16 @@
   font-size: 30px;
   position: relative;
   top: 30%;
-  margin-right: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .realtorLogoForSmallScreen {
   display: none;
-  /* justify-content: center; */
   margin-top: 10px;
   align-items: center;
-  /* margin-left: 250px; */
+  justify-content: center;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -30,25 +46,23 @@
 @media (max-width: 900px) {
   .realtorLogoForSmallScreen {
     display: flex;
+    margin-bottom: 15px;
+  }
+
+  .realtorNoListngsCon {
+    align-self: center;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
   }
 }
 
 @media (max-width: 800px) {
-  .realtorLogoForSmallScreen {
-    margin-left: 160px;
-  }
 }
 
 @media (max-width: 700px) {
-  .realtorLogoForSmallScreen {
-    margin-left: 180px;
-  }
 }
 @media (max-width: 600px) {
-
-  .realtorLogoForSmallScreen {
-    margin-left: 120px;
-  }
 
   .realtorLogoForSmallScreen img {
     width: 150px;
@@ -57,7 +71,4 @@
 }
 
 @media (max-width: 500px) {
-  .realtorLogoForSmallScreen {
-    margin-left: 95px;
-  }
 }

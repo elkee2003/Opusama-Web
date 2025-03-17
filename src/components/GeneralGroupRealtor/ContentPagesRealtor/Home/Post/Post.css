@@ -60,7 +60,8 @@
 }
 @media (max-width: 900px) {
   .realtorPostContainer{
-    padding:10px
+    padding:10px;
+    width: 100%;
   }
 }
 @media (max-width: 500px) {

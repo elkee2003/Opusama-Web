@@ -82,7 +82,9 @@ function PostList() {
                 ))}
             </div>
         ) : (
-            <p className="realtorNoListings">You have not made any posts yet.</p>
+            <div className='realtorNoListngsCon'>
+                <p className="realtorNoListings">You have not made any posts yet.</p>
+            </div>
         )}
         {refreshing && (
             <div className="loading-container">
