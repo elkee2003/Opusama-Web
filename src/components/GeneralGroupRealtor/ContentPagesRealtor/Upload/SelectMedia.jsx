@@ -5,24 +5,10 @@ import './SelectMedia.css';
 import { useUploadContext } from '../../../../../Providers/RealtorProvider/UploadProvider';
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 
-
 const SelectMedia = () => {
   const { setMedia } = useUploadContext();
   const navigate = useNavigate();
   const { dbRealtor, authUser } = useAuthContext();
-
-  if (!authUser) {
-      return (
-        <div className='mainContainer'>
-          <p className='emptyText'>Sign In</p>
-          <div className='emptyBtnCon'>
-            <button className='emptyBtnTxt' onClick={() => navigate('/')}>
-              Sign In
-            </button>
-          </div>
-        </div>
-      );
-    }
 
   useEffect(() => {
     if (authUser && !dbRealtor) {
