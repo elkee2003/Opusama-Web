@@ -2,17 +2,18 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 70vw;
 }
 
 .uploadPropHeader {
     font-size: 2.5rem;
     text-align: center;
-    margin-right: 2rem;
 }
 
 .uploadPropBckBtn {
     position: absolute;
     font-size: 40px;
+    left: 10px;
 }
 
 .uploadBtnCon {
@@ -36,6 +37,7 @@
 .uploadTxt {
     font-size: 1.5rem;
     font-weight: bold;
+    color: black;
 }
 
 
@@ -45,6 +47,11 @@
 @media (max-width: 900px) {
     .uploadPropContainer {
         margin-bottom: 5rem;
+        width: 100vw;
+    }
+
+    .uploadPropHeader {
+        margin-top: 1.5rem;
     }
     
 }

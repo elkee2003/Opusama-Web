@@ -23,6 +23,9 @@ import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/Deta
 import PostGallery from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PostGallery/PostGallery';
 import PendingDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/PendingAlerts/DetailedAlert/DetailedAlert';
 import AcceptedDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/AcceptedAlerts/DetailedAlert/DetailedAlert';
+import CreatePost from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/CreatePost/CreatePost';
+import CommunityDetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/DetailedPost/DetailedPost';
+import CommunityPostResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/DetailedPost/Content/Response/Response';
 
 const RealtorRoutes = () => (
     <Routes>
@@ -50,6 +53,15 @@ const RealtorRoutes = () => (
             <Route path="postgallery/:postId" element={<PostGallery/>} />
             <Route path="pending_details/:alertId" element={<PendingDetailedAlert/>} />
             <Route path="accepted_details/:alertId" element={<AcceptedDetailedAlert/>} />
+
+             {/* Create Post */}
+             <Route path="create_post" element={<CreatePost />} />
+
+            {/* Community Detailed Post */}
+            <Route path="community_post/:postId" element={<CommunityDetailedPost />} />
+            
+            {/* Response Community Post */}
+            <Route path="response_post/:postId" element={<CommunityPostResponse />} />
 
             {/* for invalid route */}
             <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>

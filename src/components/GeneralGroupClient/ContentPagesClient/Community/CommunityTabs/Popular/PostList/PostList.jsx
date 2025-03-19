@@ -122,13 +122,32 @@ function PostList() {
     useEffect(()=>{
         fetchInstigatorAndPost();
 
-        const subscription = DataStore.observe(CommunityDiscussion).subscribe(({opType})=>{
-            if(opType === "UPDATE"){
+        // Observe CommunityDiscussion for any changes
+        const discussionSubscription = DataStore.observe(CommunityDiscussion).subscribe(({ opType, element }) => {
+            if (opType === "INSERT" || opType === "UPDATE" || opType === "DELETE") {
                 fetchInstigatorAndPost();
             }
         });
 
-        return () => subscription.unsubscribe();
+        // Observe CommunityReply for any changes
+        const replySubscription = DataStore.observe(CommunityReply).subscribe(({ opType, element }) => {
+            if (posts.some(post => post.id === element.communitydiscussionID)) {
+                fetchInstigatorAndPost();
+            }
+        });
+
+        // Observe CommunityLike for any changes
+        const likeSubscription = DataStore.observe(CommunityLike).subscribe(({ opType, element }) => {
+            if (posts.some(post => post.id === element.communitydiscussionID)) {
+                fetchInstigatorAndPost();
+            }
+        });
+
+        return () => {
+            discussionSubscription.unsubscribe();
+            replySubscription.unsubscribe();
+            likeSubscription.unsubscribe();
+        };
     },[category]);
 
     // Search filtering

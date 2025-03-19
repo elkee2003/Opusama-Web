@@ -9,7 +9,7 @@ import { CommunityDiscussion } from '../../../../../../models';
 const CreatePost = () => {
     const [isFocus, setIsFocus] = useState(false);
     const navigate = useNavigate();
-    const { dbUser } = useAuthContext();
+    const { dbRealtor } = useAuthContext();
 
 
     const [category, setCategory] = useState('');
@@ -38,7 +38,7 @@ const CreatePost = () => {
                     title,
                     content,
                     media,
-                    instigatorID: dbUser?.id
+                    instigatorID: dbRealtor?.id
                 })
             );
             alert('Post created successfully!');

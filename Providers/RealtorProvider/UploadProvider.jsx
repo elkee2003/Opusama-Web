@@ -19,7 +19,11 @@ const UploadContextProvider = ({children}) => {
     const [bedrooms, setBedrooms] = useState('');
     const [bed, setBed] = useState('');
     const [cautionFee, setCautionFee] = useState('');
-    const [inspectionFee, setInspectionFee]= useState('')
+    const [inspectionFee, setInspectionFee]= useState('');
+    const [otherFeesName, setOtherFeesName] = useState('');
+    const [otherFeesName2, setOtherFeesName2] = useState('');
+    const [otherFeesPrice, setOtherFeesPrice] = useState('');
+    const [otherFeesPrice2, setOtherFeesPrice2] = useState('');
     const [price, setPrice] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
     const [timeFrame, setTimeFrame] = useState('');
@@ -151,6 +155,18 @@ const UploadContextProvider = ({children}) => {
       setMedia((prevMedia) => prevMedia.filter((_, idx) => idx !== index));
     };
 
+    // Function for trimmed video (new media)
+    const addMedia = (newMedia) => {
+      setMedia([...media, newMedia]);
+    };
+
+     // Update existing media
+    const updateMedia = (index, newMedia) => {
+      setMedia((prevMedia) =>
+        prevMedia.map((item, i) => (i === index ? newMedia : item))
+      );
+    };
+
     const onValidate = ()=>{
         if (validateInput()) {
           return true;
@@ -220,6 +236,10 @@ const UploadContextProvider = ({children}) => {
         bed, setBed,
         cautionFee, setCautionFee,
         inspectionFee, setInspectionFee,
+        otherFeesName, setOtherFeesName,
+        otherFeesName2, setOtherFeesName2,
+        otherFeesPrice, setOtherFeesPrice,
+        otherFeesPrice2, setOtherFeesPrice2,
         price, setPrice,
         totalPrice, setTotalPrice,
         timeFrame, setTimeFrame,
@@ -231,7 +251,7 @@ const UploadContextProvider = ({children}) => {
         policies, setPolicies,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
-        removeMedia
+        removeMedia, addMedia, updateMedia
     }}>
       {children}
     </UploadContext.Provider>

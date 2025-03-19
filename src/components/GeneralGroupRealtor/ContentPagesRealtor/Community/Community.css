@@ -25,6 +25,28 @@
     box-sizing: border-box; /* Include padding and borders in width */
 }
 
+.addIconCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 70%; 
+    right: 10px; 
+    transform: translateY(-70%);
+    z-index: 1000; 
+    /* width:40px;
+    height:40px; */
+    padding:10px;
+    background: var( --blue-gradient);
+    color:white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.addIcon {
+    font-size: 28px;
+}
+
 body {
     margin: 0; /* Remove body margin to prevent extra space */
     overflow-x: hidden; /* Prevent horizontal overflow on the entire page */
@@ -35,7 +57,7 @@ body {
 
 @media (max-width: 900px) {
     .communityTabs-container {
-        padding-right: 0px;
+        padding-right: 0;
     }
 }
 

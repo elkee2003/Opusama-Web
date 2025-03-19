@@ -15,7 +15,7 @@ import { CommunityDiscussion, CommunityReply, CommunityLike } from '../../../../
 const Content = ({post, onDelete}) => {
     const navigate = useNavigate();
     const [readMore, setReadMore] = useState(false);
-    const {authUser, dbUser} = useAuthContext();
+    const {authUser, dbRealtor} = useAuthContext();
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
 
@@ -71,7 +71,7 @@ const Content = ({post, onDelete}) => {
     // Function to toggle like button
     const toggleLike = async () => {
 
-      if (!dbUser) {
+      if (!dbRealtor) {
         alert("You need to be logged in to like a post!");
         return;
       }
@@ -81,7 +81,7 @@ const Content = ({post, onDelete}) => {
           CommunityLike,
           (c) => c.and(c => [
               c.communitydiscussionID.eq(post.id),
-              c.likedByID.eq(dbUser.id)
+              c.likedByID.eq(dbRealtor.id)
           ])
         );
 
@@ -95,7 +95,7 @@ const Content = ({post, onDelete}) => {
           await DataStore.save(
               new CommunityLike({
                 communitydiscussionID: post.id,
-                likedByID: dbUser.id,
+                likedByID: dbRealtor.id,
                 like: true,
               })
           );
@@ -110,7 +110,7 @@ const Content = ({post, onDelete}) => {
     // Navigate function
     const handleNavigate = () => {
       if(authUser){
-        navigate('/clientcontent/create_post');
+        navigate('/realtorcontent/create_post');
       }else{
         alert('Sign In to access')
         navigate('/')
@@ -119,18 +119,16 @@ const Content = ({post, onDelete}) => {
 
     const handleNavigateToReply = () => {
       if(authUser){
-        navigate(`/clientcontent/response_post/${post.id}`);
+        navigate(`/realtorcontent/response_post/${post.id}`);
       }else{
         alert('Sign In to access')
         navigate('/')
       }
     };
 
-    
-    // Fetch updated likes
     useEffect(() => {
       const fetchLikeStatus = async () => {
-        if (!dbUser) return; 
+        if (!dbRealtor) return; 
 
         try {
           // Check if user has liked the post
@@ -138,7 +136,7 @@ const Content = ({post, onDelete}) => {
             CommunityLike,
             (c) => c.and(c => [
                 c.communitydiscussionID.eq(post.id),
-                c.likedByID.eq(dbUser.id)
+                c.likedByID.eq(dbRealtor.id)
             ])
           );
 
@@ -157,7 +155,7 @@ const Content = ({post, onDelete}) => {
       };
 
       fetchLikeStatus();
-    }, [post.id, dbUser]);
+    }, [post.id, dbRealtor]);
 
   return (
     <div className="communityDetailedPostCon">
@@ -177,7 +175,7 @@ const Content = ({post, onDelete}) => {
           </div>
 
           {/* Delete Button */}
-          {dbUser?.id === post.instigatorID && (
+          {dbRealtor?.id === post.instigatorID && (
               <div className='deltContentCon' onClick={handleDelete}>
                   <MdDelete className='deltContentIcon' />
               </div>

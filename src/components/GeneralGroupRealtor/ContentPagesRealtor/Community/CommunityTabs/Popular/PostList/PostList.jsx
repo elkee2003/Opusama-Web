@@ -10,7 +10,7 @@ import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User } fro
 function PostList() {
 
     const [isFocus, setIsFocus] = useState(false);
-    const {dbUser, authUser} = useAuthContext()
+    const {dbRealtor, authUser} = useAuthContext()
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
@@ -31,15 +31,15 @@ function PostList() {
     // useEffect to complete profile
     useEffect(()=>{
         if(authUser){
-            if(!dbUser){
+            if(!dbRealtor){
                 alert(
                     'Kindly fill in your data to access pages. Thank you.'
                 );
-                navigate('/clientcontent/profile')
+                navigate('/realtorcontent/profile')
             }
         };
         
-    },[dbUser]);
+    },[dbRealtor]);
 
     const fetchInstigatorAndPost = async () => {
     
@@ -108,7 +108,7 @@ function PostList() {
                 })
             );
     
-            setPosts(enhancedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+            setPosts(enhancedPosts.sort((a, b) => (b.numComments + b.totalLikes) - (a.numComments + a.totalLikes)));
     
         } catch (error) {
             console.error('Error fetching posts', error);

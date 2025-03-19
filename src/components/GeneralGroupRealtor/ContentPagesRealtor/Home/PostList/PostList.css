@@ -47,6 +47,7 @@
   .realtorLogoForSmallScreen {
     display: flex;
     margin-bottom: 15px;
+    width: 100vw;
   }
 
   .realtorNoListngsCon {

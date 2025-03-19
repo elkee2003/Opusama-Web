@@ -3,84 +3,37 @@ import { useNavigate } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa'; 
 import './SelectMedia.css'; 
 import { useUploadContext } from '../../../../../Providers/RealtorProvider/UploadProvider';
-
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 
-import * as ffmpeg from '@ffmpeg/ffmpeg';
-const { createFFmpeg, fetchFile } = ffmpeg;
-
 const SelectMedia = () => {
-  const {setMedia, media} = useUploadContext();
+  const { setMedia } = useUploadContext();
   const navigate = useNavigate();
+  const { dbRealtor, authUser } = useAuthContext();
 
-  const {dbRealtor, authUser} = useAuthContext();
+  useEffect(() => {
+    if (authUser && !dbRealtor) {
+      alert('Kindly fill in your data to access pages. Thank you.');
+      navigate('/realtorcontent/profile');
+    }
+  }, [dbRealtor]);
 
-  useEffect(()=>{
-      if(authUser){
-          if(!dbRealtor){
-              alert(
-                  'Kindly fill in your data to access pages. Thank you.'
-              );
-              navigate('/realtorcontent/profile')
-          }
-      };
-      
-  },[dbRealtor])
-
-  
-
-  // Pick Multiple Media Function (Images and Videos)
-  // Pick Multiple Media Function (Images and Videos)
+  // Pick Multiple Images Function (Videos Removed)
   const pickMediaAsync = async (event) => {
     const files = Array.from(event.target.files);
-    const images = [];
-    const videos = [];
+    const images = files.filter((file) => file.type.startsWith('image/'));
 
-    // Classify the files into images and videos
-    files.forEach((file) => {
-      if (file.type.startsWith('image/')) {
-        images.push(file);
-      } else if (file.type.startsWith('video/')) {
-        videos.push(file);
-      }
-    });
-
-    // Enforce media selection conditions
-    if (videos.length > 1) {
-      alert('You can only select one video.');
+    if (images.length < 3) {
+      alert('Select at least 3 images.');
       return;
     }
 
-    if (images.length + videos.length > 10) {
-      alert('You can select up to 10 images and videos combined.');
-      return;
-    } else if (images.length < 3 && videos.length === 0) {
-      alert('Select at least 3 images or 1 video and any number of images.');
+    if (images.length > 10) {
+      alert('You can select up to 10 images.');
       return;
     }
 
-    // If a video is selected, check its duration
-    if (videos.length === 1) {
-      const isVideoValid = await checkVideoDuration(videos[0]);
-      if (!isVideoValid) {
-        alert('The video you selected is longer than 40 seconds. Please trim it when you get to the next page.');
-      }
-    }
-
-    // Proceed to finalize media selection
-    finalizeMediaSelection([...images, ...videos]);
-  };
-
-  // Function to check video duration asynchronously
-  const checkVideoDuration = (videoFile) => {
-    return new Promise((resolve) => {
-      const videoURL = URL.createObjectURL(videoFile);
-      const videoElement = document.createElement('video');
-      videoElement.src = videoURL;
-      videoElement.onloadedmetadata = () => {
-        resolve(videoElement.duration <= 40);
-      };
-    });
+    // Finalize media selection
+    finalizeMediaSelection(images);
   };
 
   // Function to finalize media selection
@@ -88,7 +41,7 @@ const SelectMedia = () => {
     const selectedMedia = files.map((file) => ({
       uri: URL.createObjectURL(file),
       name: file.name,
-      type: file.type.startsWith("video/") ? "video" : "image",
+      type: "image",
     }));
 
     setMedia((prevMedia) => [...prevMedia, ...selectedMedia]);
@@ -101,7 +54,7 @@ const SelectMedia = () => {
         <FaCamera className="selectMIcon" />
         <input
           type="file"
-          accept="image/*,video/*"
+          accept="image/*"  // Only images allowed
           multiple
           className="file-input"
           onChange={pickMediaAsync}
@@ -109,7 +62,6 @@ const SelectMedia = () => {
         />
         <p>Click here</p>
         <span>Upload Images of Property</span>
-        
       </label>
       <p className="disclaimer">
         Only property owners or authorized representatives may upload listings. Misrepresentation may lead to account suspension or deletion.

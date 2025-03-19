@@ -1,13 +1,13 @@
 import React from 'react';
 import PostList from './PostList/PostList';
 
-const Latest = () => {
+const Popular = () => {
 
   return (
-    <div>
+    <div >
       <PostList/>
     </div>
   );
 };
 
-export default Latest;
+export default Popular;

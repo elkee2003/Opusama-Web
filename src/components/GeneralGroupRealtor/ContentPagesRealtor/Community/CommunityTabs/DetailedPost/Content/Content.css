@@ -1,0 +1,217 @@
+.communityDetailedPostCon {
+    display: flex;
+    flex-direction: column;
+    padding:15px
+}
+
+.detPostCategory {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1c1e41;
+}
+
+.detPostUserTimeDeltCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.detPostUserTimeCon {
+    display: flex;
+    gap:10px;
+    margin-bottom: 5px;
+}
+
+.detPostUsername {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.detPostTime {
+    font-style: italic;
+    color: #afadad;
+}
+
+.deltContentCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.deltContentIcon {
+    font-size: 1.5rem;
+}
+
+.detPostTitleCon {
+    display: flex;
+}
+
+.detPostTitle {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.detPostContent {
+    white-space: pre-wrap;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.readMoreBtnComment {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #009b0f;
+    border:none;
+    background: transparent;
+}
+.readLessBtnComment {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #9b0000;
+    border:none;
+    background: transparent;
+}
+
+.detPostEngagementCon {
+    display: flex;
+    gap:40px;
+    width: 100%;
+    align-items: center;
+}
+
+.detEngagementrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    cursor: pointer;
+}
+
+.detEngagementIcon {
+    font-size: 18px;
+}
+.detEngagementFilledHeart {
+    font-size: 18px;
+    color:red;
+}
+
+.detEngagementNum {
+    font-size: 18px;
+}
+
+.detCommentBorder {
+    border: 1px solid rgb(235, 235, 235);
+    margin: 10px 0;
+}
+
+.writeResCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0; 
+    right: 0; 
+    width: 90%;
+    padding:10px;
+    background: rgb(255, 255, 255);
+    z-index: 200;
+    cursor: pointer;
+}
+
+.writeRes {
+    border:1px solid rgb(73, 73, 75);
+    width: 72%;
+    padding:10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    color:rgb(179, 179, 179);
+}
+
+/* addIconCon addIcon styles are in Community styles */
+
+
+/* Styles for UsersComment */
+.detCommentsCon {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+
+.detCommentsHeader {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:rgb(103, 103, 104);
+    margin-top:15px;
+    margin-bottom: 10px;
+}
+
+.detCommentUserTimeCon {
+    display: flex;
+    gap:10px;
+    margin-bottom: 5px;
+}
+
+.detCommentUsername {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.detCommentTime {
+    font-style: italic;
+    color: #afadad;
+}
+
+
+.detComment {
+    white-space: pre-wrap;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.commentRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteCommentCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.deleteCommentIcon {
+    font-size: 1.5rem;
+}
+
+.commentBorder {
+    border: 1px solid rgb(241, 241, 241);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+    .communityDetailedPostCon {
+        width: 100vw;
+    }
+    .detCommentsCon {
+        margin-bottom: 10rem;
+    }
+    .writeResCon {
+        width: 100vw;
+        bottom: 4.8rem; 
+    }
+
+    .writeRes {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}
