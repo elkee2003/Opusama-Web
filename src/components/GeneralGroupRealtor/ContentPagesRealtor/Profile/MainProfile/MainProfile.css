@@ -1,4 +1,14 @@
 .profileMainContainer{
     padding: 10px;
     margin-bottom: 8rem;
+    width:60vw;
+}
+
+@media (max-width: 900px) {
+  .profileMainContainer{
+    width: 100vw;
+  }
+}
+@media (max-width: 500px) {
+ 
 }
