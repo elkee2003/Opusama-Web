@@ -421,6 +421,10 @@ button {
         width: 90%;
     }
 
+    .realtorNameRow {
+        flex-wrap: wrap;
+    }
+
     .bookContainer {
         position: fixed;
         padding: 2px;

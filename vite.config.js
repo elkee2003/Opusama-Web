@@ -7,4 +7,17 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@ffmpeg/ffmpeg', 'browser-image-compression']
   },
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'credentialless', 
+    },
+    proxy: {
+      '/cognito': {
+        target: 'https://cognito-identity.eu-north-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      }
+    }
+  }
 })
