@@ -17,7 +17,7 @@ const DisplayMedia = () => {
     if (video) {
       const isValid = await checkVideoDuration(video.uri);
       if (!isValid) {
-        alert('The selected video is longer than 40 seconds. Please trim it before proceeding.');
+        alert('The selected video is longer than 40 seconds. Click to trim it before proceeding.');
         return;
       }
     }
@@ -89,7 +89,7 @@ const DisplayMedia = () => {
                       <source src={item.uri} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
-                    <div className="videoOverlay" onClick={() => handleMediaClick(item)}></div>
+                    <div className="videoOverlay" onClick={() => handleMediaClick(item)} />
                   </div>
                 ) : (
                   <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />

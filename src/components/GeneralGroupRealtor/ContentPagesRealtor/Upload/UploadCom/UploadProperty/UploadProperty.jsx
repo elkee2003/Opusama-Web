@@ -110,57 +110,50 @@ const UploadProperty = () => {
     setAmenities("");
   };
 
-  // Function to upload images and videos
+  // Function to compress images
+  const compressImage = async (fileBlob, filename) => {
+    const file = new File([fileBlob], filename, { type: fileBlob.type });
+    const options = { maxSizeMB: 0.5, maxWidthOrHeight: 600, useWebWorker: true };
+    const compressedFile = await browserImageCompression(file, options);
+    return new Blob([compressedFile], { type: "image/jpeg" });
+  };
+
+  // Function to upload media (images & videos)
   const uploadMedia = async () => {
     try {
+      let totalFiles = media.length;
+      let uploadedFiles = 0;
+
       const uploadPromises = media.map(async (item) => {
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
+        let compressedBlob = fileBlob;
+        let fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
 
+        // Compress Image
         if (item.type.startsWith("image")) {
-          // Compress Image
-          const file = new File([fileBlob], item.name, { type: fileBlob.type });
-          const options = { maxSizeMB: 0.5, maxWidthOrHeight: 600, useWebWorker: true };
-          const compressedFile = await browserImageCompression(file, options);
-          const compressedBlob = new Blob([compressedFile], { type: "image/jpeg" });
-
-          const fileKey = `public/media/${sub}/${crypto.randomUUID()}.jpg`;
-
-          const result = await uploadData({
-            path: fileKey,
-            data: compressedBlob,
-            options: {
-              contentType: "image/jpeg",
-              onProgress: ({ transferredBytes, totalBytes }) => {
-                if (totalBytes) {
-                  setUploadProgress(Math.round((transferredBytes / totalBytes) * 100));
-                }
-              },
-            },
-          }).result;
-
-          return result.path;
-        } 
-        else if (item.type.startsWith("video")) {
-          // Compress Video
-          const fileKey = `public/media/${sub}/${crypto.randomUUID()}.mp4`;
-          const compressedBlob = await compressVideo(fileBlob);
-
-          const result = await uploadData({
-            path: fileKey,
-            data: compressedBlob,
-            options: {
-              contentType: "video/mp4",
-              onProgress: ({ transferredBytes, totalBytes }) => {
-                if (totalBytes) {
-                  setUploadProgress(Math.round((transferredBytes / totalBytes) * 100));
-                }
-              },
-            },
-          }).result;
-
-          return result.path;
+          compressedBlob = await compressImage(fileBlob, item.name);
         }
+
+        // Generate a unique file path
+        const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${fileExtension}`;
+
+        // Upload to S3
+        const result = await uploadData({
+          path: fileKey,
+          data: compressedBlob,
+          options: {
+            contentType: item.type,
+            onProgress: ({ transferredBytes, totalBytes }) => {
+              if (totalBytes) {
+                const progress = Math.round((transferredBytes / totalBytes) * 100);
+                setUploadProgress(progress); // Show progress per file (optional)
+              }
+            },
+          },
+        }).result;
+
+        return result.path;
       });
 
       const mediaUrls = await Promise.all(uploadPromises);
@@ -170,41 +163,6 @@ const UploadProperty = () => {
       alert("Failed to upload media. Please try again.");
       return [];
     }
-  };
-
-  // Video Compression Helper Function
-  const compressVideo = async (videoBlob) => {
-    return new Promise((resolve, reject) => {
-      const videoElement = document.createElement("video");
-      videoElement.src = URL.createObjectURL(videoBlob);
-      videoElement.muted = true;
-      videoElement.play();
-
-      videoElement.onloadedmetadata = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = videoElement.videoWidth / 2;
-        canvas.height = videoElement.videoHeight / 2;
-        const ctx = canvas.getContext("2d");
-
-        const stream = canvas.captureStream();
-        const mediaRecorder = new MediaRecorder(stream, {
-          mimeType: "video/webm",
-          videoBitsPerSecond: 500000, 
-        });
-
-        const chunks = [];
-        mediaRecorder.ondataavailable = (event) => chunks.push(event.data);
-        mediaRecorder.onstop = () => {
-          const compressedBlob = new Blob(chunks, { type: "video/mp4" });
-          resolve(compressedBlob);
-        };
-
-        mediaRecorder.start();
-        setTimeout(() => mediaRecorder.stop(), Math.min(videoElement.duration, 5000));
-      };
-
-      videoElement.onerror = (err) => reject(err);
-    });
   };
 
   // Handle the upload process for all media and save post in DataStore

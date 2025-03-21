@@ -25,7 +25,7 @@ function Content({post, realtor,}) {
     = useState(false);
     const [isAvailable, setIsAvailable] = useState(post.available);
     const [averageRating, setAverageRating] = useState(0);
-    const [imageUris, setImageUris] = useState([]); 
+    const [mediaUris, setMediaUris] = useState([]); 
     const [loading, setLoading] = useState(false); 
 
     const formattedPrice = Number(post?.price)?.toLocaleString();
@@ -93,22 +93,30 @@ function Content({post, realtor,}) {
 
     // Fetch signed URLs for images
     useEffect(() => {
-      const fetchImageUrls = async () => {
+      // Fetch signed URLs for each media item in post.media
+      const fetchMediaUrls = async () => {
         try {
           const urls = await Promise.all(
-            post.media.map(async (path) => {
-              const result = await getUrl({ path, options: { validateObjectExistence: true } });
-              return result.url;
+              post.media.map(async (path) => {
+                const result = await getUrl({
+                    path,
+                    options: {
+                      validateObjectExistence: true, 
+                      expiresIn: null, // No expiration limit
+                    },
+                });
+                return { url: result.url.toString(), type: path.endsWith('.mp4') ? 'video' : 'image' };
             })
           );
-          setImageUris(urls.filter((url) => url !== null));
+  
+          setMediaUris(urls.filter(media => media.url !== null));
         } catch (error) {
-          console.error("Error fetching image URLs:", error);
+          console.error('Error fetching media URLs:', error);
         }
       };
 
       if (post.media?.length > 0) {
-        fetchImageUrls();
+        fetchMediaUrls();
       }
     }, [post.media]);
 
@@ -166,10 +174,28 @@ function Content({post, realtor,}) {
             className='imageContainer'
             onClick={()=>navigate(`/realtorcontent/postgallery/${post.id}`)}
           >
-            {imageUris[0] ? (
-              <img src={imageUris[0]} alt="Post" className='image' />
+            {mediaUris.length > 0 ? (
+            mediaUris[0].type === 'video' ? (
+              <div className='postDetailVideoWrapper'>
+                <video 
+                  className="detailMedia" 
+                  controls
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
+                >
+                  <source src={mediaUris[0].url} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+
+                <div className="postDetailVideoOverlay" onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/realtorcontent/postgallery/${post.id}`);
+                }}/>
+              </div>
             ) : (
-              <img src={DefaultImage} alt="Default" className='image' />
+              <img src={mediaUris[0].url} alt="Post" className="image" />
+            )) : (
+              <img src={'/defaultImage.png'} alt="Default" className="image" />
             )}
           </div>
 
