@@ -103,6 +103,11 @@ to {
   }
 }
 @media (max-width: 900px) {
+
+  .noListngsCon {
+    width: 85vw;
+  }
+
   .homeSearchBtn {
     width: 90%;
   }

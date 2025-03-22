@@ -472,8 +472,9 @@ button {
         display: flex;
         justify-content: center;
         align-items: center;
-        right: 160px;
-        left: 160px;
+        right: 0;
+        left: 0;
+        margin:0 6rem;
         height: 60px;
         bottom: 5rem;
         background-color: #020425;
@@ -497,6 +498,10 @@ button {
 
     .getInTouchTxt {
         font-size: 25px;
+    }
+
+    .reserveCon {
+        margin:0 5rem;
     }
 
     .reserveTxt {
