@@ -54,10 +54,16 @@
   background-color: #15141a;
 }
 
-.searchImage {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.searchMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.searchImage  {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .searchBedroom {

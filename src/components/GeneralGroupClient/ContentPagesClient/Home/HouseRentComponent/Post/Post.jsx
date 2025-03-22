@@ -6,39 +6,39 @@ import { getUrl } from 'aws-amplify/storage';
 
 function Post({post}) {
     const navigate = useNavigate();
-    const [imageUris, setImageUris] = useState([]);
+    const [mediaUris, setMediaUris] = useState([]);
     const formattedPrice = Number(post.price)?.toLocaleString();
 
-    // Fetch signed URLs for each image in post.media
-    const fetchImageUrls = async () => {
-        try {
+    // Fetch signed URLs for each media item (image/video) in post.media
+    const fetchMediaUrls = async () => {
+      try {
         const urls = await Promise.all(
-            post.media.map(async (path) => {
+          post.media.map(async (path) => {
             const result = await getUrl({
-                path,
-                options: {
-                validateObjectExistence: true, 
+              path,
+              options: {
+                validateObjectExistence: true,
                 expiresIn: null, // No expiration limit
-                },
+              },
             });
-    
-            // Use `result.url` 
-            return result.url.toString(); 
-
-            })
+            return {
+              url: result.url.toString(),
+              type: path.endsWith('.mp4') ? 'video' : 'image',
+            };
+          })
         );
-    
-        const validUrls = urls.filter(url => url !== null);
-        setImageUris(validUrls);
-        } catch (error) {
-        console.error('Error fetching image URLs:', error);
-        }
+
+        // Store valid URLs (either video or image)
+        setMediaUris(urls.filter(media => media.url !== null));
+      } catch (error) {
+          console.error('Error fetching media URLs:', error);
+      }
     };
 
-    useEffect(()=>{
-        if (post.media?.length > 0) {
-        fetchImageUrls();
-        }
+    useEffect(() => {
+      if (post.media?.length > 0) {
+        fetchMediaUrls();
+      }
     }, [post.media]);
 
   return (
@@ -48,11 +48,31 @@ function Post({post}) {
             className={'imageContainer'}
             onClick={()=>navigate(`/clientcontent/detailedpost/${post.id}`)}
         >
-          {/* Image */}
-          {imageUris[0] ? (
-            <img src={imageUris[0]} alt="Post" className={'image'} />
+          {mediaUris.length > 0 ? (
+            mediaUris[0].type === 'video' ? (
+              <div className='pVideoWrapper'>
+                <video
+                  className="pMedia"
+                  controls
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
+                >
+                  <source src={mediaUris[0].url} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div 
+                  className="pVideoOverlay" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/clientcontent/detailedpost/${post.id}`);
+                  }}
+                />
+              </div>
+            ) : (
+              <img src={mediaUris[0].url} alt="Post" className='pImage' />
+            )
           ) : (
-            <img src={'/defaultImage.png'} alt="Default" className={'image'} />
+            <img src={'/defaultImage.png'} alt="Default" className='pImage' />
           )}
         </div>
 

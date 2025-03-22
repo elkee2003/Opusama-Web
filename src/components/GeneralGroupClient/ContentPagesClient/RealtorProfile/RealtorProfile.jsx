@@ -18,7 +18,9 @@ const RealtorProfilePageScreen = () => {
 
         // Fetch posts related to the realtor by filtering on realtorId
         const realtorPosts = await DataStore.query(Post, (post) => post.realtorID.eq(realtorId));
-        setPosts(realtorPosts);
+
+        const sortedPosts = realtorPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setPosts(sortedPosts);
       }
     } catch (error) {
       console.error('Fetching Realtor error:', error);
