@@ -55,6 +55,14 @@ const ReviewClientDetails = () => {
     setPostPrice,
     postCautionFee,
     setPostCautionFee,
+    postOtherFeesName, 
+    setPostOtherFeesName,
+    postOtherFeesPrice, 
+    setPostOtherFeesPrice,
+    postOtherFeesName2, 
+    setPostOtherFeesName2,
+    postOtherFeesPrice2, 
+    setPostOtherFeesPrice2,
     postTotalPrice,
     setPostTotalPrice,
     overAllPrice,
@@ -136,6 +144,10 @@ const ReviewClientDetails = () => {
       setDuration("");
       setCheckInDate("");
       setCheckOutDate("");
+      setPostOtherFeesName("");
+      setPostOtherFeesPrice("");
+      setPostOtherFeesName2("");
+      setPostOtherFeesPrice2("");
       setPostTotalPrice("");
       setPostCautionFee("");
       setOverAllPrice("");
@@ -209,6 +221,20 @@ const ReviewClientDetails = () => {
           <>
             <h4>Caution Fee:</h4>
             <p className="txtInputReview">₦{postCautionFee?.toLocaleString()} (already added)</p>
+          </>
+        )}
+
+        {postOtherFeesPrice && (
+          <>
+            <h4>{postOtherFeesName}:</h4>
+            <p className="txtInputReview">₦{postOtherFeesPrice?.toLocaleString()} (already added)</p>
+          </>
+        )}
+
+        {postOtherFeesPrice2 && (
+          <>
+            <h4>{postOtherFeesName2}:</h4>
+            <p className="txtInputReview">₦{postOtherFeesPrice2?.toLocaleString()} (already added)</p>
           </>
         )}
 

@@ -18,7 +18,7 @@ function Content({post, realtor,}) {
     const navigate = useNavigate();
     const {dbUser, authUser} = useAuthContext();
 
-    const {setPostPrice, setPostCautionFee, setPostTotalPrice} = useBookingShowingContext();
+    const {setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice} = useBookingShowingContext();
 
     const {setRealtorID} = useProfileContext();
     const [readMore, setReadMore] = useState(false);
@@ -29,6 +29,8 @@ function Content({post, realtor,}) {
 
     const formattedPrice = Number(post?.price)?.toLocaleString();
     const formattedCautionFee = Number(post?.cautionFee)?.toLocaleString();
+    const formattedOtherFeesPrice = Number(post?.otherFeesPrice)?.toLocaleString();
+    const formattedOtherFeesPrice2 = Number(post?.otherFeesPrice2)?.toLocaleString();
     const formattedTotalPrice = Number(post?.totalPrice)?.toLocaleString();
     const formattedInspectionFee = Number(post?.inspectionFee)?.toLocaleString();
     
@@ -94,6 +96,10 @@ function Content({post, realtor,}) {
       setPostTotalPrice(post?.totalPrice);
       setPostPrice(post?.price);
       setPostCautionFee(post?.cautionFee);
+      setPostOtherFeesName(post?.otherFeesName);
+      setPostOtherFeesPrice(post?.otherFeesPrice);
+      setPostOtherFeesName2(post?.otherFeesName2);
+      setPostOtherFeesPrice2(post?.otherFeesPrice2);
     }, [formattedTotalPrice, realtor.id]);
 
     // Navigate function
@@ -300,6 +306,25 @@ function Content({post, realtor,}) {
           ) : ''
         }
 
+        {/* Other Fees */}
+        {post?.otherFeesPrice ? (
+          <div className='cautionFeeRow'>
+            <p className='sub'>{post?.otherFeesName}:</p>
+            <p className='price'>₦{formattedOtherFeesPrice}</p>
+          </div>
+          ) : ''
+        }
+
+        {/* Other Fees2 */}
+        {post?.otherFeesPrice2 ? (
+          <div className='cautionFeeRow'>
+            <p className='sub'>{post?.otherFeesName2}:</p>
+            <p className='price'>₦{formattedOtherFeesPrice2}</p>
+          </div>
+          ) : ''
+        }
+
+        {/* Total Price */}
         <div className="priceRowTotal">
           <p className='sub'>Total Price:</p>
           <p className='totalPrice'>₦{formattedTotalPrice}</p>

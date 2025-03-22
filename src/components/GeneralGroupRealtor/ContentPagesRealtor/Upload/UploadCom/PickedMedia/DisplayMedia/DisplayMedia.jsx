@@ -10,24 +10,26 @@ const DisplayMedia = () => {
 
   // Function to navigate to forms
   const goToForms = async () => {
-    const video = media.find(item => item.type === 'video');
+    const videos = media.filter(item => item.type === 'video');
     const imageCount = media.filter(item => item.type === 'image').length;
-    
 
-    if (video) {
-      const isValid = await checkVideoDuration(video.uri);
+    if (videos.length > 1) {
+      alert("You can only select at most one video.");
+      return;
+    }
+    
+    if (videos.length === 1) {
+      const isValid = await checkVideoDuration(videos[0].uri);
       if (!isValid) {
         alert('The selected video is longer than 40 seconds. Click to trim it before proceeding.');
         return;
       }
     }
 
-    if (video && imageCount <= 10) {
+    if (videos.length === 1 && imageCount <= 10) {
       navigate('/realtorcontent/selectaddress');
-      // navigate('/realtorcontent/form');
-    } else if (!video && imageCount >= 3) {
+    } else if (videos.length === 0 && imageCount >= 3) {
       navigate('/realtorcontent/selectaddress');
-      // navigate('/realtorcontent/form');
     } else {
       alert('Select at least 3 images OR 1 video with any number of images (up to 10).');
     }

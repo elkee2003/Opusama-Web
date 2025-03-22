@@ -28,6 +28,10 @@ const BookingShowingContextProvider = ({children}) => {
     const [checkOutDate, setCheckOutDate] = useState('')
     const [postPrice, setPostPrice] = useState(null);
     const [postCautionFee, setPostCautionFee] = useState(null);
+    const [postOtherFeesName, setPostOtherFeesName] = useState('');
+    const [postOtherFeesName2, setPostOtherFeesName2] = useState('');
+    const [postOtherFeesPrice, setPostOtherFeesPrice] = useState('');
+    const [postOtherFeesPrice2, setPostOtherFeesPrice2] = useState('');
     const [postTotalPrice, setPostTotalPrice] = useState(null);
     const [overAllPrice, setOverAllPrice] = useState(0);
     const [realtorPrice, setRealtorPrice] = useState(0);
@@ -144,7 +148,7 @@ const BookingShowingContextProvider = ({children}) => {
 
 
   return (
-    <BookingShowingContext.Provider value={{bookings, setBookings, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice}}>
+    <BookingShowingContext.Provider value={{bookings, setBookings, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice}}>
         {children}
     </BookingShowingContext.Provider>
   )

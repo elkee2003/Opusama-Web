@@ -15,7 +15,7 @@ const Booking = () => {
   });
 
   const [totalPrice, setTotalPrice] = useState(0);
-  const { postPrice, postCautionFee, postTotalPrice, setOverAllPrice, setDuration, setCheckInDate, setCheckOutDate } = useBookingShowingContext();
+  const { postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice, setOverAllPrice, setDuration, setCheckInDate, setCheckOutDate } = useBookingShowingContext();
 
   const navigate = useNavigate();
 
@@ -37,14 +37,14 @@ const Booking = () => {
       setCheckOutDate(formattedCheckOutDate);
 
       if (postPrice) {
-        let calculatedTotalPrice = daysDifference * postPrice; // Multiply only postPrice
-        if (postCautionFee) {
-          calculatedTotalPrice += postCautionFee; // Add postCautionFee once
-        }
+        // ✅ Sum all the fees together
+        const additionalFees = (postCautionFee || 0) + (postOtherFeesPrice || 0) + (postOtherFeesPrice2 || 0);
+        let calculatedTotalPrice = daysDifference * postPrice + additionalFees;
+
         setTotalPrice(calculatedTotalPrice);
       }
     }
-  }, [range, postTotalPrice]);
+  }, [range, postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice]);
 
   useEffect(() => {
     if (totalPrice) {

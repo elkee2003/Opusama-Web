@@ -55,9 +55,14 @@ const Forms = () => {
   };
 
   useEffect(() => {
-    const updatedTotalPrice = parseFloat(cautionFee || 0) + parseFloat(price || 0);
-    setTotalPrice(updatedTotalPrice.toFixed(2));
-  }, [cautionFee, price]);
+    const updatedTotalPrice = 
+      parseFloat(price || 0) + 
+      parseFloat(cautionFee || 0) + 
+      parseFloat(otherFeesPrice || 0) + 
+      parseFloat(otherFeesPrice2 || 0);
+      
+      setTotalPrice(updatedTotalPrice.toFixed(2));
+  }, [price, cautionFee, otherFeesPrice, otherFeesPrice2]);
 
   return (
     <div className="formContainer">

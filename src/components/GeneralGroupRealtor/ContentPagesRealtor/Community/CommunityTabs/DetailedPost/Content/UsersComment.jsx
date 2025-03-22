@@ -53,7 +53,7 @@ const UsersComment = ({ replies: initialReplies }) => {
                     </p>
                     <p className='detCommentTime'>
                         {reply.createdAt 
-                        ? formatDistanceStrict(new Date(reply.createdAt), new Date(), { unit: "minute" })
+                        ? formatDistanceStrict(new Date(reply.createdAt), new Date(), { addSuffix: true })
                             .replace(" seconds", "s")
                             .replace(" second", "s")
                             .replace(" minutes", "m")
