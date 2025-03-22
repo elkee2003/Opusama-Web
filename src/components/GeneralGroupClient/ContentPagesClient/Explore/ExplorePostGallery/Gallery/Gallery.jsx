@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DefaultImage from "/defaultImage.png";
 import { IoArrowBack } from "react-icons/io5";
 import { getUrl } from 'aws-amplify/storage';
+import '../../../TabStyles/Gallery.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -23,12 +24,16 @@ const Gallery = ({ media }) => {
               path: item,
               options: {
                 validateObjectExistence: true,
-                expiresIn: null, // No expiration
+                expiresIn: null,
               },
             });
-            return result.url;
+
+            return {
+              url: result.url.toString(),
+              type: item.endsWith('.mp4') ? 'video' : 'image',
+            };
           } catch {
-            return DefaultImage; // Fallback to a default image
+            return { url: DefaultImage, type: 'image' };
           }
         })
       );
@@ -65,12 +70,26 @@ const Gallery = ({ media }) => {
         >
           {mediaUrls.map((url, index) => (
             <SwiperSlide key={index}>
-              <img
-                src={url || DefaultImage}
-                alt={`Media ${index + 1}`}
-                className="galleryImage"
-                onError={(e) => (e.target.src = DefaultImage)}
-              />
+              {url.type === 'video' ? (
+                <div className="videoWrapper">
+                  <video
+                    className="galleryVideo"
+                    controls
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
+                  >
+                    <source src={url.url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <img
+                  src={url.url || DefaultImage}
+                  alt={`Media ${index + 1}`}
+                  className="galleryImage"
+                  onError={(e) => (e.target.src = DefaultImage)}
+                />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>

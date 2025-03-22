@@ -51,7 +51,21 @@
     background-color: #f00404;
 }
   
-/* Gallery image styling */
+/* Gallery media styling */
+.videoWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+.galleryVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    border-radius: 5px;
+    display: flex;
+    background-color: #000000; 
+}
+
 .galleryImage {
     width: 100%;
     height: 100%;
