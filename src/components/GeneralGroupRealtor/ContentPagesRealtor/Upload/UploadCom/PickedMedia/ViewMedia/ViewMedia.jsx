@@ -16,7 +16,7 @@ const formatTime = (seconds) => {
     return [hrs, mins, secs].map((v) => v.toString().padStart(2, "0")).join(":");
 };
 
-const MAX_TRIM_DURATION = 40; // Maximum trim duration in seconds
+const MAX_TRIM_DURATION = 60; // Maximum trim duration in seconds
 
 const getValidFileUrl = async (uri) => {
     if (uri.startsWith("file://")) {
@@ -43,6 +43,13 @@ const ViewMedia = () => {
 
     useEffect(() => {
         const loadFFmpeg = async () => {
+            // Check if SharedArrayBuffer is supported
+            if (typeof SharedArrayBuffer === "undefined") {
+                alert("Video trimming is not supported on your device. You can either: \n1. Use a computer to trim the video on this site. \n2. Trim the video outside the site and upload it.");
+                return;
+            }
+
+            
             if (!window.FFmpeg) {
                 const script = document.createElement("script");
                 script.src = "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js";
