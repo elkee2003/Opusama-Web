@@ -257,8 +257,8 @@ function Content({post, realtor,}) {
           <div className='topBorderLine' />
 
           {/* Location */}
-          {post.address && (
-            <p className='location'>{post.address}</p>
+          {post.fullAddress && (
+            <p className='location'>{post.fullAddress}</p>
           )}
 
           {/* City, State, Country, */}

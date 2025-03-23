@@ -1255,7 +1255,7 @@ export const schema = {
                     "name": "generalLocation",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "lat": {
@@ -1501,5 +1501,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "6be92408ac02fb5191ce64de23350084"
+    "version": "df81cd4bf3d574fce6c247d88296eade"
 };

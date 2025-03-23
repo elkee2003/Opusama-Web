@@ -101,9 +101,9 @@ function Post({post}) {
         )}
 
         {/* Location */}
-        {post.address && (
+        {post.fullAddress && (
           <p className={'location'}>
-            {post.address}
+            {post.fullAddress}
           </p>
         )}
 

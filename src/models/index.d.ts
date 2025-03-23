@@ -429,7 +429,7 @@ type EagerPost = {
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
-  readonly generalLocation: string;
+  readonly generalLocation?: string | null;
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;
@@ -472,7 +472,7 @@ type LazyPost = {
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
-  readonly generalLocation: string;
+  readonly generalLocation?: string | null;
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;

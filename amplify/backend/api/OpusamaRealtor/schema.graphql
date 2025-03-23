@@ -144,7 +144,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   available: Boolean
   address: String
   fullAddress: String
-  generalLocation: String!
+  generalLocation: String
   lat: Float
   lng: Float
   price: Float!
