@@ -100,9 +100,9 @@ function Post({post}) {
         )}
 
         {/* Location */}
-        {post.address && (
+        {post.generalLocation && (
           <p className={'location'}>
-            {post.address}
+            {post.generalLocation}
           </p>
         )}
 

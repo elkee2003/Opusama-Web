@@ -91,7 +91,7 @@ const SearchResultCom = ({ post }) => {
       {/* Bed & Bedrooms */}
       {post?.packageType && <p className='searchBedroom'>Beds: {post?.packageType}</p>}
 
-      {post.address && <p className='searchLocation'>{post.address}</p>}
+      {post.generalLocation && <p className='searchLocation'>{post.generalLocation}</p>}
 
       {/* Type & Description */}
       <p 

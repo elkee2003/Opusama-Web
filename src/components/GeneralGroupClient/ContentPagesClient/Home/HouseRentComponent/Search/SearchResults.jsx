@@ -92,7 +92,7 @@ const SearchResultCom = ({ post }) => {
 
       {post.bedrooms && <p className='searchBedroom'>Bedroom(s): {post.bedrooms}</p>}
 
-      {post.address && <p className='searchLocation'>{post.address}</p>}
+      {post.generalLocation && <p className='searchLocation'>{post.generalLocation}</p>}
 
       {/* Type & Description */}
       <p 
