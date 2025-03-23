@@ -24,7 +24,7 @@ const HouseSearch = () => {
       const matchesQuery =
         item?.realtorFirstName?.toLowerCase().includes(lowercasedQuery) ||
         item?.type?.toLowerCase().includes(lowercasedQuery) ||
-        item?.address?.toLowerCase().includes(lowercasedQuery) ||
+        item?.generalLocation?.toLowerCase().includes(lowercasedQuery) ||
         item?.city?.toLowerCase().includes(lowercasedQuery) ||
         item?.state?.toLowerCase().includes(lowercasedQuery) ||
         item?.country?.toLowerCase().includes(lowercasedQuery);
