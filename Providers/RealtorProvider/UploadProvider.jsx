@@ -13,7 +13,8 @@ const UploadContextProvider = ({children}) => {
     const [accommodationParts, setAccommodationParts] = useState('');
     const [media, setMedia] = useState([]);
     const [description, setDescription] = useState('');
-    const [address, setAddress] = useState('');
+    const [fullAddress, setFullAddress] = useState('');
+    const [generalLocation, setGeneralLocation] = useState('');
     const [lat, setLat] = useState(0);
     const [lng, setLng] = useState(0);
     const [bedrooms, setBedrooms] = useState('');
@@ -65,7 +66,7 @@ const UploadContextProvider = ({children}) => {
           setErrors('State is Required');
           return false;
         }
-        if (!address) {
+        if (!fullAddress) {
           setErrors('Address is Required');
           return false;
         }
@@ -192,7 +193,7 @@ const UploadContextProvider = ({children}) => {
         alert('Cannot upload empty fields');
         return false;
       }
-      if(!address){
+      if(!fullAddress){
         alert('Cannot upload empty fields');
         return false;
       }
@@ -230,7 +231,8 @@ const UploadContextProvider = ({children}) => {
         accommodationParts, setAccommodationParts,
         media, setMedia,
         description, setDescription,
-        address, setAddress,
+        fullAddress, setFullAddress,
+        generalLocation, setGeneralLocation,
         lat, setLat, lng, setLng,
         bedrooms, setBedrooms,
         bed, setBed,

@@ -128,6 +128,38 @@ export declare const CommunityDiscussion: (new (init: ModelInit<CommunityDiscuss
   copyOf(source: CommunityDiscussion, mutator: (draft: MutableModel<CommunityDiscussion>) => MutableModel<CommunityDiscussion> | void): CommunityDiscussion;
 }
 
+type EagerPostComment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PostComment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly comment?: string | null;
+  readonly commenterID?: string | null;
+  readonly postID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPostComment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PostComment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly comment?: string | null;
+  readonly commenterID?: string | null;
+  readonly postID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PostComment = LazyLoading extends LazyLoadingDisabled ? EagerPostComment : LazyPostComment
+
+export declare const PostComment: (new (init: ModelInit<PostComment>) => PostComment) & {
+  copyOf(source: PostComment, mutator: (draft: MutableModel<PostComment>) => MutableModel<PostComment> | void): PostComment;
+}
+
 type EagerRealtorReview = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<RealtorReview, 'id'>;
@@ -170,9 +202,9 @@ type EagerPostReview = {
   readonly id: string;
   readonly rating?: number | null;
   readonly review?: string | null;
+  readonly realtorID?: string | null;
   readonly postID: string;
   readonly userID: string;
-  readonly realtorID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -185,9 +217,9 @@ type LazyPostReview = {
   readonly id: string;
   readonly rating?: number | null;
   readonly review?: string | null;
+  readonly realtorID?: string | null;
   readonly postID: string;
   readonly userID: string;
-  readonly realtorID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -395,16 +427,18 @@ type EagerPost = {
   readonly media?: (string | null)[] | null;
   readonly description: string;
   readonly available?: boolean | null;
-  readonly address: string;
+  readonly address?: string | null;
+  readonly fullAddress?: string | null;
+  readonly generalLocation: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly PostReviews?: (PostReview | null)[] | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
-  readonly PostReviews?: (PostReview | null)[] | null;
   readonly otherFeesName2?: string | null;
   readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
@@ -416,6 +450,7 @@ type EagerPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly realtorID: string;
+  readonly PostComments?: (PostComment | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -435,16 +470,18 @@ type LazyPost = {
   readonly media?: (string | null)[] | null;
   readonly description: string;
   readonly available?: boolean | null;
-  readonly address: string;
+  readonly address?: string | null;
+  readonly fullAddress?: string | null;
+  readonly generalLocation: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
   readonly inspectionFee?: number | null;
+  readonly PostReviews: AsyncCollection<PostReview>;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
-  readonly PostReviews: AsyncCollection<PostReview>;
   readonly otherFeesName2?: string | null;
   readonly otherFeesPrice2?: number | null;
   readonly timeFrame?: string | null;
@@ -456,6 +493,7 @@ type LazyPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly realtorID: string;
+  readonly PostComments: AsyncCollection<PostComment>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

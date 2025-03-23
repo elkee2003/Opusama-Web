@@ -43,6 +43,13 @@ enum BookingStatus {
   REMOVED_REALTOR_PAYMENT_DELAYED
 }
 
+type PostComment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  comment: String
+  commenterID: String
+  postID: ID! @index(name: "byPost")
+}
+
 type RealtorReview @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Float
@@ -55,9 +62,9 @@ type PostReview @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Float
   review: String
+  realtorID: String
   postID: ID! @index(name: "byPost")
   userID: ID! @index(name: "byUser")
-  realtorID: String
 }
 
 type Booking @model @auth(rules: [{allow: public}]) {
@@ -135,16 +142,18 @@ type Post @model @auth(rules: [{allow: public}]) {
   media: [String]
   description: String!
   available: Boolean
-  address: String!
+  address: String
+  fullAddress: String
+  generalLocation: String!
   lat: Float
   lng: Float
   price: Float!
   cautionFee: Float
   totalPrice: Float!
   inspectionFee: Float
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   otherFeesName: String
   otherFeesPrice: Float
-  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   otherFeesName2: String
   otherFeesPrice2: Float
   timeFrame: String
@@ -156,5 +165,6 @@ type Post @model @auth(rules: [{allow: public}]) {
   state: String
   city: String
   realtorID: ID! @index(name: "byRealtor")
+  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
 }
  

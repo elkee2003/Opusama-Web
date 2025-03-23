@@ -35,6 +35,10 @@
     color: #01011b;
 }
 
+.nameRatingCon {
+    display: flex;
+}
+
 .proHeadTxt {
     flex: 1;
     font-size: 25px;

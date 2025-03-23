@@ -19,7 +19,7 @@ const GooglePlacesAutoCompleteCom = () => {
   });
 
   const [isFocused, setIsFocused] = useState(false);
-  const { address, setAddress, setLat, setLng } = useUploadContext();
+  const { fullAddress, setFullAddress, generalLocation, setGeneralLocation, setLat, setLng } = useUploadContext();
   const navigate = useNavigate();
 
   const handleOnPlacesChanged = () => {
@@ -27,11 +27,34 @@ const GooglePlacesAutoCompleteCom = () => {
       const places = autocompleteRef.current.getPlaces();
       if (places?.length > 0) {
         const place = places[0];
-        const selectedAddress = `${place?.name}, ${place?.formatted_address}`;
+
+        const selectedFullAddress = place?.formatted_address
+        // `${place?.name}, ${place?.formatted_address}`;
         const selectedLat = place.geometry.location.lat();
         const selectedLng = place.geometry.location.lng();
 
-        setAddress(selectedAddress);
+        let city = "";
+        let area = "";
+
+        place.address_components.forEach((component) => {
+          if (component.types.includes("locality")) {
+            city = component.long_name; // City
+          }
+          if (
+            component.types.includes("sublocality") ||
+            component.types.includes("sublocality_level_1") ||
+            component.types.includes("neighborhood")
+          ) {
+            area = component.long_name; // Area / Neighborhood
+          }
+        });
+
+        console.log('full address:', fullAddress)
+        console.log('gen Addy:', generalLocation);
+
+        // Store in context
+        setFullAddress(selectedFullAddress);
+        setGeneralLocation(`${area}, ${city}`);
         setLat(selectedLat);
         setLng(selectedLng);
       }
@@ -39,7 +62,7 @@ const GooglePlacesAutoCompleteCom = () => {
   };
 
   const navigateToNxtPage = () =>{
-    if (address) {
+    if (fullAddress) {
       navigate('/realtorcontent/form');
     }else{
       alert('Select an address to access the next page')
@@ -50,7 +73,7 @@ const GooglePlacesAutoCompleteCom = () => {
   //   if (address) {
   //     navigate('/realtorcontent/form');
   //   }
-  // }, [address, navigate]);
+  // }, [fullAddress, navigate]);
 
   return (
     <div className="formContainer">

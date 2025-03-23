@@ -59,8 +59,10 @@ const UploadProperty = () => {
     setState,
     city,
     setCity,
-    address,
-    setAddress,
+    fullAddress,
+    setFullAddress,
+    generalLocation, 
+    setGeneralLocation,
     lat,
     setLat,
     lng,
@@ -89,7 +91,8 @@ const UploadProperty = () => {
     setAccommodationParts("");
     setMedia([]);
     setDescription("");
-    setAddress("");
+    setFullAddress("");
+    setGeneralLocation("");
     setLat(null);
     setLng(null);
     setBedrooms("");
@@ -195,7 +198,8 @@ const UploadProperty = () => {
           media: mediaUrls,
           description,
           available: true,
-          address,
+          fullAddress,
+          generalLocation,
           lat: parseFloat(lat),
           lng: parseFloat(lng),
           timeFrame,

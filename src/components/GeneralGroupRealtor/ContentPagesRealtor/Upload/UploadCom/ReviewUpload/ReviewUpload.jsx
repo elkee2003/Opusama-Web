@@ -24,7 +24,7 @@ const ReviewUpload = () => {
     otherFeesPrice2,
     country,
     state,
-    address,
+    fullAddress,
     city,
     media,
     policies,
@@ -88,7 +88,7 @@ const ReviewUpload = () => {
 
         <div className='uploadPropRow'>
           <p className='displayLabel'>Address:</p>
-          <p className='uploadPropDetails'>{address?.trim()}</p>
+          <p className='uploadPropDetails'>{fullAddress?.trim()}</p>
         </div>
 
         <div className='uploadPropRow'>
