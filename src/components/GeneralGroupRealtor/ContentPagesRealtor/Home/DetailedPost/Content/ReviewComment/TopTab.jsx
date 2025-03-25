@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import '../../../../TabStyles/TopTab.css'
+// import '../../../../TabStyles/TopTab.css'
 import { Tabs, Tab, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UserReviews from './Content/UsersReviews';

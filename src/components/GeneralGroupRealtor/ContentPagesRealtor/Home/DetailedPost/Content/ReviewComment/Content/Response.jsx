@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowRoundBack } from "react-icons/io";
-import '../../../../../TabStyles/DetailResponse.css';
+// import '../../../../../TabStyles/DetailResponse.css';
 import { useNavigate, useParams} from "react-router-dom";
-import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider'; 
+import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider'; 
 import { DataStore } from "aws-amplify/datastore";
-import { PostComment } from '../../../../../../../../../models'; 
+import { PostComment } from '../../../../../../../../models';
 
 const Response = () => {
     const navigate = useNavigate();
     const { postId } = useParams();
-    const { dbUser } = useAuthContext(); 
+    const { dbRealtor } = useAuthContext(); 
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ const Response = () => {
             await DataStore.save(
                 new PostComment({
                     comment: comment.trim(),
-                    commenterID: dbUser.id, 
+                    commenterID: dbRealtor.id, 
                     postID: postId,  
                 })
             );

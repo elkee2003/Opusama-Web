@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
-import { PostComment, User, Realtor  } from '../../../../../../../../../models';
-import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider';
+import { PostComment, User, Realtor  } from '../../../../../../../../models';
+import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider'; 
 import { useParams, useNavigate} from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-import '../../../../../TabStyles/ReviewsComments.css';
+// import '../../../../../TabStyles/ReviewsComments.css';
 
 const UsersComment = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
-  const {authUser, dbUser} = useAuthContext();
+  const {authUser, dbRealtor} = useAuthContext();
   const [usersComments, setUsersComments] = useState([]);
   const [deleting, setDeleting] = useState(null);
 
@@ -84,7 +84,7 @@ const UsersComment = () => {
 
   const handleNavigateToReply = () => {
     if(authUser){
-      navigate(`/clientcontent/detail_response_post/${postId}`);
+      navigate(`/realtorcontent/detail_response_post/${postId}`);
     }else{
       alert('Sign In to access')
       navigate('/')
@@ -102,7 +102,7 @@ const UsersComment = () => {
               <div className='reviewTxtDeltCon'>
                 <p className="reviewText">{item.comment}</p>
                 {/* Show delete button only if user is the owner of the comment */}
-                {dbUser && dbUser.id === item.commenterID && (
+                {dbRealtor && dbRealtor.id === item.commenterID && (
                   <div
                     className="detailDeleteCommentCon"
                     onClick={() => handleDelete(item.id)}

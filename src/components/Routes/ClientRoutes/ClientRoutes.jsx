@@ -10,8 +10,8 @@ import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesCl
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
 import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
-import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/Content/ReviewComment/TopTab';
-import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/Content/ReviewComment/Content/Response';
+import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
+import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
 import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
 import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/Booking/BookingInfo';

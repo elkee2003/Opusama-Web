@@ -386,10 +386,10 @@ function Content({post, realtor,}) {
         <p className= 'lastRatingReviewTxt'>Ratings and Reviews:</p>
         <button 
           className='seeAllReviews'
-          onClick={()=>navigate(`/clientcontent/reviews/${post.id}`)}
+          onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
         >
           <LastReview post={post} dbUser={dbUser}/>
-          <p className='seeAllReviewsTxt'>See all reviews</p>
+          <p className='seeAllReviewsTxt'>See all feedbacks</p>
         </button>
 
         {/* Get In Touch Container */}

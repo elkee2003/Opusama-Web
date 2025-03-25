@@ -1,72 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from 'aws-amplify/datastore';
 import { PostComment, User, Realtor  } from '../../../../../../../../../models';
+import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useParams, useNavigate} from "react-router-dom";
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { MdDelete } from "react-icons/md";
 import '../../../../../TabStyles/ReviewsComments.css';
 
 const UsersComment = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const {authUser, dbUser} = useAuthContext();
-  const [usersReviews, setUsersReviews] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [realtors, setRealtors] = useState([]);
+  const [usersComments, setUsersComments] = useState([]);
+  const [deleting, setDeleting] = useState(null);
 
-  // Fetch all reviews
-  const fetchReviews = async () => {
+  // Fetch all comments
+  const fetchComments = async () => {
     try {
-      const fetchedReviews = await DataStore.query(PostComment, (c) => c.postID.eq(postId));
+      // Fetch Realtors and Users
+      const realtors = await DataStore.query(Realtor);
+      const users = await DataStore.query(User);
 
-      // Sort reviews by createdAt in ascending order (oldest first)
-      const sortedReviews = fetchedReviews.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      // Fetch comments related to this post
+      const fetchedComments = await DataStore.query(PostComment, (c) => c.postID.eq(postId));
 
-      const enrichedReviews = sortedReviews.map((review) => {
-        const user = users.find((u) => u.id === review.userID);
-        return {
-          ...review,
-          userName: user ? user.firstName : 'Unknown User',
-        };
-      });
+      // Fetch commenter details for each comment
+      const postWithCommenters = await Promise.all(
+        fetchedComments.map(async (comment) => {
+          const commenter = realtors.find((r) => r.id === comment.commenterID) || users.find((u) => u.id === comment.commenterID);
+          return {
+            ...comment,
+            commenterName: commenter ? commenter.firstName : "Unknown",
+            commenterProfilePic: commenter ? commenter.profilePic : null,
+          };
+        })
+      );
 
-      setUsersReviews(enrichedReviews);
+      // Sort comments by createdAt in ascending order (oldest first)
+      const sortedComments = postWithCommenters.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+      setUsersComments(sortedComments);
     } catch (e) {
-      console.error('Error fetching reviews', e);
+      console.error('Error fetching comments', e);
     }
   };
 
-  // Fetch users
-  const fetchUsers = async () => {
+  // Delete Comment Function
+  const handleDelete = async (commentId) => {
     try {
-      const fetchedUsers = await DataStore.query(User);
-      setUsers(fetchedUsers);
-    } catch (e) {
-      console.error('Error fetching users', e);
+      setDeleting(commentId); // Set loading state for the comment being deleted
+
+      // Query the comment from DataStore
+      const commentToDelete = await DataStore.query(PostComment, commentId);
+      if (commentToDelete) {
+        await DataStore.delete(commentToDelete);
+
+        // Remove the deleted comment from state
+        setUsersComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    } finally {
+      setDeleting(null);
     }
   };
 
-  // Fetch users when component mounts
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
-  // useEffect for Reviews
-  useEffect(() => {
-    if (users.length > 0) {
-      fetchReviews();
-    }
-  }, [users]);
-
-  // useEffect for realtime update
+  // useEffect for fetching comments and real-time updates
   useEffect(() => {
     if (!postId) return;
+
+    fetchComments(); // Initial fetch
 
     const subscription = DataStore.observe(PostComment).subscribe(({ opType, element }) => {
       if (element.postID === postId) {
         if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
-          fetchReviews();
-          fetchUsers();
+          fetchComments();
         }
       }
     });
@@ -85,26 +93,28 @@ const UsersComment = () => {
 
   return (
     <div className="reviewsContainer">
-      {/* User Reviews */}
-      {usersReviews.length > 0 ? (
+      {usersComments.length > 0 ? (
         <>
-          <h3 className="rateTxt">Ratings and Reviews:</h3>
-          {usersReviews.map((item) => (
-            <div key={item?.id} className="reviewItem">
-              <h4 className="reviewerName">{item?.userName}</h4>
-              <div className="usersStarContainer">
-                {[1, 2, 3, 4, 5].map((index) => (
-                  // Use FaStar for filled stars and FaRegStar for empty stars
-                  index <= item?.rating ? (
-                    <FaStar key={index} size={20} color="#07021f" />
-                  ) : (
-                    <FaRegStar key={index} size={20} color="#07021f" />
-                  )
-                ))}
+          {usersComments.map((item) => (
+            <div key={item.id} className="reviewItem">
+              <h4 className="reviewerName">{item.commenterName}</h4>
+
+              <div className='reviewTxtDeltCon'>
+                <p className="reviewText">{item.comment}</p>
+                {/* Show delete button only if user is the owner of the comment */}
+                {dbUser && dbUser.id === item.commenterID && (
+                  <div
+                    className="detailDeleteCommentCon"
+                    onClick={() => handleDelete(item.id)}
+                    disabled={deleting === item.id} // Disable button when deleting
+                  >
+                    <MdDelete className='detailDeleteCommentIcon' />
+                  </div>
+                )}
               </div>
-              <p className="reviewText">{item?.review}</p>
             </div>
           ))}
+
         </>
       ) : (
         <p className="noReviewsComments">No Comments Yet</p>

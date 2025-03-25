@@ -19,7 +19,9 @@ import UserReviewsProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Pr
 import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
 import DetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/DetailedPost';
-import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/UsersReviews';
+import ReviewComment from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/TopTab';
+import DetailResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/Response';
+import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/UsersReviews'
 import PostGallery from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PostGallery/PostGallery';
 import PendingDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/PendingAlerts/DetailedAlert/DetailedAlert';
 import AcceptedDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/AcceptedAlerts/DetailedAlert/DetailedAlert';
@@ -31,27 +33,52 @@ const RealtorRoutes = () => (
     <Routes>
         <Route path="/" element={<RealtorLayout />}>
             <Route path="home" element={<HomeRealtor />} />
+
             <Route path="upload" element={<Upload />} />
+
             <Route path="alerts" element={<Alert />} />
+
             <Route path="community" element={<RealtorCommunity />} />
+
             <Route path="profile" element={<RealtorProfile />} />
+
             <Route path="displaymedia" element={<DisplayMedia />} />
+
             <Route path="view-media" element={<ViewMedia />} />
+
             <Route path="selectaddress" element={<GooglePlacesAutoCompleteCom />} />
+
             <Route path="form" element={<Forms />} />
+
             <Route path="uploadproperty" element={<UploadProperty />} />
             <Route path="editprofile" element={<EditProfile />} />
+
             <Route path="reviewprofile" element={<ReviewProfile />} />
+
             <Route path="profile" element={<EditProfile />} />
+
             <Route path="profileoptions" element={<ProfileOptionsPage />} />
+
             <Route path="realtorrating" element={<UserReviewsProfile />} />
+
             <Route path="deleteaccount" element={<DeleteAcccount />} />
+
             <Route path="support" element={<Support />} />
             
             <Route path="postdetails/:postId" element={<DetailedPost/>} />
+
+            {/* ReviewComment Post */}
+            <Route path="reviews_comments/:postId" element={<ReviewComment />} />
+
+            {/* Response for Detailed Post */}
+            <Route path="detail_response_post/:postId" element={<DetailResponse />} />
+
             <Route path="postreviews/:postId" element={<UsersReview/>} />
+
             <Route path="postgallery/:postId" element={<PostGallery/>} />
+
             <Route path="pending_details/:alertId" element={<PendingDetailedAlert/>} />
+
             <Route path="accepted_details/:alertId" element={<AcceptedDetailedAlert/>} />
 
              {/* Create Post */}

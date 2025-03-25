@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
-import { PostReview, User } from '../../../../../../../../../models';
+import { PostReview, User } from '../../../../../../../../models';
 import { useParams} from "react-router-dom";
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import '../../../../../TabStyles/ReviewsComments.css';
+// import '../../../../../TabStyles/ReviewsComments.css';
 
 const UserReviews = () => {
   const { postId } = useParams();
