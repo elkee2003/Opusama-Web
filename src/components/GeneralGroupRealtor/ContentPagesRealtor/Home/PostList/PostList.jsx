@@ -56,7 +56,20 @@ function PostList() {
     }, []);
     
 
+    // Function to Restore Scroll Position When Returning
+    useEffect(() => {
+        const scrollPosition = sessionStorage.getItem("scrollPosition");
+
+        if (scrollPosition) {
+            setTimeout(() => {
+                window.scrollTo(0, parseInt(scrollPosition, 10));
+            }, 100); // Delay to ensure content is loaded first
+        }
+    }, [myPostList]);
+
+    // Function to Refresh
     const handleRefresh = () => {
+        sessionStorage.removeItem("scrollPosition");
         setRefreshing(true);
         fetchMyPosts();
     };
