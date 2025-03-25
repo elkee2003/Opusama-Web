@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DefaultImage from "/defaultImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FaRegCommentDots } from "react-icons/fa6";
 import DbUserReviewSection from './DataBUserReview'
 import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
@@ -171,9 +172,19 @@ function Content({post, realtor,}) {
           <RealtorNameRating realtor={realtor}/>
 
           {/* Property Details */}
-          {post.propertyType && <p className='propertyType'>
-            {post.propertyType}
-          </p>}
+          <div className='propertyTypeRow'>
+            {post.propertyType && <p className='propertyType'>
+              {post.propertyType}
+            </p>}
+
+            <div 
+              className='commentContentRow'
+              onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
+            >
+              <FaRegCommentDots className='commentContentIcon'/>
+              <p>{post?.totalFeedback}</p>
+            </div>
+          </div>
 
           {/* Type */}
           {post.type && <p className='type'>{post.type}</p>}

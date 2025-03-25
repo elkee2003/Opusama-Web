@@ -159,10 +159,27 @@ button {
     background: transparent;
 }
 
+.propertyTypeRow {
+    display: flex;
+    align-items: center;
+    gap:1.5rem;
+}
+
 .propertyType {
     font-size: 18px;
     font-weight: bold;
     line-height: 25px;
+}
+
+.commentContentRow {
+    display: flex;
+    align-items: center;
+    gap:5px;
+    cursor: pointer;
+}
+
+.commentContentIcon {
+    font-size: 18px;
 }
 
 .subheader {

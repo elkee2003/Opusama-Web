@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useParams} from "react-router-dom";
 import { DataStore } from "aws-amplify/datastore";
-import {Post, Realtor} from '../../../../../models';
+import {Post, PostReview, PostComment, Realtor} from '../../../../../models';
 import Content from './Content/Content';
 import {useProfileContext} from '../../../../../../Providers/ClientProvider/ProfileProvider';
 import {useBookingShowingContext} from '../../../../../../Providers/ClientProvider/BookingShowingProvider';
@@ -16,26 +16,44 @@ function DetailedPost() {
 
     // Fetch the post data based on the id
     const fetchPost = async () => {
-        try {
-        if (postId) {
-            // Query DataStore for the specific post with the given ID
-            const foundPost = await DataStore.query(Post, postId);
+      try {
+        if (!postId) return;
 
-            setPostData(foundPost);
-            
-            if (foundPost) {
-            setPost(foundPost);
-
-            // Fetch the related realtor using the realtorID
-            const foundRealtor = await DataStore.query(Realtor, foundPost.realtorID);
-            setRealtor(foundRealtor); 
-            }
+        setLoading(true);
+        // Fetch the post by ID
+        const foundPost = await DataStore.query(Post, postId);
+        if (!foundPost) {
+            console.error("Post not found");
+            return;
         }
-        } catch (error) {
+
+        setPostData(foundPost);
+
+        // Fetch the related realtor using the realtorID
+        const foundRealtor = await DataStore.query(Realtor, foundPost.realtorID);
+        setRealtor(foundRealtor);
+
+        // Fetch reviews and comments related to this post
+        const reviews = await DataStore.query(PostReview, (r) => r.postID.eq(postId));
+        const comments = await DataStore.query(PostComment, (c) => c.postID.eq(postId));
+
+        // Count reviews and comments
+        const numReviews = reviews.length;
+        const numComments = comments.length;
+        const totalFeedback = numReviews + numComments; 
+
+        // Update the post state with review and comment counts
+        setPost({
+          ...foundPost,
+          numReviews,
+          numComments,
+          totalFeedback,
+        });
+      } catch (error) {
         console.error('Error fetching post', error);
-        } finally {
+      } finally {
         setLoading(false);
-        }
+      }
     };
 
     useEffect(() => {
