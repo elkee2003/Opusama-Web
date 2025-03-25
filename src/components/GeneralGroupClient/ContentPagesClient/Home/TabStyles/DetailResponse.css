@@ -1,0 +1,74 @@
+.detailResponseCon{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding:15px;
+    width: 65vw;
+}
+
+.detailResponseBckCon{
+    position: absolute;
+    left: 15px;
+    cursor: pointer;
+}
+
+.detailResponseBckIcon {
+    font-size: 3rem;
+}
+
+.detailResponseCommentCon {
+    position: absolute;
+    right: 15px;
+    background: var(--blue-gradient);
+    padding:10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.detailResponseCommentCon p{
+    font-size: 15px;
+    color: white;
+}
+
+
+.detailCommentCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 5rem;
+}
+
+.detailCommentTxtBox {
+    width: 100%;
+    height: 300px;
+    border:1px solid rgb(8, 8, 70);
+    border-radius: 20px;
+    padding:15px;
+    font-size: 1.2rem;
+}
+
+
+@media (max-width: 900px) {
+    .detailResponseCon{
+        width: 100vw;
+    }
+    
+    .detailCommentCon {
+        align-self: center;
+        width: 90vw;
+    }
+
+    .detailCommentTxtBox {
+        height: 400px;
+    }
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}

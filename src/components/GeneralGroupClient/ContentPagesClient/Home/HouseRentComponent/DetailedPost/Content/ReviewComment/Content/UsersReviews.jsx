@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
-import { PostReview, User } from '../../../../../../../models';
+import { PostReview, User } from '../../../../../../../../../models';
 import { useParams} from "react-router-dom";
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import '../../../TabStyles/Content.css';
+import '../../../../../TabStyles/ReviewsComments.css';
 
 const UserReviews = () => {
   const { postId } = useParams();
@@ -75,7 +75,6 @@ const UserReviews = () => {
       {/* User Reviews */}
       {usersReviews.length > 0 ? (
         <>
-          <h3 className="rateTxt">Ratings and Reviews:</h3>
           {usersReviews.map((item) => (
             <div key={item?.id} className="reviewItem">
               <h4 className="reviewerName">{item?.userName}</h4>
@@ -94,7 +93,7 @@ const UserReviews = () => {
           ))}
         </>
       ) : (
-        <p className="noReviews">No Reviews Yet</p>
+        <p className="noReviewsComments">No Reviews Yet</p>
       )}
     </div>
   );

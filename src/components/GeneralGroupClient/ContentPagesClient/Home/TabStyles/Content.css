@@ -256,11 +256,11 @@ button {
     gap: 10px;
 }
 
-.rateTxt {
+/* .rateTxt {
     font-size: 26px;
     font-weight: bold;
     color: var(--heading-color);
-}
+} */
 
 .starContainer {
     display: flex;
@@ -270,11 +270,11 @@ button {
     margin: auto;
 }
 
-.usersStarContainer {
+/* .usersStarContainer {
     display: flex;
     flex-direction: row;
     gap: 10px;
-}
+} */
 
 .reviewInput {
     font-size: 16px;
@@ -311,7 +311,7 @@ button {
     background-color: #e4dfdf;
 }
 
-.reviewsContainer {
+/* .reviewsContainer {
     display: flex;
     height: 100%;
     width: 100vw;
@@ -319,7 +319,7 @@ button {
     flex:1;
     padding: 0px 10px;
     background-color: #f9f9f9;
-}
+} */
 
 .seeAllReviews {
     cursor: pointer;
@@ -333,7 +333,7 @@ button {
     text-decoration: underline; 
 }
 
-.reviewItem {
+/* .reviewItem {
     border-bottom: 1px solid #dbd9d9;
     margin-bottom: 15px;
 }
@@ -343,15 +343,15 @@ button {
     font-weight: bold;
     font-size: 17px;
     margin-bottom: 5px;
-}
+} */
 
-.reviewText {
+/* .reviewText {
     text-align: start !important;
     color: #0e0d0d;
     font-size: 15px;
     margin-top: 5px;
     margin-bottom: 10px;
-}
+} */
 
 .noReviews {
     margin-top: 60px;

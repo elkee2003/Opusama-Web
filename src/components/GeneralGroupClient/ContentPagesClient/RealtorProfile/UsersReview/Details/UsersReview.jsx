@@ -169,7 +169,7 @@ const UserReviews = ({ realtor }) => {
     <div className='userReviewContainer'>
       <div className='realtorRatingScrollContainer'>
         {usersReviews.length > 0 ? (
-          <div className='reviewsContainer'>
+          <div className='realtorReviewsContainer'>
             <h3>Ratings and Reviews:</h3>
             {usersReviews.map((item) => (
               <div key={item?.id} className='reviewItem'>

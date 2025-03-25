@@ -10,7 +10,8 @@ import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesCl
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
 import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
-import UserReviews from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/UsersReviews';
+import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/Content/ReviewComment/TopTab';
+import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/Content/ReviewComment/Content/Response';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
 import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
 import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/Booking/BookingInfo';
@@ -69,7 +70,10 @@ const ClientRoutes = () => (
             <Route path="detailedpost/:postId" element={<DetailedPost />} />
 
             {/* UserReview Post */}
-            <Route path="reviews/:postId" element={<UserReviews />} />
+            <Route path="reviews_comments/:postId" element={<ReviewComment />} />
+
+            {/* Response for Detailed Post */}
+            <Route path="detail_response_post/:postId" element={<DetailResponse />} />
 
             {/* Gallery of Post */}
             <Route path="gallery/:postId" element={<PostGallery />} />

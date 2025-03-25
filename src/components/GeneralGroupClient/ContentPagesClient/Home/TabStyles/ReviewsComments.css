@@ -1,0 +1,121 @@
+.reviewsContainer {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    flex:1;
+    padding: 0px 10px;
+    background-color: #f9f9f9;
+}
+
+.reviewItem {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #dbd9d9;
+    margin-bottom: 2rem;
+}
+
+.reviewerName {
+    text-align: start;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.reviewTxtDeltCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reviewText {
+    text-align: start !important;
+    color: #0e0d0d;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.detailDeleteCommentCon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.detailDeleteCommentIcon {
+    font-size: 1.5rem;
+}
+
+.usersStarContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.writeCommentCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0; 
+    right: 0; 
+    width: 90%;
+    padding:10px;
+    background: rgb(255, 255, 255);
+    z-index: 200;
+    cursor: pointer;
+}
+
+.writeComment {
+    border:1px solid rgb(73, 73, 75);
+    width: 72%;
+    padding:10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    color:rgb(179, 179, 179);
+}
+
+.noReviewsComments {
+    margin-top: 60px;
+    margin-left: 20rem;
+    font-size: 30px;
+    font-weight: bold;
+    color: #b6b3b3;
+}
+
+@media (max-width: 1200px) {
+    .noReviewsComments {
+        margin-left: -25rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 900px) {
+    .reviewsContainer{
+        padding: 0;
+    }
+
+    .detCommentsCon {
+        margin-bottom: 10rem;
+    }
+    .writeCommentCon {
+        width: 100vw;
+        bottom: 4.8rem; 
+    }
+
+    .writeComment {
+        width: 100%;
+    }
+
+    .noReviewsComments {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}
