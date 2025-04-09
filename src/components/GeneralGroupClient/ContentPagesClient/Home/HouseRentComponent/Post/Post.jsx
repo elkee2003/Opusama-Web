@@ -41,12 +41,18 @@ function Post({post}) {
       }
     }, [post.media]);
 
+    // function to navigate
+    const handleNavigate = (postId) => {
+      // sessionStorage.setItem("scrollPosition", window.scrollY); 
+      navigate(`/clientcontent/detailedpost/${postId}`);
+    };
+
   return (
     <div className='singlePostContainer'>
         {/* Image Container */}
         <div 
             className={'imageContainer'}
-            onClick={()=>navigate(`/clientcontent/detailedpost/${post.id}`)}
+            onClick={() => handleNavigate(post.id)}
         >
           {mediaUris.length > 0 ? (
             mediaUris[0].type === 'video' ? (

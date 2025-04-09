@@ -68,8 +68,21 @@ function PostList() {
         return () => subscription.unsubscribe();
     },[])
 
+    // Function to Restore Scroll Position When Returning
+    // useEffect(() => {
+    //     const scrollPosition = sessionStorage.getItem("scrollPosition");
+
+    //     if (scrollPosition) {
+    //         setTimeout(() => {
+    //             window.scrollTo(0, parseInt(scrollPosition, 10));
+    //         }, 100); 
+    //     }
+    // }, []);
+
+    // Function to Refresh
     const handleRefreshHotel = () => {
-        setRefreshing(true); // Start the refreshing spinner
+        // sessionStorage.removeItem("scrollPosition");
+        setRefreshing(true); 
         fetchRealtorsAndPosts();
     };
 

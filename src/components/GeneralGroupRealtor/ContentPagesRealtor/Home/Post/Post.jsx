@@ -40,11 +40,17 @@ function Post({post}) {
         }
     }, [post.media]);
 
+    // Function to navigate
+    const handleNavigate = (postId) => {
+      // sessionStorage.setItem("scrollPosition", window.scrollY);
+      navigate(`/realtorcontent/postdetails/${postId}`);
+    };
+
   return (
     <div className='realtorPostContainer'>
         <div 
           className={'imageContainer'}
-          onClick={()=>navigate(`/realtorcontent/postdetails/${post.id}`)}
+          onClick={() => handleNavigate(post.id)}
         >
           {mediaUris.length > 0 ? (
             mediaUris[0].type === 'video' ? (

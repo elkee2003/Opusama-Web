@@ -23,11 +23,11 @@ function PostList() {
         { label: 'Display All', value: '' },
         { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
         { label: 'House Hunting Tips', value: 'House Hunting Tips' },
-        { label: 'Market Trends', value: 'Market Trends' },
-        { label: 'Recreation & Nightlife', value: 'Recreation & Nightlife' },
+        { label: 'Recreation & Nightlife', value : 'Recreation & Nightlife' },
         { label: 'Food & Drinks', value: 'Food & Drinks' },
         { label: 'Scam Alerts', value: 'Scam Alerts' },
-        { label: 'Moving & Relocation Advice', value: 'Moving & Relocation Advice' },
+        { label: 'Moving & Relocation Tips', value: 'Moving & Relocation Tips' },
+        { label: 'Experiences & Reviews', value: 'Experiences & Reviews'},
         { label: 'General Real Estate Discussion', value: 'General Real Estate Discussion' },
     ];
 

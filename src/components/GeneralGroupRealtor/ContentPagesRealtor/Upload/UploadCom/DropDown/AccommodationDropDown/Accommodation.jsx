@@ -35,6 +35,7 @@ const AccommodationDropDown = () => {
     { label: 'Five Bedroom', value: 'Five Bedroom' },
     { label: 'Bungalow', value: 'Bungalow' },
     { label: 'Duplex', value: 'Duplex' },
+    { label: 'Shared Apartment', value: 'Shared Apartment' },
     { label: 'Single-Family Home', value: 'Single-Family Home' },
     { label: 'Condominium (Condo)', value: 'Condominium (Condo)' },
     { label: 'Chalet', value: 'Chalet' },

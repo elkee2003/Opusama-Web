@@ -164,7 +164,7 @@ const Forms = () => {
           </div>
         )}
 
-        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife') && (
           <div className='timeCon'>
             <label className="formLabel">Time Frame:</label>
             <select
