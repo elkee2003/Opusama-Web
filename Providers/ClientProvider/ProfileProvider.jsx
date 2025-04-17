@@ -7,12 +7,13 @@ const ProfileContextProvider = ({children}) => {
 
     const {dbUser} = useAuthContext()
 
-    const [profilePic, setProfilePic] = useState(null)
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [address, setAddress] = useState( "")
-    const [phoneNumber, setPhoneNumber]= useState("")
-    const [errorMessage, setErrorMessage] = useState('')
+    const [profilePic, setProfilePic] = useState(null);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("");
+    const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber]= useState("");
+    const [errorMessage, setErrorMessage] = useState('');
 
     // For Map
     const [postData, setPostData] = useState(null);
@@ -28,6 +29,10 @@ const ProfileContextProvider = ({children}) => {
       setErrorMessage('')
       if(!firstName){
         setErrorMessage('First Name is Required')
+        return false;
+      }
+      if(!username){
+        setErrorMessage('Username is Required')
         return false;
       }
       if(phoneNumber.length < 10){
@@ -54,6 +59,7 @@ const ProfileContextProvider = ({children}) => {
           setProfilePic(dbUser?.profilePic);
           setFirstName(dbUser.firstName || "");
           setLastName(dbUser.lastName || "");
+          setUsername(dbUser.username || "");
           setAddress(dbUser.address || "");
           setPhoneNumber(dbUser.phoneNumber || "");
       }
@@ -61,7 +67,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, address, setAddress, phoneNumber, setPhoneNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, onValidateInput, postData, setPostData, isPaymentSuccessful, setIsPaymentSuccessful, paymentPrice, setPaymentPrice, realtorID, setRealtorID}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, onValidateInput, postData, setPostData, isPaymentSuccessful, setIsPaymentSuccessful, paymentPrice, setPaymentPrice, realtorID, setRealtorID}}>
         {children}
     </ProfileContext.Provider>
   )

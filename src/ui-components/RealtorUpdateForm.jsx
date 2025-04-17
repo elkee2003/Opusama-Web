@@ -32,6 +32,7 @@ export default function RealtorUpdateForm(props) {
     sub: "",
     firstName: "",
     lastName: "",
+    username: "",
     myDescription: "",
     profilePic: "",
     email: "",
@@ -50,6 +51,7 @@ export default function RealtorUpdateForm(props) {
   const [sub, setSub] = React.useState(initialValues.sub);
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
+  const [username, setUsername] = React.useState(initialValues.username);
   const [myDescription, setMyDescription] = React.useState(
     initialValues.myDescription
   );
@@ -80,6 +82,7 @@ export default function RealtorUpdateForm(props) {
     setSub(cleanValues.sub);
     setFirstName(cleanValues.firstName);
     setLastName(cleanValues.lastName);
+    setUsername(cleanValues.username);
     setMyDescription(cleanValues.myDescription);
     setProfilePic(cleanValues.profilePic);
     setEmail(cleanValues.email);
@@ -111,6 +114,7 @@ export default function RealtorUpdateForm(props) {
     sub: [{ type: "Required" }],
     firstName: [],
     lastName: [],
+    username: [],
     myDescription: [],
     profilePic: [],
     email: [],
@@ -155,6 +159,7 @@ export default function RealtorUpdateForm(props) {
           sub,
           firstName,
           lastName,
+          username,
           myDescription,
           profilePic,
           email,
@@ -227,6 +232,7 @@ export default function RealtorUpdateForm(props) {
               sub: value,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -267,6 +273,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName: value,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -307,6 +314,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName: value,
+              username,
               myDescription,
               profilePic,
               email,
@@ -336,6 +344,47 @@ export default function RealtorUpdateForm(props) {
         {...getOverrideProps(overrides, "lastName")}
       ></TextField>
       <TextField
+        label="Username"
+        isRequired={false}
+        isReadOnly={false}
+        value={username}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username: value,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankname,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.username ?? value;
+          }
+          if (errors.username?.hasError) {
+            runValidationTasks("username", value);
+          }
+          setUsername(value);
+        }}
+        onBlur={() => runValidationTasks("username", username)}
+        errorMessage={errors.username?.errorMessage}
+        hasError={errors.username?.hasError}
+        {...getOverrideProps(overrides, "username")}
+      ></TextField>
+      <TextField
         label="My description"
         isRequired={false}
         isReadOnly={false}
@@ -347,6 +396,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription: value,
               profilePic,
               email,
@@ -387,6 +437,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic: value,
               email,
@@ -427,6 +478,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email: value,
@@ -467,6 +519,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -507,6 +560,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -547,6 +601,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -587,6 +642,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -627,6 +683,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -667,6 +724,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -707,6 +765,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -747,6 +806,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -787,6 +847,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -827,6 +888,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,
@@ -867,6 +929,7 @@ export default function RealtorUpdateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               myDescription,
               profilePic,
               email,

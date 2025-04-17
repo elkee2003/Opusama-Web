@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from "aws-amplify/auth";
 import { useAuthContext } from "../../../../../../Providers/ClientProvider/AuthProvider";
 import { useProfileContext } from "../../../../../../Providers/ClientProvider/ProfileProvider";
-import { FiArrowRightCircle } from "react-icons/fi"; 
+import { FiArrowRightCircle, FiCheckCircle, FiXCircle  } from "react-icons/fi"; 
+import { DataStore } from "aws-amplify/datastore";
+import { User, Realtor } from "../../../../../models";
+// import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import "./Styles.css";
 
 const EditProfile = () => {
+  const [isUsernameAvailable, setIsUsernameAvailable] = useState(null); 
+  const [checkingUsername, setCheckingUsername] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
   const { authUser, dbUser } = useAuthContext();
   const {
     firstName,
     setFirstName,
     lastName,
     setLastName,
+    username,
+    setUsername,
     profilePic,
     address,
     setAddress,
@@ -40,9 +48,14 @@ const EditProfile = () => {
 
   // Navigation Function
   const goToNxtPage = () => {
+
+    if (!isUsernameAvailable) {
+      setUsernameError("Please choose a unique username before proceeding");
+      return; // 🚫 Don't navigate
+    }
+
     if (onValidateInput()) {
       navigate("/clientcontent/reviewedit"); 
-      
     }
   };
 
@@ -75,6 +88,50 @@ const EditProfile = () => {
       navigate('/');
     }
   };
+
+  useEffect(() => {
+    const checkUsername = async () => {
+      if (!username || username.trim().length < 3) {
+        setIsUsernameAvailable(null);
+        setUsernameError("");
+        return;
+      }
+  
+      setCheckingUsername(true);
+      try {
+        const trimmed = username.trim();
+        
+        const [userResults, realtorResults] = await Promise.all([
+          DataStore.query(User, (u) => u.username.eq(trimmed)),
+          DataStore.query(Realtor, (r) => r.username.eq(trimmed)),
+        ]);
+  
+        const otherUser = userResults.find((user) => user.id !== dbUser?.id);
+        const otherRealtor = realtorResults.find((realtor) => realtor.id !== dbUser?.id);
+  
+        if (otherUser || otherRealtor) {
+          setIsUsernameAvailable(false);
+          setUsernameError("Username already taken");
+        } else {
+          setIsUsernameAvailable(true);
+          setUsernameError("");
+        }
+  
+      } catch (error) {
+        console.error("Error checking username:", error);
+        setIsUsernameAvailable(null);
+        setUsernameError("Something went wrong. Try again.");
+      } finally {
+        setCheckingUsername(false);
+      }
+    };
+  
+    const timeoutId = setTimeout(() => {
+      checkUsername();
+    }, 500); // debounce
+  
+    return () => clearTimeout(timeoutId);
+  }, [username, dbUser?.id]);
 
   if (!authUser) {
     return (
@@ -175,10 +232,29 @@ const EditProfile = () => {
             <textarea
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              placeholder="Surname (Optional)"
+              placeholder="Last Name(Optional)"
               className="profileInput"
               // rows={2} 
             />
+
+            <div className="usernameInputWrapper">
+              <textarea
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                autoCapitalize="none"
+                autoCorrect="off"
+                className={`profileInputClientUsername ${isUsernameAvailable === false ? "errorInput" : ""}`}
+              />
+
+              {checkingUsername ? (
+                <span className="loadingIcon">...</span> // optional loading UI
+              ) : isUsernameAvailable === true ? (
+                <FiCheckCircle color="green" size={20} />
+              ) : isUsernameAvailable === false ? (
+                <FiXCircle color="red" size={20} />
+              ) : null}
+            </div>
 
             <textarea
               value={phoneNumber}
@@ -198,9 +274,14 @@ const EditProfile = () => {
           </div>
 
           {/* Error Message */}
-          <p className="error">{errorMessage}</p>
+          <p className="clientError">{errorMessage}</p>
+          {usernameError && <p className="clientError">{usernameError}</p>}
 
-          <button onClick={goToNxtPage} className="profileNxtBtn">
+          <button 
+            className="profileNxtBtn"
+            onClick={goToNxtPage} 
+            // disabled={!isUsernameAvailable}
+          >
             <FiArrowRightCircle
               className="nxtBtnIcon"
             />

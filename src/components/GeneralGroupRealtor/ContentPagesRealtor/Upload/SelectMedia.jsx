@@ -17,12 +17,15 @@ const SelectMedia = () => {
 
   useEffect(()=>{
       if(authUser){
-          if(!dbRealtor){
-              alert(
-                  'Kindly fill in your data to access pages. Thank you.'
-              );
-              navigate('/realtorcontent/profile')
-          }
+        if(!dbRealtor){
+          alert(
+              'Kindly fill in your data to access pages. Thank you.'
+          );
+          navigate('/realtorcontent/profile')
+        } else if (!dbRealtor.username) {
+          alert('Please fill in your username to proceed.');
+          navigate('/realtorcontent/editprofile');
+        }
       };
       
   },[dbRealtor])

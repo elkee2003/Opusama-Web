@@ -21,6 +21,9 @@ function PostList() {
                     'Kindly fill in your data to access pages. Thank you.'
                 );
                 navigate('/clientcontent/profile')
+            }else if (!dbUser.username) {
+                alert('Please fill in your username to proceed.');
+                navigate('/clientcontent/editprofile');
             }
         };
         

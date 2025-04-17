@@ -8,15 +8,16 @@ const ProfileContextProvider = ({children}) => {
     const {dbRealtor} = useAuthContext()
 
     const [profilePic, setProfilePic] = useState(null)
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("");
     const [myDescription, setMyDescription] = useState("")
-    const [address, setAddress] = useState( "")
-    const [phoneNumber, setPhoneNumber]= useState("")
-    const [bankname, setBankname]= useState("")
-    const [accountName, setAccountName]= useState("")
-    const [accountNumber, setAccountNumber]= useState("")
-    const [errorMessage, setErrorMessage] = useState('')
+    const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber]= useState("");
+    const [bankname, setBankname]= useState("");
+    const [accountName, setAccountName]= useState("");
+    const [accountNumber, setAccountNumber]= useState("");
+    const [errorMessage, setErrorMessage] = useState('');
 
       const validateInput = () =>{
         setErrorMessage('')
@@ -26,6 +27,10 @@ const ProfileContextProvider = ({children}) => {
         }
         if(!firstName){
           setErrorMessage('First Name is Required')
+          return false;
+        }
+        if(!username){
+          setErrorMessage('Username is Required')
           return false;
         }
         if(phoneNumber.length < 10){
@@ -64,6 +69,7 @@ const ProfileContextProvider = ({children}) => {
             setProfilePic(dbRealtor?.profilePic);
             setFirstName(dbRealtor.firstName || "");
             setLastName(dbRealtor.lastName || "");
+            setUsername(dbRealtor.username || "");
             setMyDescription(dbRealtor.myDescription || "");
             setAddress(dbRealtor.address || "");
             setPhoneNumber(dbRealtor.phoneNumber || "");
@@ -75,7 +81,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, address, setAddress, phoneNumber, setPhoneNumber, bankname, setBankname, accountName, setAccountName, accountNumber, setAccountNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankname, setBankname, accountName, setAccountName, accountNumber, setAccountNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
         {children}
     </ProfileContext.Provider>
   )

@@ -25,6 +25,7 @@ export default function UserCreateForm(props) {
     sub: "",
     firstName: "",
     lastName: "",
+    username: "",
     profilePic: "",
     phoneNumber: "",
     address: "",
@@ -33,6 +34,7 @@ export default function UserCreateForm(props) {
   const [sub, setSub] = React.useState(initialValues.sub);
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
+  const [username, setUsername] = React.useState(initialValues.username);
   const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
   const [phoneNumber, setPhoneNumber] = React.useState(
     initialValues.phoneNumber
@@ -44,6 +46,7 @@ export default function UserCreateForm(props) {
     setSub(initialValues.sub);
     setFirstName(initialValues.firstName);
     setLastName(initialValues.lastName);
+    setUsername(initialValues.username);
     setProfilePic(initialValues.profilePic);
     setPhoneNumber(initialValues.phoneNumber);
     setAddress(initialValues.address);
@@ -54,6 +57,7 @@ export default function UserCreateForm(props) {
     sub: [{ type: "Required" }],
     firstName: [{ type: "Required" }],
     lastName: [],
+    username: [],
     profilePic: [],
     phoneNumber: [],
     address: [],
@@ -88,6 +92,7 @@ export default function UserCreateForm(props) {
           sub,
           firstName,
           lastName,
+          username,
           profilePic,
           phoneNumber,
           address,
@@ -149,6 +154,7 @@ export default function UserCreateForm(props) {
               sub: value,
               firstName,
               lastName,
+              username,
               profilePic,
               phoneNumber,
               address,
@@ -179,6 +185,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName: value,
               lastName,
+              username,
               profilePic,
               phoneNumber,
               address,
@@ -209,6 +216,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName,
               lastName: value,
+              username,
               profilePic,
               phoneNumber,
               address,
@@ -228,6 +236,37 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "lastName")}
       ></TextField>
       <TextField
+        label="Username"
+        isRequired={false}
+        isReadOnly={false}
+        value={username}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username: value,
+              profilePic,
+              phoneNumber,
+              address,
+              push_token,
+            };
+            const result = onChange(modelFields);
+            value = result?.username ?? value;
+          }
+          if (errors.username?.hasError) {
+            runValidationTasks("username", value);
+          }
+          setUsername(value);
+        }}
+        onBlur={() => runValidationTasks("username", username)}
+        errorMessage={errors.username?.errorMessage}
+        hasError={errors.username?.hasError}
+        {...getOverrideProps(overrides, "username")}
+      ></TextField>
+      <TextField
         label="Profile pic"
         isRequired={false}
         isReadOnly={false}
@@ -239,6 +278,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               profilePic: value,
               phoneNumber,
               address,
@@ -269,6 +309,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               profilePic,
               phoneNumber: value,
               address,
@@ -299,6 +340,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               profilePic,
               phoneNumber,
               address: value,
@@ -329,6 +371,7 @@ export default function UserCreateForm(props) {
               sub,
               firstName,
               lastName,
+              username,
               profilePic,
               phoneNumber,
               address,

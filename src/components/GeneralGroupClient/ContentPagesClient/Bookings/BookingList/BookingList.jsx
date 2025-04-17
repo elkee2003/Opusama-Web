@@ -15,12 +15,15 @@ const BookingList = () => {
 
   useEffect(()=>{
       if(authUser){
-          if(!dbUser){
-            alert(
-                'Kindly fill in your data to access pages. Thank you.'
-            );
-            navigate('/clientcontent/profile')
-          }
+        if(!dbUser){
+          alert(
+              'Kindly fill in your data to access pages. Thank you.'
+          );
+          navigate('/clientcontent/profile')
+        }else if (!dbUser.username) {
+          alert('Please fill in your username to proceed.');
+          navigate('/clientcontent/editprofile');
+        }
       };
       
   },[dbUser])

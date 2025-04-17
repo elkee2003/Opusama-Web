@@ -5,7 +5,7 @@ import { useProfileContext } from '../../../../../../Providers/ClientProvider/Pr
 import './ReviewProfile.css'; 
 
 const ReviewProfile = () => {
-  const { firstName, lastName, profilePic, address, phoneNumber } = useProfileContext();
+  const { firstName, lastName, username, profilePic, address, phoneNumber } = useProfileContext();
   const navigate = useNavigate();
 
   // Navigation Function
@@ -40,6 +40,9 @@ const ReviewProfile = () => {
 
         <h2 className="subHeader">Last Name:</h2>
         <p className="inputReview">{lastName}</p>
+
+        <h2 className="subHeader">Username:</h2>
+        <p className="inputReview">@{username}</p>
 
         <h2 className="subHeader">Address:</h2>
         <p className="inputReview">{address}</p>

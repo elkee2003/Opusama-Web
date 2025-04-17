@@ -2,6 +2,11 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
+export enum NotificationRecipientType {
+  USER = "USER",
+  REALTOR = "REALTOR"
+}
+
 export enum BookingStatus {
   PENDING = "PENDING",
   ACCEPTED = "ACCEPTED",
@@ -23,6 +28,44 @@ export enum BookingStatus {
 }
 
 
+
+type EagerNotification = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Notification, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly recipientID?: string | null;
+  readonly recipientType?: NotificationRecipientType | keyof typeof NotificationRecipientType | null;
+  readonly type?: string | null;
+  readonly entityID?: string | null;
+  readonly message?: string | null;
+  readonly read?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyNotification = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Notification, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly recipientID?: string | null;
+  readonly recipientType?: NotificationRecipientType | keyof typeof NotificationRecipientType | null;
+  readonly type?: string | null;
+  readonly entityID?: string | null;
+  readonly message?: string | null;
+  readonly read?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Notification = LazyLoading extends LazyLoadingDisabled ? EagerNotification : LazyNotification
+
+export declare const Notification: (new (init: ModelInit<Notification>) => Notification) & {
+  copyOf(source: Notification, mutator: (draft: MutableModel<Notification>) => MutableModel<Notification> | void): Notification;
+}
 
 type EagerCommunityLike = {
   readonly [__modelMeta__]: {
@@ -309,13 +352,14 @@ type EagerUser = {
   readonly sub: string;
   readonly firstName: string;
   readonly lastName?: string | null;
+  readonly username?: string | null;
   readonly profilePic?: string | null;
   readonly phoneNumber?: string | null;
-  readonly address?: string | null;
   readonly PostReviews?: (PostReview | null)[] | null;
   readonly RealtorReviews?: (RealtorReview | null)[] | null;
-  readonly push_token?: string | null;
+  readonly address?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
+  readonly push_token?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -329,13 +373,14 @@ type LazyUser = {
   readonly sub: string;
   readonly firstName: string;
   readonly lastName?: string | null;
+  readonly username?: string | null;
   readonly profilePic?: string | null;
   readonly phoneNumber?: string | null;
-  readonly address?: string | null;
   readonly PostReviews: AsyncCollection<PostReview>;
   readonly RealtorReviews: AsyncCollection<RealtorReview>;
-  readonly push_token?: string | null;
+  readonly address?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
+  readonly push_token?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -355,6 +400,7 @@ type EagerRealtor = {
   readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
+  readonly username?: string | null;
   readonly myDescription?: string | null;
   readonly profilePic?: string | null;
   readonly email?: string | null;
@@ -362,11 +408,11 @@ type EagerRealtor = {
   readonly phoneNumber?: string | null;
   readonly bankname?: string | null;
   readonly accountName?: string | null;
-  readonly accountNumber?: string | null;
   readonly Post?: (Post | null)[] | null;
-  readonly push_token?: string | null;
+  readonly accountNumber?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
   readonly RealtorReview?: (RealtorReview | null)[] | null;
+  readonly push_token?: string | null;
   readonly isVerified?: boolean | null;
   readonly isPartner?: boolean | null;
   readonly isPremium?: boolean | null;
@@ -385,6 +431,7 @@ type LazyRealtor = {
   readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
+  readonly username?: string | null;
   readonly myDescription?: string | null;
   readonly profilePic?: string | null;
   readonly email?: string | null;
@@ -392,11 +439,11 @@ type LazyRealtor = {
   readonly phoneNumber?: string | null;
   readonly bankname?: string | null;
   readonly accountName?: string | null;
-  readonly accountNumber?: string | null;
   readonly Post: AsyncCollection<Post>;
-  readonly push_token?: string | null;
+  readonly accountNumber?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
   readonly RealtorReview: AsyncCollection<RealtorReview>;
+  readonly push_token?: string | null;
   readonly isVerified?: boolean | null;
   readonly isPartner?: boolean | null;
   readonly isPremium?: boolean | null;

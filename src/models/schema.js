@@ -1,5 +1,101 @@
 export const schema = {
     "models": {
+        "Notification": {
+            "name": "Notification",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "recipientID": {
+                    "name": "recipientID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "recipientType": {
+                    "name": "recipientType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "NotificationRecipientType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "entityID": {
+                    "name": "entityID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "message": {
+                    "name": "message",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "read": {
+                    "name": "read",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Notifications",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "CommunityLike": {
             "name": "CommunityLike",
             "fields": {
@@ -826,6 +922,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "username": {
+                    "name": "username",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "profilePic": {
                     "name": "profilePic",
                     "isArray": false,
@@ -835,13 +938,6 @@ export const schema = {
                 },
                 "phoneNumber": {
                     "name": "phoneNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "address": {
-                    "name": "address",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -879,8 +975,8 @@ export const schema = {
                         ]
                     }
                 },
-                "push_token": {
-                    "name": "push_token",
+                "address": {
+                    "name": "address",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -901,6 +997,13 @@ export const schema = {
                             "userID"
                         ]
                     }
+                },
+                "push_token": {
+                    "name": "push_token",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -975,6 +1078,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "username": {
+                    "name": "username",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "myDescription": {
                     "name": "myDescription",
                     "isArray": false,
@@ -1024,13 +1134,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "accountNumber": {
-                    "name": "accountNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "Post": {
                     "name": "Post",
                     "isArray": true,
@@ -1047,8 +1150,8 @@ export const schema = {
                         ]
                     }
                 },
-                "push_token": {
-                    "name": "push_token",
+                "accountNumber": {
+                    "name": "accountNumber",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1085,6 +1188,13 @@ export const schema = {
                             "realtorID"
                         ]
                     }
+                },
+                "push_token": {
+                    "name": "push_token",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "isVerified": {
                     "name": "isVerified",
@@ -1476,6 +1586,13 @@ export const schema = {
         }
     },
     "enums": {
+        "NotificationRecipientType": {
+            "name": "NotificationRecipientType",
+            "values": [
+                "USER",
+                "REALTOR"
+            ]
+        },
         "BookingStatus": {
             "name": "BookingStatus",
             "values": [
@@ -1501,5 +1618,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "df81cd4bf3d574fce6c247d88296eade"
+    "version": "5455ce696c3040f290dbc2b1e5905189"
 };

@@ -12,7 +12,7 @@ import "./Styles.css";
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const { firstName, lastName, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
+  const { firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
 
   const { dbUser, setDbUser, sub } = useAuthContext();
 
@@ -113,6 +113,7 @@ const ReviewDetails = () => {
           profilePic: uploadedImagePath,
           firstName,
           lastName,
+          username,
           address,
           phoneNumber,
           sub,
@@ -134,6 +135,7 @@ const ReviewDetails = () => {
         User.copyOf(dbUser, (updated) => {
           updated.firstName = firstName;
           updated.lastName = lastName;
+          updated.username = username;
           updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
@@ -192,6 +194,9 @@ const ReviewDetails = () => {
 
         <p className='subHeader'>Last Name:</p>
         <p className='inputReview'>{lastName?.trim()}</p>
+
+        <p className='subHeader'>Username:</p>
+        <p className='inputReview'>@{username?.trim()}</p>
 
         <p className='subHeader'>Address:</p>
         <p className='inputReview'>{address?.trim()}</p>

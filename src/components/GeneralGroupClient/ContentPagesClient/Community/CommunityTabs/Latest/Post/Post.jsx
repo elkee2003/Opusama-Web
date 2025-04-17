@@ -72,6 +72,9 @@ function Post({post, onDelete}) {
         if (!dbUser) {
             alert("You need to be logged in to like a post!");
             return;
+        }else if (!dbUser.username) {
+            alert('Please fill in your username to proceed.');
+            navigate('/clientcontent/editprofile');
         }
     
         try {

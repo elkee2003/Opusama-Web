@@ -1,3 +1,18 @@
+enum NotificationRecipientType {
+  USER
+  REALTOR
+}
+
+type Notification @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  recipientID: String
+  recipientType: NotificationRecipientType
+  type: String
+  entityID: String
+  message: String
+  read: Boolean
+}
+
 type CommunityLike @model @auth(rules: [{allow: public}]) {
   id: ID!
   like: Boolean
@@ -98,13 +113,14 @@ type User @model @auth(rules: [{allow: public}]) {
   sub: String!
   firstName: String!
   lastName: String
+  username: String
   profilePic: String
   phoneNumber: String
-  address: String
   PostReviews: [PostReview] @hasMany(indexName: "byUser", fields: ["id"])
   RealtorReviews: [RealtorReview] @hasMany(indexName: "byUser", fields: ["id"])
-  push_token: String
+  address: String
   Bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+  push_token: String
 }
 
 type Realtor @model @auth(rules: [{allow: public}]) {
@@ -112,6 +128,7 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   sub: String!
   firstName: String
   lastName: String
+  username: String
   myDescription: String
   profilePic: String
   email: String
@@ -119,11 +136,11 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   phoneNumber: String
   bankname: String
   accountName: String
-  accountNumber: String
   Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
-  push_token: String
+  accountNumber: String
   Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
   RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
+  push_token: String
   isVerified: Boolean
   isPartner: Boolean
   isPremium: Boolean

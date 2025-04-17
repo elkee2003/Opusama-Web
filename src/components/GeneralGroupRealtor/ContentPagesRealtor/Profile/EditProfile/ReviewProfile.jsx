@@ -11,7 +11,7 @@ import { uploadData, remove } from 'aws-amplify/storage';
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const {firstName, lastName, profilePic, setProfilePic, address, phoneNumber, bankname, accountName, accountNumber, myDescription} = useProfileContext()
+  const {firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber, bankname, accountName, accountNumber, myDescription} = useProfileContext()
 
   const { dbRealtor, setDbRealtor, sub } = useAuthContext();
 
@@ -111,7 +111,7 @@ const ReviewDetails = () => {
       const user = await DataStore.save(
         new Realtor({
           profilePic: uploadedImagePath,
-          firstName, lastName, myDescription, address, phoneNumber, bankname, accountName, accountNumber,
+          firstName, lastName, username, myDescription, address, phoneNumber, bankname, accountName, accountNumber,
           sub
         })
       );
@@ -131,6 +131,7 @@ const ReviewDetails = () => {
         Realtor.copyOf(dbRealtor, (updated) => {
           updated.firstName = firstName;
           updated.lastName = lastName;
+          updated.username = username;
           updated.myDescription = myDescription;
           updated.profilePic = uploadedImagePath;
           updated.address = address;
@@ -186,6 +187,9 @@ const ReviewDetails = () => {
 
         <p className='subHeader'>Last Name:</p>
         <p className='realtorInputReview'>{lastName?.trim()}</p>
+
+        <p className='subHeader'>Username:</p>
+        <p className='realtorInputReview'>@{username?.trim()}</p>
 
         <p className='subHeader'>Address:</p>
         <p className='realtorInputReview'>{address?.trim()}</p>

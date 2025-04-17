@@ -2,6 +2,11 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const NotificationRecipientType = {
+  "USER": "USER",
+  "REALTOR": "REALTOR"
+};
+
 const BookingStatus = {
   "PENDING": "PENDING",
   "ACCEPTED": "ACCEPTED",
@@ -22,9 +27,10 @@ const BookingStatus = {
   "REMOVED_REALTOR_PAYMENT_DELAYED": "REMOVED_REALTOR_PAYMENT_DELAYED"
 };
 
-const { CommunityLike, CommunityReply, CommunityDiscussion, PostComment, RealtorReview, PostReview, Booking, User, Realtor, Post } = initSchema(schema);
+const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, RealtorReview, PostReview, Booking, User, Realtor, Post } = initSchema(schema);
 
 export {
+  Notification,
   CommunityLike,
   CommunityReply,
   CommunityDiscussion,
@@ -35,5 +41,6 @@ export {
   User,
   Realtor,
   Post,
+  NotificationRecipientType,
   BookingStatus
 };

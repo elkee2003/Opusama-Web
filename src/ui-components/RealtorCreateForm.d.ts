@@ -25,6 +25,7 @@ export declare type RealtorCreateFormInputValues = {
     sub?: string;
     firstName?: string;
     lastName?: string;
+    username?: string;
     myDescription?: string;
     profilePic?: string;
     email?: string;
@@ -44,6 +45,7 @@ export declare type RealtorCreateFormValidationValues = {
     sub?: ValidationFunction<string>;
     firstName?: ValidationFunction<string>;
     lastName?: ValidationFunction<string>;
+    username?: ValidationFunction<string>;
     myDescription?: ValidationFunction<string>;
     profilePic?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
@@ -65,6 +67,7 @@ export declare type RealtorCreateFormOverridesProps = {
     sub?: PrimitiveOverrideProps<TextFieldProps>;
     firstName?: PrimitiveOverrideProps<TextFieldProps>;
     lastName?: PrimitiveOverrideProps<TextFieldProps>;
+    username?: PrimitiveOverrideProps<TextFieldProps>;
     myDescription?: PrimitiveOverrideProps<TextFieldProps>;
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;

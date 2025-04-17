@@ -72,6 +72,9 @@ function Post({post, onDelete}) {
         if (!dbRealtor) {
             alert("You need to be logged in to like a post!");
             return;
+        }else if (!dbRealtor.username) {
+            alert('Please fill in your username to proceed.');
+            navigate('/realtorcontent/editprofile');
         }
     
         try {

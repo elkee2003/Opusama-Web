@@ -134,6 +134,34 @@
   border-radius: 5px;
 }
 
+.realtorUsernameInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 7rem;
+  /* padding:0 10px */
+}
+
+.profileInputRealtorUsername {
+  width:100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid rgb(3, 3, 48);
+  border-radius: 5px;
+}
+
+.errorInput {
+  border: 2px solid red;
+}
+
+.clientError {
+  color: red;
+  font-size: 14px;
+}
+
 .realtorProfileInputLast {
   margin-top: 10px;
   margin-bottom: 1rem;
@@ -275,6 +303,11 @@
     margin-left: 8rem;
   }
 
+  .realtorUsernameInputWrapper {
+    margin-right: 8rem;
+    margin-left: 8rem;
+  }
+
   .realtorProfileInputLast{
     margin-right: 8rem;
     margin-left: 8rem;
@@ -306,6 +339,11 @@
   }
 
   .realtorProfileInput {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .realtorUsernameInputWrapper {
     margin-right: 0;
     margin-left: 0;
   }
@@ -354,7 +392,7 @@
   }
 
     .wordCount {
-        margin-right: 7px;
+      margin-right: 0.5rem;
     }
 
     .realtorError {
@@ -372,6 +410,10 @@
   }
 
   .realtorInputReview {
+    min-width:340px;
+  }
+
+  .usernameInputWrapper {
     min-width:340px;
   }
   
@@ -403,7 +445,6 @@
 .wordCount {
     text-align:right;
     margin-bottom:10px;
-    margin-right: 8rem;
     color:grey;
 }
 
