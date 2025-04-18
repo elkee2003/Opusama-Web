@@ -20,9 +20,7 @@ export const schema = {
                 "recipientType": {
                     "name": "recipientType",
                     "isArray": false,
-                    "type": {
-                        "enum": "NotificationRecipientType"
-                    },
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1586,13 +1584,6 @@ export const schema = {
         }
     },
     "enums": {
-        "NotificationRecipientType": {
-            "name": "NotificationRecipientType",
-            "values": [
-                "USER",
-                "REALTOR"
-            ]
-        },
         "BookingStatus": {
             "name": "BookingStatus",
             "values": [
@@ -1618,5 +1609,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "5455ce696c3040f290dbc2b1e5905189"
+    "version": "e2740ba7c8d3df142dfbf358980065a6"
 };

@@ -2,11 +2,6 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const NotificationRecipientType = {
-  "USER": "USER",
-  "REALTOR": "REALTOR"
-};
-
 const BookingStatus = {
   "PENDING": "PENDING",
   "ACCEPTED": "ACCEPTED",
@@ -41,6 +36,5 @@ export {
   User,
   Realtor,
   Post,
-  NotificationRecipientType,
   BookingStatus
 };

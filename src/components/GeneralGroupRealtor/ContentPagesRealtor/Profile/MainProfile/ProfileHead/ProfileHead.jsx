@@ -16,7 +16,7 @@ import { getUrl } from 'aws-amplify/storage';
 
 const ProfileHead = () => {
     const navigate = useNavigate(); 
-    const { firstName, lastName, address, phoneNumber, profilePic, setProfilePic, myDescription } = useProfileContext();
+    const { firstName, lastName, username, address, phoneNumber, profilePic, setProfilePic, myDescription } = useProfileContext();
     const { dbRealtor } = useAuthContext();
 
     const [loading, setLoading] = useState(true);
@@ -195,6 +195,10 @@ const ProfileHead = () => {
                         <span className="realtorStarTxt">{averageRealtorRating}</span>
                     </button>
                 </div>
+            </div>
+            
+            <div className='realtorProUsernameCon'>
+                <p className='realtorProUsername'>@{username ? username : 'unknown'}</p>
             </div>
 
             {/* PhoneNumber */}

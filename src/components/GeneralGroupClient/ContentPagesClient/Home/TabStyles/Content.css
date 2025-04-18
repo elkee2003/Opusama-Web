@@ -78,6 +78,16 @@ button {
     /* justify-content: center; */
 }
 
+.postRealtorProUsernameCon{
+    margin-top: -8px;
+    margin-bottom: 7px;
+    /* background-color: red; */
+}
+
+.postRealtorProUsername{
+    font-size: 1.3rem;
+}
+
 .name {
     font-size: 30px;
     font-weight: bold;
@@ -465,6 +475,10 @@ button {
 
     .realtorNameRow {
         flex-wrap: wrap;
+    }
+
+    .postRealtorProUsername{
+        font-size: 1.1rem;
     }
 
     .bookContainer {

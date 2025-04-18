@@ -14,6 +14,42 @@ function PostList() {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
+    // For search
+    const [searchQuery, setSearchQuery] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [propPosts, setPropPosts] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+
+
+    const handleSearch = () => {
+        if (!propPosts || propPosts.length === 0) {
+            return;
+        }
+
+        const minPriceParsed = parseFloat(minPrice) || 0;
+        const maxPriceParsed = parseFloat(maxPrice) || Infinity;
+
+        const lowercasedQuery = searchQuery.toLowerCase();
+
+        const filtered = propPosts.filter((item) => {
+            const matchesQuery =
+            item?.firstName?.toLowerCase().includes(lowercasedQuery) ||
+            item?.userName?.toLowerCase().includes(lowercasedQuery) ||
+            item?.type?.toLowerCase().includes(lowercasedQuery) ||
+            item?.generalLocation?.toLowerCase().includes(lowercasedQuery) ||
+            item?.city?.toLowerCase().includes(lowercasedQuery) ||
+            item?.state?.toLowerCase().includes(lowercasedQuery) ||
+            item?.country?.toLowerCase().includes(lowercasedQuery);
+
+            const matchesPrice = item?.price >= minPriceParsed && item?.price <= maxPriceParsed;
+
+            return matchesQuery && matchesPrice;
+        });
+
+        setFilteredData(filtered);
+    };
+
     useEffect(()=>{
         if(authUser){
             if(!dbUser){
@@ -47,6 +83,7 @@ function PostList() {
                 ...post,
                 realtorId: realtor?.id,
                 firstName: realtor?.firstName,
+                userName: realtor?.username,
                 lastName: realtor?.lastName,
                 email: realtor?.email,
                 profilepic: realtor?.profilePic,
@@ -58,6 +95,7 @@ function PostList() {
             const sortedPosts = allPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
             setRealtorPosts(sortedPosts);
+            setPropPosts(sortedPosts);
         } catch (error) {
             console.error('Error fetching realtors and posts', error);
         } finally {
@@ -65,6 +103,12 @@ function PostList() {
             setRefreshing(false);
         }
     };
+
+    useEffect(() => {
+        handleSearch();
+    }, [searchQuery, minPrice, maxPrice, propPosts]);
+
+    
 
     useEffect(()=>{
         fetchRealtorsAndPosts();
@@ -110,17 +154,57 @@ function PostList() {
             </button>
         </div> */}
 
-        {realtorPosts && realtorPosts.length > 0 ? (
-            <div>
-                {realtorPosts.map((post) => (
-                    <ExplorePostFeed key={post.id} post={post} />
-                ))}
-            </div>
+        {/* Search logic */}
+        <input
+            className="searchInputt"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        <div className="priceInputRow">
+            <input
+            className="priceInput"
+            placeholder="Min Price"
+            value={minPrice}
+            type="number"
+            onChange={(e) => setMinPrice(e.target.value)}
+            />
+            <input
+            className="priceInput"
+            placeholder="Max Price"
+            value={maxPrice}
+            type="number"
+            onChange={(e) => setMaxPrice(e.target.value)}
+            />
+        </div>
+
+        {(searchQuery || minPrice || maxPrice) ? (
+            filteredData.length > 0 ? (
+                <div>
+                    {filteredData.map((post) => (
+                        <ExplorePostFeed key={post.id} post={post} />
+                    ))}
+                </div>
+            ) : (
+                <div className='noListngsCon'>
+                    <p className="noListings">No matching listings</p>
+                </div>
+            )
         ) : (
-            <div className='noListngsCon'>
-                <p className="noListings">No listings</p>
-            </div>
+            realtorPosts.length > 0 ? (
+                <div>
+                    {realtorPosts.map((post) => (
+                        <ExplorePostFeed key={post.id} post={post} />
+                    ))}
+                </div>
+            ) : (
+                <div className='noListngsCon'>
+                    <p className="noListings">No listings</p>
+                </div>
+            )
         )}
+        
         {refreshing && (
             <div className="loading-container">
                 <div className="spinner" />

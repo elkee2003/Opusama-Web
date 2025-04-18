@@ -14,7 +14,7 @@ import { getUrl } from 'aws-amplify/storage';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { firstName, lastName, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
+  const { firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
   const { dbUser, authUser } = useAuthContext();
   const [loading, setLoading] = useState(true);
 
@@ -95,6 +95,11 @@ const ProfilePage = () => {
         <IoPerson size={24} />
         <p className='pName'>{firstName}</p>
       </div>
+
+      <div className='userProUsernameCon'>
+        <p className='userProUsername'>@{username ? username : 'unknown'}</p>
+      </div>
+      
       <div className='pRow'>
         <FaPhone size={24} />
         <p className='pTxt'>{phoneNumber}</p>

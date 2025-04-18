@@ -147,6 +147,10 @@ const RealtorProfileHead = ({ realtor }) => {
           </button>
         </div>
 
+        <div className='userRealtorProUsernameCon'>
+            <p className='userRealtorProUsername'>@{realtor?.username || 'unknown'}</p>
+        </div>
+
         <div className="descriptionCon">
           <p className="txtDesc">
             {readMoreDescription || realtor?.myDescription?.length <= descriptionMaxLength

@@ -45,6 +45,14 @@
     cursor: pointer;
 }
 
+.userRealtorProUsernameCon {
+    margin-bottom: 7px;
+}
+
+.userRealtorProUsername {
+    font-size: 1.3rem;
+}
+
 .star {
     color: #333236;
     font-size: 18px;
@@ -99,6 +107,10 @@
         font-size: 1.8rem;
         font-weight: bold;
         color: #01011b;
+    }
+
+    .userRealtorProUsername {
+        font-size: 1.1rem;
     }
 
     .txtDesc {

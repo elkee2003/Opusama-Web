@@ -2,11 +2,6 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
-export enum NotificationRecipientType {
-  USER = "USER",
-  REALTOR = "REALTOR"
-}
-
 export enum BookingStatus {
   PENDING = "PENDING",
   ACCEPTED = "ACCEPTED",
@@ -36,7 +31,7 @@ type EagerNotification = {
   };
   readonly id: string;
   readonly recipientID?: string | null;
-  readonly recipientType?: NotificationRecipientType | keyof typeof NotificationRecipientType | null;
+  readonly recipientType?: string | null;
   readonly type?: string | null;
   readonly entityID?: string | null;
   readonly message?: string | null;
@@ -52,7 +47,7 @@ type LazyNotification = {
   };
   readonly id: string;
   readonly recipientID?: string | null;
-  readonly recipientType?: NotificationRecipientType | keyof typeof NotificationRecipientType | null;
+  readonly recipientType?: string | null;
   readonly type?: string | null;
   readonly entityID?: string | null;
   readonly message?: string | null;

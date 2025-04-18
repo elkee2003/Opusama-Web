@@ -108,6 +108,10 @@ const RealtorNameRating = ({ realtor }) => {
           </button>
         </div>
       )}
+
+      <div className='postRealtorProUsernameCon'>
+        <p className='postRealtorProUsername'>@{realtor?.username || 'unknown'}</p>
+      </div>
     </div>
   );
 };

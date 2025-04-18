@@ -1,12 +1,7 @@
-enum NotificationRecipientType {
-  USER
-  REALTOR
-}
-
 type Notification @model @auth(rules: [{allow: public}]) {
   id: ID!
   recipientID: String
-  recipientType: NotificationRecipientType
+  recipientType: String
   type: String
   entityID: String
   message: String

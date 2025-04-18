@@ -47,7 +47,7 @@ function Home() {
           <Tab label="Student Accommodation" />
           <Tab label="Property Sale" />
           <Tab label="Office Space" />
-          {/* <Tab label="Eat & Drink" /> */}
+          {/* <Tab label="Food & Drinks" /> */}
           {/* <Tab label="Events & Halls" /> */}
         </Tabs>
       </div>
@@ -60,7 +60,7 @@ function Home() {
         {selectedTab === 4 && <StudentAccommodation />}
         {selectedTab === 5 && <PropertySale />}
         {selectedTab === 6 && <OfficeSpace />}
-        {/* {selectedTab === 7 && <EatDrink />} */}
+        {/* {selectedTab === 7 && <FoodDrinks />} */}
         {/* {selectedTab === 8 && <EventHalls />} */}
       </div>
     </div>

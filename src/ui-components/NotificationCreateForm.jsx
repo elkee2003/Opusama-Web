@@ -10,7 +10,6 @@ import {
   Button,
   Flex,
   Grid,
-  SelectField,
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
@@ -170,10 +169,10 @@ export default function NotificationCreateForm(props) {
         hasError={errors.recipientID?.hasError}
         {...getOverrideProps(overrides, "recipientID")}
       ></TextField>
-      <SelectField
+      <TextField
         label="Recipient type"
-        placeholder="Please select an option"
-        isDisabled={false}
+        isRequired={false}
+        isReadOnly={false}
         value={recipientType}
         onChange={(e) => {
           let { value } = e.target;
@@ -198,18 +197,7 @@ export default function NotificationCreateForm(props) {
         errorMessage={errors.recipientType?.errorMessage}
         hasError={errors.recipientType?.hasError}
         {...getOverrideProps(overrides, "recipientType")}
-      >
-        <option
-          children="User"
-          value="USER"
-          {...getOverrideProps(overrides, "recipientTypeoption0")}
-        ></option>
-        <option
-          children="Realtor"
-          value="REALTOR"
-          {...getOverrideProps(overrides, "recipientTypeoption1")}
-        ></option>
-      </SelectField>
+      ></TextField>
       <TextField
         label="Type"
         isRequired={false}
