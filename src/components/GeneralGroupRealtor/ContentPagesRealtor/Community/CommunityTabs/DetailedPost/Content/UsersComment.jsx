@@ -48,9 +48,12 @@ const UsersComment = ({ replies: initialReplies }) => {
         {replies.map(reply => (
             <div>
                 <div className='detCommentUserTimeCon'>
-                    <p className='detCommentUsername'>
-                        {reply.commenterName}
-                    </p>
+                    <div className='detCommentUserNameCon'>
+                        <p className='detCommentUsername'>
+                            {reply.commenterName}
+                        </p>
+                        <p>@{reply.commenterUsername}</p>
+                    </div>
                     <p className='detCommentTime'>
                         {reply.createdAt 
                         ? formatDistanceStrict(new Date(reply.createdAt), new Date(), { addSuffix: true })

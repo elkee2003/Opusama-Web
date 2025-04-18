@@ -170,7 +170,10 @@ const Content = ({post, onDelete}) => {
         {/* Post Username and Time */}
         <div className="detPostUserTimeDeltCon">
           <div className="detPostUserTimeCon">
-            <p>{post.instigatorName}</p>
+            <div className="detPostUserNameCon">
+              <p>{post.instigatorName}</p>
+              <p>@{post.instigatorUsername}</p>
+            </div>
             <p className='detPostTime'>
               {formattedTime}
             </p>

@@ -145,11 +145,14 @@ function Post({post, onDelete}) {
             <div className='postUserTimeDeltCon'>
                 {/* Username & Time */}
                 <div className='postUserTimeCon'>
-                    <p className='postUsername'>
-                        {moreName || post.instigatorName.length <= 10
-                        ? post.instigatorName
-                        : `${post.instigatorName.substring(0, 12)}...`}
-                    </p>
+                    <div className='postUsernameCon'>
+                        <p className='postUsername'>
+                            {moreName || post.instigatorName.length <= 10
+                            ? post.instigatorName
+                            : `${post.instigatorName.substring(0, 12)}...`}
+                        </p>
+                        <p>@{post.instigatorUsername}</p>
+                    </div>
                     <p className='postTime'>
                         {formattedTime}
                     </p>

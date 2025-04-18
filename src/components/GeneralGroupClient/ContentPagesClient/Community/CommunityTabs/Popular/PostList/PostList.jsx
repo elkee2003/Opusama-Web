@@ -83,6 +83,7 @@ function PostList() {
                             return {
                                 ...reply,
                                 commenterName: commenter ? commenter.firstName : "Unknown",
+                                commenterUsername: commenter?.username || "unknown",
                                 commenterProfilePic: commenter ? commenter.profilePic : null,
                             };
                         })
@@ -95,6 +96,7 @@ function PostList() {
                             return {
                                 ...like,
                                 likerName: liker ? liker.firstName : "Unknown",
+                                likerUsername: liker?.username || "unknown",
                                 likerProfilePic: liker ? liker.profilePic : null
                             };
                         })
@@ -103,6 +105,7 @@ function PostList() {
                     return {
                         ...post,
                         instigatorName: instigator ? instigator.firstName : 'Unknown',
+                        instigatorUsername: instigator?.username || "unknown",
                         numComments,
                         totalLikes,
                         likes: likesWithUsers,

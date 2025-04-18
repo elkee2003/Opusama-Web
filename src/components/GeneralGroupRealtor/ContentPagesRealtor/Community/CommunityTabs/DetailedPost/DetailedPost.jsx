@@ -52,6 +52,7 @@ const DetailedPost = () => {
             return {
               ...reply,
               commenterName: commenter ? commenter.firstName : "Unknown",
+              commenterUsername: commenter?.username || "unknown",
               commenterProfilePic: commenter ? commenter.profilePic : null,
             };
           })
@@ -59,6 +60,7 @@ const DetailedPost = () => {
         setPost({
           ...foundPost,
           instigatorName: instigator ? instigator.firstName : 'Unknown',
+          instigatorUsername: instigator?.username || "unknown",
           numComments,
           totalLikes,
           replies: repliesWithCommenters || []
