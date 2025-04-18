@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { DataStore } from "aws-amplify/datastore";
-import { Booking } from "../../../../../../../../models";
+import { Booking, Notification } from "../../../../../../../../models";
 import "./ReviewShowing.css"; 
 import { useAuthContext } from "../../../../../../../../../Providers/ClientProvider/AuthProvider";
 import { useBookingShowingContext } from "../../../../../../../../../Providers/ClientProvider/BookingShowingProvider";
@@ -129,6 +129,19 @@ const ReviewClientDetails = () => {
           status: propertyType === "Recreation" ? "ACCEPTED" : "PENDING",
         })
       );
+
+      await DataStore.save(
+        new Notification({
+          creatorID: dbUser?.id,
+          recipientID:realtorContext.id,
+          recipientType: 'REALTOR',
+          type: ["Hotel / Shortlet", "Nightlife", "Recreation"].includes(propertyType) ? "BOOKING" : "SHOWING",
+          entityID: booking.id,
+          message: `A client made a booking for your ${propertyType} (${accommodationType})`,
+          read: false,
+        })
+      );
+      
       setBookings(booking);
       alert("Booking was a success");
 

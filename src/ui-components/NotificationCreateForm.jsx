@@ -28,6 +28,7 @@ export default function NotificationCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    creatorID: "",
     recipientID: "",
     recipientType: "",
     type: "",
@@ -35,6 +36,7 @@ export default function NotificationCreateForm(props) {
     message: "",
     read: false,
   };
+  const [creatorID, setCreatorID] = React.useState(initialValues.creatorID);
   const [recipientID, setRecipientID] = React.useState(
     initialValues.recipientID
   );
@@ -47,6 +49,7 @@ export default function NotificationCreateForm(props) {
   const [read, setRead] = React.useState(initialValues.read);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setCreatorID(initialValues.creatorID);
     setRecipientID(initialValues.recipientID);
     setRecipientType(initialValues.recipientType);
     setType(initialValues.type);
@@ -56,6 +59,7 @@ export default function NotificationCreateForm(props) {
     setErrors({});
   };
   const validations = {
+    creatorID: [],
     recipientID: [],
     recipientType: [],
     type: [],
@@ -89,6 +93,7 @@ export default function NotificationCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          creatorID,
           recipientID,
           recipientType,
           type,
@@ -141,6 +146,36 @@ export default function NotificationCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Creator id"
+        isRequired={false}
+        isReadOnly={false}
+        value={creatorID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              creatorID: value,
+              recipientID,
+              recipientType,
+              type,
+              entityID,
+              message,
+              read,
+            };
+            const result = onChange(modelFields);
+            value = result?.creatorID ?? value;
+          }
+          if (errors.creatorID?.hasError) {
+            runValidationTasks("creatorID", value);
+          }
+          setCreatorID(value);
+        }}
+        onBlur={() => runValidationTasks("creatorID", creatorID)}
+        errorMessage={errors.creatorID?.errorMessage}
+        hasError={errors.creatorID?.hasError}
+        {...getOverrideProps(overrides, "creatorID")}
+      ></TextField>
+      <TextField
         label="Recipient id"
         isRequired={false}
         isReadOnly={false}
@@ -149,6 +184,7 @@ export default function NotificationCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID: value,
               recipientType,
               type,
@@ -178,6 +214,7 @@ export default function NotificationCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID,
               recipientType: value,
               type,
@@ -207,6 +244,7 @@ export default function NotificationCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID,
               recipientType,
               type: value,
@@ -236,6 +274,7 @@ export default function NotificationCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID,
               recipientType,
               type,
@@ -265,6 +304,7 @@ export default function NotificationCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID,
               recipientType,
               type,
@@ -294,6 +334,7 @@ export default function NotificationCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
+              creatorID,
               recipientID,
               recipientType,
               type,

@@ -59,6 +59,7 @@ const DetailedPost = () => {
         );
         setPost({
           ...foundPost,
+          creatorOfPostID: instigator?.id,
           instigatorName: instigator ? instigator.firstName : 'Unknown',
           instigatorUsername: instigator?.username || "unknown",
           numComments,

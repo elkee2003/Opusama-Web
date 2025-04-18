@@ -30,6 +30,7 @@ type EagerNotification = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly creatorID?: string | null;
   readonly recipientID?: string | null;
   readonly recipientType?: string | null;
   readonly type?: string | null;
@@ -46,6 +47,7 @@ type LazyNotification = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly creatorID?: string | null;
   readonly recipientID?: string | null;
   readonly recipientType?: string | null;
   readonly type?: string | null;

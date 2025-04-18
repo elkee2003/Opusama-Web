@@ -104,6 +104,7 @@ function PostList() {
     
                     return {
                         ...post,
+                        creatorOfPostID: instigator?.id,
                         instigatorName: instigator ? instigator.firstName : 'Unknown',
                         instigatorUsername: instigator?.username || "unknown",
                         numComments,

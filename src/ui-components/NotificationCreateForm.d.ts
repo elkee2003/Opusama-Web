@@ -22,6 +22,7 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type NotificationCreateFormInputValues = {
+    creatorID?: string;
     recipientID?: string;
     recipientType?: string;
     type?: string;
@@ -30,6 +31,7 @@ export declare type NotificationCreateFormInputValues = {
     read?: boolean;
 };
 export declare type NotificationCreateFormValidationValues = {
+    creatorID?: ValidationFunction<string>;
     recipientID?: ValidationFunction<string>;
     recipientType?: ValidationFunction<string>;
     type?: ValidationFunction<string>;
@@ -40,6 +42,7 @@ export declare type NotificationCreateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NotificationCreateFormOverridesProps = {
     NotificationCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    creatorID?: PrimitiveOverrideProps<TextFieldProps>;
     recipientID?: PrimitiveOverrideProps<TextFieldProps>;
     recipientType?: PrimitiveOverrideProps<TextFieldProps>;
     type?: PrimitiveOverrideProps<TextFieldProps>;

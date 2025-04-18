@@ -119,7 +119,9 @@ const Content = ({post, onDelete}) => {
 
     const handleNavigateToReply = () => {
       if(authUser){
-        navigate(`/realtorcontent/response_post/${post.id}`);
+        navigate(`/realtorcontent/response_post/${post.id}`, {
+          state: { creatorOfPostID: post.creatorOfPostID }
+        });
       }else{
         alert('Sign In to access')
         navigate('/')

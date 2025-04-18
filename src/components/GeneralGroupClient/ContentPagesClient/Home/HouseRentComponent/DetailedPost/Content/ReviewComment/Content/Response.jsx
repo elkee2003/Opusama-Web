@@ -3,8 +3,10 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import '../../../../../TabStyles/DetailResponse.css';
 import { useNavigate, useParams} from "react-router-dom";
 import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider'; 
+import { useProfileContext } from '../../../../../../../../../../Providers/ClientProvider/ProfileProvider';
+import { useBookingShowingContext } from '../../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { DataStore } from "aws-amplify/datastore";
-import { PostComment } from '../../../../../../../../../models'; 
+import { PostComment, Notification } from '../../../../../../../../../models'; 
 
 const Response = () => {
     const navigate = useNavigate();
@@ -12,6 +14,8 @@ const Response = () => {
     const { dbUser } = useAuthContext(); 
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
+    const {realtorID} = useProfileContext();
+    const {propertyDetails} = useBookingShowingContext();
 
     const handleCommentSubmit = async () => {
         if (!comment.trim()) {
@@ -22,11 +26,23 @@ const Response = () => {
         try {
             setLoading(true);
 
-            await DataStore.save(
+            const postComment = await DataStore.save(
                 new PostComment({
                     comment: comment.trim(),
                     commenterID: dbUser.id, 
                     postID: postId,  
+                })
+            );
+
+            await DataStore.save(
+                new Notification({
+                    creatorID: dbUser?.id,
+                    recipientID:realtorID,
+                    recipientType: 'REALTOR',
+                    type: "COMMENT",
+                    entityID: postComment.id,
+                    message: `Someone made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
+                    read: false,
                 })
             );
 

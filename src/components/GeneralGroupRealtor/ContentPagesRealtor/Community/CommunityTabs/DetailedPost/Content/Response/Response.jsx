@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import './Response.css'; 
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityReply } from '../../../../../../../../models';
 
 const Response = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { creatorOfPostID } = location.state || {};
     const { postId } = useParams();
     const { dbRealtor } = useAuthContext(); 
     const [comment, setComment] = useState('');
@@ -22,11 +24,23 @@ const Response = () => {
         try {
             setLoading(true);
 
-            await DataStore.save(
+            const savedReply = await DataStore.save(
                 new CommunityReply({
                     comment: comment.trim(),
                     commenterID: dbRealtor.id, 
                     communitydiscussionID: postId,  
+                })
+            );
+
+            await DataStore.save(
+                new Notification({
+                    creatorID: dbRealtor.id,
+                    recipientID:creatorOfPostID,
+                    recipientType: 'POST_CREATOR',
+                    type: "COMMENT",
+                    entityID: savedReply.id,
+                    message: `Someone commented on your post`,
+                    read: false,
                 })
             );
 

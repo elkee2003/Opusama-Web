@@ -10,6 +10,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "creatorID": {
+                    "name": "creatorID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "recipientID": {
                     "name": "recipientID",
                     "isArray": false,
@@ -1609,5 +1616,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "e2740ba7c8d3df142dfbf358980065a6"
+    "version": "29a553426edc47b4350bc2a2b92cf376"
 };

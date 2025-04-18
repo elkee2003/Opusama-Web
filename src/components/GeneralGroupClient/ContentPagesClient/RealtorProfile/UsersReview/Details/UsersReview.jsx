@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from 'aws-amplify/datastore';
-import { RealtorReview, User, Booking } from '../../../../../../models';
+import { RealtorReview, User, Booking, Notification } from '../../../../../../models';
 import './UsersReview.css';
 
 const UserReviews = ({ realtor }) => {
@@ -65,6 +65,17 @@ const UserReviews = ({ realtor }) => {
         );
         alert('Your review has been submitted.');
       }
+
+      await DataStore.save(
+        new Notification({
+            recipientID:realtor.id,
+            recipientType: 'REALTOR',
+            type: "REVIEW",
+            entityID: realtor.id,
+            message: 'Someone rated and reviewed you.',
+            read: false,
+        })
+      );
 
       setUserRating(0);
       setReview('');

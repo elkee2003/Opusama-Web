@@ -1,5 +1,6 @@
 type Notification @model @auth(rules: [{allow: public}]) {
   id: ID!
+  creatorID: String
   recipientID: String
   recipientType: String
   type: String

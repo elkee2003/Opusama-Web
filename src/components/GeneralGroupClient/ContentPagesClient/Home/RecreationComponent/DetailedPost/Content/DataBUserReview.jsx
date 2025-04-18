@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
+import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { DataStore } from "aws-amplify/datastore";
-import { PostReview, Booking } from '../../../../../../../models';
+import { PostReview, Booking, Notification } from '../../../../../../../models';
 
 const ReviewSection = ({ post, dbUser }) => {
   const [userRating, setUserRating] = useState(0);
   const [review, setReview] = useState('');
   const [loading, setLoading] = useState(false);
-  const { realtorID } = useProfileContext();
   const [bookings, setBookings] = useState([]);
+  const { realtorID } = useProfileContext();
+  const {propertyDetails} = useBookingShowingContext();
 
   // Function to handle rating click
   const handleRating = (rating) => setUserRating(rating);
@@ -39,7 +41,7 @@ const ReviewSection = ({ post, dbUser }) => {
         );
         alert("Updated", "Your review has been updated.");
       } else {
-        await DataStore.save(
+        reviewRecord = await DataStore.save(
           new PostReview({
             postID: post?.id,
             userID: dbUser?.id,
@@ -50,6 +52,18 @@ const ReviewSection = ({ post, dbUser }) => {
         );
         alert("Submitted", "Your review has been submitted.");
       }
+
+      await DataStore.save(
+        new Notification({
+          creatorID: dbUser?.id,
+          recipientID:realtorID,
+          recipientType: 'REALTOR',
+          type: "REVIEW",
+          entityID: reviewRecord.id,
+          message: `Someone rated and reviewed your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
+          read: false,
+        })
+      );
 
       setUserRating(0);
       setReview("");

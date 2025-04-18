@@ -8,7 +8,7 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User } from '../../../../../../../models';
+import { CommunityDiscussion, CommunityReply, CommunityLike, Notification, Realtor, User } from '../../../../../../../models';
 
 function Post({post, onDelete}) {
 
@@ -89,18 +89,45 @@ function Post({post, onDelete}) {
     
             if (existingLikes.length > 0) {
                 // Unlike: delete the like entry
-                await Promise.all(existingLikes.map(like => DataStore.delete(like)));
+                await Promise.all(existingLikes.map(async (like) => {
+                    await DataStore.delete(like);
+
+                    // Delete the associated notification
+                    const relatedNotifications = await DataStore.query(Notification, (n) =>
+                        n.and(n => [
+                            n.type.eq("LIKE"),
+                            n.entityID.eq(like.id),
+                            n.recipientID.eq(post.creatorOfPostID)
+                        ])
+                    );
+
+                    await Promise.all(relatedNotifications.map(n => DataStore.delete(n)));
+                }));
+
                 setLikesCount(prev => prev - 1);
-                setIsLiked(false);  // <-- Update the state
+                setIsLiked(false);
             } else {
                 // Like: create a new like entry
-                await DataStore.save(
+                const savedLike = await DataStore.save(
                     new CommunityLike({
                         communitydiscussionID: post.id,
                         likedByID: dbUser.id,
                         like: true,
                     })
                 );
+                
+                await DataStore.save(
+                    new Notification({
+                        creatorID: dbUser?.id,
+                        recipientID:post.creatorOfPostID,
+                        recipientType: 'POST_CREATOR',
+                        type: "LIKE",
+                        entityID: savedLike.id,
+                        message: `Someone liked your post`,
+                        read: false,
+                    })
+                );
+
                 setLikesCount(prev => prev + 1);
                 setIsLiked(true);  // <-- Update the state
             }
