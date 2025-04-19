@@ -25,6 +25,8 @@ const UploadProperty = () => {
     setNameOfType,
     availableDocs,
     setAvailableDocs,
+    capacity,
+    setCapacity,
     accommodationParts,
     setAccommodationParts,
     media,
@@ -99,6 +101,7 @@ const UploadProperty = () => {
     setBed("");
     setCautionFee("");
     setTimeFrame("");
+    setCapacity("");
     setPrice("");
     setInspectionFee("");
     setOtherFeesName("");
@@ -198,6 +201,7 @@ const UploadProperty = () => {
           media: mediaUrls,
           description,
           available: true,
+          capacity,
           fullAddress,
           generalLocation,
           lat: parseFloat(lat),

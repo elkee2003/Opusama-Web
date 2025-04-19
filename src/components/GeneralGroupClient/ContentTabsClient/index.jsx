@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaCompass, FaSearch, FaCalendarAlt, FaCalendarCheck, FaUser, FaUsers } from 'react-icons/fa';
+import { FaHome, FaBell, FaCompass, FaSearch, FaUser, FaUsers } from 'react-icons/fa';
 import { NavLink, useNavigate } from "react-router-dom";
 import './Sidebar.css';
 
@@ -46,16 +46,6 @@ function ContentTabsClient (){
                         </li>
                         <li>
                             <NavLink 
-                                to="/clientcontent/bookings"
-                                className={({ isActive }) => isActive ? 'active-link' : ''}
-                            >
-                                <div className='client-nav-container'>
-                                    <FaCalendarAlt /> Bookings
-                                </div>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink 
                                 to="/clientcontent/community"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
@@ -64,6 +54,18 @@ function ContentTabsClient (){
                                 </div>
                             </NavLink>
                         </li>
+
+                        <li>
+                            <NavLink 
+                                to="/clientcontent/bookings"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='client-nav-container'>
+                                    <FaBell /> Alerts
+                                </div>
+                            </NavLink>
+                        </li>
+
                         <li>
                             <NavLink 
                                 to="/clientcontent/profile"
@@ -95,17 +97,17 @@ function ContentTabsClient (){
                 </NavLink>
 
                 <NavLink 
-                    to="/clientcontent/bookings"
-                    className={({ isActive }) => isActive ? 'active-link' : ''}
-                >
-                    <FaCalendarAlt /> Bookings
-                </NavLink>
-
-                <NavLink 
                     to="/clientcontent/community"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaUsers /> Community
+                </NavLink>
+
+                <NavLink 
+                    to="/clientcontent/bookings"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaBell /> Alerts
                 </NavLink>
 
                 <NavLink Link 

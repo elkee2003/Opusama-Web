@@ -208,6 +208,16 @@ function Content({post, realtor,}) {
 
           <div className='topBorderLine' />
 
+          {/* Capacity */}
+          {post?.capacity ? (
+            <>
+              <p className='subheader'>Capacity</p>
+              <p className='bedroom'>
+                {post.capacity}
+              </p>
+            </>
+          ) : ''}
+
           {/* Accommodation Parts */}
           {post.accommodationParts && (
             <>
@@ -341,12 +351,12 @@ function Content({post, realtor,}) {
         </div>
 
         {/* Inspection Fee */}
-          {post?.inspectionFee ? (
-            <div className='priceRowTotal'>
-              <p className='subInspectionFee'>Inspection Fee:</p>
-              <p className='inspectionFee'> ₦{formattedInspectionFee}</p>
-            </div>
-          ) : ''}
+        {post?.inspectionFee ? (
+          <div className='priceRowTotal'>
+            <p className='subInspectionFee'>Inspection Fee:</p>
+            <p className='inspectionFee'> ₦{formattedInspectionFee}</p>
+          </div>
+        ) : ''}
 
         <div className='topBorderLine' />
 

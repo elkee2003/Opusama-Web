@@ -9,6 +9,7 @@ const ReviewUpload = () => {
     packageType,
     nameOfType,
     availableDocs,
+    capacity,
     bedrooms,
     bed,
     accommodationParts,
@@ -115,6 +116,13 @@ const ReviewUpload = () => {
           <div className='uploadPropRow'>
             <p className='displayLabel'>Time Frame:</p>
             <p className='uploadPropDetails'>{timeFrame}</p>
+          </div>
+        )}
+
+        {capacity && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Capacity:</p>
+            <p className='uploadPropDetails'>{capacity}</p>
           </div>
         )}
 

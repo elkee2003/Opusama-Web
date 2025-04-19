@@ -24,6 +24,7 @@ const HotelSearch = () => {
     const filtered = nightlifePosts.filter((item) => {
       const matchesQuery =
         item?.realtorFirstName?.toLowerCase().includes(lowercasedQuery) ||
+        item?.userName?.toLowerCase().includes(lowercasedQuery) ||
         item?.type?.toLowerCase().includes(lowercasedQuery) ||
         item?.generalLocation?.toLowerCase().includes(lowercasedQuery) ||
         item?.city?.toLowerCase().includes(lowercasedQuery) ||
@@ -50,6 +51,7 @@ const HotelSearch = () => {
         return {
           ...post,
           realtorFirstName: realtor?.firstName,
+          userName: realtor?.username,
           price: parseFloat(post.price) || 0,
         };
       });

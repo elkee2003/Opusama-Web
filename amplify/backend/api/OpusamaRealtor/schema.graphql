@@ -154,6 +154,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   accommodationParts: String
   media: [String]
   description: String!
+  capacity: String
   available: Boolean
   address: String
   fullAddress: String
@@ -163,8 +164,8 @@ type Post @model @auth(rules: [{allow: public}]) {
   price: Float!
   cautionFee: Float
   totalPrice: Float!
-  inspectionFee: Float
   PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
+  inspectionFee: Float
   otherFeesName: String
   otherFeesPrice: Float
   otherFeesName2: String
@@ -177,7 +178,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   country: String!
   state: String
   city: String
-  realtorID: ID! @index(name: "byRealtor")
   PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
+  realtorID: ID! @index(name: "byRealtor")
 }
  

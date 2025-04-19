@@ -44,16 +44,7 @@ function ContentTabsRealtor (){
                                 </div>
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink 
-                                to="/realtorcontent/alerts"
-                                className={({ isActive }) => isActive ? 'active-link' : ''}
-                            >
-                                <div className='realtor-nav-container'>
-                                    <FaBell /> Alerts
-                                </div>
-                            </NavLink>
-                        </li>
+                        
                         <li>
                             <NavLink 
                                 to="/realtorcontent/community"
@@ -64,6 +55,18 @@ function ContentTabsRealtor (){
                                 </div>
                             </NavLink>
                         </li>
+
+                        <li>
+                            <NavLink 
+                                to="/realtorcontent/alerts"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='realtor-nav-container'>
+                                    <FaBell /> Alerts
+                                </div>
+                            </NavLink>
+                        </li>
+
                         <li>
                             <NavLink 
                                 to="/realtorcontent/profile"
@@ -96,17 +99,17 @@ function ContentTabsRealtor (){
                 </NavLink>
 
                 <NavLink 
-                    to="/realtorcontent/alerts"
-                    className={({ isActive }) => isActive ? 'active-link' : ''}
-                >
-                    <FaBell /> Alerts
-                </NavLink>
-
-                <NavLink 
                     to="/realtorcontent/community"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaUsers /> Community
+                </NavLink>
+
+                <NavLink 
+                    to="/realtorcontent/alerts"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaBell /> Alerts
                 </NavLink>
 
                 <NavLink Link 

@@ -176,7 +176,7 @@ function Post({post, onDelete}) {
                         <p className='postUsername'>
                             {moreName || post.instigatorName.length <= 10
                             ? post.instigatorName
-                            : `${post.instigatorName.substring(0, 12)}...`}
+                            : `${post.instigatorName.substring(0, 9)}...`}
                         </p>
                         <p>@{post.instigatorUsername}</p>
                     </div>

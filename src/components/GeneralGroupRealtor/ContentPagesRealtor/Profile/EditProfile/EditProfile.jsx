@@ -253,6 +253,8 @@ const EditProfile = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username eg: tonari"
+                autoCapitalize="none"
+                autoCorrect="off"
                 className= {`profileInputRealtorUsername ${isUsernameAvailable === false ? "errorInput" : ""}`}
               />
 

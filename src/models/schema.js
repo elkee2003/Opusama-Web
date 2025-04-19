@@ -1345,6 +1345,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "capacity": {
+                    "name": "capacity",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "available": {
                     "name": "available",
                     "isArray": false,
@@ -1408,13 +1415,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "inspectionFee": {
-                    "name": "inspectionFee",
-                    "isArray": false,
-                    "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "PostReviews": {
                     "name": "PostReviews",
                     "isArray": true,
@@ -1430,6 +1430,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "inspectionFee": {
+                    "name": "inspectionFee",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "otherFeesName": {
                     "name": "otherFeesName",
@@ -1515,13 +1522,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "realtorID": {
-                    "name": "realtorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "PostComments": {
                     "name": "PostComments",
                     "isArray": true,
@@ -1537,6 +1537,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "realtorID": {
+                    "name": "realtorID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1616,5 +1623,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "29a553426edc47b4350bc2a2b92cf376"
+    "version": "57005b8e4ea310ac6a078b4860ed3138"
 };

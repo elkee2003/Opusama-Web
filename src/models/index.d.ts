@@ -470,6 +470,7 @@ type EagerPost = {
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
   readonly description: string;
+  readonly capacity?: string | null;
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
@@ -479,8 +480,8 @@ type EagerPost = {
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
-  readonly inspectionFee?: number | null;
   readonly PostReviews?: (PostReview | null)[] | null;
+  readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
   readonly otherFeesName2?: string | null;
@@ -493,8 +494,8 @@ type EagerPost = {
   readonly country: string;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly realtorID: string;
   readonly PostComments?: (PostComment | null)[] | null;
+  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -513,6 +514,7 @@ type LazyPost = {
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
   readonly description: string;
+  readonly capacity?: string | null;
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
@@ -522,8 +524,8 @@ type LazyPost = {
   readonly price: number;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
-  readonly inspectionFee?: number | null;
   readonly PostReviews: AsyncCollection<PostReview>;
+  readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
   readonly otherFeesName2?: string | null;
@@ -536,8 +538,8 @@ type LazyPost = {
   readonly country: string;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly realtorID: string;
   readonly PostComments: AsyncCollection<PostComment>;
+  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

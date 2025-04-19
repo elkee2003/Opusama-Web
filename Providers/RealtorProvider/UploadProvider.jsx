@@ -8,6 +8,7 @@ const UploadContextProvider = ({children}) => {
     const [type, setType] = useState('')
     const [nameOfType, setNameOfType] = useState('');
     const [packageType, setPackageType] = useState('');
+    const [capacity, setCapacity] = useState('');
     const [availableDocs, setAvailableDocs] = useState('');
     const [customInput, setCustomInput] = useState('');
     const [accommodationParts, setAccommodationParts] = useState('');
@@ -134,6 +135,11 @@ const UploadContextProvider = ({children}) => {
             setErrors('Time frame is required');
             return false;
           }
+        } else if (propertyType === 'Events & Halls') {
+          if(!capacity){
+            setErrors('Capacity is required');
+            return false;
+          }
         }
 
         // Price validations
@@ -226,6 +232,7 @@ const UploadContextProvider = ({children}) => {
         type, setType,
         nameOfType, setNameOfType,
         packageType, setPackageType,
+        capacity, setCapacity,
         availableDocs, setAvailableDocs,
         customInput, setCustomInput,
         accommodationParts, setAccommodationParts,

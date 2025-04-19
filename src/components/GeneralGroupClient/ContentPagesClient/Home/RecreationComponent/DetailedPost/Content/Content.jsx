@@ -211,6 +211,16 @@ function Content({post, realtor,}) {
 
           <div className='topBorderLine' />
 
+          {/* Capacity */}
+          {post?.capacity ? (
+            <>
+              <p className='subheader'>Capacity</p>
+              <p className='bedroom'>
+                {post.capacity}
+              </p>
+            </>
+          ) : ''}
+
           {/* Accommodation Parts */}
           {post.accommodationParts && (
             <>

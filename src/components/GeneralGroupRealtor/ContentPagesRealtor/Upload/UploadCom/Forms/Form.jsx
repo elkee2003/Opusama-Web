@@ -9,6 +9,7 @@ import Recreation from '../DropDown/Recreation/Recreation';
 import NightLife from '../DropDown/NightLife/NightLife';
 import WriteDescription from '../DropDown/Desription/Description';
 import OfficeSpace from '../DropDown/OfficeSpace/OfficeSpace';
+import EventsHalls from '../DropDown/Events&Halls/Events&Halls';
 // import Shop from '../DropDown/Shop';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,6 +84,8 @@ const Forms = () => {
         {propertyType === 'Nightlife' && <NightLife/>}
 
         {propertyType === 'Recreation' && <Recreation/>}
+
+        {propertyType === 'Events & Halls' && <EventsHalls/>}
 
         
 

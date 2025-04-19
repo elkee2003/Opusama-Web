@@ -42,48 +42,64 @@ const WriteDescription = () => {
     return (
         <div className="formSectionCon">
             {propertyType === 'House Rent' &&
-                renderFields('House', 'Kindly describe House', 
+                renderFields('House Rent', 'Kindly describe House', 
                 '24/7 Security, Parking, Swimming, Pool, Gym, Building is around banks', 
-                'Lawn must be mowed every 2 weeks, Paint building every year')}
+                'Lawn must be mowed every 2 weeks, Paint building every year')
+            }
 
             {propertyType === 'Hotel / Shortlet' &&
                 renderFields('Hotel / Shortlet', 'Kindly describe Hotel / Shortlet', 
                 '24/7 Security, Parking, Swimming, Pool, Gym, Breakfast', 
-                'No guns allowed, Caution fees applicable, Paint building every year, Not more than 5 Guests')}
+                'No guns allowed, Caution fees applicable, Paint building every year, Not more than 5 Guests')
+            }
 
             {propertyType === 'Student Accommodation' &&
                 renderFields('Student Accommodation', 'Kindly describe Student Accommodation', 
                 '24/7 Security, Parking, Swimming, Pool, Gym, Breakfast, library', 
-                'Gate closes at 8:00pm, Not more than 2 Guests')}
+                'Gate closes at 8:00pm, Not more than 2 Guests')
+            }
 
             {propertyType === 'Land Sale' &&
                 renderFields('Land', 'Unit measurement, method of measurement, situation etc.', 
                 'Advantage of purchase', 
-                'What potential buyer needs for purchase')}
+                'What potential buyer needs for purchase')
+            }
 
             {propertyType === 'House Sale' &&
                 renderFields('House', 'Describe house, situation etc.', 
                 'Advantage of Purchase', 
-                'What potential buyer needs')}
+                'What potential buyer needs')
+            }
 
             {propertyType === 'Recreation' &&
                 renderFields('Recreation', 'Describe the services you offer.', 
                 'Advantage of using your services', 
-                'How clients should behave and act while using your service')}
+                'How clients should behave and act while using your service')
+            }
+
             {propertyType === 'Nightlife' &&
                 renderFields('Nightlife', 'Describe the services you offer.', 
                 'Advantage of using your services', 
-                'How clients should behave and act while using your service')}
+                'How clients should behave and act while using your service')
+            }
 
             {propertyType === 'Office Space' &&
                 renderFields('Office Space', 'Describe office space.', 
                 'Advantage of Space', 
-                'What potential clients need to get Office Space')}
+                'What potential clients need to get Office Space')
+            }
+
+            {propertyType === 'Events & Halls' &&
+                renderFields('Events & Halls', 'Describe Event Center / Hall.', 
+                'Advantage of using your event center / hall', 
+                'Criteria to fulfil before using and while using your event center / hall')
+            }
 
             {propertyType === 'Shop' &&
                 renderFields('Shop', 'Describe shop etc.', 
                 'Advantage of getting shop', 
-                'What potential client needs to get shop')}
+                'What potential client needs to get shop')
+            }
         </div>
     );
 };
