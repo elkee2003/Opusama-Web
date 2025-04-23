@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import './Sidebar.css';
 
-function ContentTabsRealtor (){
+function ContentTabsRealtor ({ unreadCount }){
 
     const navigate = useNavigate();
 
@@ -63,6 +63,9 @@ function ContentTabsRealtor (){
                             >
                                 <div className='realtor-nav-container'>
                                     <FaBell /> Alerts
+                                    {unreadCount > 0 && (
+                                        <span className="realtorNotification-badge">{unreadCount}</span>
+                                    )}
                                 </div>
                             </NavLink>
                         </li>
@@ -109,7 +112,12 @@ function ContentTabsRealtor (){
                     to="/realtorcontent/alerts"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
-                    <FaBell /> Alerts
+                    <div className='realtorBottomNavBellCon'>
+                        <FaBell /> Alerts
+                        {unreadCount > 0 && (
+                            <span className="realtorNotification-badge">{unreadCount}</span>
+                        )}
+                    </div>
                 </NavLink>
 
                 <NavLink Link 

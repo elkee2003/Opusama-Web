@@ -37,9 +37,28 @@
 }
 
 .realtor-nav-container {
+  position: relative;
   display: flex;
   align-items: center;
   gap:0.5rem;
+}
+
+.realtorNotification-badge {
+  background-color: red;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 999px;
+  position: absolute;
+  top: -4px;
+  right: -10px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 
 .realtor-sidebar nav ul li a {
@@ -112,5 +131,19 @@
   
       .realtor-bottom-nav {
           display: flex; 
+      }
+      
+      .realtorBottomNavBellCon {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+      }
+
+      .realtorNotification-badge {
+        top: -8px;
+        right: -3px;
+        min-width: 20px;
+        height: 20px;
       }
   }

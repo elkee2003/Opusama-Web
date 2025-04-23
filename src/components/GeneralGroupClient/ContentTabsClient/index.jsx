@@ -3,7 +3,7 @@ import { FaHome, FaBell, FaCompass, FaSearch, FaUser, FaUsers } from 'react-icon
 import { NavLink, useNavigate } from "react-router-dom";
 import './Sidebar.css';
 
-function ContentTabsClient (){
+function ContentTabsClient ({ unreadCount }){
 
     const navigate = useNavigate();
 
@@ -62,6 +62,9 @@ function ContentTabsClient (){
                             >
                                 <div className='client-nav-container'>
                                     <FaBell /> Alerts
+                                    {unreadCount > 0 && (
+                                        <span className="clientNotification-badge">{unreadCount}</span>
+                                    )}
                                 </div>
                             </NavLink>
                         </li>
@@ -107,7 +110,12 @@ function ContentTabsClient (){
                     to="/clientcontent/bookings"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
+                    <div className='clientBottomNavBellCon'>
                     <FaBell /> Alerts
+                        {unreadCount > 0 && (
+                            <span className="clientNotification-badge">{unreadCount}</span>
+                        )}
+                    </div>
                 </NavLink>
 
                 <NavLink Link 

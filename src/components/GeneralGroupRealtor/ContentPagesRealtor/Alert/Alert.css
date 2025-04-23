@@ -1,4 +1,8 @@
 .aTabs-container {
+    position: fixed;
+    top:0;
+    z-index: 100;
+    background-color: white;
     border-bottom: 1px solid #e0e0e0;
     overflow-x: auto; /* Allow horizontal scrolling */
     white-space: nowrap; /* Prevent wrapping of tabs */
@@ -20,6 +24,7 @@
 }
 
 .aTab-panel {
+    margin-top: 2.5rem;
     padding: 16px; /* Padding for tab content */
     width: 100%; /* Make tab content fit screen */
     box-sizing: border-box; /* Include padding and borders in width */

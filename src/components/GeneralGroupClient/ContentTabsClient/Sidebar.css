@@ -38,8 +38,27 @@
 
   .client-nav-container {
     display: flex;
+    position: relative;
     align-items: center;
     gap:0.5rem;
+  }
+
+  .clientNotification-badge {
+    background-color: red;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 999px;
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
   }
   
   .client-sidebar nav ul li a {
@@ -112,5 +131,19 @@
     
         .client-bottom-nav {
             display: flex; 
+        }
+
+        .clientBottomNavBellCon {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          align-items: center;
+        }
+
+        .clientNotification-badge {
+          top: -8px;
+          right: -3px;
+          min-width: 20px;
+          height: 20px;
         }
     }

@@ -20,36 +20,38 @@ function Home() {
 
   return (
     <div className='client-HomeMain-Con'>
-      {/* logo */}
-      <div 
-          className='client-logoForSmallScreen'
-      >
-          <img 
-              src={'/opusama.png'}
-              alt="logo" 
-              onClick={() => navigate('/')}
-          />
-      </div>
-
-      {/* Toptab */}
-      <div className="client-tabs-container">
-        <Tabs
-          value={selectedTab}
-          onChange={handleTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="navigation tabs"
+      <div className='logoTabCon'>
+        {/* logo */}
+        <div 
+            className='client-logoForSmallScreen'
         >
-          <Tab label="House" />
-          <Tab label="Hotel / Shortlet" />
-          <Tab label="Recreation" />
-          <Tab label="Nightlife" />
-          <Tab label="Student Accommodation" />
-          <Tab label="Property Sale" />
-          <Tab label="Office Space" />
-          {/* <Tab label="Food & Drinks" /> */}
-          {/* <Tab label="Events & Halls" /> */}
-        </Tabs>
+            <img 
+                src={'/opusama.png'}
+                alt="logo" 
+                onClick={() => navigate('/')}
+            />
+        </div>
+
+        {/* Toptab */}
+        <div className="client-tabs-container">
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="navigation tabs"
+          >
+            <Tab label="House" />
+            <Tab label="Hotel / Shortlet" />
+            <Tab label="Recreation" />
+            <Tab label="Nightlife" />
+            <Tab label="Student Accommodation" />
+            <Tab label="Property Sale" />
+            <Tab label="Office Space" />
+            {/* <Tab label="Food & Drinks" /> */}
+            {/* <Tab label="Events & Halls" /> */}
+          </Tabs>
+        </div>
       </div>
       
       <div className="client-tab-panel">
