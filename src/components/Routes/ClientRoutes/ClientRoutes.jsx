@@ -4,7 +4,7 @@ import {Routes, Route } from 'react-router-dom';
 import ClientLayout from '../../../components/GeneralGroupClient/ContentLayout'
 import HomeClient from '../../../components/GeneralGroupClient/ContentPagesClient/Home/Home';
 import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
-import Bookings from '../../../components/GeneralGroupClient/ContentPagesClient/Bookings/Bookings';
+import Bookings from '../../../components/GeneralGroupClient/ContentPagesClient/Alerts/Alerts';
 import ClientCommunity from '../../../components/GeneralGroupClient/ContentPagesClient/Community/Community';
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
@@ -16,7 +16,7 @@ import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseR
 import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
 import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/Booking/BookingInfo';
 import ReviewClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ReviewShowing/ReviewClientInfo';
-import BookingFullDetails from '../../GeneralGroupClient/ContentPagesClient/Bookings/BookingFullDetails/DetailedBooking';
+import BookingFullDetails from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookingFullDetails/DetailedBooking';
 import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/ReviewProfile/ReviewProfile';
 import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
 import DeleteAccount from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';

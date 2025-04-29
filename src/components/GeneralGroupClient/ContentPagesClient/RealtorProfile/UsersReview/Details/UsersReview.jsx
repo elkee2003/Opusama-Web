@@ -69,7 +69,7 @@ const UserReviews = ({ realtor }) => {
       await DataStore.save(
         new Notification({
             recipientID:realtor.id,
-            recipientType: 'REALTOR',
+            recipientType: 'REVIEW_REALTOR',
             type: "REVIEW",
             entityID: realtor.id,
             message: 'Someone rated and reviewed you.',

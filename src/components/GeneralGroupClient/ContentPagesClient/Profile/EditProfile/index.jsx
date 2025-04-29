@@ -240,8 +240,11 @@ const EditProfile = () => {
             <div className="usernameInputWrapper">
               <textarea
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                onChange={(e) => {
+                  const input = e.target.value.replace(/@/g, ""); // remove all @s
+                  setUsername(input);
+                }}
+                placeholder="Username eg: tonari"
                 autoCapitalize="none"
                 autoCorrect="off"
                 className={`profileInputClientUsername ${isUsernameAvailable === false ? "errorInput" : ""}`}

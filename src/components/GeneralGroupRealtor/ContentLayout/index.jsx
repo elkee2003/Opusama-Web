@@ -15,30 +15,37 @@ const Layout = () => {
 
   useEffect(() => {
     if (!dbRealtor?.id) return;
-
-    const fetchNotifications = async () => {
+  
+    const fetchUnreadCount = async () => {
       const all = await DataStore.query(Notification, n =>
         n.recipientID.eq(dbRealtor.id)
       );
       const unread = all.filter(n => !n.read);
       setUnreadCount(unread.length);
     };
-
-    fetchNotifications();
-
-    const subscription = DataStore.observe(Notification).subscribe(msg => {
-      if (msg.opType === 'INSERT' && msg.element.recipientID === dbRealtor.id) {
+  
+    fetchUnreadCount();
+  
+    const subscription = DataStore.observe(Notification).subscribe(async msg => {
+      const { opType, element } = msg;
+  
+      if (element.recipientID !== dbRealtor.id) return;
+  
+      if (opType === 'INSERT') {
         toast.info(
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <FaBell />  {msg.element.message}
-            </div>
-          );
-          setUnreadCount(prev => prev + 1);
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FaBell />  {element.message}
+          </div>
+        );
       }
+  
+      // Recalculate count for any relevant change
+      await fetchUnreadCount();
     });
-
+  
     return () => subscription.unsubscribe();
   }, [dbRealtor]);
+  
   return (
     <div className="realtor-layout">
       {/* Sidebar */}

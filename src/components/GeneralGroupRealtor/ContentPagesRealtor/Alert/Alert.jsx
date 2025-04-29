@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './Alert.css'
 import { Tabs, Tab, Box } from '@mui/material';
+import Notification from './Notifications/notification';
 import PendingAlertList from './PendingAlerts/ShortAlertList/ShortAlertList'
 import AcceptedAlertList from './AcceptedAlerts/ShortAlertList/ShortAlertList';
 
@@ -21,13 +22,15 @@ function Alert() {
           scrollButtons="auto"
           aria-label="navigation tabs"
         >
+          <Tab label="Notification" />
           <Tab label="Pending Alert" />
           <Tab label="Accepted Alert" />
         </Tabs>
       </div>
       <div className="aTab-panel">
-        {selectedTab === 0 && <PendingAlertList />}
-        {selectedTab === 1 && <AcceptedAlertList />}
+        {selectedTab === 0 && <Notification />}
+        {selectedTab === 1 && <PendingAlertList />}
+        {selectedTab === 2 && <AcceptedAlertList />}
       </div>
     </div>
   )

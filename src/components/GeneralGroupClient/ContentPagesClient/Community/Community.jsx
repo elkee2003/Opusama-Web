@@ -41,6 +41,7 @@ function Community() {
           <Tab label="Popular" />
         </Tabs>
       </div>
+      
       <div className="communityTab-panel">
         {selectedTab === 0 && <Latest />}
         {selectedTab === 1 && <Popular />}

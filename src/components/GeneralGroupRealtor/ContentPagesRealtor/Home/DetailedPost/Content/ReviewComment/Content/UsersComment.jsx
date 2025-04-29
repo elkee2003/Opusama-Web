@@ -37,7 +37,7 @@ const UsersComment = () => {
 
       // Sort comments by createdAt in ascending order (oldest first)
       const sortedComments = postWithCommenters.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
+      console.log('shortcomments:', sortedComments)
       setUsersComments(sortedComments);
     } catch (e) {
       console.error('Error fetching comments', e);

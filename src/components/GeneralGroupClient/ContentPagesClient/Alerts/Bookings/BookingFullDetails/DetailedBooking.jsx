@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BookingFullDetails from './Details/BookingDetails';
 import { useParams } from 'react-router-dom';
 import { DataStore } from "aws-amplify/datastore";
-import { Booking, Realtor, Post } from '../../../../../models';
+import { Booking, Realtor, Post } from '../../../../../../models';
 
 const DetailedBooking = () => {
   const { bookingId } = useParams();

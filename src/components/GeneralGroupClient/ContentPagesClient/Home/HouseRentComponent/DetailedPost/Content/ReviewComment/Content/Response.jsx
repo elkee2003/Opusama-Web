@@ -30,6 +30,7 @@ const Response = () => {
                 new PostComment({
                     comment: comment.trim(),
                     commenterID: dbUser.id, 
+                    realtorID,
                     postID: postId,  
                 })
             );
@@ -38,7 +39,7 @@ const Response = () => {
                 new Notification({
                     creatorID: dbUser?.id,
                     recipientID:realtorID,
-                    recipientType: 'REALTOR',
+                    recipientType: 'COMMENT_REALTOR_POST',
                     type: "COMMENT",
                     entityID: postComment.id,
                     message: `Someone made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,

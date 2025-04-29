@@ -120,7 +120,7 @@ function Post({post, onDelete}) {
                     new Notification({
                         creatorID: dbUser?.id,
                         recipientID:post.creatorOfPostID,
-                        recipientType: 'POST_CREATOR',
+                        recipientType: 'POST_CREATOR_LIKE',
                         type: "LIKE",
                         entityID: savedLike.id,
                         message: `Someone liked your post`,

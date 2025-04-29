@@ -58,6 +58,10 @@ body {
   .client-logoForSmallScreen {
     display: flex;
   }
+
+  .client-tab-panel {
+    margin-top: 7.5rem;
+  }
 }
 
 @media (max-width: 800px) {

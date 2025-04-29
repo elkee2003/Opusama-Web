@@ -15,28 +15,34 @@ const Layout = () => {
 
   useEffect(() => {
     if (!dbUser?.id) return;
-
-    const fetchNotifications = async () => {
+  
+    const fetchUnreadCount = async () => {
       const all = await DataStore.query(Notification, n =>
         n.recipientID.eq(dbUser.id)
       );
       const unread = all.filter(n => !n.read);
       setUnreadCount(unread.length);
     };
-
-    fetchNotifications();
-
-    const subscription = DataStore.observe(Notification).subscribe(msg => {
-      if (msg.opType === 'INSERT' && msg.element.recipientID === dbUser.id) {
+  
+    fetchUnreadCount();
+  
+    const subscription = DataStore.observe(Notification).subscribe(async msg => {
+      const { opType, element } = msg;
+  
+      if (element.recipientID !== dbUser.id) return;
+  
+      if (opType === 'INSERT') {
         toast.info(
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <FaBell />  {msg.element.message}
+            <FaBell />  {element.message}
           </div>
         );
-        setUnreadCount(prev => prev + 1);
       }
+  
+      // Recalculate count for any relevant change
+      await fetchUnreadCount();
     });
-
+  
     return () => subscription.unsubscribe();
   }, [dbUser]);
 

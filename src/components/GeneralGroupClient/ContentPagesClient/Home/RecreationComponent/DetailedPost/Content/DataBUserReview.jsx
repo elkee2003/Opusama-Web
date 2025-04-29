@@ -57,7 +57,7 @@ const ReviewSection = ({ post, dbUser }) => {
         new Notification({
           creatorID: dbUser?.id,
           recipientID:realtorID,
-          recipientType: 'REALTOR',
+          recipientType: 'REVIEW_REALTOR_POST',
           type: "REVIEW",
           entityID: reviewRecord.id,
           message: `Someone rated and reviewed your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,

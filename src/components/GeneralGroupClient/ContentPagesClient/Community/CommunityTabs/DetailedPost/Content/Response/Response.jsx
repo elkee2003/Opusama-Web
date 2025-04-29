@@ -36,7 +36,7 @@ const Response = () => {
                 new Notification({
                     creatorID: dbUser.id,
                     recipientID:creatorOfPostID,
-                    recipientType: 'POST_CREATOR',
+                    recipientType: 'POST_CREATOR_COMMENT',
                     type: "COMMENT",
                     entityID: savedReply.id,
                     message: `Someone commented on your post`,

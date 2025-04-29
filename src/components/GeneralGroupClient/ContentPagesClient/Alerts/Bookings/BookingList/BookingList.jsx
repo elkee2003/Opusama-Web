@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import BookingSingle from "../BookingSingle/BookingSingle";
-import { useAuthContext } from "../../../../../../Providers/ClientProvider/AuthProvider";
+import { useAuthContext } from "../../../../../../../Providers/ClientProvider/AuthProvider";
 import { DataStore } from "aws-amplify/datastore";
-import { Booking, Realtor, Post } from "../../../../../models";
+import { Booking, Realtor, Post } from "../../../../../../models";
 import "./BookingList.css";
 
 const BookingList = () => {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaInfoCircle } from 'react-icons/fa';
 import './BookingDetails.css'; 
-import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
+import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 
 const BookingDetails = ({ notification, onStatusChange }) => {
   const navigate = useNavigate();

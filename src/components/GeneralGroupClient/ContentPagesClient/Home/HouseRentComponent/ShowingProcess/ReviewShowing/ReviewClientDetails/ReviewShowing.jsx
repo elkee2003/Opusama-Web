@@ -134,7 +134,7 @@ const ReviewClientDetails = () => {
         new Notification({
           creatorID: dbUser?.id,
           recipientID:realtorContext.id,
-          recipientType: 'REALTOR',
+          recipientType: 'BOOKING_REALTOR',
           type: ["Hotel / Shortlet", "Nightlife", "Recreation"].includes(propertyType) ? "BOOKING" : "SHOWING",
           entityID: booking.id,
           message: `A client made a booking for your ${propertyType} (${accommodationType})`,

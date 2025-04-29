@@ -251,7 +251,10 @@ const EditProfile = () => {
             <div className="realtorUsernameInputWrapper">
               <textarea
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  const input = e.target.value.replace(/@/g, ""); // remove all @s
+                  setUsername(input);
+                }}
                 placeholder="Username eg: tonari"
                 autoCapitalize="none"
                 autoCorrect="off"
