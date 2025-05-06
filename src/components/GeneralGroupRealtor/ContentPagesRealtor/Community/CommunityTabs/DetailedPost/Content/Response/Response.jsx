@@ -4,7 +4,7 @@ import './Response.css';
 import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityReply } from '../../../../../../../../models';
+import { CommunityReply, Notification } from '../../../../../../../../models';
 
 const Response = () => {
     const navigate = useNavigate();
@@ -24,6 +24,7 @@ const Response = () => {
         try {
             setLoading(true);
 
+            // 1. Save the comment reply
             const savedReply = await DataStore.save(
                 new CommunityReply({
                     comment: comment.trim(),
@@ -32,6 +33,7 @@ const Response = () => {
                 })
             );
 
+            // 2. Notify the post creator (default)
             await DataStore.save(
                 new Notification({
                     creatorID: dbRealtor.id,

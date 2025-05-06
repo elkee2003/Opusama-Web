@@ -55,7 +55,7 @@ const SelectMedia = () => {
     }
 
     if (images.length + videos.length > 10) {
-      alert('You can select up to 10 images and videos combined.');
+      alert('You can select up to 10 images and a video combined.');
       return;
     } else if (images.length < 3 && videos.length === 0) {
       alert('Select at least 3 images or 1 video and any number of images.');
@@ -63,11 +63,17 @@ const SelectMedia = () => {
     }
 
     // If a video is selected, check its duration
-    if (videos.length === 1) {
-      const isVideoValid = await checkVideoDuration(videos[0]);
-      if (!isVideoValid) {
-        alert('The video you selected is longer than 60 seconds. Please trim it when you get to the next page.');
+    try {
+      if (videos.length === 1) {
+        const isVideoValid = await checkVideoDuration(videos[0]);
+        if (!isVideoValid) {
+          alert('The video you selected is longer than 2 mins. Please trim it when you get to the next page.');
+        }
       }
+    }catch (err) {
+      console.error("Error checking video duration", err);
+      alert('Failed to verify video duration. Please try another file.');
+      return;
     }
 
     // Proceed to finalize media selection
@@ -79,9 +85,10 @@ const SelectMedia = () => {
     return new Promise((resolve) => {
       const videoURL = URL.createObjectURL(videoFile);
       const videoElement = document.createElement('video');
+      videoElement.preload = 'metadata';
       videoElement.src = videoURL;
       videoElement.onloadedmetadata = () => {
-        resolve(videoElement.duration <= 60);
+        resolve(videoElement.duration <= 120);
       };
     });
   };

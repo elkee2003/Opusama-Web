@@ -167,7 +167,9 @@ function PostList() {
         const lowerSearchQuery = searchQuery.toLowerCase();
         const filteredResults = posts.filter(post =>
             post.title.toLowerCase().includes(lowerSearchQuery) ||
-            post.content.toLowerCase().includes(lowerSearchQuery)
+            post.content.toLowerCase().includes(lowerSearchQuery) ||
+            post.instigatorName.toLowerCase().includes(lowerSearchQuery) || 
+            post.instigatorUsername.toLowerCase().includes(lowerSearchQuery)
         );
 
         setFilteredPosts(filteredResults);

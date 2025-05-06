@@ -17,10 +17,22 @@ const NotificationCom = () => {
       const all = await DataStore.query(Notification, n =>
         n.recipientID.eq(dbUser.id)
       );
-      setNotifications(all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))); // newest first
+      setNotifications(all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
     };
 
     fetchNotifications();
+
+    const subscription = DataStore.observe(Notification).subscribe(async (msg) => {
+      const { element, opType } = msg;
+
+      // Only react to notifications meant for this user
+      if (element.recipientID !== dbUser.id) return;
+
+      // Refetch the full notification list on any change
+      await fetchNotifications();
+    });
+
+    return () => subscription.unsubscribe();
   }, [dbUser]);
 
   const handleNotificationClick = async (notification) => {

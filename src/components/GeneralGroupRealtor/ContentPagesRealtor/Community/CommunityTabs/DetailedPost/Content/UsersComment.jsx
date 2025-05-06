@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { formatDistanceStrict } from "date-fns";
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityReply } from '../../../../../../../models';
+import { CommunityReply, Notification } from '../../../../../../../models';
 
 const UsersComment = ({ replies: initialReplies }) => {
     const navigate = useNavigate();
@@ -20,18 +20,29 @@ const UsersComment = ({ replies: initialReplies }) => {
     // Delete Reply Function
     const handleDelete = async (replyId) => {
         try {
-            setDeleting(replyId); // Set loading state for the reply being deleted
-
+            setDeleting(replyId);
+        
             // Query the reply from DataStore
             const replyToDelete = await DataStore.query(CommunityReply, replyId);
-            if (replyToDelete) {
-                await DataStore.delete(replyToDelete);
-
-                // Remove the deleted reply from state
-                setReplies(prevReplies => prevReplies.filter(reply => reply.id !== replyId));
+            if (!replyToDelete) throw new Error("Reply not found");
+        
+            // Query the all notifications from DataStore
+            const allNotifications = await DataStore.query(Notification);
+            const relatedNotifications = allNotifications.filter(n => n.entityID === replyId);
+        
+            if (relatedNotifications.length > 0) {
+                await Promise.all(
+                    relatedNotifications.map(n => DataStore.delete(n))
+                );
             }
+        
+            // Delete the reply itself
+            await DataStore.delete(replyToDelete);
+
+            // Remove the deleted reply from state
+            setReplies(prev => prev.filter(r => r.id !== replyId));
         } catch (error) {
-            console.error("Error deleting reply:", error);
+            console.error("Error during deletion:", error);
         } finally {
             setDeleting(null);
         }

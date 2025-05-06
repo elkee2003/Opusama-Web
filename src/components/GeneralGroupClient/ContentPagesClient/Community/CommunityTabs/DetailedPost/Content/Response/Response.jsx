@@ -24,6 +24,7 @@ const Response = () => {
         try {
             setLoading(true);
 
+            // 1. Save the comment reply
             const savedReply = await DataStore.save(
                 new CommunityReply({
                     comment: comment.trim(),
@@ -32,6 +33,7 @@ const Response = () => {
                 })
             );
 
+            // 2. Notify the post creator (default)
             await DataStore.save(
                 new Notification({
                     creatorID: dbUser.id,

@@ -19,6 +19,7 @@ type CommunityLike @model @auth(rules: [{allow: public}]) {
 type CommunityReply @model @auth(rules: [{allow: public}]) {
   id: ID!
   comment: String
+  media: [String]
   commenterID: String
   communitydiscussionID: ID! @index(name: "byCommunityDiscussion")
 }
@@ -58,6 +59,7 @@ type PostComment @model @auth(rules: [{allow: public}]) {
   id: ID!
   comment: String
   commenterID: String
+  realtorID: String
   postID: ID! @index(name: "byPost")
 }
 
@@ -179,6 +181,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   state: String
   city: String
   PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
+  isApproved: String
   realtorID: ID! @index(name: "byRealtor")
 }
  

@@ -21,7 +21,7 @@ const DisplayMedia = () => {
     if (videos.length === 1) {
       const isValid = await checkVideoDuration(videos[0].uri);
       if (!isValid) {
-        alert('The selected video is longer than 60 seconds. Click to trim it before proceeding.');
+        alert('The selected video is longer than 2 mins. Click to trim it before proceeding.');
         return;
       }
     }
@@ -41,7 +41,7 @@ const DisplayMedia = () => {
       const videoElement = document.createElement('video');
       videoElement.src = videoUri;
       videoElement.onloadedmetadata = () => {
-        resolve(videoElement.duration <= 60);
+        resolve(videoElement.duration <= 121);
       };
     });
   };

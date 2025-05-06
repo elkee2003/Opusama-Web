@@ -200,6 +200,14 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "media": {
+                    "name": "media",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "commenterID": {
                     "name": "commenterID",
                     "isArray": false,
@@ -404,6 +412,13 @@ export const schema = {
                 },
                 "commenterID": {
                     "name": "commenterID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "realtorID": {
+                    "name": "realtorID",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1538,6 +1553,13 @@ export const schema = {
                         ]
                     }
                 },
+                "isApproved": {
+                    "name": "isApproved",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "realtorID": {
                     "name": "realtorID",
                     "isArray": false,
@@ -1623,5 +1645,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "57005b8e4ea310ac6a078b4860ed3138"
+    "version": "5e4482b8090e0a1cedf7ee40ba50edce"
 };

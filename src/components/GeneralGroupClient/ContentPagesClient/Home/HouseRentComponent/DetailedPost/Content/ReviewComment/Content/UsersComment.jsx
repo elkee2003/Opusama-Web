@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
-import { PostComment, User, Realtor  } from '../../../../../../../../../models';
+import { PostComment, Notification, User, Realtor  } from '../../../../../../../../../models';
 import { useAuthContext } from '../../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useParams, useNavigate} from "react-router-dom";
 import { MdDelete } from "react-icons/md";
@@ -49,8 +49,21 @@ const UsersComment = () => {
     try {
       setDeleting(commentId); // Set loading state for the comment being deleted
 
-      // Query the comment from DataStore
+      // 1. Query the comment from DataStore
       const commentToDelete = await DataStore.query(PostComment, commentId);
+
+       // 2. Find associated notifications
+      const allNotifications = await DataStore.query(Notification);
+      const relatedNotifications = allNotifications.filter(n => n.entityID === commentId);
+
+      // 3. Delete related notifications
+      if (relatedNotifications.length > 0) {
+        await Promise.all(
+          relatedNotifications.map(n => DataStore.delete(n))
+        );
+      }
+      
+      // 4. Delete the comment
       if (commentToDelete) {
         await DataStore.delete(commentToDelete);
 

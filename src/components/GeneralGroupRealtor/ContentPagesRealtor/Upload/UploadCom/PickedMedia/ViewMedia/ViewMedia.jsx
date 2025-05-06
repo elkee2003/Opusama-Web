@@ -16,7 +16,7 @@ const formatTime = (seconds) => {
     return [hrs, mins, secs].map((v) => v.toString().padStart(2, "0")).join(":");
 };
 
-const MAX_TRIM_DURATION = 60; // Maximum trim duration in seconds
+const MAX_TRIM_DURATION = 120; // Maximum trim duration in seconds
 
 const getValidFileUrl = async (uri) => {
     if (uri.startsWith("file://")) {

@@ -103,6 +103,7 @@ type EagerCommunityReply = {
   };
   readonly id: string;
   readonly comment?: string | null;
+  readonly media?: (string | null)[] | null;
   readonly commenterID?: string | null;
   readonly communitydiscussionID: string;
   readonly createdAt?: string | null;
@@ -116,6 +117,7 @@ type LazyCommunityReply = {
   };
   readonly id: string;
   readonly comment?: string | null;
+  readonly media?: (string | null)[] | null;
   readonly commenterID?: string | null;
   readonly communitydiscussionID: string;
   readonly createdAt?: string | null;
@@ -176,6 +178,7 @@ type EagerPostComment = {
   readonly id: string;
   readonly comment?: string | null;
   readonly commenterID?: string | null;
+  readonly realtorID?: string | null;
   readonly postID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -189,6 +192,7 @@ type LazyPostComment = {
   readonly id: string;
   readonly comment?: string | null;
   readonly commenterID?: string | null;
+  readonly realtorID?: string | null;
   readonly postID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -495,6 +499,7 @@ type EagerPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly PostComments?: (PostComment | null)[] | null;
+  readonly isApproved?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -539,6 +544,7 @@ type LazyPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly PostComments: AsyncCollection<PostComment>;
+  readonly isApproved?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

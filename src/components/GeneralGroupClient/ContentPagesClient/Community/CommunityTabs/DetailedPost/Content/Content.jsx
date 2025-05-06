@@ -18,6 +18,7 @@ const Content = ({post, onDelete}) => {
     const {authUser, dbUser} = useAuthContext();
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
+    const [repliesCount, setRepliesCount] = useState(0);
 
     // Time format
     const formattedTime = post.createdAt
@@ -37,6 +38,18 @@ const Content = ({post, onDelete}) => {
         .replace(" years", "y")
         .replace(" year", "y")
     : "Just now";
+
+    // function to fetch replies
+    const fetchRepliesCount = async () => {
+      try {
+        const replies = await DataStore.query(CommunityReply, (r) =>
+          r.communitydiscussionID.eq(post.id)
+        );
+        setRepliesCount(replies.length);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
 
     // Delete Post Function
     const handleDelete = async (e) => {
@@ -94,7 +107,7 @@ const Content = ({post, onDelete}) => {
               const relatedNotifications = await DataStore.query(Notification, (n) =>
                   n.and(n => [
                       n.type.eq("LIKE"),
-                      n.entityID.eq(like.id),
+                      n.entityID.eq(post.id),
                       n.recipientID.eq(post.creatorOfPostID)
                   ])
               );
@@ -120,7 +133,7 @@ const Content = ({post, onDelete}) => {
                 recipientID:post.creatorOfPostID,
                 recipientType: 'POST_CREATOR_LIKE',
                 type: "LIKE",
-                entityID: savedLike.id,
+                entityID: post.id,
                 message: `Someone liked your post`,
                 read: false,
             })
@@ -154,6 +167,21 @@ const Content = ({post, onDelete}) => {
         navigate('/')
       }
     };
+
+    // Fetch updated replies
+    useEffect(() => {
+      fetchRepliesCount(); // Initial fetch
+    
+      const subscription = DataStore.observe(CommunityReply).subscribe((msg) => {
+        if (msg.element.communitydiscussionID !== post.id) return;
+    
+        if (["INSERT", "DELETE"].includes(msg.opType)) {
+          fetchRepliesCount(); // Refresh the count
+        }
+      });
+    
+      return () => subscription.unsubscribe();
+    }, [post.id]);
 
     
     // Fetch updated likes
@@ -246,7 +274,7 @@ const Content = ({post, onDelete}) => {
             <div className="detEngagementrow">
               <FaRegCommentDots className='detEngagementIcon'/>
               <p className='detEngagementNum'>
-                {post.numComments}
+                {repliesCount}
               </p>
             </div>
 

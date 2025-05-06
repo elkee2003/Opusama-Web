@@ -96,7 +96,7 @@ function Post({post, onDelete}) {
                 const relatedNotifications = await DataStore.query(Notification, (n) =>
                     n.and(n => [
                         n.type.eq("LIKE"),
-                        n.entityID.eq(like.id),
+                        n.entityID.eq(post.id),
                         n.recipientID.eq(post.creatorOfPostID)
                     ])
                 );
@@ -122,7 +122,7 @@ function Post({post, onDelete}) {
                         recipientID:post.creatorOfPostID,
                         recipientType: 'POST_CREATOR_LIKE',
                         type: "LIKE",
-                        entityID: savedLike.id,
+                        entityID: post.id,
                         message: `Someone liked your post`,
                         read: false,
                     })
