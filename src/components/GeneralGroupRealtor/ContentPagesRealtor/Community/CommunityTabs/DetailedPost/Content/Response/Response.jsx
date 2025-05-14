@@ -4,7 +4,7 @@ import './Response.css';
 import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityReply, Notification } from '../../../../../../../../models';
+import { CommunityReply, Notification, User, Realtor } from '../../../../../../../../models';
 
 const Response = () => {
     const navigate = useNavigate();
@@ -14,6 +14,9 @@ const Response = () => {
     const { dbRealtor } = useAuthContext(); 
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
+    const [allUsernames, setAllUsernames] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
+    const [cursorPosition, setCursorPosition] = useState(null);
 
     const handleCommentSubmit = async () => {
         if (!comment.trim()) {
