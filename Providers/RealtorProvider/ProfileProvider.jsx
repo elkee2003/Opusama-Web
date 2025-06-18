@@ -14,7 +14,8 @@ const ProfileContextProvider = ({children}) => {
     const [myDescription, setMyDescription] = useState("")
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber]= useState("");
-    const [bankname, setBankname]= useState("");
+    const [bankName, setBankName]= useState("");
+    const [bankCode, setBankCode,]= useState("");
     const [accountName, setAccountName]= useState("");
     const [accountNumber, setAccountNumber]= useState("");
     const [errorMessage, setErrorMessage] = useState('');
@@ -41,7 +42,7 @@ const ProfileContextProvider = ({children}) => {
           setErrorMessage('Address is required')
           return false;
         }
-        if(!bankname){
+        if(!bankName){
           setErrorMessage('Bank name is required')
           return false;
         }
@@ -73,7 +74,7 @@ const ProfileContextProvider = ({children}) => {
             setMyDescription(dbRealtor.myDescription || "");
             setAddress(dbRealtor.address || "");
             setPhoneNumber(dbRealtor.phoneNumber || "");
-            setBankname(dbRealtor.bankname || "");
+            setBankname(dbRealtor.bankName || "");
             setAccountName(dbRealtor.accountName || "");
             setAccountNumber(dbRealtor.accountNumber || "");
         }
@@ -81,7 +82,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankname, setBankname, accountName, setAccountName, accountNumber, setAccountNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
         {children}
     </ProfileContext.Provider>
   )

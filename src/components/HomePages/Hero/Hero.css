@@ -8,17 +8,41 @@
     width: 100%;
     padding-bottom: 2rem; 
     transition: background-image 0.3s ease-in-out;
-  }
+}
+
+.hero-Overlay {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  /* z-index: 500; */
+  background-color: rgba(0, 0, 0, 0.63);
+}
+
+.writeup-container {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  padding:50px 20px;
+  font-weight: 600;
+  color:rgb(240, 239, 239);
+  z-index: 300;
+}
+
+.writeup-container span{
+  color: var(--bluecolor);
+}
   
 
 /* Button container styling */
-.hero-btn-container {
+/* .hero-btn-container {
   padding-top: 70vh;
-}
+} */
 
 
   /* Styling for the button */
-  .hero-button {
+  /* .hero-button {
     padding: 0.8rem 1.5rem; 
     font-size: 1rem; 
     font-weight: 600; 
@@ -30,45 +54,45 @@
     text-transform: capitalize; 
     margin-left: 2rem;
     cursor: pointer;
-  }
+  } */
 
   
   /* Button hover effect */
   .hero-button:hover {
-    transform: scale(1.05); 
+    /* transform: scale(1.05); 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background: var(--blue-gradient); /* Darker shade on hover */
+    background: var(--blue-gradient); */
   }
 
-  .heroSearchBtn {
-    min-width: 300px;
-    margin-top: -3.5%;
-    margin-left: 30vw;
+  .hero-explore-con {
     display: flex;
-    flex-direction: row;
-    background: rgba(255, 255, 255);
     justify-content: center;
     align-items: center;
-    gap:20px;
-    padding:10px;
-    border-radius: 20px;
-    border:2px solid rgb(36, 31, 31, 0.5);
-    box-shadow: 0px 4px 6px rgba(80, 238, 7, 0.5), 0px 1px 3px rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    padding: 0.5rem; 
+    width:12rem; 
+    background: var(--bluecolor);
+    border: none;
+    border-radius: 10px; 
     cursor: pointer;
+    transition: all 0.3s ease; 
   }
 
-  .heroSearchBtnTxt {
-    font-size: 1.1rem;
-    color:rgb(131, 129, 129)
-  }
+ .hero-explore-txt {
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    color: rgb(245, 245, 245);
+    text-transform: capitalize;
+ } 
 
-  .searchIcon {
-    color:white;
-    background-color: rgb(3, 3, 41, 0.8);
-    padding:7px;
-    font-size: 20px;
-    border-radius: 10px;
-  }
+ .hero-explore-con:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: var(--blue-gradient); 
+ }
 
 /* For smaller devices, ensure responsiveness */
 
@@ -112,32 +136,41 @@
 }
 
 @media (max-width: 1300px) {
-  .heroSearchBtn{
-    margin-top: -5%;
-    margin-left: 50vw;
-    max-width: 300;
+  .writeup-container {
+    font-size: 3.5rem;
   }
 }
+
 @media (max-width: 900px) {
-  /* .hero-btn-container {
-  } */
-  .hero-button{
-    margin-left: -3rem;
+  .writeup-container {
+    position: absolute;
+    top:50%;
+    left: 25%;
+    transform: translate(-18%, -50%);
+    font-size: 2.8rem;
   }
-  .heroSearchBtn{
-    margin-top: -10%;
-    margin-left: 45vw;
-    max-width: 300px
-  }
+  
 }
 @media (max-width: 500px) {
-  .hero-button{
-    margin-left: 1.4rem;
+
+  .writeup-container {
+    top:45%;
+    left: 50%;
+    padding:0 0;
+    transform: translate(-50%, -50%);
+    font-size: 2.7rem;
   }
-  .heroSearchBtn{
-    margin-top: 5%;
-    margin-left: 13vw;
-    max-width: 300px
+
+  .hero-explore-con {
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10rem;
+    padding: 0.5rem; 
+  }
+
+  .hero-explore-txt {
+    font-size: 1.3rem;
   }
 }
 

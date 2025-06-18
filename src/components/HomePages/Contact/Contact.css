@@ -36,6 +36,9 @@
     color: var(--black);
 }
 
+/* .bold-txt {
+}  it is in aboutus.css*/
+
 @media (max-width: 768px) {
     .contact-row {
         display: flex;

@@ -1,0 +1,16 @@
+.aboutUs-wrapper {
+    width: 100%;
+    background-color: var(--offWhite);
+    display: flex; 
+    align-items: center;
+}
+.aboutUs-container{
+    justify-content: center;
+}
+
+.bold-txt {
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+}

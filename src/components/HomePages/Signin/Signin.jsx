@@ -113,7 +113,7 @@ const Signin = () => {
     >
 
         {/* Title Section */}
-        <h1 className="primaryText signin-title-left">Sign In Screen</h1>
+        <h1 className="primaryText signin-title-left">Sign In</h1>
 
         {/* Buttons for selecting user type */}
         <div className="signin-switcher">

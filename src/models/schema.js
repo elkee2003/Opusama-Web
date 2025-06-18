@@ -1140,15 +1140,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "bankname": {
-                    "name": "bankname",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "accountName": {
-                    "name": "accountName",
+                "bankName": {
+                    "name": "bankName",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1170,8 +1163,8 @@ export const schema = {
                         ]
                     }
                 },
-                "accountNumber": {
-                    "name": "accountNumber",
+                "bankCode": {
+                    "name": "bankCode",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1208,6 +1201,20 @@ export const schema = {
                             "realtorID"
                         ]
                     }
+                },
+                "accountName": {
+                    "name": "accountName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "accountNumber": {
+                    "name": "accountNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "push_token": {
                     "name": "push_token",
@@ -1645,5 +1652,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "5e4482b8090e0a1cedf7ee40ba50edce"
+    "version": "2320e758b339054fc20cca18db3ef814"
 };

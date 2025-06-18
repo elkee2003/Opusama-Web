@@ -132,12 +132,13 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   email: String
   address: String
   phoneNumber: String
-  bankname: String
-  accountName: String
+  bankName: String
   Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
-  accountNumber: String
+  bankCode: String
   Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
   RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
+  accountName: String
+  accountNumber: String
   push_token: String
   isVerified: Boolean
   isPartner: Boolean

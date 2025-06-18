@@ -32,27 +32,27 @@ const Hero = () => {
     const isSmallScreen = useMediaQuery("(min-width: 250px) and (max-width: 499px)");
 
     const largeScreenImages = [
-        "/hero1.png",
-        "/hero2.png",
-        "/hero3.png",
-        "/hero4.png",
-        "/hero5.png",
+        "/hero1.jpg",
+        "/hero2.jpg",
+        "/hero3.jpg",
+        "/hero4.jpg",
+        // "/hero5.jpg",
     ];
 
     const mediumScreenImages = [
-        'hero1medium.png',
-        'hero2medium.png',
-        'hero3medium.png',
-        'hero4medium.png',
-        'hero5medium.png',
+        "/hero1.jpg",
+        "/hero2.jpg",
+        "/hero3.jpg",
+        "/hero4.jpg",
+        // "/hero5.jpg",
     ]
 
     const smallScreenImages = [
-        'hero1small.png',
-        'hero2small.png',
-        'hero3small.png',
-        'hero4small.png',
-        'hero5small.png',
+        'hero1small.jpg',
+        'hero2.jpg',
+        'hero3.jpg',
+        'hero4small.jpg',
+        // 'hero5small.jpg',
     ]
 
     // Choose images based on screen size
@@ -71,7 +71,7 @@ const Hero = () => {
     useEffect(() => {
         const interval = setInterval(() => {
           setCurrentImage((prev) => (prev + 1) % images.length); // Loop through images
-        }, 7000); // 5000ms = 7 seconds
+        }, 4000); // 4000ms = 4 seconds
     
         // Cleanup interval on component unmount
         return () => clearInterval(interval);
@@ -94,6 +94,14 @@ const Hero = () => {
         }} 
     >
 
+        {/* Write up section */}
+        <div className="writeup-container">
+            <span>Own</span> The  City<span> Live</span> The Experience
+        </div>
+
+        {/* Hero Overlay */}
+        <div className="hero-Overlay" />
+
         {/* Button container */}
         <div className="hero-btn-container">
 
@@ -101,28 +109,17 @@ const Hero = () => {
                 Download App
             </button> */}
             
-            <button className="hero-button" onClick={navigateToSignIn}>
+            {/* <button className="hero-button" onClick={navigateToSignIn}>
                 Sign In
-            </button>
+            </button> */}
         </div>
 
         {/* Search */}
-        <div>
-            <button 
-                className="heroSearchBtn"
-                onClick={()=>navigate('/clientcontent/home')}
-            >
-                <FontAwesomeIcon
-                    icon={faSearch}
-                    size="lg" 
-                    className='searchIcon'
-                />
-
-                <p className="heroSearchBtnTxt">
-                    {/* Property, Gym, Park... */}
-                    Search for properties...
-                </p>
-            </button>
+        <div
+            className="hero-explore-con"
+            onClick={()=>navigate('/clientcontent/home')}
+        >
+            <p className="hero-explore-txt">Explore</p>
         </div>
     </div>
   )

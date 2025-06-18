@@ -13,13 +13,10 @@ const Contact = () => {
           <span className="greenText">Our Contacts</span>
           <span className="primaryText">Easy to Contact us</span>
           <span className="secondaryText">
-            Whether you're an agent looking to showcase your listings or a client seeking your dream space or booking, we are committed to making your experience seamless.
+            Whether you're listing your space, joining the movement, or need help exploring your next experience — we're always here.
           </span>
           <span className="secondaryText">
             Reach out to us via email, mobile, WhatsApp or Instagram, and we'll get back to you as soon as possible.
-          </span>
-          <span className="secondaryText">
-            Your journey to the perfect property starts here - let's make it happen!
           </span>
 
           {/* Contact details */}
@@ -52,6 +49,10 @@ const Contact = () => {
                     <span>@opusamaapp</span>
                 </div>
             </div>
+
+            <span className="secondaryText bold-txt">
+              Opusama. Own the City. Live the Experience.
+            </span>
           </div>
         </div>
       </div>

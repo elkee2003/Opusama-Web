@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './EditProfile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import BankDetails from "./BankDetails";
 import { signOut } from "aws-amplify/auth";
 import { useAuthContext } from "../../../../../../Providers/ClientProvider/AuthProvider";
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
@@ -32,8 +33,8 @@ const EditProfile = () => {
     setAddress,
     phoneNumber,
     setPhoneNumber,
-    bankname, 
-    setBankname,
+    bankName, 
+    setBankName,
     accountName, 
     setAccountName, 
     accountNumber, 
@@ -46,7 +47,6 @@ const EditProfile = () => {
   // const [loading, setLoading] = useState(false);
 
   const [remainingWords, setRemainingWords] = useState(150);
-  
 
   // Pick Image function for web
   const pickImage = (e) => {
@@ -293,26 +293,7 @@ const EditProfile = () => {
               className="realtorProfileInput"
             />
 
-            <textarea
-              value={bankname}
-              onChange={(e) => setBankname(e.target.value)}
-              placeholder="Bank name"
-              className="realtorProfileInput"
-            />
-
-            <textarea
-              value={accountName}
-              onChange={(e) => setAccountName(e.target.value)}
-              placeholder="Account name"
-              className="realtorProfileInput"
-            />
-
-            <textarea
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-              placeholder="Account number"
-              className="realtorProfileInputLast"
-            />
+            <BankDetails/>
           </div>
 
           {/* Error Message */}

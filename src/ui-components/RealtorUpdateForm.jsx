@@ -38,7 +38,8 @@ export default function RealtorUpdateForm(props) {
     email: "",
     address: "",
     phoneNumber: "",
-    bankname: "",
+    bankName: "",
+    bankCode: "",
     accountName: "",
     accountNumber: "",
     push_token: "",
@@ -61,7 +62,8 @@ export default function RealtorUpdateForm(props) {
   const [phoneNumber, setPhoneNumber] = React.useState(
     initialValues.phoneNumber
   );
-  const [bankname, setBankname] = React.useState(initialValues.bankname);
+  const [bankName, setBankName] = React.useState(initialValues.bankName);
+  const [bankCode, setBankCode] = React.useState(initialValues.bankCode);
   const [accountName, setAccountName] = React.useState(
     initialValues.accountName
   );
@@ -88,7 +90,8 @@ export default function RealtorUpdateForm(props) {
     setEmail(cleanValues.email);
     setAddress(cleanValues.address);
     setPhoneNumber(cleanValues.phoneNumber);
-    setBankname(cleanValues.bankname);
+    setBankName(cleanValues.bankName);
+    setBankCode(cleanValues.bankCode);
     setAccountName(cleanValues.accountName);
     setAccountNumber(cleanValues.accountNumber);
     setPush_token(cleanValues.push_token);
@@ -120,7 +123,8 @@ export default function RealtorUpdateForm(props) {
     email: [],
     address: [],
     phoneNumber: [],
-    bankname: [],
+    bankName: [],
+    bankCode: [],
     accountName: [],
     accountNumber: [],
     push_token: [],
@@ -165,7 +169,8 @@ export default function RealtorUpdateForm(props) {
           email,
           address,
           phoneNumber,
-          bankname,
+          bankName,
+          bankCode,
           accountName,
           accountNumber,
           push_token,
@@ -238,7 +243,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -279,7 +285,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -320,7 +327,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -361,7 +369,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -402,7 +411,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -443,7 +453,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -484,7 +495,8 @@ export default function RealtorUpdateForm(props) {
               email: value,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -525,7 +537,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address: value,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -566,7 +579,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber: value,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -590,10 +604,10 @@ export default function RealtorUpdateForm(props) {
         {...getOverrideProps(overrides, "phoneNumber")}
       ></TextField>
       <TextField
-        label="Bankname"
+        label="Bank name"
         isRequired={false}
         isReadOnly={false}
-        value={bankname}
+        value={bankName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -607,7 +621,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname: value,
+              bankName: value,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -618,17 +633,59 @@ export default function RealtorUpdateForm(props) {
               isTrusted,
             };
             const result = onChange(modelFields);
-            value = result?.bankname ?? value;
+            value = result?.bankName ?? value;
           }
-          if (errors.bankname?.hasError) {
-            runValidationTasks("bankname", value);
+          if (errors.bankName?.hasError) {
+            runValidationTasks("bankName", value);
           }
-          setBankname(value);
+          setBankName(value);
         }}
-        onBlur={() => runValidationTasks("bankname", bankname)}
-        errorMessage={errors.bankname?.errorMessage}
-        hasError={errors.bankname?.hasError}
-        {...getOverrideProps(overrides, "bankname")}
+        onBlur={() => runValidationTasks("bankName", bankName)}
+        errorMessage={errors.bankName?.errorMessage}
+        hasError={errors.bankName?.hasError}
+        {...getOverrideProps(overrides, "bankName")}
+      ></TextField>
+      <TextField
+        label="Bank code"
+        isRequired={false}
+        isReadOnly={false}
+        value={bankCode}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankName,
+              bankCode: value,
+              accountName,
+              accountNumber,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.bankCode ?? value;
+          }
+          if (errors.bankCode?.hasError) {
+            runValidationTasks("bankCode", value);
+          }
+          setBankCode(value);
+        }}
+        onBlur={() => runValidationTasks("bankCode", bankCode)}
+        errorMessage={errors.bankCode?.errorMessage}
+        hasError={errors.bankCode?.hasError}
+        {...getOverrideProps(overrides, "bankCode")}
       ></TextField>
       <TextField
         label="Account name"
@@ -648,7 +705,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName: value,
               accountNumber,
               push_token,
@@ -689,7 +747,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber: value,
               push_token,
@@ -730,7 +789,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token: value,
@@ -771,7 +831,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -812,7 +873,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -853,7 +915,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -894,7 +957,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,
@@ -935,7 +999,8 @@ export default function RealtorUpdateForm(props) {
               email,
               address,
               phoneNumber,
-              bankname,
+              bankName,
+              bankCode,
               accountName,
               accountNumber,
               push_token,

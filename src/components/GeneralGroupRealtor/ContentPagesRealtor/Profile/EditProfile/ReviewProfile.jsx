@@ -11,7 +11,7 @@ import { uploadData, remove } from 'aws-amplify/storage';
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const {firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber, bankname, accountName, accountNumber, myDescription} = useProfileContext()
+  const {firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, myDescription} = useProfileContext()
 
   const { dbRealtor, setDbRealtor, sub } = useAuthContext();
 
@@ -111,7 +111,7 @@ const ReviewDetails = () => {
       const user = await DataStore.save(
         new Realtor({
           profilePic: uploadedImagePath,
-          firstName, lastName, username, myDescription, address, phoneNumber, bankname, accountName, accountNumber,
+          firstName, lastName, username, myDescription, address, phoneNumber, bankName, accountName, accountNumber,
           sub
         })
       );
@@ -136,7 +136,7 @@ const ReviewDetails = () => {
           updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
-          updated.bankname = bankname;
+          updated.bankName = bankName;
           updated.accountName = accountName,
           updated.accountNumber = accountNumber;
         })
@@ -201,7 +201,7 @@ const ReviewDetails = () => {
         <p className='subHeader'>Phone Number:</p>
         <p className='realtorInputReview'>{phoneNumber}</p>
         <p className='subHeader'>Bank Name:</p>
-        <p className='realtorInputReview'>{bankname?.trim()}</p>
+        <p className='realtorInputReview'>{bankName?.trim()}</p>
         <p className='subHeader'>Account Name:</p>
         <p className='realtorInputReview'>{accountName?.trim()}</p>
         <p className='subHeader'>Account Number:</p>

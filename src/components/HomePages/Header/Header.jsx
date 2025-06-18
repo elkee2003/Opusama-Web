@@ -111,6 +111,11 @@ const Header = () => {
                   Home
                 </span>
 
+                {/* AboutUs */}
+                <span onClick={() => navigateAndScroll('/', 'aboutUs')}>
+                  About Us
+                </span>
+
                 {/* Offers */}
                 <span onClick={() => navigateAndScroll('/', 'offers')}>
                   Offers
@@ -118,7 +123,7 @@ const Header = () => {
 
                 {/* Sign-in / Get Started */}
                 <span onClick={() => navigateAndScroll('/', 'signin')}>
-                  Get Started
+                  Sign In
                 </span>
 
                 {isMobileView && (

@@ -11,84 +11,54 @@ const Offers = () => {
         <div className="paddings innerWidth flexColStart offer-container">
             <h1 className="primaryText">What We Offer</h1>
             <p className="secondaryText">
-            Opusama is your trusted platform for finding the perfect property. Whether you're a client looking for properties or an agent showcasing listings, we connect you seamlessly.
+                Opusama is your trusted platform for finding the perfect property. Whether you're a client looking for properties or an agent showcasing listings, we connect you seamlessly.
             </p>
 
-            {/* For Clients */}
-            <div className="offer-section">
-                <h2 className="section-title">
-                    For Clients
-                </h2>
+            <div className='offer-section'>
                 <div className="offer-items">
-                    <div className="offer-item">
-                        <FaHome className="offer-icon" />
-                        <h3>Houses for Rent</h3>
+
+                    {/* For Clients */}
+                    <div className='offer-item'>
+                        <h2 className="section-title">
+                            For everyday explorers
+                        </h2>
                         <p>
-                            Discover comfortable and affordable rental homes.
+                            Discover verified homes, shortlets, student housing, restaurants, spas, pools, clubs, lounges, gyms, and more — all in one place.
+                        </p>
+                        <p>
+                            See authentic reviews, visitor photos, and collections curated by real people like you.
+                        </p>
+                        <p>
+                            Ask questions, share experiences, or follow community insights about safety, nightlife, neighborhoods, food and more.
+                        </p>
+                        <p>
+                            Create personal collections and bookmarks of where you've been or want to go next.
                         </p>
                     </div>
 
-                    <div className="offer-item">
-                        <FaBuilding className="offer-icon" />
-                        <h3>Houses for Sale</h3>
+                    {/* Agents / Business owners */}
+                    <div className='offer-item'>
+                        <h2 className="section-title">
+                            For business owners, realtors, and venue managers
+                        </h2>
                         <p>
-                            Browse through a variety of properties to purchase your dream home.
+                            Showcase your spaces with beautiful listings, visitor-generated reviews, and 1-minute video experiences.
                         </p>
-                    </div>
-
-                    <div className="offer-item">
-                        <FaLandmark className="offer-icon" />
-                        <h3>Land for Sale</h3>
                         <p>
-                            Secure land for your next project or investment.
+                            Get discovered by users actively searching for what you offer — not by chance, but by intent.
                         </p>
-                    </div>
-
-                    <div className="offer-item">
-                        <FaBuilding className="offer-icon" />
-                        <h3>Office Spaces</h3>
                         <p>
-                            Find professional office spaces to suit your business needs.
+                            Receive leads, bookings, and comments from interested customers.
                         </p>
-                    </div>
-
-                    <div className="offer-item">
-                        <FaHotel className="offer-icon" />
-                        <h3>Hotels and Short Stays</h3>
-                        <p>Book conveniently located hotels and short-stay apartments for your trips.</p>
-                    </div>
-                </div>
-
-                    {/* For Agents */}
-                <div className="offer-section">
-                    <h2 className="section-title">For Agents</h2>
-                    <div className="offer-items">
-                        <div className="offer-item">
-                            <FaUserTie className="offer-icon" />
-                            <h3>Showcase Listings</h3>
-                            <p>
-                                Post and manage your property listings effortlessly.
-                            </p>
-                        </div>
-
-                        <div className="offer-item">
-                            <FaUserTie className="offer-icon" />
-                            <h3>Connect with Clients</h3>
-                            <p>
-                                Reach a broader audience and grow your network.
-                            </p>
-                        </div>
-
-                        <div className="offer-item">
-                            <FaUserTie className="offer-icon" />
-                            <h3>Build Credibility</h3>
-                            <p>
-                                Enhance your reputation in the real estate market.
-                            </p>
-                        </div>
+                        <p>
+                            Enjoy enhanced visibility through promoted listings, spotlight ads, or inclusion in curated collections (e.g. “Top 5 Date Spots”).
+                        </p>
+                        <p>
+                            Tap into community conversations — get tagged, respond to feedback, and build loyalty.
+                        </p>
                     </div>
                 </div> 
-            </div> 
+            </div>
         </div>
     </section>
   );
