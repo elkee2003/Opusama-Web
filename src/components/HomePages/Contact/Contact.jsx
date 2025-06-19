@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaEnvelope, FaPhone, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter, FaTiktok } from "react-icons/fa6";
 import './Contact.css'
 
 const Contact = () => {
@@ -24,10 +25,14 @@ const Contact = () => {
 
             {/* Email and phone in one row */}
             <div className="contact-row">
-              <div className="contact-item">
-                <FaEnvelope className="contact-icon" />
-                <span>support@opusama.com</span>
-              </div>
+              <a
+                href="mailto:support@opusama.com?subject=Support%20Request&body=Hi%20Opusama%20Support%2C%0A%0AI%20need%20assistance%20with%20the%20following%20issue%3A%0A%0A%5BPlease%20describe%20your%20issue%20here%5D%0A%0AThank%20you%20for%20your%20support.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
+              >
+                <div className="contact-item">
+                  <FaEnvelope className="contact-icon" />
+                  <span>support@opusama.com</span>
+                </div>
+              </a>
 
               <div className="contact-item">
                 <FaPhone className="contact-icon" />
@@ -38,16 +43,56 @@ const Contact = () => {
             {/* Instagram and WhatApp */}
             <div className='contact-row'>
                 {/* WhatsApp */}
-                <div className="contact-item">
-                    <FaWhatsapp className="contact-icon" />
-                    <span>+234 902 252 2504</span>
-                </div>
+                <a 
+                  href="https://wa.me/2349022522504" 
+                  // className="contact-item"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <div className="contact-item">
+                      <FaWhatsapp className="contact-icon" />
+                      <span>+234 902 252 2504</span>
+                  </div>
+                </a>
 
                 {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/opusamaapp/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className="contact-item">
+                      <FaInstagram className="contact-icon" />
+                      <span>@opusamaapp</span>
+                  </div>
+                </a>
+            </div>
+
+            {/* Twitter & Tiktok */}
+            <div className="contact-row">
+              {/* Twitter */}
+              <a
+                href="https://x.com/opusamaapp"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div className="contact-item">
-                    <FaInstagram className="contact-icon" />
+                    <FaXTwitter className="contact-icon" />
                     <span>@opusamaapp</span>
                 </div>
+              </a>
+
+              {/* Tiktok*/}
+              <a
+                href="https://www.tiktok.com/@opusamapp"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="contact-item">
+                    <FaTiktok className="contact-icon" />
+                    <span>@opusamaapp</span>
+                </div>
+              </a>
             </div>
 
             <span className="secondaryText bold-txt">

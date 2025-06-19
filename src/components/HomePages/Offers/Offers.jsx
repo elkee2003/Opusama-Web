@@ -19,7 +19,7 @@ const Offers = () => {
         <div className="paddings innerWidth flexColStart offer-container">
             <h1 className="primaryText">What We Offer</h1>
             <p className="secondaryText">
-                Opusama is your trusted platform for finding the perfect property. Whether you're a client looking for properties or an agent showcasing listings, we connect you seamlessly.
+                Opusama is a bridge between discovery and experience — where people and places meet.
             </p>
 
             <div className='offer-section'>
