@@ -36,7 +36,10 @@ const Hero = () => {
         "/hero2.jpg",
         "/hero3.jpg",
         "/hero4.jpg",
-        // "/hero5.jpg",
+        "/hero5.jpg",
+        "/hero6.jpg",
+        "/hero7.jpg",
+        "/hero8.jpg",
     ];
 
     const mediumScreenImages = [
@@ -44,15 +47,21 @@ const Hero = () => {
         "/hero2.jpg",
         "/hero3.jpg",
         "/hero4.jpg",
-        // "/hero5.jpg",
+        "/hero5.jpg",
+        "/hero6.jpg",
+        "/hero7.jpg",
+        "/hero8.jpg",
     ]
 
     const smallScreenImages = [
         'hero1small.jpg',
-        'hero2.jpg',
+        'hero2small.jpg',
         'hero3.jpg',
         'hero4small.jpg',
-        // 'hero5small.jpg',
+        'hero5.jpg',
+        'hero6.jpg',
+        "/hero7small.jpg",
+        "/hero8small.jpg",
     ]
 
     // Choose images based on screen size
