@@ -1,24 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import "./Hero.css";
 
 // Custom hook to check screen width
 const useMediaQuery = (query) => {
-    const [matches, setMatches] = useState(window.matchMedia(query).matches);
-  
-    // useEffect to check media query to display background images
-    useEffect(() => {
-      const mediaQueryList = window.matchMedia(query);
-      const listener = (event) => setMatches(event.matches);
-  
-      mediaQueryList.addEventListener("change", listener);
-      return () => mediaQueryList.removeEventListener("change", listener);
-    }, [query]);
-  
-    return matches;
-}
+  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const mediaQueryList = window.matchMedia(query);
+    const listener = (event) => setMatches(event.matches);
+
+    mediaQueryList.addEventListener("change", listener);
+    return () => mediaQueryList.removeEventListener("change", listener);
+  }, [query]);
+
+  return matches;
+};
+
 
 const Hero = () => {
 
@@ -76,23 +74,43 @@ const Hero = () => {
         images = [];
     }
 
-    // Function to change the image every 5 seconds
+   // Preload images
     useEffect(() => {
-        const interval = setInterval(() => {
-          setCurrentImage((prev) => (prev + 1) % images.length); // Loop through images
-        }, 4000); // 4000ms = 4 seconds
-    
-        // Cleanup interval on component unmount
-        return () => clearInterval(interval);
-    }, [images.length]);
+        images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+        });
+    }, [images]);
 
-    const navigateToSignIn = () => {
-        const signInElement = document.getElementById('signin');
-        if (signInElement) {
-            const elementTop = signInElement.getBoundingClientRect().top + window.scrollY - 80; // Adjust for any fixed headers
-            window.scrollTo({ top: elementTop, behavior: 'smooth' });
-        }
-    };
+    // Change background image every 4 seconds
+    useEffect(() => {
+        let isMounted = true;
+
+        const changeImage = () => {
+        const nextIndex = (currentImage + 1) % images.length;
+        const img = new Image();
+        img.src = images[nextIndex];
+        img.onload = () => {
+            if (isMounted) {
+            setCurrentImage(nextIndex);
+            }
+        };
+        };
+
+        const interval = setInterval(changeImage, 4000);
+        return () => {
+        isMounted = false;
+        clearInterval(interval);
+        };
+    }, [currentImage, images]);
+
+    // const navigateToSignIn = () => {
+    //     const signInElement = document.getElementById('signin');
+    //     if (signInElement) {
+    //         const elementTop = signInElement.getBoundingClientRect().top + window.scrollY - 80; // Adjust for any fixed headers
+    //         window.scrollTo({ top: elementTop, behavior: 'smooth' });
+    //     }
+    // };
 
   return (
     <div
