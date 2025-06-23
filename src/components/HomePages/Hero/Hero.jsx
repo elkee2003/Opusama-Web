@@ -130,7 +130,7 @@ const Hero = () => {
         <div className="hero-Overlay" />
 
         {/* Button container */}
-        <div className="hero-btn-container">
+        {/* <div className="hero-btn-container"> */}
 
             {/* <button className="hero-button">
                 Download App
@@ -139,9 +139,9 @@ const Hero = () => {
             {/* <button className="hero-button" onClick={navigateToSignIn}>
                 Sign In
             </button> */}
-        </div>
+        {/* </div> */}
 
-        {/* Search */}
+        {/* Explore */}
         <div
             className="hero-explore-con"
             onClick={()=>navigate('/clientcontent/home')}

@@ -1,3 +1,8 @@
+.c-wrapper {
+    background-color: var(--offWhite);
+    display: flex; 
+    align-items: center;
+}
 .c-container{
     height: 100vh;
     justify-content: center;

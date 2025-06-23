@@ -1,6 +1,6 @@
 .aboutUs-wrapper {
     width: 100%;
-    background-color: var(--offWhite);
+    background-color: var(--white);
     display: flex; 
     align-items: center;
 }
