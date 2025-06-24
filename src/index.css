@@ -8,6 +8,7 @@
   --grey: rgb(194, 189, 189);
   --green-gradient: linear-gradient(270deg, #00fd15 75.76%, #32831e 100%);
   --blue-gradient: linear-gradient(97.05deg, #09123b 5.76%, #1134be 100%);
+  --blue-box-gradient: linear-gradient(185.05deg, #09123b 5.76%, #072085 100%);
   --light-blue-gradient: linear-gradient(77.05deg,#00f2fe 5.76%, #4facfe 100%);
   --blue-text-gradient: linear-gradient(90deg, #00f2fe, #4facfe);
   --gold-gradient: linear-gradient(97.05deg, #fcce00 5.76%, #ca9e24 100%);

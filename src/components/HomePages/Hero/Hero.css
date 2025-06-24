@@ -30,7 +30,7 @@
   font-weight: 500;
   color:rgb(240, 239, 239);
   z-index: 300;
-  animation: growIn 1.2s ease-out;
+  animation: growIn 2.5s ease-out;
 }
 
 .writeup-container span{
@@ -88,7 +88,7 @@
     cursor: pointer;
     transition: all 0.3s ease; 
     opacity: 0;
-    animation: appear 1.5s ease-out 1.5s;
+    animation: appear 1.5s ease-out 2.8s;
     animation-fill-mode: forwards;
   }
 

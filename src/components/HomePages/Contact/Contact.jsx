@@ -17,7 +17,7 @@ const Contact = () => {
             Whether you're listing your space, joining the movement, or need help exploring your next experience — we're always here.
           </span>
           <span className="secondaryText">
-            Reach out to us via email, mobile, WhatsApp or Instagram, and we'll get back to you as soon as possible.
+            Tap any of the options below — we're all ears and ready to help.
           </span>
 
           {/* Contact details */}

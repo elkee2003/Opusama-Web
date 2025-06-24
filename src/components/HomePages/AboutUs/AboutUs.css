@@ -12,5 +12,36 @@
     font-weight: 600;
 }
 
-@media (max-width: 768px) {
+.bg-image {
+    height: 70vh;
+    width: 90vw;
+    margin:1rem 0;
+    border-radius: 20px;
+    overflow: hidden;
+    /* background-color: transparent; */
+    background: rgb(245, 245, 245);
+    /* background: url('/backgroundBig.png'); */
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@media (max-width: 900px) {
+    .bg-image {
+        height: 75vh;
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+    .bg-image {
+        height: 75vh;
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
 }
