@@ -17,13 +17,18 @@ const Offers = () => {
         className="offer-wrapper"
     >
         <div className="paddings innerWidth flexColStart offer-container">
-            <h1 className="primaryText">What We Offer</h1>
-            <p className="secondaryText">
+            <h1 className="primaryText offer-section-header-txt">What We Offer</h1>
+            <p className="secondaryText offer-section-txt">
                 Opusama is a bridge between discovery and experience — where people and places meet.
             </p>
+            
 
             <div className='offer-section'>
                 <div className="offer-items">
+
+                    <div className='offer-image-con'>
+                        <img src={'/image1.png'} alt="image" className="offer-image" />
+                    </div>
 
                     {/* For Clients */}
                     <div className='offer-item'>

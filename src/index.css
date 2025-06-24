@@ -14,13 +14,14 @@
   --skyblue-gradient: linear-gradient(270deg, #083eb3 0%, #051f57 100%);
   --blue: #083eb3;
   --green: rgb(3, 231, 3);
-  --darkBlue: rgb(5, 11, 59);
+  --darkBlue: rgb(1, 3, 15);
   --bluecolor: #007fff;
   --testgold: rgb(214, 160, 47);
   --testsoftbeige: rgb(243, 239, 224);
   --testdarkgrey: rgb(60, 60, 60);
   --lightBlue: #5f5f8d;
   --shadow: 0px 23px 21px -8px rgba(31, 31, 32, 0.25);
+  --white-shadow: 10px 15px 21px -12px rgba(231, 230, 230, 0.15);
 }
 
 * {
@@ -82,7 +83,7 @@ a {
 }
 
 .primaryText {
-  color: #050524;
+  /* color: #050524; */
   font-weight: bold;
   font-size: 2.5rem;
 }
