@@ -21,9 +21,10 @@
     /* background-color: transparent; */
     background: rgb(245, 245, 245);
     /* background: url('/backgroundBig.png'); */
-    background-size: contain; 
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
+    transition: 0.8s ease-in-out;
 }
 
 @media (max-width: 900px) {

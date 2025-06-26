@@ -1,9 +1,10 @@
 .offer-wrapper {
     width: 100%;
-    background-color: var(--offWhite);
-    background-color: var(--darkBlue);
     display: flex; 
     align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
   
   .offer-container {
@@ -109,12 +110,11 @@
     margin:1rem 0;
     border-radius: 20px;
     overflow: hidden;
-    /* background-color: transparent; */
-    background: rgb(235, 7, 7);
-    /* background: url('/backgroundBig.png'); */
+    background-color: transparent;
     background-size: contain; 
     background-repeat: no-repeat;
     background-position: center;
+    transition: 0.8s ease-in-out;
   }
   
   /* Responsive Design */
@@ -169,3 +169,25 @@
       width: 200px;
     }
   }
+
+  /* for background */
+  /* Large screen */
+@media (min-width: 1000px) {
+  .bg-large {
+    background-image: url('/backgroundBig.png');
+  }
+}
+
+/* Medium screen */
+@media (min-width: 500px) and (max-width: 1099px) {
+  .bg-medium {
+    background-image: url('/backgroundBig.png');
+  }
+}
+
+/* Small screen */
+@media (min-width: 250px) and (max-width: 499px) {
+  .bg-small {
+    background-image: url('/backgroundSmall.png');
+  }
+}

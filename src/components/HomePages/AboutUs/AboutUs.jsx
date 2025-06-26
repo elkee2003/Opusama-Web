@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import './AboutUs.css';
 
 // Custom hook to check screen width
@@ -26,37 +26,33 @@ const AboutUs = () => {
     const isSmallScreen = useMediaQuery("(min-width: 250px) and (max-width: 499px)");
 
     const largeScreenImages = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image1Big.jpg',
+        '/image2Big.jpg',
+        '/image3Big.png',
+        '/image4Big.jpg',
     ];
 
     const mediumScreenImages = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image1Big.jpg',
+        '/image2Big.jpg',
+        '/image3Big.png',
+        '/image4Big.jpg',
     ]
 
     const smallScreenImages = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image1Small.png',
+        '/image2Small.jpeg',
+        '/image3Small.jpg',
+        '/image4Small.png',
     ]
 
     // Choose images based on screen size
-    let images;
-    if (isLargeScreen) {
-        images = largeScreenImages;
-    } else if (isMediumScreen) {
-        images = mediumScreenImages;
-    } else if (isSmallScreen) {
-        images = smallScreenImages;
-    } else {
-        images = [];
-    }
+    const images = useMemo(() => {
+            if (isLargeScreen) return largeScreenImages;
+            if (isMediumScreen) return mediumScreenImages;
+            if (isSmallScreen) return smallScreenImages;
+            return [];
+    }, [isLargeScreen, isMediumScreen, isSmallScreen]);
 
 
     // Preload images
@@ -72,23 +68,22 @@ const AboutUs = () => {
         let isMounted = true;
 
         const changeImage = () => {
-        const nextIndex = (currentImage + 1) % images.length;
-        const img = new Image();
-        img.src = images[nextIndex];
-        img.onload = () => {
-            if (isMounted) {
-            setCurrentImage(nextIndex);
-            }
-        };
+            const nextIndex = (currentImage + 1) % images.length;
+            const img = new Image();
+            img.src = images[nextIndex];
+
+            img.onload = () => {
+            if (isMounted) setCurrentImage(nextIndex);
+            };
         };
 
         const interval = setInterval(changeImage, 6000);
+
         return () => {
-        isMounted = false;
-        clearInterval(interval);
+            isMounted = false;
+            clearInterval(interval);
         };
     }, [currentImage, images]);
-
 
   return (
     <section
@@ -107,9 +102,9 @@ const AboutUs = () => {
                     className='bg-image'
                     style={{
                         backgroundImage: `url(${images[currentImage]})`,
-                        backgroundSize: 'contain',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'center',
+                        // backgroundSize: 'contain',
+                        // backgroundRepeat: 'no-repeat',
+                        // backgroundPosition: 'center',
                     }} 
                 />
 

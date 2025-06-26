@@ -8,7 +8,7 @@ import { signIn } from 'aws-amplify/auth';
 const Signin = () => {
     // useNavigation
     const navigate = useNavigate();
-    const [activeUserType, setActiveUserType] = useState('client');
+    const [activeUserType, setActiveUserType] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -115,116 +115,164 @@ const Signin = () => {
         {/* Title Section */}
         <h1 className="primaryText signin-title-left">Sign In</h1>
 
-        {/* Buttons for selecting user type */}
-        <div className="signin-switcher">
+        {/* Sign In button */}
+        <div className="user-type-buttons">
             <button
-                className={`switcher-button ${activeUserType === 'client' ? 'active' : ''}`}
+                className={`user-type-button ${activeUserType === 'client' ? 'active' : ''}`}
                 onClick={() => setActiveUserType('client')}
             >
-                Client
+                Are you a client? Click here
             </button>
             <button
-                className={`switcher-button ${activeUserType === 'realtor' ? 'active' : ''}`}
+                className={`user-type-button ${activeUserType === 'realtor' ? 'active' : ''}`}
                 onClick={() => setActiveUserType('realtor')}
             >
-                Realtor
+                Are you a realtor? Click here
             </button>
         </div>
 
-        {/* Sign-in form */}
-        <form onSubmit={handleSubmit} className="signin-form">
-                <h2 className="signin-title">
-                    {
-                        activeUserType === 'client' ? 'Client Sign In' : 'Realtor Sign In'
-                    }
-                </h2>
+        <div className="signin-accordion">
 
-                <label htmlFor="email" className="signin-label">
-                Email
-                </label>
-                <input
-                type="email"
-                name="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="signin-input"
-                required
-                />
-
-                <label htmlFor="password" className="signin-label">
-                Password
-                </label>
-                <div className="password-container">
+            {/* Client Form */}
+            {activeUserType === 'client' && (
+            <div className="accordion-content">
+                <form onSubmit={handleSubmit} className="signin-form">
+                    <h2 className="signin-title">Client Sign In</h2>
+                    {/* Email */}
+                    <label htmlFor="email" className="signin-label">Email</label>
                     <input
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        name="password"
-                        id="password"
-                        value={formData.password}
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={formData.email}
                         onChange={handleChange}
                         className="signin-input"
                         required
                     />
-                    <button
-                        type="button"
-                        className="eye-icon-signin"
-                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                    >
-                        {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                </div>
 
-                {/* Error message */}
-                {error && (
-                    <div className="error-message">
-                    {error}
-                    </div>
-                )}
-
-                {/* Signin Terms */}
-                <div className="signin-terms">
-                    <div className="signin-terms-label">
-                        <span>
-                            By Sigining in you accept the <a 
-                                href="https://sites.google.com/view/opusama-termsofservice/home"
-                                className="terms"
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                            >
-                                Terms of Use
-                            </a>
-                        </span>
-                        {' '}
-                        and
-                        {' '}
-                        <span>
-                        <a 
-                            href="https://sites.google.com/view/opusama/home"
-                            className="terms"
-                            target="_blank" 
-                            rel="noopener noreferrer"
+                    {/* Password */}
+                    <label htmlFor="password" className="signin-label">Password</label>
+                    <div className="password-container">
+                        <input
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            name="password"
+                            id="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="signin-input"
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="eye-icon-signin"
+                            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                         >
-                            Privacy Policy
-                        </a>
-                        </span>
+                            {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                        </button>
                     </div>
-                </div>
 
-                {/* Sign-in Button */}
-                <button type="submit" className="signin-button" disabled={loading}>
-                    {loading ? "Signing In..." : "Sign In"}
-                </button>
+                    {/* Error message */}
+                    {error && <div className="error-message">{error}</div>}
 
-                {/* Create Account and Forgot Password buttons */}
-                <div className="secondary-button-container">
-                    <button type="button" className="secondary-button" onClick={navigateToForgotPassword}>
-                        Forgot Password?
+                    {/* Signin Terms */}
+                    <div className="signin-terms">
+                        <div className="signin-terms-label">
+                            <span>
+                                By signing in you accept the <a href="https://sites.google.com/view/opusama-termsofservice/home" className="terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                            </span> 
+                            {' '}
+                            and 
+                            {' '}
+                            <span>
+                                <a href="https://sites.google.com/view/opusama/home" className="terms" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Sign-in Button */}
+                    <button type="submit" className="signin-button" disabled={loading}>
+                        {loading ? "Signing In..." : "Sign In"}
                     </button>
-                    <button type="button" className="secondary-button" onClick={navigateToCreateAccount}>
-                        Create Account
+
+                    {/* Create Account and Forgot Password buttons */}
+                    <div className="secondary-button-container">
+                        <button type="button" className="secondary-button" onClick={navigateToForgotPassword}>Forgot Password?</button>
+                        <button type="button" className="secondary-button" onClick={navigateToCreateAccount}>Create Account</button>
+                    </div>
+                </form>
+            </div>
+            )}
+
+            {/* Realtor Form */}
+            {activeUserType === 'realtor' && (
+            <div className="accordion-content">
+                <form onSubmit={handleSubmit} className="signin-form">
+                    <h2 className="signin-title">Realtor Sign In</h2>
+                    {/* Email */}
+                    <label htmlFor="email" className="signin-label">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="signin-input"
+                        required
+                    />
+                    {/* Password */}
+                    <label htmlFor="password" className="signin-label">Password</label>
+                    <div className="password-container">
+                        <input
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            name="password"
+                            id="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="signin-input"
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="eye-icon-signin"
+                            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        >
+                            {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+                    
+                    {/* Error message */}
+                    {error && <div className="error-message">{error}</div>}
+
+                    {/* Signin Terms */}
+                    <div className="signin-terms">
+                        <div className="signin-terms-label">
+                            <span>
+                                By signing in you accept the <a href="https://sites.google.com/view/opusama-termsofservice/home" className="terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                            </span> 
+                            {' '}
+                            and 
+                            {' '}
+                            <span>
+                                <a href="https://sites.google.com/view/opusama/home" className="terms" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Sign-in Button */}
+                    <button type="submit" className="signin-button" disabled={loading}>
+                        {loading ? "Signing In..." : "Sign In"}
                     </button>
-                </div>
-        </form>
+
+                    {/* Create Account and Forgot Password buttons */}
+                    <div className="secondary-button-container">
+                        <button type="button" className="secondary-button" onClick={navigateToForgotPassword}>Forgot Password?</button>
+                        <button type="button" className="secondary-button" onClick={navigateToCreateAccount}>Create Account</button>
+                    </div>
+                </form>
+            </div>
+            )}   
+        </div>
+
     </div>
   )
 }

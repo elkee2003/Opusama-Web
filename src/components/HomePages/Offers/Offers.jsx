@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import './Offers.css';
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -27,71 +27,36 @@ const useMediaQuery = (query) => {
 
 const Offers = () => {
 
-    const [currentImage, setCurrentImage] = useState(0);
     const [currentPhoto, setCurrentPhoto] = useState(0);
+
+    // for main background Image
     const isLargeScreen = useMediaQuery("(min-width: 1000px)");
     const isMediumScreen = useMediaQuery("(min-width: 500px) and (max-width: 1099px)");
     const isSmallScreen = useMediaQuery("(min-width: 250px) and (max-width: 499px)");
 
-    const isLargeEcran = useMediaQuery("(min-width: 1000px)");
-    const isMediumEcran = useMediaQuery("(min-width: 500px) and (max-width: 1099px)");
-    const isSmallEcran = useMediaQuery("(min-width: 250px) and (max-width: 499px)");
-
-    const largeScreenImages = [
-        "/backgroundBig.png"
-    ]
-
-    const mediumScreenImages = [
-        "/backgroundBig.png"
-    ]
-    const smallScreenImages = [
-        "/backgroundSmall.png"
-    ]
-
     // for numerous images
     const largeEcranPhotos = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image5Small.png',
+        '/image6Small.png',
     ]
 
     const mediumEcranPhotos = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image5Small.png',
+        '/image6Small.png',
+        
     ]
     const smallEcranPhotos = [
-        '/image1.png',
-        '/image2.jpeg',
-        '/image3.jpg',
-        '/image4.png',
+        '/image5Small.png',
+        '/image6Small.png',
     ]
 
     // Choose images based on screen size
-    let images;
-    if (isLargeScreen) {
-        images = largeScreenImages;
-    } else if (isMediumScreen) {
-        images = mediumScreenImages;
-    } else if (isSmallScreen) {
-        images = smallScreenImages;
-    } else {
-        images = [];
-    }
-
-    // Choose images based on screen size
-    let photos;
-    if (isLargeEcran) {
-        photos = largeEcranPhotos;
-    } else if (isMediumEcran) {
-        photos = mediumEcranPhotos;
-    } else if (isSmallEcran) {
-        photos = smallEcranPhotos;
-    } else {
-        photos = [];
-    }
+    const photos = useMemo(() => {
+        if (isLargeScreen) return largeEcranPhotos;
+        if (isMediumScreen) return mediumEcranPhotos;
+        if (isSmallScreen) return smallEcranPhotos;
+        return [];
+    }, [isLargeScreen, isMediumScreen, isSmallScreen]);
 
     // Preload images
     useEffect(() => {
@@ -105,33 +70,28 @@ const Offers = () => {
     useEffect(() => {
         let isMounted = true;
 
-        const changeImage = () => {
-        const nextIndex = (currentImage + 1) % photos.length;
-        const img = new Image();
-        img.src = photos[nextIndex];
-        img.onload = () => {
-            if (isMounted) {
-            setCurrentImage(nextIndex);
-            }
-        };
+        const changePhoto = () => {
+            const nextIndex = (currentPhoto + 1) % photos.length;
+            const img = new Image();
+            img.src = photos[nextIndex];
+
+            img.onload = () => {
+            if (isMounted) setCurrentPhoto(nextIndex);
+            };
         };
 
-        const interval = setInterval(changeImage, 6000);
+        const interval = setInterval(changePhoto, 6000);
+
         return () => {
-        isMounted = false;
-        clearInterval(interval);
+            isMounted = false;
+            clearInterval(interval);
         };
-    }, [currentImage, photos]);
+    }, [currentPhoto, photos]);
+    
   return (
     <section
         id='offers'
-        className="offer-wrapper"
-        style={{
-            backgroundImage: `url(${images[currentImage]})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-        }} 
+        className={`offer-wrapper ${isLargeScreen ? 'bg-large' : isMediumScreen ? 'bg-medium' : 'bg-small'}`}
     >
         <div className="paddings innerWidth flexColStart offer-container">
             <h1 className="primaryText offer-section-header-txt">What We Offer</h1>
@@ -146,7 +106,7 @@ const Offers = () => {
                     <div 
                         className='offer-image-con'
                         style={{
-                            backgroundImage: `url(${photos[currentImage]})`,
+                            backgroundImage: `url(${photos[currentPhoto]})`,
                             backgroundRepeat: 'no-repeat',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center'
