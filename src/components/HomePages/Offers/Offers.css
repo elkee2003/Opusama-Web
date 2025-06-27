@@ -161,14 +161,36 @@
       min-height: 295px;
     }
   }
-  
-  
-  @media (max-width: 550px) {
-  
-    .offer-list-con {
-      width: 200px;
-    }
+
+@media (max-width: 900px) {
+  .offer-image-con {
+    height: 75vh;
+    width: 100%;
   }
+}
+
+@media (max-width: 700px) {
+  .offer-image-con {
+    /* border-top-left-radius: 5rem;
+    border-top-right-radius: 5rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; */
+    border-radius: 5rem 5rem 0 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .offer-image-con {
+    border-radius: 7rem 7rem 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+    .offer-list-con {
+    width: 200px;
+  }
+}
+  
 
   /* for background */
   /* Large screen */
