@@ -101,18 +101,20 @@ const Offers = () => {
             
 
             <div className='offer-section'>
+
+                {/* offer Images */}
+                <div 
+                    className='offer-image-con'
+                    style={{
+                        backgroundImage: `url(${photos[currentPhoto]})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }} 
+                />
+
                 <div className="offer-items">
-
-                    <div 
-                        className='offer-image-con'
-                        style={{
-                            backgroundImage: `url(${photos[currentPhoto]})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                        }} 
-                    />
-
+                    
                     {/* For Clients */}
                     <div className='offer-item'>
                         <h2 className="section-title">
