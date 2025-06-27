@@ -93,7 +93,7 @@ const Header = () => {
             <img 
                 src={isScrolled ? './opusama.png' : './opusamawhite.png'}
                 alt="logo" 
-                width={150} 
+                width={130} 
             />
           </span>
 

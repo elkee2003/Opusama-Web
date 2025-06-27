@@ -17,83 +17,40 @@
     /* box-sizing: border-box;  */
 }
 
-.collapsible-form {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
-}
-
-.collapsible-form.visible {
-  max-height: 800px; /* adjust based on your form height */
-  opacity: 1;
-}
-
-/* Switcher styles */
-/* .signin-switcher {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.switcher-button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  color: var(--primary);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.switcher-button.active {
-  color: var(--blue);
-  border-bottom: 2px solid var(--green);
-}
-
-.switcher-button:hover {
-  color: var(--blue);
-} */
-
 .user-type-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .user-type-button {
-    padding: 10px 20px;
-    background-color: #eee;
-    color:rgb(88, 87, 87);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.user-type-button p {
+  color:rgb(88, 87, 87);
 }
 
 .user-type-button:hover {
-    background: #ccc;
+  background: #ccc;
 }
 
 .user-type-button.active {
-    background: var(--light-blue-gradient);
-    color: black;
-    font-weight: 500;
+  background: var(--light-blue-gradient);
 }
 
-/* .accordion-toggle {
-  background: #eee;
-  border: none;
-  padding: 1em;
-  font-weight: bold;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-} */
+.user-type-button.active p {
+  color: black;
+  font-weight: 500;
+}
 
 .accordion-content {
   animation: fadeIn 0.3s ease-in-out;
@@ -204,7 +161,6 @@
 }
   
 /* Button styles */
-
 form {
   margin: 0; 
   padding: 0; 
@@ -212,18 +168,6 @@ form {
   background: none; 
   box-sizing: border-box;
 }
-
-/* .signin-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  border-radius: 8px;
-  background-color: white;
-} */
 
 .signin-button {
     width: 100%;

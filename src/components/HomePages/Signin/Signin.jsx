@@ -121,13 +121,15 @@ const Signin = () => {
                 className={`user-type-button ${activeUserType === 'client' ? 'active' : ''}`}
                 onClick={() => setActiveUserType('client')}
             >
-                Are you a client? Click here
+                <p>Are you a client?</p>
+                <p>Click here</p>
             </button>
             <button
                 className={`user-type-button ${activeUserType === 'realtor' ? 'active' : ''}`}
                 onClick={() => setActiveUserType('realtor')}
             >
-                Are you a realtor? Click here
+                <p>Are you a realtor?</p>
+                <p>Click here</p>
             </button>
         </div>
 

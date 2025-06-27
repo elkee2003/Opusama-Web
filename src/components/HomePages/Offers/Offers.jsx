@@ -36,8 +36,8 @@ const Offers = () => {
 
     // for numerous images
     const largeEcranPhotos = [
-        '/image5Small.png',
-        '/image6Small.png',
+        '/image5Big.jpg',
+        '/image6Big.jpg',
     ]
 
     const mediumEcranPhotos = [

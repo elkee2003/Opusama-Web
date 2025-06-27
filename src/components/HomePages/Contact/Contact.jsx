@@ -22,82 +22,87 @@ const Contact = () => {
 
           {/* Contact details */}
           <div className="contact-details">
-
-            {/* Email and phone in one row */}
-            <div className="contact-row">
-              <a
-                href="mailto:support@opusama.com?subject=Support%20Request&body=Hi%20Opusama%20Support%2C%0A%0AI%20need%20assistance%20with%20the%20following%20issue%3A%0A%0A%5BPlease%20describe%20your%20issue%20here%5D%0A%0AThank%20you%20for%20your%20support.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-              >
+            {/* Email */}
+            <a
+              href="mailto:support@opusama.com?subject=Support%20Request&body=Hi%20Opusama%20Support%2C%0A%0AI%20need%20assistance%20with%20the%20following%20issue%3A%0A%0A%5BPlease%20describe%20your%20issue%20here%5D%0A%0AThank%20you%20for%20your%20support.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
+            >
+              <div className='contact-item-con'>
                 <div className="contact-item">
                   <FaEnvelope className="contact-icon" />
                   <span>support@opusama.com</span>
                 </div>
-              </a>
+              </div>
+            </a>
 
+            {/* Phone Number */}
+            <div className='contact-item-con'>
               <div className="contact-item">
                 <FaPhone className="contact-icon" />
                 <span>+234 902 252 2504</span>
               </div>
             </div>
 
-            {/* Instagram and WhatApp */}
-            <div className='contact-row'>
-                {/* WhatsApp */}
-                <a 
-                  href="https://wa.me/2349022522504" 
-                  // className="contact-item"
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <div className="contact-item">
-                      <FaWhatsapp className="contact-icon" />
-                      <span>+234 902 252 2504</span>
-                  </div>
-                </a>
+            {/* WhatsApp */}
+            <a 
+              href="https://wa.me/2349022522504" 
+              // className="contact-item"
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <div className='contact-item-con'>
+                <div className="contact-item">
+                    <FaWhatsapp className="contact-icon" />
+                    <span>+234 902 252 2504</span>
+                </div>
+              </div>
+            </a>
 
-                {/* Instagram */}
-                <a
-                  href="https://www.instagram.com/opusamaapp/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="contact-item">
-                      <FaInstagram className="contact-icon" />
-                      <span>@opusamaapp</span>
-                  </div>
-                </a>
-            </div>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/opusamaapp/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className='contact-item-con'>
+                <div className="contact-item">
+                    <FaInstagram className="contact-icon" />
+                    <span>@opusamaapp</span>
+                </div>
+              </div>
+            </a>
 
-            {/* Twitter & Tiktok */}
-            <div className="contact-row">
-              {/* Twitter */}
+            {/* Twitter */}
               <a
                 href="https://x.com/opusamaapp"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="contact-item">
-                    <FaXTwitter className="contact-icon" />
-                    <span>@opusamaapp</span>
+                <div className='contact-item-con'>
+                  <div className="contact-item">
+                      <FaXTwitter className="contact-icon" />
+                      <span>@opusamaapp</span>
+                  </div>
                 </div>
               </a>
 
-              {/* Tiktok*/}
+            {/* Tiktok*/}
               <a
                 href="https://www.tiktok.com/@opusamapp"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="contact-item">
-                    <FaTiktok className="contact-icon" />
-                    <span>@opusamaapp</span>
+                <div className='contact-item-con'>
+                  <div className="contact-item">
+                      <FaTiktok className="contact-icon" />
+                      <span>@opusamaapp</span>
+                  </div>
                 </div>
               </a>
-            </div>
+          </div>
 
-            <span className="secondaryText bold-txt">
-              Opusama. Own the City. Live the Experience.
-            </span>
+          {/* Write up */}
+          <div className="secondaryText bold-txt">
+            Opusama. Own the City. Live the Experience.
           </div>
         </div>
       </div>

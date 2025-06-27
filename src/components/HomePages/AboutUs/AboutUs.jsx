@@ -29,7 +29,7 @@ const AboutUs = () => {
         '/image1Big.jpg',
         '/image2Big.jpg',
         '/image3Big.png',
-        '/image4Big.jpg',
+        '/image4Medium.jpg',
     ];
 
     const mediumScreenImages = [
