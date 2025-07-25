@@ -1,56 +1,50 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { debounce } from "lodash"; 
+import Select from "react-select";
+import { debounce } from "lodash";
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
 
-//Get the base URL from .env
+// Get the base URL from .env
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const BankDetails = () => {
-    const [bankList, setBankList] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const {
-      bankName, 
-      setBankName,
-      bankCode, 
-      setBankCode,
-      accountName, 
-      setAccountName, 
-      accountNumber, 
-      setAccountNumber,
-    } = useProfileContext();
+  const [bankOptions, setBankOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    // Step 1: Fetch bank list from your backend
-    useEffect(() => {
-        const fetchBanks = async () => {
-        try {
-            const response = await axios.get(`${API_BASE_URL}/banks`);
-            setBankList(response.data.data);
-        } catch (err) {
-            console.error("Failed to fetch bank list:", err);
-        }
-        };
+  const {
+    bankName,
+    setBankName,
+    bankCode,
+    setBankCode,
+    accountName,
+    setAccountName,
+    accountNumber,
+    setAccountNumber,
+  } = useProfileContext();
 
-        fetchBanks();
-    }, []);
+  // Fetch bank list from backend
+  useEffect(() => {
+    const fetchBanks = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/banks`);
+        const banks = response.data.data;
 
-    // Step 2: Set bank code when bank name changes
-    useEffect(() => {
-        if (!bankName) return;
-        const bank = bankList.find(
-        (b) => b.name.toLowerCase() === bankName.toLowerCase()
-        );
+        const formattedOptions = banks.map((bank) => ({
+          value: bank.code,
+          label: bank.name,
+        }));
 
-        if (bank) {
-        setBankCode(bank.code);
-        } else {
-        setBankCode("");
-        }
-    }, [bankName, bankList]);
+        setBankOptions(formattedOptions);
+      } catch (err) {
+        console.error("Failed to fetch bank list:", err);
+      }
+    };
 
-    // Step 3: Verify account number using your backend
-    // Step 3: Verify account number (debounced)
+    fetchBanks();
+  }, []);
+
+  // Debounced account verification
   const debouncedVerify = useCallback(
     debounce(async (accountNumber, bankCode) => {
       if (accountNumber.length !== 10 || !bankCode) {
@@ -60,6 +54,7 @@ const BankDetails = () => {
 
       setLoading(true);
       setError("");
+
       try {
         const res = await axios.post(`${API_BASE_URL}/resolve-account`, {
           account_number: accountNumber,
@@ -73,63 +68,44 @@ const BankDetails = () => {
       } finally {
         setLoading(false);
       }
-    }, 800), [] // empty dependency ensures debounce function is created only once
+    }, 800),
+    []
   );
 
   useEffect(() => {
     debouncedVerify(accountNumber, bankCode);
 
     return () => {
-      debouncedVerify.cancel(); // Cleanup debounce
+      debouncedVerify.cancel();
     };
   }, [accountNumber, bankCode, debouncedVerify]);
 
   return (
-    <div >
-      {/* <h2>Bank Account Verification</h2> */}
-
-        {/* <textarea
-            value={bankname}
-            onChange={(e) => setBankname(e.target.value)}
-            placeholder="Bank name"
-            className="realtorProfileInput"
-        />
-
-        <textarea
-            value={accountName}
-            onChange={(e) => setAccountName(e.target.value)}
-            placeholder="Account name"
-            className="realtorProfileInput"
-        />
-
-        <textarea
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value)}
-            placeholder="Account number"
-            className="realtorProfileInputLast"
-        /> */}
-
+    <div>
+      {/* Bank selection */}
       <div style={{ marginBottom: 10 }}>
-        {/* <label>Bank Name:</label> */}
-        <input
-          type="text"
-          value={bankName}
-          onChange={(e) => setBankName(e.target.value)}
-          placeholder="Bank name"
-          list="banks"
-          style={{ width: "100%", padding: 8 }}
+        <Select
+          options={bankOptions}
+          value={
+            bankOptions.find((opt) => opt.label === bankName) || null
+          }
+          onChange={(selected) => {
+            if (selected) {
+              setBankCode(selected.value);
+              setBankName(selected.label);
+            } else {
+              setBankCode("");
+              setBankName("");
+            }
+          }}
+          placeholder="Select or search bank"
         />
-        <datalist id="banks">
-          {bankList.map((bank) => (
-            <option key={bank.code} value={bank.name} />
-          ))}
-        </datalist>
       </div>
 
+      {/* Account number */}
       <div style={{ marginBottom: 10 }}>
-        {/* <label>Account Number:</label> */}
         <input
-          type="text"
+          type='number'
           value={accountNumber}
           onChange={(e) => setAccountNumber(e.target.value)}
           maxLength={10}
@@ -138,9 +114,10 @@ const BankDetails = () => {
         />
       </div>
 
+      {/* Account name and feedback */}
       {loading && <p>Verifying...</p>}
       {accountName && !loading && (
-        <p className='accountName'>{accountName}</p>
+        <p className="accountName">{accountName}</p>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
