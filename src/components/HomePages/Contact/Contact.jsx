@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaEnvelope, FaPhone, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaInstagram, FaWhatsapp, FaLongArrowAltLeft } from 'react-icons/fa';
 import { FaXTwitter, FaTiktok } from "react-icons/fa6";
 import './Contact.css'
 
@@ -19,6 +19,11 @@ const Contact = () => {
           <span className="secondaryText">
             Tap any of the options below — we're all ears and ready to help.
           </span>
+
+          <div className='swipe-left-con'>
+            <FaLongArrowAltLeft className='swipe-left-icon'/>
+            <p>swipe to see more options</p>
+          </div>
 
           {/* Contact details */}
           <div className="contact-details">

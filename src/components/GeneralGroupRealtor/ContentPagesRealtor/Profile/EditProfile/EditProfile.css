@@ -172,6 +172,11 @@
   border-radius: 5px;
 }
 
+.accountName {
+  color:rgb(136, 136, 136);
+  text-transform:capitalize;
+}
+
 .profileNxtBtn  {
   position: fixed;
   background-color: #0c052e;

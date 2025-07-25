@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { debounce } from "lodash"; 
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
@@ -140,7 +140,7 @@ const BankDetails = () => {
 
       {loading && <p>Verifying...</p>}
       {accountName && !loading && (
-        <p style={{ color: "green" }}>Account Name: {accountName}</p>
+        <p className='accountName'>{accountName}</p>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

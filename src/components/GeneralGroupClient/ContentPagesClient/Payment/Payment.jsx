@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdArrowBack } from 'react-icons/io';
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import Logo from '/opusamaSolo.png';
-import { FLUTTER_WAVE_KEY } from '../../../../../keys';
 import { useProfileContext } from '../../../../../Providers/ClientProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 import './Payment.css';

@@ -48,9 +48,9 @@ amplifytools.xcconfig
 # api key
 /keys.jsx
 
-/.env
+.env
 
-/.env.production
+.env.production
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
@@ -73,3 +73,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Local Netlify folder
+.netlify

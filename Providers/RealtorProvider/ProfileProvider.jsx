@@ -74,7 +74,7 @@ const ProfileContextProvider = ({children}) => {
             setMyDescription(dbRealtor.myDescription || "");
             setAddress(dbRealtor.address || "");
             setPhoneNumber(dbRealtor.phoneNumber || "");
-            setBankname(dbRealtor.bankName || "");
+            setBankName(dbRealtor.bankName || "");
             setAccountName(dbRealtor.accountName || "");
             setAccountNumber(dbRealtor.accountNumber || "");
         }

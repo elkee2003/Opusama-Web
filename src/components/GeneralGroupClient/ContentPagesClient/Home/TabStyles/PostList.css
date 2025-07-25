@@ -12,6 +12,7 @@
   background-color: rgb(245, 245, 245, 0.5);
   height: 60px;
   width: 70%;
+  margin-top: 0;
   margin-left: 0px;
   margin-right: 10px;
   border: 2px solid rgb(3, 3, 34);
@@ -26,12 +27,12 @@
   font-size: 16px;
   font-weight: bold;
   margin: 30px;
-  color:rgb(105, 104, 104)
+  color:rgb(105, 104, 104);
 }
 
 .noListngsCon {
   display: flex;
-  width: 100vw;
+  width: 75vw;
   justify-content: center;
 }
 
@@ -110,6 +111,7 @@ to {
 
   .homeSearchBtn {
     width: 90%;
+    margin-top: 2rem;
   }
 
   .postListContainer {
