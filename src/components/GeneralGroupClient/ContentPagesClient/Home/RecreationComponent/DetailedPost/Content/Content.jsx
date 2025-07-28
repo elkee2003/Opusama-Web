@@ -107,8 +107,8 @@ function Content({post, realtor,}) {
       if(authUser){
         navigate(`/clientcontent/clientdetails/${post.id}`);
       }else{
-        alert('Sign In to access')
-        navigate('/')
+        alert('Sign In to access');
+        navigate('/?section=signin');
       }
     };
 

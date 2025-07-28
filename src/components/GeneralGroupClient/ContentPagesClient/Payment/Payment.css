@@ -1,6 +1,7 @@
 .payContainer {
     position: relative;
     display: flex;
+    width: 80vw;
     flex-direction: column;
 }
 
@@ -65,4 +66,14 @@
   font-weight: bold;
   text-align: center;
   letter-spacing: 0.3px;
+}
+
+@media (max-width: 900px) {
+  .payContainer {
+    width: 100vw;
+  }
+}
+
+@media (max-width: 500px) {
+
 }

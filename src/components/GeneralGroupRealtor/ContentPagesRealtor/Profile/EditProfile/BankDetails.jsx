@@ -105,10 +105,15 @@ const BankDetails = () => {
       {/* Account number */}
       <div style={{ marginBottom: 10 }}>
         <input
-          type='number'
+          type="text"
           value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
-          maxLength={10}
+          onChange={(e) => {
+            const value = e.target.value;
+            // Allow only digits and max 10 characters
+            if (/^\d{0,10}$/.test(value)) {
+              setAccountNumber(value);
+            }
+          }}
           placeholder="Account number"
           style={{ width: "100%", padding: 8 }}
         />

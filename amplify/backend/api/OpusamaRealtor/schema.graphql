@@ -102,6 +102,8 @@ type Booking @model @auth(rules: [{allow: public}]) {
   bookingLng: Float
   status: BookingStatus
   userID: ID! @index(name: "byUser")
+  transactionReference: String
+  transactionStatus: String
   realtorID: ID! @index(name: "byRealtor")
   PostID: String
 }

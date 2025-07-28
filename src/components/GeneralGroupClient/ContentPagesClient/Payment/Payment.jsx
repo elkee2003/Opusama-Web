@@ -1,87 +1,100 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdArrowBack } from 'react-icons/io';
+import PaystackPop from '@paystack/inline-js';
 import Logo from '/opusamaSolo.png';
 import { useProfileContext } from '../../../../../Providers/ClientProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
+import { useBookingShowingContext } from '../../../../../Providers/ClientProvider/BookingShowingProvider';
 import './Payment.css';
 
 const PaymentComponent = () => {
     const navigate = useNavigate();
 
-    const {firstName, phoneNumber, setIsPaymentSuccessful, paymentPrice, setPaymentPrice} = useProfileContext();
+    const {
+        firstName,
+        phoneNumber,
+        setIsPaymentSuccessful,
+        paymentPrice,
+    } = useProfileContext();
 
-    const {userMail} = useAuthContext();
+    const {transactionReference,
+        setTransactionReference, setTransactionStatus
+    } = useBookingShowingContext();
 
-    console.log('payprice:', paymentPrice)
+    const { userMail } = useAuthContext();
 
-    const config = {
-        public_key: FLUTTER_WAVE_KEY,
-        tx_ref: `flw_tx_ref_${Date.now()}`,
-        amount: paymentPrice,
-        currency: 'NGN',
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-        email: userMail,
-        phone_number: phoneNumber,
-        name: firstName,
-        },
-        customizations: {
-        title: 'My Payment Title',
-        description: 'Payment for items in cart',
-        logo: Logo, // Replace with a valid URL if necessary
-        },
+    const payWithPaystack = () => {
+        const paystack = new PaystackPop();
+
+        paystack.newTransaction({
+            // Test key
+            // key: 'pk_test_64145fd844453c5288c6c45bb26a3cbdf439575a',
+
+            // Live Key
+            key: 'pk_live_41dc1952adece7d813efac252ad7d86ad8a6bd54',
+            email: userMail,
+            amount: paymentPrice * 100, // Naira to Kobo
+            currency: 'NGN',
+            ref: 'ps_' + Date.now(),
+            metadata: {
+                custom_fields: [
+                    {
+                        display_name: firstName,
+                        variable_name: 'phone',
+                        value: phoneNumber,
+                    },
+                ],
+            },
+            callback: function (response) {
+                console.log('Payment success:', response);
+
+                alert('Payment Successful! Ref: ' + response.reference);
+
+                setTransactionReference(response.reference);
+
+                setTransactionStatus('Successful');
+
+                setIsPaymentSuccessful(true);
+
+                // Wait 2 seconds before navigating back
+                setTimeout(() => {
+                    navigate(-1);
+                }, 2000);
+            },
+            onClose: function () {
+                setTransactionStatus('Failed');
+                setTransactionReference(null);
+                alert('Transaction was not completed.');
+            },
+        });
     };
 
-    const handleFlutterPayment = useFlutterwave(config);
-
-  return (
-    <div className="payContainer">
-        <button className="payBckContainer" onClick={() => navigate(-1)}>
-            <IoMdArrowBack className="payBckIcon"  />
-        </button>
-
-        <div className="payLogoCon">
-            <img src={Logo} alt="Logo" className="payLogo" />
-        </div>
-
-        <div className="sub">
-            <input
-            type="text"
-            className="payInput"
-            placeholder="Input amount eg: 100"
-            value={paymentPrice}
-            readOnly
-            />
-
-            <button
-            className="payBtnContainer"
-            onClick={() => {
-                handleFlutterPayment({
-                callback: (response) => {
-                    console.log('Payment Status:', response.status);
-                    console.log('Transaction Reference:', response.tx_ref);
-                    if (response.status === 'successful') {
-                    alert('Payment Successful! Transaction ID: ' + response.transaction_id);
-                    navigate(-1); // Navigate back
-                    } else if (response.status === 'cancelled') {
-                    alert('Payment Cancelled.');
-                    } else {
-                    alert('Payment Failed. Please try again.');
-                    }
-                    closePaymentModal(); // Close modal programmatically
-                },
-                onClose: () => {
-                    console.log('Payment modal closed');
-                },
-                });
-            }}
-            >
-            <p className="payBtnTxt">Pay Now</p>
+    return (
+        <div className="payContainer">
+            <button className="payBckContainer" onClick={() => navigate(-1)}>
+                <IoMdArrowBack className="payBckIcon" />
             </button>
+
+            <div className="payLogoCon">
+                <img src={Logo} alt="Logo" className="payLogo" />
+            </div>
+
+            <div className="sub">
+                <input
+                    type="text"
+                    className="payInput"
+                    placeholder="Input amount eg: 100"
+                    value={paymentPrice}
+                    readOnly
+                />
+
+                <button className="payBtnContainer" onClick={payWithPaystack}>
+                    <p className="payBtnTxt">Pay Now</p>
+                </button>
+            </div>
         </div>
-    </div>
-  );
+    );
 };
 
 export default PaymentComponent;

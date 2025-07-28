@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './Header.css';
 import { Link } from 'react-scroll';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import useDarkScreen from '../useDarkScreen/useDarkScreen';
 
 
 const Header = () => {
+
+    const location = useLocation();
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -83,6 +85,20 @@ const Header = () => {
           closeMenu()
       }
     },[])
+
+    // useEffect for scrolling to signin section if user is not signed in, in the detailed page for each top tab.
+    useEffect(() => {
+      const params = new URLSearchParams(location.search);
+      const section = params.get('section');
+
+      if (section) {
+        const element = document.getElementById(section);
+        if (element) {
+          const elementTop = element.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: elementTop, behavior: "smooth" });
+        }
+      }
+    }, [location]);
 
   return (
     <section className={`h-wrapper ${isScrolled ? "scrolled" : ""} ${isDarkScreen ? "dark-screen" : ""} `}>

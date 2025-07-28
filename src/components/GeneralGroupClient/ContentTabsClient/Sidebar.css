@@ -1,8 +1,7 @@
 .client-sidebar {
-    width: 250px;
+    width: 20vw;
     height: 100vh;
     gap:50px;
-    background-color: #fff; 
     color: #0b0431;
     position: fixed;
     top: 0;

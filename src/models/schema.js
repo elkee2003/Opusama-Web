@@ -837,6 +837,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "transactionReference": {
+                    "name": "transactionReference",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "transactionStatus": {
+                    "name": "transactionStatus",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "realtorID": {
                     "name": "realtorID",
                     "isArray": false,
@@ -1652,5 +1666,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "2320e758b339054fc20cca18db3ef814"
+    "version": "0af4b1f010f3275f257fe4730872f66d"
 };

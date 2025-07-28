@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaInfoCircle } from 'react-icons/fa';
 import './BookingDetails.css'; 
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
+import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
 const BookingDetails = ({ notification, onStatusChange }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
+  const {transactionReference, setTransactionReference, transactionStatus, setTransactionStatus}= useBookingShowingContext();
 
   const getStatusText = (status) => {
     const statusMap = {
@@ -61,6 +63,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
 
   // Handle Paid button click
   const handlePaidClick = () => {
+    // fallback if triggered manually, without payment
     onStatusChange('PAID');
   };
 
@@ -70,11 +73,11 @@ const BookingDetails = ({ notification, onStatusChange }) => {
   };
 
   useEffect(() => {
-    if (isPaymentSuccessful) {
-      onStatusChange('PAID');
+    if (isPaymentSuccessful && transactionReference && transactionStatus) {
+      onStatusChange('PAID', transactionReference, transactionStatus);
       setIsPaymentSuccessful(false);
     }
-  }, [isPaymentSuccessful]);
+  }, [isPaymentSuccessful, transactionReference, transactionStatus]);
   
   const renderButton = () => {
     if (notification.status === 'ACCEPTED') {
@@ -115,18 +118,18 @@ const BookingDetails = ({ notification, onStatusChange }) => {
       } else if (notification.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
-            <button className="view" onClick={handlePaidClick}>
+            {/* <button className="view" onClick={handlePaidClick}>
               <p className='bkBtnTxt'>
                 Paid
               </p>
-            </button>
+            </button> */}
 
             {/* When I fix flutter wave, I will uncomment */}
-            {/* <button className="view" onClick={handlePayment}>
+            <button className="view" onClick={handlePayment}>
               <p className='bkBtnTxt'>
                 Make Payment
               </p>
-            </button> */}
+            </button>
 
             {/* Info Icon */}
             <button
