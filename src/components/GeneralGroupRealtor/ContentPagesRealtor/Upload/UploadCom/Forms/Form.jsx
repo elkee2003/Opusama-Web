@@ -177,7 +177,7 @@ const Forms = () => {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             >
-              <option value="" disabled>
+              <option value="">
                 Select Time Frame
               </option>
               {timeOptions.map((option) => (

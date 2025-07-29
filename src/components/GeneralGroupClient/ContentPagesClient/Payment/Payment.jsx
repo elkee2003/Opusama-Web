@@ -54,13 +54,9 @@ const PaymentComponent = () => {
                 setTransactionReference(response.reference);
 
                 setTransactionStatus('Successful');
-
+                
                 setIsPaymentSuccessful(true);
-
-                // Wait 2 seconds before navigating back
-                setTimeout(() => {
-                    navigate(-1);
-                }, 2000);
+                navigate(-1);
             },
             onClose: function () {
                 setTransactionStatus('Failed');

@@ -28,11 +28,6 @@
   object-fit: contain;
 }
 
-.flutterwaveTxt {
-  font-size: 19px;
-  font-weight: bold;
-  text-align: center;
-}
 
 .sub {
     display: flex; 
