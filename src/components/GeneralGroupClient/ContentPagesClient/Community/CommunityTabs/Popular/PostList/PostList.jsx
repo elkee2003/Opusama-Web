@@ -21,14 +21,18 @@ function PostList() {
 
     const categoryData = [
         { label: 'Display All', value: '' },
-        { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
-        { label: 'House Hunting Tips', value: 'House Hunting Tips' },
-        { label: 'Recreation & Nightlife', value : 'Recreation & Nightlife' },
-        { label: 'Food & Drinks', value: 'Food & Drinks' },
-        { label: 'Scam Alerts', value: 'Scam Alerts' },
-        { label: 'Moving & Relocation Tips', value: 'Moving & Relocation Tips' },
-        { label: 'Experiences & Reviews', value: 'Experiences & Reviews'},
-        { label: 'General Real Estate Discussion', value: 'General Real Estate Discussion' },
+        { label: 'Experience & Review', value: 'Experience & Review' },
+        { label: 'Food, Fun & Nightlife', value: 'Food, Fun & Nightlife' },
+        { label: 'Safety & Scam Alerts', value: 'Safety & Scam Alerts' },
+        { label: 'City Life & Questions', value: 'City Life & Questions' },
+        // { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
+        // { label: 'House Hunting Tips', value: 'House Hunting Tips' },
+        // { label: 'Recreation & Nightlife', value : 'Recreation & Nightlife' },
+        // { label: 'Food & Drinks', value: 'Food & Drinks' },
+        // { label: 'Scam Alerts', value: 'Scam Alerts' },
+        // { label: 'Moving & Relocation Tips', value: 'Moving & Relocation Tips' },
+        // { label: 'Experiences & Reviews', value: 'Experiences & Reviews'},
+        // { label: 'General Real Estate Discussion', value: 'General Real Estate Discussion' },
     ];
 
     // useEffect to complete profile

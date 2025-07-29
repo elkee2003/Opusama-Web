@@ -46,12 +46,13 @@ function Community() {
         {selectedTab === 1 && <Popular />}
       </div>
 
-      <div 
+      {/* Floating Create Post Icon Shouldn't be for Realtor*/}
+      {/* <div 
         className='addIconCon'
         onClick={handleNavigate}
       >
         <IoMdAdd className='addIcon'/>
-      </div>
+      </div> */}
     </div>
   )
 }
