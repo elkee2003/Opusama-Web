@@ -1,53 +1,48 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'aws-amplify/storage';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import { Navigation, Pagination } from 'swiper/modules';
-
-// important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer
 
 function Post({post}) {
     const navigate = useNavigate();
     const [mediaUris, setMediaUris] = useState([]);
     const formattedPrice = Number(post.price)?.toLocaleString();
 
-    // Fetch ONLY the first media item
-    const fetchFirstMediaUrl = async () => {
-      if (!post.media?.length) return;
-
-      const path = post.media[0];
-
+    // Fetch signed URLs for each media item (image/video) in post.media
+    const fetchMediaUrls = async () => {
       try {
-        const result = await getUrl({
-          path,
-          options: {
-            validateObjectExistence: true,
-            expiresIn: null,
-          },
-        });
+        const urls = await Promise.all(
+          post.media.map(async (path) => {
+            const result = await getUrl({
+              path,
+              options: {
+                validateObjectExistence: true,
+                expiresIn: null, // No expiration limit
+              },
+            });
+            return {
+              url: result.url.toString(),
+              type: path.endsWith('.mp4') ? 'video' : 'image',
+            };
+          })
+        );
 
-        setMediaUris([
-          {
-            url: result.url.toString(),
-            type: path.endsWith('.mp4') ? 'video' : 'image',
-          },
-        ]);
+        // Store valid URLs (either video or image)
+        setMediaUris(urls.filter(media => media.url !== null));
       } catch (error) {
-        console.error('Error fetching media URL:', error);
+          console.error('Error fetching media URLs:', error);
       }
     };
 
     useEffect(() => {
-      fetchFirstMediaUrl();
+      if (post.media?.length > 0) {
+        fetchMediaUrls();
+      }
     }, [post.media]);
 
     // function to navigate
     const handleNavigate = (postId) => {
       // sessionStorage.setItem("scrollPosition", window.scrollY); 
-      navigate(`/clientcontent/detailedpost/${postId}`);
+      navigate(`/clientcontent/venue_detailedpost/${postId}`);
     };
 
   return (
@@ -73,13 +68,15 @@ function Post({post}) {
                   className="pVideoOverlay" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/clientcontent/detailedpost/${post.id}`);
+                    navigate(`/clientcontent/venue_detailedpost/${post.id}`);
                   }}
                 />
               </div>
             ) : (
               <img 
-                src={mediaUris[0].url}  alt="Post"  className='pImage' 
+                src={mediaUris[0].url} 
+                alt="Post" 
+                className='pImage' 
                 loading='lazy'
               />
             )
@@ -104,6 +101,10 @@ function Post({post}) {
 
         {post.type && (
             <p className={'bedroom'}>{post.type}</p>
+        )}
+
+        {post.packageType && (
+            <p className={'bedroom'}>{post.packageType}</p>
         )}
 
         {/* Bed & Bedrooms */}

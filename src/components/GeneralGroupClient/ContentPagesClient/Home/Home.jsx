@@ -3,9 +3,11 @@ import { Tabs, Tab, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import HouseRent from './HouseRentComponent';
 import Hotel from './HotelComponent';
-import Recreation from './RecreationComponent';
-import NightLife from './NightlifeComponent';
-import StudentAccommodation from './StudentAccommodationComponent';
+import Experiences from './ExperiencesComponent';
+import EventsTab from './EventsComponent'
+import Venues from './VenuesComponent';
+import FoodDrinks from './FoodDrinksComponent'
+import CommercialSpaces from './CommercialSpacesComponent';
 import PropertySale from './PropertySaleComponent';
 import OfficeSpace from './OfficeSpaceComponent';
 import './Home.css';
@@ -43,13 +45,13 @@ function Home() {
           >
             <Tab label="House" />
             <Tab label="Hotel / Shortlet" />
-            <Tab label="Recreation" />
-            <Tab label="Nightlife" />
-            <Tab label="Student Accommodation" />
+            <Tab label="Experiences" />
+            <Tab label="Events" />
+            <Tab label="Venues" />
+            <Tab label="Commercial Spaces" />
             <Tab label="Property Sale" />
-            <Tab label="Office Space" />
-            {/* <Tab label="Food & Drinks" /> */}
-            {/* <Tab label="Events & Halls" /> */}
+            <Tab label="Office Spaces" />
+            <Tab label="Food & Drinks" />
           </Tabs>
         </div>
       </div>
@@ -57,13 +59,13 @@ function Home() {
       <div className="client-tab-panel">
         {selectedTab === 0 && <HouseRent />}
         {selectedTab === 1 && <Hotel />}
-        {selectedTab === 2 && <Recreation />}
-        {selectedTab === 3 && <NightLife />}
-        {selectedTab === 4 && <StudentAccommodation />}
-        {selectedTab === 5 && <PropertySale />}
-        {selectedTab === 6 && <OfficeSpace />}
-        {/* {selectedTab === 7 && <FoodDrinks />} */}
-        {/* {selectedTab === 8 && <EventHalls />} */}
+        {selectedTab === 2 && <Experiences />}
+        {selectedTab === 3 && <EventsTab />}
+        {selectedTab === 4 && <Venues />}
+        {selectedTab === 5 && <CommercialSpaces />}
+        {selectedTab === 6 && <PropertySale />}
+        {selectedTab === 7 && <OfficeSpace />}
+        {selectedTab === 8 && <FoodDrinks />}
       </div>
     </div>
   )

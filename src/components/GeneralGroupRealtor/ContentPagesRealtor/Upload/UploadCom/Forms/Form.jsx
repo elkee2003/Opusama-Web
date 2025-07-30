@@ -102,7 +102,7 @@ const Forms = () => {
               type="number"
             />
           </div>
-          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
+          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Events' && propertyType !== 'FoodDrinks') && (
             <div className='moneyCon'>
               <label className="formLabel">Caution Fee:</label>
               <input

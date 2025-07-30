@@ -9,7 +9,6 @@ import ClientCommunity from '../../../components/GeneralGroupClient/ContentPages
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
 import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
-import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
 import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
 import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
@@ -30,17 +29,31 @@ import PaymentPage from '../../GeneralGroupClient/ContentPagesClient/Payment/Pay
 // SearchPages
 import SearchPageHouse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/Search/Search';
 import SearchPageHotel from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/Search/Search';
-import SearchPageRecreation from '../../GeneralGroupClient/ContentPagesClient/Home/RecreationComponent/Search/Search';
-import SearchPageNightlife from '../../GeneralGroupClient/ContentPagesClient/Home/NightlifeComponent/Search/Search';
+import SearchPageCommercialSpaces from '../../GeneralGroupClient/ContentPagesClient/Home/CommercialSpacesComponent/Search/Search';
+import SearchPageEvents from '../../GeneralGroupClient/ContentPagesClient/Home/EventsComponent/Search/Search';
+import SearchPageExperience from '../../GeneralGroupClient/ContentPagesClient/Home/ExperiencesComponent/Search/Search';
+import SearchPageFoodDrinks from '../../GeneralGroupClient/ContentPagesClient/Home/FoodDrinksComponent/Search/Search';
+import SearchPageVenue from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/Search/Search';
 import SearchPageOfficeSpace from '../../GeneralGroupClient/ContentPagesClient/Home/OfficeSpaceComponent/Search/Search';
 import SearchPagePropertySale from '../../GeneralGroupClient/ContentPagesClient/Home/PropertySaleComponent/Search/Search';
-import SearchPageStudentAcc from '../../GeneralGroupClient/ContentPagesClient/Home/StudentAccommodationComponent/Search/Search';
 
-// HotelDetailedPost Import
+// Other DetailedPost
+import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
+
+// HotelDetailedPost
 import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
 
-// Recreation & Nightlife DetailedPost Import
-import RecreationDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/RecreationComponent/DetailedPost/DetailedPost';
+// Experiences DetailedPost 
+import ExperiencesDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/ExperiencesComponent/DetailedPost/DetailedPost';
+
+// Events DetailedPost 
+import EventsDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/EventsComponent/DetailedPost/DetailedPost';
+
+// Food & Drinks DetailedPost 
+import FoodDrinksDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/FoodDrinksComponent/DetailedPost/DetailedPost';
+
+// Venue DetailedPost 
+import VenueDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/DetailedPost/DetailedPost';
 
 const ClientRoutes = () => (
     <Routes>
@@ -124,11 +137,20 @@ const ClientRoutes = () => (
             {/* Hotel Search */}
             <Route path="search_hotel" element={<SearchPageHotel />} />
 
-            {/* Recreation Search */}
-            <Route path="search_recreation" element={<SearchPageRecreation />} />
+            {/* Experience Search */}
+            <Route path="search_experience" element={<SearchPageExperience />} />
 
-            {/* Nightlife Search */}
-            <Route path="search_nightlife" element={<SearchPageNightlife />} />
+            {/* Events Search */}
+            <Route path="search_events" element={<SearchPageEvents />} />
+
+            {/* CommercialSpace Search */}
+            <Route path="search_commercial_spaces" element={<SearchPageCommercialSpaces />} />
+
+            {/* Food&Drinks Search */}
+            <Route path="search_food_drinks" element={<SearchPageFoodDrinks />} />
+
+            {/* Venue Search */}
+            <Route path="search_venue" element={<SearchPageVenue />} />
 
             {/* Office Space Search */}
             <Route path="search_office_space" element={<SearchPageOfficeSpace />} />
@@ -136,14 +158,21 @@ const ClientRoutes = () => (
             {/* Property Sale Search */}
             <Route path="search_property_sale" element={<SearchPagePropertySale />} />
 
-            {/* Student Acc Search */}
-            <Route path="search_student_acc" element={<SearchPageStudentAcc />} />
 
             {/* Hotel Detailed Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
 
-            {/* Recreation & Nightlife Detailed Route */}
-            <Route path="lifestyle_detailedpost/:postId" element={<RecreationDetailedPost />} />
+            {/* Experiences Detailed Route */}
+            <Route path="experience_detailedpost/:postId" element={<ExperiencesDetailedPost />} />
+
+            {/* Events Detailed Route */}
+            <Route path="events_detailedpost/:postId" element={<EventsDetailedPost />} />
+
+            {/* Food&Drinks Detailed Route */}
+            <Route path="food_drinks_detailedpost/:postId" element={<FoodDrinksDetailedPost />} />
+
+            {/* Venue Detailed Route */}
+            <Route path="venue_detailedpost/:postId" element={<VenueDetailedPost />} />
 
             {/* for invalid route */}
             <Route path='*' element={<div style={{display: 'flex', width:'100vw', marginTop:'200px', paddingLeft:'20%',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>

@@ -42,7 +42,7 @@ function PostList() {
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true)
             ]));
-            const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent');
+            const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent' || post.propertyType === 'Student Accommodation');
 
             // Map the realtor details to each post
             return filteredPosts.map((post) => ({
@@ -103,7 +103,7 @@ function PostList() {
     <div className='postListContainer' >
 
         {/* Search Bar */}
-        <div>
+        <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
                 onClick={()=>navigate(`/clientcontent/search_house`)}

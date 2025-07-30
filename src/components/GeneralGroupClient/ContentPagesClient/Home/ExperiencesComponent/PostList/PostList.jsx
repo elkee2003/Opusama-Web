@@ -28,7 +28,7 @@ function PostList() {
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true)
             ]));
-            const filteredPosts = posts.filter((post) => post.propertyType === 'Land Sale' || post.propertyType === 'House Sale');
+            const filteredPosts = posts.filter((post) => post.propertyType === 'Recreation' || post.propertyType === 'Nightlife');
 
             // Map the realtor details to each post
             return filteredPosts.map((post) => ({
@@ -81,7 +81,7 @@ function PostList() {
     // Function to Refresh
     const handleRefresh = () => {
         // sessionStorage.removeItem("scrollPosition");
-        setRefreshing(true);
+        setRefreshing(true); 
         fetchRealtorsAndPosts();
     };
 
@@ -92,10 +92,10 @@ function PostList() {
         <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate(`/clientcontent/search_property_sale`)}
+                onClick={()=>navigate(`/clientcontent/search_experience`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
-                <span className="homeSearchBtnTxt">Search for Property</span>
+                <span className="homeSearchBtnTxt">Search for Experiences</span>
             </button>
         </div>
 
@@ -107,7 +107,7 @@ function PostList() {
             </div>
         ) : (
             <div className='noListngsCon'>
-                <p className="noListings">No Property Sale listings</p>
+                <p className="noListings">No Experience listings</p>
             </div>
         )}
         {refreshing && (

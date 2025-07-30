@@ -90,7 +90,7 @@ function PostList() {
     <div className='postListContainer' >
 
         {/* Search Bar */}
-        <div>
+        <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
                 onClick={()=>navigate(`/clientcontent/search_hotel`)}

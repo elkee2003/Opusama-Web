@@ -8,36 +8,34 @@ function Post({post}) {
     const [mediaUris, setMediaUris] = useState([]);
     const formattedPrice = Number(post.price)?.toLocaleString();
 
-    // Fetch signed URLs for each media item (image/video) in post.media
-    const fetchMediaUrls = async () => {
-      try {
-        const urls = await Promise.all(
-          post.media.map(async (path) => {
-            const result = await getUrl({
-              path,
-              options: {
-                validateObjectExistence: true,
-                expiresIn: null, // No expiration limit
-              },
-            });
-            return {
-              url: result.url.toString(),
-              type: path.endsWith('.mp4') ? 'video' : 'image',
-            };
-          })
-        );
+    // Fetch ONLY the first media item
+    const fetchFirstMediaUrl = async () => {
+      if (!post.media?.length) return;
 
-        // Store valid URLs (either video or image)
-        setMediaUris(urls.filter(media => media.url !== null));
+      const path = post.media[0];
+
+      try {
+        const result = await getUrl({
+          path,
+          options: {
+            validateObjectExistence: true,
+            expiresIn: null,
+          },
+        });
+
+        setMediaUris([
+          {
+            url: result.url.toString(),
+            type: path.endsWith('.mp4') ? 'video' : 'image',
+          },
+        ]);
       } catch (error) {
-          console.error('Error fetching media URLs:', error);
+        console.error('Error fetching media URL:', error);
       }
     };
 
     useEffect(() => {
-      if (post.media?.length > 0) {
-        fetchMediaUrls();
-      }
+      fetchFirstMediaUrl();
     }, [post.media]);
 
     // function to navigate
@@ -74,10 +72,21 @@ function Post({post}) {
                 />
               </div>
             ) : (
-              <img src={mediaUris[0].url} alt="Post" className='pImage' />
+              <img 
+                src={mediaUris[0].url} 
+                alt="Post" 
+                className='pImage' 
+                loading='lazy'
+              />
             )
             ) : (
-              <img src={'/defaultImage.png'} alt="Default" className='pImage' />
+              <div className="pImageLoading">
+                {/* Default Image */}
+                <img src={'/defaultImage.png'} alt="Default" className='pImage' />
+
+                {/* Spinner */}
+                <div className="spinnerOverlay" />
+              </div>
             )}
         </div>
 

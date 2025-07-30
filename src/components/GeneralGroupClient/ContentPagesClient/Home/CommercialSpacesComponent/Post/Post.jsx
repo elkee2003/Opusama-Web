@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'aws-amplify/storage';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import { Navigation, Pagination } from 'swiper/modules';
-
-// important to note that most of the component styles are taken from HouseComponent. Example homeSearchBtn, singlePostContainer, .pListContainer
 
 function Post({post}) {
     const navigate = useNavigate();
@@ -46,7 +39,7 @@ function Post({post}) {
 
     // function to navigate
     const handleNavigate = (postId) => {
-      // sessionStorage.setItem("scrollPosition", window.scrollY); 
+      // sessionStorage.setItem("scrollPosition", window.scrollY);
       navigate(`/clientcontent/detailedpost/${postId}`);
     };
 
@@ -79,8 +72,10 @@ function Post({post}) {
               </div>
             ) : (
               <img 
-                src={mediaUris[0].url}  alt="Post"  className='pImage' 
-                loading='lazy'
+                src={mediaUris[0].url} 
+                alt="Post" 
+                className='pImage' 
+                loading="lazy"
               />
             )
           ) : (

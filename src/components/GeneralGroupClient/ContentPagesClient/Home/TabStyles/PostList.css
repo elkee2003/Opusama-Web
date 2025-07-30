@@ -7,6 +7,15 @@
   padding: 30px;
 }
 
+.stickySearchBar {
+  position:sticky;
+  top: 0;
+  /* background-color: rgb(117, 13, 13);  */
+  /* z-index: 1000;  */
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0; 
+}
+
 .homeSearchBtn {
   margin-bottom: 10px;
   background-color: rgb(245, 245, 245, 0.5);

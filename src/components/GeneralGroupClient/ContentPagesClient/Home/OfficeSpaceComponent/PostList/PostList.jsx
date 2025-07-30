@@ -89,13 +89,13 @@ function PostList() {
     <div className='postListContainer' >
 
         {/* Search Bar */}
-        <div>
+        <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
                 onClick={()=>navigate(`/clientcontent/search_office_space`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
-                <span className="homeSearchBtnTxt">Search for Office Space</span>
+                <span className="homeSearchBtnTxt">Search for Office Spaces</span>
             </button>
         </div>
 
