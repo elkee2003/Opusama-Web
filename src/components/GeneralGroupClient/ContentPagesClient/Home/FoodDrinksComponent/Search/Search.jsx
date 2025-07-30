@@ -44,7 +44,7 @@ const HotelSearch = () => {
       const realtors = await DataStore.query(Realtor);
       const posts = await DataStore.query(Post);
 
-      const filteredPosts = posts.filter((post) => post.propertyType === 'Food&Drinks');
+      const filteredPosts = posts.filter((post) => post.propertyType === 'Food & Drinks');
 
       const foodDrinksPostData = filteredPosts.map((post) => {
         const realtor = realtors.find((r) => r.id === post.realtorID);

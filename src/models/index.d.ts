@@ -480,7 +480,9 @@ type EagerPost = {
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
   readonly description: string;
+  readonly eventDateTime?: string | null;
   readonly capacity?: string | null;
+  readonly dressCode?: string | null;
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
@@ -488,9 +490,9 @@ type EagerPost = {
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;
+  readonly PostReviews?: (PostReview | null)[] | null;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
-  readonly PostReviews?: (PostReview | null)[] | null;
   readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
@@ -502,9 +504,9 @@ type EagerPost = {
   readonly amenities?: string | null;
   readonly policies?: string | null;
   readonly country: string;
+  readonly PostComments?: (PostComment | null)[] | null;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly PostComments?: (PostComment | null)[] | null;
   readonly isApproved?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
@@ -525,7 +527,9 @@ type LazyPost = {
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
   readonly description: string;
+  readonly eventDateTime?: string | null;
   readonly capacity?: string | null;
+  readonly dressCode?: string | null;
   readonly available?: boolean | null;
   readonly address?: string | null;
   readonly fullAddress?: string | null;
@@ -533,9 +537,9 @@ type LazyPost = {
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly price: number;
+  readonly PostReviews: AsyncCollection<PostReview>;
   readonly cautionFee?: number | null;
   readonly totalPrice: number;
-  readonly PostReviews: AsyncCollection<PostReview>;
   readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
@@ -547,9 +551,9 @@ type LazyPost = {
   readonly amenities?: string | null;
   readonly policies?: string | null;
   readonly country: string;
+  readonly PostComments: AsyncCollection<PostComment>;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly PostComments: AsyncCollection<PostComment>;
   readonly isApproved?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;

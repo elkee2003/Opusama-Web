@@ -28,7 +28,7 @@ function PostList() {
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true)
             ]));
-            const filteredPosts = posts.filter((post) => post.propertyType === 'Food&Drinks');
+            const filteredPosts = posts.filter((post) => post.propertyType === 'Food & Drinks');
 
             // Map the realtor details to each post
             return filteredPosts.map((post) => ({
@@ -92,7 +92,7 @@ function PostList() {
         <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate(`/clientcontent/search_student_acc`)}
+                onClick={()=>navigate(`/clientcontent/search_food_drinks`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
                 <span className="homeSearchBtnTxt">Search for Food & Drinks</span>

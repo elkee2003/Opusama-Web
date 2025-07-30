@@ -9,6 +9,8 @@ const UploadContextProvider = ({children}) => {
     const [nameOfType, setNameOfType] = useState('');
     const [packageType, setPackageType] = useState('');
     const [capacity, setCapacity] = useState('');
+    const [eventDateTime, setEventDateTime] = useState('');
+    const [dressCode, setDressCode] = useState('');
     const [availableDocs, setAvailableDocs] = useState('');
     const [customInput, setCustomInput] = useState('');
     const [accommodationParts, setAccommodationParts] = useState('');
@@ -233,6 +235,8 @@ const UploadContextProvider = ({children}) => {
         nameOfType, setNameOfType,
         packageType, setPackageType,
         capacity, setCapacity,
+        eventDateTime, setEventDateTime,
+        dressCode, setDressCode,
         availableDocs, setAvailableDocs,
         customInput, setCustomInput,
         accommodationParts, setAccommodationParts,

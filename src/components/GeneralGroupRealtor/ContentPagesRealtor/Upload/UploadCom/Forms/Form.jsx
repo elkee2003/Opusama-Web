@@ -9,8 +9,10 @@ import Recreation from '../DropDown/Recreation/Recreation';
 import NightLife from '../DropDown/NightLife/NightLife';
 import WriteDescription from '../DropDown/Desription/Description';
 import OfficeSpace from '../DropDown/OfficeSpace/OfficeSpace';
-import EventsHalls from '../DropDown/Events&Halls/Events&Halls';
-// import Shop from '../DropDown/Shop';
+import CommercialSpace from '../DropDown/CommercialSpace/CommercialSpace';
+import EventType from '../DropDown/EventType/EventType';
+import FoodDrinks from '../DropDown/FoodDrinks/FoodDrink';
+import Venue from '../DropDown/Venue/Venue';
 import { useNavigate } from 'react-router-dom';
 
 const Forms = () => {
@@ -43,6 +45,7 @@ const Forms = () => {
   } = useUploadContext();
 
   const timeOptions = [
+    { label: '', value: '' },
     { label: 'Night', value: 'Night' },
     { label: 'Week', value: 'Week' },
     { label: 'Month', value: 'Month' },
@@ -85,9 +88,13 @@ const Forms = () => {
 
         {propertyType === 'Recreation' && <Recreation/>}
 
-        {propertyType === 'Events & Halls' && <EventsHalls/>}
+        {propertyType === 'Commercial Space' && <CommercialSpace/>}
 
-        
+        {propertyType === 'Event' && <EventType/>}
+
+        {propertyType === 'Food & Drinks' && <FoodDrinks/>}
+
+        {propertyType === 'Venue' && <Venue/>}
 
         {propertyType === 'Office Space' && <OfficeSpace />}
 
@@ -102,7 +109,7 @@ const Forms = () => {
               type="number"
             />
           </div>
-          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Events' && propertyType !== 'FoodDrinks') && (
+          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food&Drinks') && (
             <div className='moneyCon'>
               <label className="formLabel">Caution Fee:</label>
               <input

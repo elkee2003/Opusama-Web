@@ -28,7 +28,7 @@ function PostList() {
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true)
             ]));
-            const filteredPosts = posts.filter((post) => post.propertyType === 'Events');
+            const filteredPosts = posts.filter((post) => post.propertyType === 'Event');
 
             // Map the realtor details to each post
             return filteredPosts.map((post) => ({
@@ -92,7 +92,7 @@ function PostList() {
         <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate(`/clientcontent/search_student_acc`)}
+                onClick={()=>navigate(`/clientcontent/search_events`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
                 <span className="homeSearchBtnTxt">Search for Events</span>

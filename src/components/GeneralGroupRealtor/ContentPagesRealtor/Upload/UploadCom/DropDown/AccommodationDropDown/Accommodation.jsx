@@ -25,8 +25,10 @@ const AccommodationDropDown = () => {
     { label: 'Nightlife', value: 'Nightlife' },
     { label: 'Office Space', value: 'Office Space' },
     { label: 'Student Accommodation', value: 'Student Accommodation' },
-    // { label: 'Events & Halls', value: 'Events & Halls' },
-    // { label: 'Food & Drinks', value: 'Food & Drinks' },
+    { label: 'Venue', value: 'Venue' },
+    { label: 'Commercial Space', value: 'Commercial Space' },
+    { label: 'Event', value: 'Event' },
+    { label: 'Food & Drinks', value: 'Food & Drinks' },
   ];
 
   const houseData = [

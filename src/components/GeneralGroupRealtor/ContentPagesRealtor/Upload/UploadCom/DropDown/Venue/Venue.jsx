@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { useUploadContext } from '../../../../../../../../Providers/RealtorProvider/UploadProvider';
 // import './PropertySale.css'; 
 
-const EventsHalls = () => {
+const Venue = () => {
     const {propertyType, 
         type, setType,
         packageType, setPackageType,
@@ -13,7 +13,7 @@ const EventsHalls = () => {
 
     const [isFocus, setIsFocus] = useState(false);
 
-    const eventsHallsData = [
+    const venueData = [
         { label: 'Banquet Hall', value: 'Banquet Hall' },
         { label: 'Conference Center', value: 'Conference Center' },
         { label: 'Event Center', value: 'Event Center' },
@@ -43,14 +43,14 @@ const EventsHalls = () => {
 
   return (
     <div>
-      {propertyType === 'Events & Halls' && (
+      {propertyType === 'Venue' && (
         <>
-          <label className="formLabel">Events / Halls Type</label>
+          <label className="formLabel">Venue Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
-            options={eventsHallsData}
+            options={venueData}
             placeholder="Select Event / Hall"
-            value={eventsHallsData.find((option) => option.value === type)}
+            value={venueData.find((option) => option.value === type)}
             onChange={(selectedOption) => setType(selectedOption.value)}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
@@ -58,7 +58,7 @@ const EventsHalls = () => {
           {type === 'Other' && (
             <input
               className="inputField"
-              placeholder="Enter Event / Hall Type"
+              placeholder="Enter Venue Type"
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
               onBlur={handleCustomInputSubmit}
@@ -91,4 +91,4 @@ const EventsHalls = () => {
   );
 };
 
-export default EventsHalls;
+export default Venue;

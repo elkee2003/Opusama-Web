@@ -44,7 +44,7 @@ const CommercialSpaceSearch = () => {
       const realtors = await DataStore.query(Realtor);
       const posts = await DataStore.query(Post);
 
-      const filteredPosts = posts.filter((post) => post.propertyType === 'Commercial Spaces');
+      const filteredPosts = posts.filter((post) => post.propertyType === 'Commercial Space');
 
       const commercialSpacePostData = filteredPosts.map((post) => {
         const realtor = realtors.find((r) => r.id === post.realtorID);

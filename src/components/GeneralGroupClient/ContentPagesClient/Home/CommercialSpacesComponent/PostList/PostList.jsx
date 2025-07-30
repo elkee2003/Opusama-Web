@@ -28,7 +28,7 @@ function PostList() {
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true)
             ]));
-            const filteredPosts = posts.filter((post) => post.propertyType === 'Commercial Spaces');
+            const filteredPosts = posts.filter((post) => post.propertyType === 'Commercial Space');
 
             // Map the realtor details to each post
             return filteredPosts.map((post) => ({

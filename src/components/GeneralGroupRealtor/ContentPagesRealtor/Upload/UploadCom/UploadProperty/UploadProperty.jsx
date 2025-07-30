@@ -27,6 +27,10 @@ const UploadProperty = () => {
     setAvailableDocs,
     capacity,
     setCapacity,
+    eventDateTime, 
+    setEventDateTime,
+    dressCode, 
+    setDressCode,
     accommodationParts,
     setAccommodationParts,
     media,
@@ -102,6 +106,8 @@ const UploadProperty = () => {
     setCautionFee("");
     setTimeFrame("");
     setCapacity("");
+    setEventDateTime("");
+    setDressCode("");
     setPrice("");
     setInspectionFee("");
     setOtherFeesName("");
@@ -202,6 +208,8 @@ const UploadProperty = () => {
           description,
           available: true,
           capacity,
+          eventDateTime,
+          dressCode,
           fullAddress,
           generalLocation,
           lat: parseFloat(lat),

@@ -159,7 +159,9 @@ type Post @model @auth(rules: [{allow: public}]) {
   accommodationParts: String
   media: [String]
   description: String!
+  eventDateTime: String
   capacity: String
+  dressCode: String
   available: Boolean
   address: String
   fullAddress: String
@@ -167,9 +169,9 @@ type Post @model @auth(rules: [{allow: public}]) {
   lat: Float
   lng: Float
   price: Float!
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   cautionFee: Float
   totalPrice: Float!
-  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   inspectionFee: Float
   otherFeesName: String
   otherFeesPrice: Float
@@ -181,9 +183,9 @@ type Post @model @auth(rules: [{allow: public}]) {
   amenities: String
   policies: String
   country: String!
+  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   state: String
   city: String
-  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   isApproved: String
   realtorID: ID! @index(name: "byRealtor")
 }

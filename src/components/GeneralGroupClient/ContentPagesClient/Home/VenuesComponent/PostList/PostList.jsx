@@ -92,7 +92,7 @@ function PostList() {
         <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate(`/clientcontent/search_nightlife`)}
+                onClick={()=>navigate(`/clientcontent/search_venue`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
                 <span className="homeSearchBtnTxt">Search for Venue</span>

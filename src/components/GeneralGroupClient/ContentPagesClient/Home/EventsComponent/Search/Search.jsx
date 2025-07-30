@@ -44,7 +44,7 @@ const EventsSearch = () => {
       const realtors = await DataStore.query(Realtor);
       const posts = await DataStore.query(Post);
 
-      const filteredPosts = posts.filter((post) => post.propertyType === 'Events');
+      const filteredPosts = posts.filter((post) => post.propertyType === 'Event');
 
       const eventsPostData = filteredPosts.map((post) => {
         const realtor = realtors.find((r) => r.id === post.realtorID);
