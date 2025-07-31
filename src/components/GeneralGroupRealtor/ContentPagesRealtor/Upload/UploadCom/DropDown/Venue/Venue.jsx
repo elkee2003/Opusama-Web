@@ -49,7 +49,7 @@ const Venue = () => {
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={venueData}
-            placeholder="Select Event / Hall"
+            placeholder="Select Venue"
             value={venueData.find((option) => option.value === type)}
             onChange={(selectedOption) => setType(selectedOption.value)}
             onFocus={() => setIsFocus(true)}

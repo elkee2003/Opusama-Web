@@ -5,34 +5,39 @@ import { getUrl } from 'aws-amplify/storage';
 import './MediaGrid.css';
 
 const MediaGrid = ({ posts }) => {
-  const [mediaUris, setMediaUris] = useState([]);
-  const navigate = useNavigate(); 
+  const [mediaUris, setMediaUris] = useState({});
+  const navigate = useNavigate();
 
-  // Fetch signed URLs for each post's media using Promise.all
-  const fetchMediaUrls = async () => {
+  // Fetch first media only
+  const fetchFirstMediaUrls = async () => {
     try {
       const urlsByPost = await Promise.all(
         posts.map(async (post) => {
-          if (!post.media || post.media.length === 0) return { [post.id]: [] };
+          if (!post.media || post.media.length === 0) {
+            return { [post.id]: null };
+          }
 
-          const mediaUrls = await Promise.all(
-            post.media.map(async (path) => {
-              const result = await getUrl({
-                path,
-                options: {
-                  validateObjectExistence: true,
-                  expiresIn: null, 
-                },
-              });
+          const firstPath = post.media[0];
 
-              return { 
-                url: result.url.toString(), 
-                type: path.endsWith('.mp4') ? 'video' : 'image' 
-              };
-            })
-          );
+          try {
+            const result = await getUrl({
+              path: firstPath,
+              options: {
+                validateObjectExistence: true,
+                expiresIn: null,
+              },
+            });
 
-          return { [post.id]: mediaUrls };
+            return {
+              [post.id]: {
+                url: result.url.toString(),
+                type: firstPath.endsWith('.mp4') ? 'video' : 'image',
+              },
+            };
+          } catch (err) {
+            console.error(`Error fetching media for post ${post.id}:`, err);
+            return { [post.id]: null };
+          }
         })
       );
 
@@ -45,49 +50,62 @@ const MediaGrid = ({ posts }) => {
 
   useEffect(() => {
     if (posts.length > 0) {
-      fetchMediaUrls();
+      fetchFirstMediaUrls();
     }
   }, [posts]);
 
   return (
     <div className="gridContainer">
-      {posts.map((post) => (
-        <button
-          key={post.id}
-          onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)} // Navigation with React Router
-          className="gridItem"
-        >
-          <div className="mediaImageContainer">
-            {mediaUris[post.id]?.length > 0 ? (
-              mediaUris[post.id][0].type === 'video' ? (
-                <div className='realPostVideoWrapper'>
-                  <video 
-                    className="realMedia"
-                    controls
-                    controlsList="nodownload"
-                    onContextMenu={(e) => e.preventDefault()}
-                  >
-                    <source src={mediaUris[post.id][0].url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+      {posts.map((post) => {
+        const media = mediaUris[post.id];
 
-                  <div
-                    className="realPostVideoOverlay" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/clientcontent/detailedpost/${post.id}`);
-                    }}
+        return (
+          <button
+            key={post.id}
+            onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)}
+            className="gridItem"
+          >
+            <div className="mediaImageContainer">
+              {media ? (
+                media.type === 'video' ? (
+                  <div className="realPostVideoWrapper">
+                    <video
+                      className="realMedia"
+                      controls
+                      controlsList="nodownload"
+                      onContextMenu={(e) => e.preventDefault()}
+                    >
+                      <source src={media.url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+
+                    <div
+                      className="realPostVideoOverlay"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/clientcontent/detailedpost/${post.id}`);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={media.url}
+                    alt="Post"
+                    className="realMediaImage"
+                    loading="lazy"
                   />
-                </div>
+                )
               ) : (
-                <img src={mediaUris[post.id][0].url} alt="Post" className="realMediaImage" />
-              )
-            ) : (
-              <img src={DefaultImage} alt="Default" className="realMediaImage" />
-            )}
-          </div>
-        </button>
-      ))}
+                <img
+                  src={DefaultImage}
+                  alt="Default"
+                  className="realMediaImage"
+                />
+              )}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 };

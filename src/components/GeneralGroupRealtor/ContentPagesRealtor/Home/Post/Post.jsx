@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './Post.css';
-import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useProfileContext } from '../../../../../../Providers/RealtorProvider/ProfileProvider';
 import { getUrl } from 'aws-amplify/storage';
@@ -12,33 +11,33 @@ function Post({post}) {
     const {firstName} = useProfileContext()
     const formattedPrice = Number(post.price)?.toLocaleString();
 
-    // Fetch signed URLs for each media item in post.media
-    const fetchMediaUrls = async () => {
-      try {
-        const urls = await Promise.all(
-            post.media.map(async (path) => {
-              const result = await getUrl({
-                  path,
-                  options: {
-                    validateObjectExistence: true, 
-                    expiresIn: null, // No expiration limit
-                  },
-              });
-              return { url: result.url.toString(), type: path.endsWith('.mp4') ? 'video' : 'image' };
-          })
-        );
+    // Fetch only first image
+    const fetchFirstMediaUrl = async () => {
+    if (!post.media?.length) return;
 
-        setMediaUris(urls.filter(media => media.url !== null));
-      } catch (error) {
-        console.error('Error fetching media URLs:', error);
-      }
-    };
+    const path = post.media[0];
 
-    useEffect(()=>{
-        if (post.media?.length > 0) {
-          fetchMediaUrls();
-        }
-    }, [post.media]);
+    try {
+      const result = await getUrl({
+        path,
+        options: {
+          validateObjectExistence: true,
+          expiresIn: null,
+        },
+      });
+
+      setMediaUris({
+        url: result.url.toString(),
+        type: path.endsWith('.mp4') ? 'video' : 'image',
+      });
+    } catch (error) {
+      console.error('Error fetching media URL:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFirstMediaUrl();
+  }, [post.media]);
 
     // Function to navigate
     const handleNavigate = (postId) => {
@@ -52,8 +51,8 @@ function Post({post}) {
           className={'imageContainer'}
           onClick={() => handleNavigate(post.id)}
         >
-          {mediaUris.length > 0 ? (
-            mediaUris[0].type === 'video' ? (
+          {mediaUris ? (
+            mediaUris.type === 'video' ? (
               <div className='postVideoWrapper'>
                 <video 
                   className="media" 
@@ -61,7 +60,7 @@ function Post({post}) {
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
                 >
-                  <source src={mediaUris[0].url} type="video/mp4" />
+                  <source src={mediaUris.url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
@@ -74,10 +73,19 @@ function Post({post}) {
                 />
               </div>
             ) : (
-              <img src={mediaUris[0].url} alt="Post" className="image" />
+              <img 
+                src={mediaUris.url} 
+                alt="Post" 
+                className="image" 
+                loading='lazy'
+              />
             )
           ) : (
-            <img src={'/defaultImage.png'} alt="Default" className="image" />
+            <img 
+              src={'/defaultImage.png'} 
+              alt="Default" 
+              className="image" 
+            />
           )}
         </div>
 

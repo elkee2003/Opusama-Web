@@ -45,7 +45,6 @@ const Forms = () => {
   } = useUploadContext();
 
   const timeOptions = [
-    { label: '', value: '' },
     { label: 'Night', value: 'Night' },
     { label: 'Week', value: 'Week' },
     { label: 'Month', value: 'Month' },
@@ -109,7 +108,7 @@ const Forms = () => {
               type="number"
             />
           </div>
-          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food&Drinks') && (
+          {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks') && (
             <div className='moneyCon'>
               <label className="formLabel">Caution Fee:</label>
               <input
@@ -123,7 +122,7 @@ const Forms = () => {
           )}
         </div>
 
-        {(propertyType !== 'Hotel / Shortlet' && propertyType !== 'Recreation' && propertyType !== 'Nightlife') && (
+        {(propertyType !== 'Hotel / Shortlet' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks' && propertyType !== 'Venue') && (
           <div className='moneyCon'>
             <label className="formLabel">Inspection Fee:</label>
             <input
@@ -136,7 +135,7 @@ const Forms = () => {
           </div>
         )}
 
-        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale') && (
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks' ) && (
           <div className='moneyCon'>
             <label className="formLabel">Other Fees:</label>
             <textarea
@@ -155,7 +154,7 @@ const Forms = () => {
           </div>
         )}
 
-        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale') && (
+        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks') && (
           <div className='moneyCon'>
             <label className="formLabel">2nd Other Fees:</label>
             <textarea

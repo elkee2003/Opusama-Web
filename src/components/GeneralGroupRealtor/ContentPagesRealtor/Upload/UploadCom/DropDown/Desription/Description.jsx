@@ -89,16 +89,28 @@ const WriteDescription = () => {
                 'What potential clients need to get Office Space')
             }
 
-            {propertyType === 'Events & Halls' &&
-                renderFields('Events & Halls', 'Describe Event Center / Hall.', 
-                'Advantage of using your event center / hall', 
-                'Criteria to fulfil before using and while using your event center / hall')
+            {propertyType === 'Venue' &&
+                renderFields('Venue', 'Describe Venue / Hall.', 
+                'Advantage of using your venue / hall', 
+                'Criteria to fulfil before using and while using your venue / hall')
             }
 
-            {propertyType === 'Shop' &&
-                renderFields('Shop', 'Describe shop etc.', 
-                'Advantage of getting shop', 
-                'What potential client needs to get shop')
+            {propertyType === 'Event' &&
+                renderFields('Event', 'Describe event.', 
+                'Reason why event is interesting', 
+                'Criteria to attend event')
+            }
+
+            {propertyType === 'Commercial Space' &&
+                renderFields('Commercial Space', 'Describe commercial space etc.', 
+                'Advantage of commercial space', 
+                'What client needs to get space')
+            }
+
+            {propertyType === 'Food & Drinks' &&
+                renderFields('Food & Drinks', 'Describe food, drink or list ingredients etc.', 
+                'Why one would get food or drink', 
+                'Criteria of getting food or drink')
             }
         </div>
     );

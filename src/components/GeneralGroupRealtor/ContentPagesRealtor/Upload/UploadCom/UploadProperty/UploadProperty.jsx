@@ -230,7 +230,7 @@ const UploadProperty = () => {
           country,
           state,
           city,
-          isApproved: 'false',
+          isApproved: false,
           realtorID: dbRealtor.id,
         })
       );

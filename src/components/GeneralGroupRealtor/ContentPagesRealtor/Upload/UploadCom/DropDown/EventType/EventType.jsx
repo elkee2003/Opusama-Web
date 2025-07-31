@@ -62,7 +62,7 @@ const EventType = () => {
     <div>
       {propertyType === 'Event' && (
         <>
-          <label className="formLabel">Venue Type</label>
+          <label className="formLabel">Event Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={eventData}

@@ -46,7 +46,7 @@ const FoodDrinks = () => {
     <div>
       {propertyType === 'Food & Drinks' && (
         <>
-          <label className="formLabel">Commercial Space Type</label>
+          <label className="formLabel">Food & Drink Type</label>
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={foodDrinkData}

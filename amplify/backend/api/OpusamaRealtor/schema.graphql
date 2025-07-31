@@ -186,7 +186,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   state: String
   city: String
-  isApproved: String
+  isApproved: Boolean
   realtorID: ID! @index(name: "byRealtor")
 }
  

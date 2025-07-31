@@ -507,7 +507,7 @@ type EagerPost = {
   readonly PostComments?: (PostComment | null)[] | null;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly isApproved?: string | null;
+  readonly isApproved?: boolean | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -554,7 +554,7 @@ type LazyPost = {
   readonly PostComments: AsyncCollection<PostComment>;
   readonly state?: string | null;
   readonly city?: string | null;
-  readonly isApproved?: string | null;
+  readonly isApproved?: boolean | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

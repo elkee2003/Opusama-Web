@@ -1591,7 +1591,7 @@ export const schema = {
                 "isApproved": {
                     "name": "isApproved",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1680,5 +1680,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "3dde2b0047c6b50448a3e3546628f990"
+    "version": "e21236276c115f4109ae88df255aba59"
 };
