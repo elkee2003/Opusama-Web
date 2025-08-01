@@ -40,6 +40,9 @@ import SearchPagePropertySale from '../../GeneralGroupClient/ContentPagesClient/
 // Other DetailedPost
 import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
 
+// Explor DetailedPost
+import ExploreDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Explore/ExploreDetailedPost/DetailedPost';
+
 // HotelDetailedPost
 import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
 
@@ -158,6 +161,9 @@ const ClientRoutes = () => (
             {/* Property Sale Search */}
             <Route path="search_property_sale" element={<SearchPagePropertySale />} />
 
+
+            {/* Explore Detailed Route */}
+            <Route path="exploredetailedpost/:postId" element={<ExploreDetailedPost />} />
 
             {/* Hotel Detailed Route */}
             <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />

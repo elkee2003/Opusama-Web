@@ -5,6 +5,7 @@ import {Post, Realtor} from '../../../../../models';
 import Content from './Content/Content';
 import {useProfileContext} from '../../../../../../Providers/ClientProvider/ProfileProvider';
 import {useBookingShowingContext} from '../../../../../../Providers/ClientProvider/BookingShowingProvider';
+import { PostReview, PostComment } from '../../../../../models';
 
 function DetailedPost() {
     const { postId } = useParams();

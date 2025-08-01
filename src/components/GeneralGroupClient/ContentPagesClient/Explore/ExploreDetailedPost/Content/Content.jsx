@@ -12,7 +12,7 @@ import {useBookingShowingContext} from '../../../../../../../Providers/ClientPro
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { getUrl } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-import {PostReview} from '../../../../../../models';
+import { PostReview } from '../../../../../../models';
 
 function Content({post, realtor,}) {
     const navigate = useNavigate();
@@ -305,11 +305,33 @@ function Content({post, realtor,}) {
             </div>
           )}
 
+          {/* Dress Code */}
+          {post?.dressCode ? (
+            <>
+              <p className='subheader'>Dress Code</p>
+              <p className='bedroom'>
+                {post.dressCode}
+              </p>
+            </>
+          ) : ''}
+
+          {/* Time and Date */}
+          {post?.eventDateTime ? (
+            <>
+              <p className='subheader'>Date & Time</p>
+              <p className='bedroom'>
+                {post.eventDateTime}
+              </p>
+            </>
+          ) : ''}
+          
         {/* Pricing */}
         <div className='priceRoww'>
           <p className='sub'>Price:</p>
           <p className='price'>
-            ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
+            {Number(post.price) === 0
+              ? 'Free'
+              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
           </p>
         </div>
 
@@ -343,16 +365,18 @@ function Content({post, realtor,}) {
         {/* Total Price */}
         <div className="priceRowTotal">
           <p className='sub'>Total Price:</p>
-          <p className='totalPrice'>₦{formattedTotalPrice}</p>
+          <p className='totalPrice'>
+            {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
+          </p>
         </div>
 
         {/* Inspection Fee */}
-          {post?.inspectionFee ? (
-            <div className='priceRowTotal'>
-              <p className='subInspectionFee'>Inspection Fee:</p>
-              <p className='inspectionFee'> ₦{formattedInspectionFee}</p>
-            </div>
-          ) : ''}
+        {post?.inspectionFee ? (
+          <div className='priceRowTotal'>
+            <p className='subInspectionFee'>Inspection Fee:</p>
+            <p className='inspectionFee'> ₦{formattedInspectionFee}</p>
+          </div>
+        ) : ''}
 
         <div className='topBorderLine' />
 

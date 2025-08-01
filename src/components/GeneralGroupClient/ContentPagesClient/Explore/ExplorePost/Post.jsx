@@ -40,7 +40,7 @@ function Post({post}) {
     // function to navigate
     const handleNavigate = (postId) => {
       // sessionStorage.setItem("scrollPosition", window.scrollY); 
-      navigate(`/clientcontent/detailedpost/${postId}`);
+      navigate(`/clientcontent/exploredetailedpost/${postId}`);
     }; 
 
   return (
@@ -66,7 +66,7 @@ function Post({post}) {
                   className="pVideoOverlay" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/clientcontent/detailedpost/${post.id}`);
+                    navigate(`/clientcontent/exploredetailedpost/${post.id}`);
                   }}
                 />
               </div>

@@ -310,11 +310,33 @@ function Content({post, realtor,}) {
             </div>
           )}
 
+          {/* Dress Code */}
+          {post?.dressCode ? (
+            <>
+              <p className='subheader'>Dress Code</p>
+              <p className='bedroom'>
+                {post.dressCode}
+              </p>
+            </>
+          ) : ''}
+
+          {/* Time and Date */}
+          {post?.eventDateTime ? (
+            <>
+              <p className='subheader'>Date & Time</p>
+              <p className='bedroom'>
+                {post.eventDateTime}
+              </p>
+            </>
+          ) : ''}
+
         {/* Pricing */}
         <div className='priceRoww'>
           <p className='sub'>Rent:</p>
           <p className='price'>
-            ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
+            {Number(post.price) === 0
+              ? 'Free'
+              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
           </p>
         </div>
 
@@ -348,7 +370,9 @@ function Content({post, realtor,}) {
         {/* Total Price */}
         <div className="priceRowTotal">
           <p className='sub'>Total Price:</p>
-          <p className='totalPrice'>₦{formattedTotalPrice}</p>
+          <p className='totalPrice'>
+            {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
+          </p>
         </div>
 
         {/* Inspection Fee */}

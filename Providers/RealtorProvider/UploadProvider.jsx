@@ -137,9 +137,14 @@ const UploadContextProvider = ({children}) => {
             setErrors('Time frame is required');
             return false;
           }
-        } else if (propertyType === 'Events & Halls') {
+        } else if (propertyType === 'Venue') {
           if(!capacity){
             setErrors('Capacity is required');
+            return false;
+          }
+        }else if (propertyType === 'Event') {
+          if(!eventDateTime){
+            setErrors('Event Date & Time required');
             return false;
           }
         }
