@@ -1,1 +1,46 @@
 /* Style is from pending alert */
+
+.openScannerBtn {
+  background-color: #0a0227;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 20px auto;
+  display: block;
+  width: fit-content;
+}
+
+.openScannerBtn:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.openScannerBtn:active {
+  background-color: #3e8e41;
+  transform: scale(0.98);
+}
+
+.qrCodeScaner{
+    width: 100%;
+    max-width: 400px; 
+    margin: auto;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+
+}

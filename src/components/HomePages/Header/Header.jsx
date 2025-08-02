@@ -142,6 +142,10 @@ const Header = () => {
                   Sign In
                 </span>
 
+                <span onClick={() => navigateAndScroll('/', 'signin')}>
+                  Create Account
+                </span>
+
                 {isMobileView && (
                   <span onClick={() => navigateAndScroll('/', 'contact')}>
                     Contact Us

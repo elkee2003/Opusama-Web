@@ -39,7 +39,7 @@ const DetailedBooking = () => {
     }
   };
 
-  const updateBookingStatus = async (newStatus, reference = null, statusText = null) => {
+  const updateBookingStatus = async (newStatus, reference = null, statusText = null, ticketId = null, ticketStatus = null) => {
     if (booking) {
       try {
         const updatedBooking = await DataStore.save(
@@ -51,6 +51,8 @@ const DetailedBooking = () => {
             if (statusText) {
               updated.transactionStatus = statusText;
             }
+            if (ticketId) updated.ticketID = ticketId;
+            if (ticketStatus) updated.ticketStatus = ticketStatus;
           })
         );
         setBooking(updatedBooking);

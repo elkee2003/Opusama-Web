@@ -865,6 +865,27 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "ticketID": {
+                    "name": "ticketID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "qrCodeUrl": {
+                    "name": "qrCodeUrl",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "ticketStatus": {
+                    "name": "ticketStatus",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1595,6 +1616,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "likedByID": {
+                    "name": "likedByID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "realtorID": {
                     "name": "realtorID",
                     "isArray": false,
@@ -1680,5 +1708,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "e21236276c115f4109ae88df255aba59"
+    "version": "0811620f4376c3adf1b90d6c52b95c71"
 };

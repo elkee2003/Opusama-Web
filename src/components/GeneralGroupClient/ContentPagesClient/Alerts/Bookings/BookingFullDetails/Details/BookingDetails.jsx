@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaInfoCircle } from 'react-icons/fa';
 import './BookingDetails.css'; 
+import { v4 as uuidv4 } from 'uuid';
+import TicketQRCode from '../QRCode/TicketQRCode';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
@@ -73,8 +75,11 @@ const BookingDetails = ({ notification, onStatusChange }) => {
   };
 
   useEffect(() => {
-    if (isPaymentSuccessful && transactionReference && transactionStatus) {
-      onStatusChange('PAID', transactionReference, transactionStatus);
+    if (isPaymentSuccessful && transactionReference && transactionStatus && !notification.ticketID) {
+      const ticketId = `TICKET-${uuidv4()}`;
+      const ticketStatus = 'unused';
+
+      onStatusChange('PAID', transactionReference, transactionStatus, ticketId, ticketStatus);
       setIsPaymentSuccessful(false);
     }
   }, [isPaymentSuccessful, transactionReference, transactionStatus]);
@@ -208,7 +213,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
         return (
           <div className="viewConInfoRow">
             {/* Button */}
-            <button style={styles.view} onClick={handleCheckedOutClick}>
+            <button className='view' onClick={handleCheckedOutClick}>
               <p className="bkBtnTxt">Checked Out</p>
             </button>
 
@@ -414,6 +419,21 @@ const BookingDetails = ({ notification, onStatusChange }) => {
           </div>
         )}
       </div>
+
+      {/* QR Code */}
+      {notification.ticketID && (
+        <div className='qrCodeCon'>
+          <h3>Click to view QR Code:</h3>
+          <p>Show at entry </p>
+
+          <TicketQRCode 
+            ticketId={notification.ticketID} 
+            ticketStatus={notification.ticketStatus}
+            accommodationType={notification.accommodationType}
+            propertyType={notification.propertyType}
+          />
+        </div>
+      )}
 
       {/* Status */}
       <div className="statusRow">

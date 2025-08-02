@@ -106,6 +106,9 @@ type Booking @model @auth(rules: [{allow: public}]) {
   transactionStatus: String
   realtorID: ID! @index(name: "byRealtor")
   PostID: String
+  ticketID: String
+  qrCodeUrl: String
+  ticketStatus: String
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -187,6 +190,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   state: String
   city: String
   isApproved: Boolean
+  likedByID: String
   realtorID: ID! @index(name: "byRealtor")
 }
  

@@ -135,6 +135,10 @@
     .bkDetails {
         min-width: 360px;
     }
+
+    .qrCodeCon {
+        align-self: center;
+    }
 }
 
 @media (max-width: 500px) {

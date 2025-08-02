@@ -304,6 +304,9 @@ type EagerBooking = {
   readonly transactionStatus?: string | null;
   readonly realtorID: string;
   readonly PostID?: string | null;
+  readonly ticketID?: string | null;
+  readonly qrCodeUrl?: string | null;
+  readonly ticketStatus?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -338,6 +341,9 @@ type LazyBooking = {
   readonly transactionStatus?: string | null;
   readonly realtorID: string;
   readonly PostID?: string | null;
+  readonly ticketID?: string | null;
+  readonly qrCodeUrl?: string | null;
+  readonly ticketStatus?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -508,6 +514,7 @@ type EagerPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
+  readonly likedByID?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -555,6 +562,7 @@ type LazyPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
+  readonly likedByID?: string | null;
   readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './ShortAlertList.css'; 
 import ShortAlert from '../ShortAlert/ShortAlert';
+import { useNavigate } from "react-router-dom";
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import { DataStore } from 'aws-amplify/datastore';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { Booking, User, Post } from '../../../../../../models'; 
 
 const ShortAlertList = () => {
     const { dbRealtor } = useAuthContext();
+
+    const navigate = useNavigate();
+
+    const [isScannerActive, setIsScannerActive] = useState(false);
+    const [scannedData, setScannedData] = useState(null);
 
     const [alerts, setAlerts] = useState([]);
     const [filteredAlerts, setFilteredAlerts] = useState([]);
@@ -48,6 +55,8 @@ const ShortAlertList = () => {
             // Preserve filtered state if search is active
             if (!searchQuery) {
                 setFilteredAlerts(bookingWithUserID);
+            } else {
+                handleSearch(searchQuery); 
             } 
         } catch (e) {
             <p>Error Fetching bookings</p>;
@@ -72,13 +81,35 @@ const ShortAlertList = () => {
       }
     };
 
+    // function to update TicketStatus
+    const updateTicketStatusToUsed = async (bookingId) => {
+        try {
+            const original = await DataStore.query(Booking, bookingId);
+            if (original) {
+            await DataStore.save(
+                Booking.copyOf(original, updated => {
+                updated.ticketStatus = 'Used'; // or "used" if lowercase
+                })
+            );
+            alert("Ticket status updated to Used");
+            }
+        } catch (error) {
+            console.error("Error updating ticket status:", error);
+            alert("Failed to update ticket status.");
+        }
+    };
+
+    // updating realtime data
     useEffect(() => {
         fetchBookings();
 
-        const subscription = DataStore.observe(Booking).subscribe(({ opType }) => {
-        if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
-            fetchBookings();
-        }
+        const subscription = DataStore.observe(Booking).subscribe(msg => {
+            if (msg.opType === 'UPDATE') {
+                const updated = msg.element;
+                setAlerts(prev =>
+                prev.map(b => (b.id === updated.id ? { ...b, ...updated } : b))
+                );
+            }
         });
 
         return () => subscription.unsubscribe();
@@ -102,8 +133,11 @@ const ShortAlertList = () => {
         const filtered = alerts.filter((alert) => {
             const clientFirstName = alert?.clientFirstName?.toLowerCase() || '';
             const clientLastName = alert?.clientLastName?.toLowerCase() || '';
+            const clientPhoneNumber = alert?.clientPhoneNumber?.toLowerCase() || '';
+            const ticketID = alert?.ticketID?.toLowerCase() || '';
             return (
-                clientFirstName.includes(lowercasedQuery) || clientLastName.includes(lowercasedQuery)
+                clientFirstName.includes(lowercasedQuery) || clientLastName.includes(lowercasedQuery) ||
+                clientPhoneNumber.includes(lowercasedQuery) || ticketID.includes(lowercasedQuery)
             );
         });
 
@@ -111,16 +145,86 @@ const ShortAlertList = () => {
     };
 
 
+    // useEffect for QR Code
+    useEffect(() => {
+        if (!isScannerActive) return;
+
+        const scanner = new Html5QrcodeScanner("qr-reader", {
+            fps: 10,
+            qrbox: 250
+        });
+
+        scanner.render(
+            (decodedText, decodedResult) => {
+                try {
+                const data = JSON.parse(decodedText); // assuming it's JSON
+                if (!data.ticketId) throw new Error();
+                setScannedData(data);
+                setIsScannerActive(false); 
+                scanner.clear(); 
+                } catch (e) {
+                alert("Invalid QR code format");
+                }
+            },
+            (errorMessage) => {
+                console.warn("QR scan error:", errorMessage);
+            }
+        );
+
+        return () => {
+            scanner.clear().catch((error) => console.error("Scanner cleanup error", error));
+        };
+    }, [isScannerActive]);
+
+    // useEffect to find scannedData and find booking
+    useEffect(() => {
+        if (scannedData?.ticketId) {
+            const match = alerts.find(alert => alert.ticketID === scannedData.ticketId);
+
+            if (!match) {
+            alert("No booking found for this ticket.");
+            return;
+            }
+
+            // Prevent duplicate check-in
+            if (match.ticketStatus === 'Used') {
+                alert("This ticket has already been used.");
+            }else {
+                // Update both booking status and ticket status
+                updateBookingStatus(match.id, "CHECKED_IN");
+
+                updateTicketStatusToUsed(match.id);
+
+                alert(`Check-in successful for ${match.user?.firstName || "User"}`);
+            }
+
+            navigate(`/realtorcontent/accepted_details/${match.id}`);
+        }
+    }, [scannedData]);
+
+
   return (
     <div className="shortAlertListContainer">
         {/* Search Bar */}
         <input
             type="text"
-            placeholder="Search by client name"
+            placeholder="Search name, number or ticket"
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             className="alertInputSearch"
         />
+
+        {/* Scan QR Code Section */}
+
+        {/* Toggle Scanner Button */}
+        <button onClick={() => setIsScannerActive(true)} className="openScannerBtn">
+            {isScannerActive ? "Scanning..." : "Open QR Scanner"}
+        </button>
+
+        {/* QR Scanner Area */}
+        {isScannerActive && (
+        <div id="qr-reader" className='qrCodeScaner'></div>
+        )}
 
         {/* Alert List */}
         {filteredAlerts && filteredAlerts.length > 0 ? (
