@@ -8,8 +8,13 @@ export default async function handler(req, res) {
   const { account_number, bank_code } = req.body;
 
   // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*'); 
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  const allowedOrigins = ['http://localhost:5173', 'https://opusama.com'];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // Handle preflight (OPTIONS) requests
