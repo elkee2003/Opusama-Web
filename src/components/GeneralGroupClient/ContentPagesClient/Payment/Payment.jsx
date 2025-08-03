@@ -24,6 +24,34 @@ const PaymentComponent = () => {
 
     const { userMail } = useAuthContext();
 
+    // Verify payment
+    const verifyPayment = async (reference) => {
+        try {
+            const apiUrl = import.meta.env.VITE_API_BASE_URL || 'https://opusama-backend.onrender.com';
+
+            const response = await fetch(`${apiUrl}/api/verify-payment`);
+            
+            const result = await response.json();
+
+            if (result.success) {
+                console.log('Verified payment:', result.data);
+
+                setTransactionReference(reference);
+                setTransactionStatus('Successful');
+                setIsPaymentSuccessful(true);
+
+                setTimeout(() => {
+                    navigate(-1);
+                }, 1000);
+            } else {
+                console.warn('Verification failed');
+            }
+        } catch (error) {
+            console.error('Error verifying payment:', error);
+        }
+    };
+
+    
     const payWithPaystack = () => {
         const paystack = new PaystackPop();
 
@@ -51,12 +79,7 @@ const PaymentComponent = () => {
 
                 alert('Payment Successful! Ref: ' + response.reference);
 
-                setTransactionReference(response.reference);
-
-                setTransactionStatus('Successful');
-                
-                setIsPaymentSuccessful(true);
-                navigate(-1);
+                verifyPayment(response.reference);
             },
             onClose: function () {
                 setTransactionStatus('Failed');
@@ -80,7 +103,7 @@ const PaymentComponent = () => {
                 <input
                     type="text"
                     className="payInput"
-                    placeholder="Input amount eg: 100"
+                    placeholder={`Amount: ₦${paymentPrice}`}
                     value={paymentPrice}
                     readOnly
                 />

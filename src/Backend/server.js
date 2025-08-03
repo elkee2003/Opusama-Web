@@ -11,8 +11,6 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 
-// Load environment variables
-dotenv.config();
 
 // Initialize Express app
 const app = express();
@@ -20,6 +18,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+import verifyRouter from './verify.js';
+app.use('/api', verifyRouter);
 
 // Paystack secret key from .env
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
