@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
-import Notification from './Notifications/notification';
+import Notification from './Notifications/Notification';
 import BookingList from './Bookings/BookingList/BookingList';
 import './Alerts.css'
 

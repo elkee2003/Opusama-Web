@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Alert.css'
 import { Tabs, Tab, Box } from '@mui/material';
-import Notification from './Notifications/notification';
+import Notification from './Notifications/Notification';
 import PendingAlertList from './PendingAlerts/ShortAlertList/ShortAlertList'
 import AcceptedAlertList from './AcceptedAlerts/ShortAlertList/ShortAlertList';
 
