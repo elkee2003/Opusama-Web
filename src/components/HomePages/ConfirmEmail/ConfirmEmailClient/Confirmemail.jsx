@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './ConfirmEmail.css';
+import './Confirmemail.css';
 import Header from '../../Header/Header';
 import { confirmSignUp, resendSignUpCode } from 'aws-amplify/auth';
 
