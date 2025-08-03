@@ -6,7 +6,12 @@ export default async function handler(req, res) {
   }
 
   const { account_number, bank_code } = req.body;
-  const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const PAYSTACK_SECRET_KEY = isProduction
+  ? process.env.PAYSTACK_SECRET_KEY_LIVE
+  : process.env.PAYSTACK_SECRET_KEY_TEST;
 
   if (!account_number || !bank_code) {
     return res.status(400).json({ message: "Missing fields" });
