@@ -64,11 +64,9 @@ const BankDetails = () => {
       setError("");
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/resolve-account`, {
-          params: {
-            account_number: accountNumber,
-            bank_code: bankCode,
-          },
+        const res = await axios.post(`${API_BASE_URL}/resolve-account`, {
+          account_number: accountNumber,
+          bank_code: bankCode,
         });
         setAccountName(res.data.data.account_name);
       } catch (err) {
