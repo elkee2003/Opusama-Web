@@ -3,7 +3,6 @@ import './Form.css';
 import { FaArrowRight } from "react-icons/fa";
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import { useNavigate } from 'react-router-dom';
-import { GOOGLE_API_KEY } from '../../../../../../../keys';
 import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
 
 const libraries = ["places"]; // Declare libraries outside the component to maintain consistency.
@@ -11,10 +10,12 @@ const libraries = ["places"]; // Declare libraries outside the component to main
 const GooglePlacesAutoCompleteCom = () => {
   const autocompleteRef = useRef(null);
 
+  const googleApiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+
   // Load the Google Maps API
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: GOOGLE_API_KEY,
+    googleMapsApiKey: googleApiKey,
     libraries, // Use the consistent libraries array
   });
 

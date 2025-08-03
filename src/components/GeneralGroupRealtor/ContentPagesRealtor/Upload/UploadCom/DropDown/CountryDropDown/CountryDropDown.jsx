@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { COUNTRY_STATE_CITY_KEY } from '../../../../../../../../keys';
 import { useUploadContext } from '../../../../../../../../Providers/RealtorProvider/UploadProvider';
 import './CountryDropDown.css'; 
 const LocationDropDown = () => {
@@ -20,7 +19,7 @@ const LocationDropDown = () => {
   const [selectedCountryCode, setSelectedCountryCode] = useState(null);
   const [selectedStateCode, setSelectedStateCode] = useState(null);
 
-  const apiKey = COUNTRY_STATE_CITY_KEY;
+  const apiKey = import.meta.env.VITE_COUNTRY_STATE_CITY_KEY;
 
   useEffect(() => {
     const fetchCountries = async () => {

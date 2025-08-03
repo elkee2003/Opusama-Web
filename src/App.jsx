@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import ReactGA from 'react-ga4';
-import { MEASUREMENT_ID } from '../keys';
 import RouteChangeTracker from './components/Analytics/RouteChangeTracker';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthRoutes from './components/Routes/HomePageRoutes/AuthRoutes';
@@ -17,7 +16,7 @@ import BookingShowingProvider from '../Providers/ClientProvider/BookingShowingPr
 import RealtorProfileProvider from '../Providers/RealtorProvider/ProfileProvider';
 import UploadContextProvider from '../Providers/RealtorProvider/UploadProvider';
 
-ReactGA.initialize(MEASUREMENT_ID);
+ReactGA.initialize(import.meta.env.VITE_MEASUREMENT_ID);
 
 function App() {
 
