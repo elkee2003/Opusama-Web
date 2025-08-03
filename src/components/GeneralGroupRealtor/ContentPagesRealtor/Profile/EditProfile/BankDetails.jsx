@@ -27,7 +27,7 @@ const BankDetails = () => {
   useEffect(() => {
     const fetchBanks = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/banks`);
+        const response = await axios.get(`${API_BASE_URL}/bank`);
         const banks = response.data.data;
 
         const formattedOptions = banks.map((bank) => ({
