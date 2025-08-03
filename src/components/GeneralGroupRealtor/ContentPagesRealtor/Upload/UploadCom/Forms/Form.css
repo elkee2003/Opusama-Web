@@ -219,6 +219,12 @@
   border-radius: 5px;
 }
 
+.signInAuthBtnTxt {
+  color: white;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
 @media (max-width: 1300px) {
 }
 

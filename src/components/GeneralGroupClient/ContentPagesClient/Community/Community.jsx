@@ -23,7 +23,7 @@ function Community() {
         navigate('/clientcontent/create_post');
       }else{
         alert('Sign In to access')
-        navigate('/')
+        navigate('/?section=signin');
       }
     };
   

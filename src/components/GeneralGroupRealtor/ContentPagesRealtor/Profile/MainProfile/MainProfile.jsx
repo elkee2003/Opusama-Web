@@ -17,7 +17,7 @@ const ProfilePage = () => {
         </div>
         <p className='emptyText'>Sign In</p>
         <div className='emptyBtnCon'>
-          <button className='emptyBtnTxt' onClick={() => navigate('/')}>
+          <button className='emptyBtnTxt' onClick={() => navigate('/?section=signin')}>
             Sign In
           </button>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Form.css';
 import { FaArrowRight } from "react-icons/fa";
+import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
@@ -20,6 +21,7 @@ const GooglePlacesAutoCompleteCom = () => {
   });
 
   const [isFocused, setIsFocused] = useState(false);
+   const {authUser} = useAuthContext();
   const { fullAddress, setFullAddress, generalLocation, setGeneralLocation, setLat, setLng } = useUploadContext();
   const navigate = useNavigate();
 
@@ -63,10 +65,17 @@ const GooglePlacesAutoCompleteCom = () => {
   };
 
   const navigateToNxtPage = () =>{
+    if(!authUser){
+        alert('Sign In to access');
+        navigate('/?section=signin');
+        return;
+    }
+
+
     if (fullAddress) {
       navigate('/realtorcontent/form');
     }else{
-      alert('Select an address to access the next page')
+      alert('Select an address to access the next page');
     }
   }
 
@@ -105,7 +114,10 @@ const GooglePlacesAutoCompleteCom = () => {
         onClick={navigateToNxtPage}
         className='nxtPageNavCon'
       >
-        <FaArrowRight className='nxtPageNavTxt' />
+        {authUser ? (
+          <FaArrowRight className='nxtPageNavTxt' />
+        ) : ( <p className='signInAuthBtnTxt'>Sign In</p>
+        )}
       </button>
     </div>
   );

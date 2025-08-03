@@ -109,7 +109,7 @@ const EditProfile = () => {
     if (authUser) {
       onSignout(); // Call the sign-out function if the user is authenticated
     } else {
-      navigate('/');
+      navigate('/?section=signin');
     }
   };
 
@@ -179,7 +179,7 @@ const EditProfile = () => {
         </div>
         <button
           className="emptyBtnCon"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/?section=signin')}
         >
           <p className="emptyBtnTxt">Sign In</p>
         </button>

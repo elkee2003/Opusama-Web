@@ -5,7 +5,8 @@ import { debounce } from "lodash";
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
 
 // Get the base URL from .env
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://opusama-web-nc9b.vercel.app/api';
+console.log("API_BASE_URL:", API_BASE_URL);
 
 const BankDetails = () => {
   const [bankOptions, setBankOptions] = useState([]);
@@ -28,7 +29,14 @@ const BankDetails = () => {
     const fetchBanks = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/bank`);
-        const banks = response.data.data;
+        console.log("Bank API response:", response.data);
+
+        const banks = response?.data?.data || [];
+
+        if (!Array.isArray(banks) || banks.length === 0) {
+          console.warn("No banks received:", response.data);
+          return;
+        }
 
         const formattedOptions = banks.map((bank) => ({
           value: bank.code,

@@ -17,6 +17,11 @@ export default defineConfig({
         target: 'https://cognito-identity.eu-north-1.amazonaws.com',
         changeOrigin: true,
         secure: true,
+      },
+      '/api': {
+        target: 'https://opusama-web-nc9b.vercel.app',
+        changeOrigin: true,
+        secure: false, 
       }
     }
   }

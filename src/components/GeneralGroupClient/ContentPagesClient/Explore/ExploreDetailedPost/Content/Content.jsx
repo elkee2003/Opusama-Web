@@ -104,7 +104,7 @@ function Content({post, realtor,}) {
         navigate(`/clientcontent/clientdetails/${post.id}`);
       }else{
         alert('Sign In to access')
-        navigate('/')
+        navigate('/?section=signin');
       }
     };
 

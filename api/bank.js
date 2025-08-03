@@ -2,8 +2,18 @@ import axios from 'axios';
 
 export default async function handler(req, res) {
 
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight (OPTIONS) requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   const isProduction = process.env.NODE_ENV === 'production';
-  
+
   const PAYSTACK_SECRET_KEY = isProduction
   ? process.env.PAYSTACK_SECRET_KEY_LIVE
   : process.env.PAYSTACK_SECRET_KEY_TEST;
@@ -14,6 +24,8 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
       },
     });
+
+    console.log("Bank API response:", response.data);
 
     res.status(200).json(response.data);
   } catch (error) {

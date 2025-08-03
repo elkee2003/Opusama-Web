@@ -153,7 +153,7 @@ const Content = ({post, onDelete}) => {
         navigate('/realtorcontent/create_post');
       }else{
         alert('Sign In to access')
-        navigate('/')
+        navigate('/?section=signin');
       }
     };
 
@@ -163,8 +163,8 @@ const Content = ({post, onDelete}) => {
           state: { creatorOfPostID: post.creatorOfPostID }
         });
       }else{
-        alert('Sign In to access')
-        navigate('/')
+        alert('Sign In to access');
+        navigate('/?section=signin');
       }
     };
 

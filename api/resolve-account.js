@@ -7,6 +7,16 @@ export default async function handler(req, res) {
 
   const { account_number, bank_code } = req.body;
 
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight (OPTIONS) requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   const isProduction = process.env.NODE_ENV === 'production';
 
   const PAYSTACK_SECRET_KEY = isProduction
