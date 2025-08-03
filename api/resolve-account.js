@@ -1,36 +1,42 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  // ✅ Add proper CORS for production
-  const allowedOrigins = ['https://opusama.com', 'http://localhost:5173'];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-
+  // Set CORS headers for all requests
+  res.setHeader('Access-Control-Allow-Origin', 'https://opusama.com');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  // ✅ Handle preflight request
+  // Handle preflight (OPTIONS) request
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    res.status(204).end();
+    return;
   }
 
-  const isProduction = process.env.NODE_ENV === 'production';
-  const PAYSTACK_SECRET_KEY = isProduction
-    ? process.env.PAYSTACK_SECRET_KEY_LIVE
-    : process.env.PAYSTACK_SECRET_KEY_TEST;
+  const { account_number, bank_code } = req.query;
+
+  if (!account_number || !bank_code) {
+    return res.status(400).json({ error: 'Missing account_number or bank_code' });
+  }
 
   try {
-    const response = await axios.get('https://api.paystack.co/bank', {
-      headers: {
-        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-      },
-    });
+    const PAYSTACK_SECRET_KEY =
+      process.env.NODE_ENV === 'production'
+        ? process.env.PAYSTACK_SECRET_KEY_PRODUCTION
+        : process.env.PAYSTACK_SECRET_KEY_TEST;
+
+    const response = await axios.get(
+      `https://api.paystack.co/bank/resolve?account_number=${account_number}&bank_code=${bank_code}`,
+      {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Error fetching banks:", error.response?.data || error);
-    res.status(500).json({ message: "Failed to fetch banks" });
+    console.error('Error resolving account:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to resolve account' });
   }
 }
