@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
-import "./ForgotPassword.css";
+import "./Forgotpassword.css";
 import Header from '../../Header/Header';
 import { confirmResetPassword } from 'aws-amplify/auth';
 

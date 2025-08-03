@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./ForgotPassword.css";
+import "./Forgotpassword.css";
 import Header from '../../Header/Header';
 import { resetPassword } from 'aws-amplify/auth';
 
