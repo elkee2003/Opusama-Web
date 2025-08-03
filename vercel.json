@@ -29,11 +29,5 @@
       },
       "status": 204
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:match*",
-      "destination": "https://opusama-web-nc9b.vercel.app/api/:match*"
-    }
   ]
 }
