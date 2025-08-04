@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 75vw;
+  width: 80vw;
 }
 
 .displayInnerCon {
@@ -113,6 +113,13 @@
   font-size: 30px;
   color: #000;
 }
+@media (max-width: 1300px) {
+
+  .displayMContainer {
+    width: 70vw;
+  }
+}
+
 
 /* Responsive design */
 @media (max-width: 900px) {

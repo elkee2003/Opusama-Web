@@ -180,13 +180,16 @@ type Post @model @auth(rules: [{allow: public}]) {
   otherFeesPrice: Float
   otherFeesName2: String
   otherFeesPrice2: Float
+  vendorCommissionAmount: Float
+  vendorCommissionBreakdown: AWSJSON
+  clientServiceFee: Float
   timeFrame: String
   bed: String
   bedrooms: String
+  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   amenities: String
   policies: String
   country: String!
-  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   state: String
   city: String
   isApproved: Boolean

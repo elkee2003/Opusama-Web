@@ -1537,6 +1537,27 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "vendorCommissionAmount": {
+                    "name": "vendorCommissionAmount",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "vendorCommissionBreakdown": {
+                    "name": "vendorCommissionBreakdown",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "clientServiceFee": {
+                    "name": "clientServiceFee",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "timeFrame": {
                     "name": "timeFrame",
                     "isArray": false,
@@ -1558,6 +1579,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "PostComments": {
+                    "name": "PostComments",
+                    "isArray": true,
+                    "type": {
+                        "model": "PostComment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "postID"
+                        ]
+                    }
+                },
                 "amenities": {
                     "name": "amenities",
                     "isArray": false,
@@ -1578,22 +1615,6 @@ export const schema = {
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
-                },
-                "PostComments": {
-                    "name": "PostComments",
-                    "isArray": true,
-                    "type": {
-                        "model": "PostComment"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "postID"
-                        ]
-                    }
                 },
                 "state": {
                     "name": "state",
@@ -1708,5 +1729,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "0811620f4376c3adf1b90d6c52b95c71"
+    "version": "56d58795aa80c18b1e85399d5d8f4d27"
 };

@@ -1,4 +1,4 @@
-import React,{useState, createContext, useContext} from 'react'
+import React,{useState, useEffect,  createContext, useContext} from 'react'
 
 const UploadContext = createContext({})
 
@@ -30,6 +30,15 @@ const UploadContextProvider = ({children}) => {
     const [otherFeesPrice2, setOtherFeesPrice2] = useState('');
     const [price, setPrice] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
+    const [vendorCommissionAmount, setVendorCommissionAmount] = useState(0);
+    const [vendorCommissionBreakdown, setVendorCommissionBreakdown] = useState({
+      price: 0,
+      // cautionFee:0,
+      inspection: 0,
+      other1: 0,
+      other2: 0,
+      total: 0,
+    })
     const [timeFrame, setTimeFrame] = useState('');
     const [country, setCountry] = useState('');
     const [state, setState]= useState('');
@@ -233,6 +242,36 @@ const UploadContextProvider = ({children}) => {
       }
     }
 
+    // useEffect for commission etc
+    useEffect(() => {
+      const priceVal = parseFloat(price || 0);
+      // const cautionVal = parseFloat(cautionFee || 0);
+      const inspectionVal = parseFloat(inspectionFee || 0);
+      const otherVal1 = parseFloat(otherFeesPrice || 0);
+      const otherVal2 = parseFloat(otherFeesPrice2 || 0);
+
+      const isPropType = propertyType === 'House Rent' || propertyType === 'House Sale' || propertyType === 'Land Sale' || propertyType === 'Student Accommodation' || propertyType === 'Office Space' || propertyType === 'Commercial Space';
+
+      const priceCommission = isPropType ? 0 : priceVal * 0.1;
+      // const cautionCommission = isSaleType ? 0 : cautionVal * 0.1;
+      const inspectionCommission = inspectionVal * 0.1;
+      const otherCommission1 = isPropType ? 0 : otherVal1 * 0.1;
+      const otherCommission2 = isPropType ? 0 : otherVal2 * 0.1;
+
+      // cautionCommission  not added
+      const total = priceCommission + inspectionCommission + otherCommission1 + otherCommission2;
+
+      setVendorCommissionBreakdown({
+        price: parseFloat(priceCommission.toFixed(2)),
+        inspection: parseFloat(inspectionCommission.toFixed(2)),
+        other1: parseFloat(otherCommission1.toFixed(2)),
+        other2: parseFloat(otherCommission2.toFixed(2)),
+        total: parseFloat(total.toFixed(2)),
+      });
+
+      setVendorCommissionAmount(parseFloat(total.toFixed(2)));
+    }, [price, inspectionFee, otherFeesPrice, otherFeesPrice2, propertyType]);
+
   return (
     <UploadContext.Provider value={{
         propertyType, setPropertyType,
@@ -260,6 +299,8 @@ const UploadContextProvider = ({children}) => {
         otherFeesPrice2, setOtherFeesPrice2,
         price, setPrice,
         totalPrice, setTotalPrice,
+        vendorCommissionAmount, setVendorCommissionAmount,
+        vendorCommissionBreakdown, setVendorCommissionBreakdown,
         timeFrame, setTimeFrame,
         country, setCountry,
         state, setState,

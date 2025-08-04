@@ -86,7 +86,7 @@ const GooglePlacesAutoCompleteCom = () => {
   // }, [fullAddress, navigate]);
 
   return (
-    <div className="formContainer">
+    <div className="formUploadCon">
       <p className="formHeader">Select Address</p>
 
       {/* Google Places Autocomplete */}

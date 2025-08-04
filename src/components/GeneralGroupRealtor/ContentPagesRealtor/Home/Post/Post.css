@@ -1,6 +1,8 @@
 .realtorPostContainer {
   margin-top: 25px;
-  width: 70%;
+  width: 80vw;
+  padding:20px
+  /* background-color: red; */
 }
 
 .imageContainer {
@@ -77,7 +79,7 @@
 
 @media (max-width: 1300px) {
   .realtorPostContainer{
-    width: 75%;
+    width: 70vw;
   }
 }
 @media (max-width: 900px) {

@@ -3,7 +3,8 @@
 .realtorContentContainer {
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: 80vw;
+    padding:20px;
     margin-top: 10px;
     /* margin-inline: 10px; */
     position: relative;
@@ -85,12 +86,15 @@
 @media (max-width: 900px) {
     .realtorContentContainer{
         padding: 10px;
-        width: 100vw;
+        width: 97vw;
     }
 }
 @media (max-width: 700px) {
 }
 @media (max-width: 600px) {
+    .realtorContentContainer{
+        width: 99vw;
+    }
 }
 @media (max-width: 500px) {
 

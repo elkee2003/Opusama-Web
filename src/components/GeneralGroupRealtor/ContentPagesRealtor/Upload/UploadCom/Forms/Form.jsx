@@ -37,12 +37,27 @@ const Forms = () => {
     setInspectionFee,
     totalPrice,
     setTotalPrice,
+    vendorCommissionAmount,
+    vendorCommissionBreakdown,
     timeFrame,
     setTimeFrame,
     errors,
     onValidate,
     media,
   } = useUploadContext();
+
+  // Earnings = Value - Commission
+  const priceValue = parseFloat(price || 0);
+  const priceEarnings = priceValue - vendorCommissionBreakdown.price;
+
+  const inspectionValue = parseFloat(inspectionFee || 0);
+  const inspectionEarnings = inspectionValue - vendorCommissionBreakdown.inspection;
+
+  const otherFeesValue = parseFloat(otherFeesPrice || 0);
+  const otherFeesEarnings = otherFeesValue - vendorCommissionBreakdown.other1;
+
+  const otherFeesValue2 = parseFloat(otherFeesPrice2 || 0);
+  const otherFeesEarnings2 = otherFeesValue2 - vendorCommissionBreakdown.other2;
 
   const timeOptions = [
     { label: 'Night', value: 'Night' },
@@ -65,10 +80,10 @@ const Forms = () => {
       parseFloat(otherFeesPrice2 || 0);
       
       setTotalPrice(updatedTotalPrice.toFixed(2));
-  }, [price, cautionFee, otherFeesPrice, otherFeesPrice2]);
+  }, [price, cautionFee, inspectionFee, otherFeesPrice, otherFeesPrice2]);
 
   return (
-    <div className="formContainer">
+    <div className="formUploadCon">
       <h1 className="formHeader">Property Details</h1>
 
       {/* Back Icon */}
@@ -98,6 +113,8 @@ const Forms = () => {
         {propertyType === 'Office Space' && <OfficeSpace />}
 
         <div className="general-row">
+
+          {/* Price */}
           <div className='moneyCon'>
             <label className="formLabel">Price:</label>
             <input
@@ -107,7 +124,19 @@ const Forms = () => {
               placeholder="Price"
               type="number"
             />
+            
+            {/* Display message */}
+            {price && propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
+              <p className="commissionMsg">
+                You are setting 
+                <span className='displayedValue'> ₦{priceValue.toFixed(2)}</span>,
+                 Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.price.toFixed(2)} (10%)</span>.
+                  You'll earn <span className='displayedValue'>₦{priceEarnings.toFixed(2)}</span>.
+              </p>
+            )}
           </div>
+
+          {/* Caution Fee */}
           {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks') && (
             <div className='moneyCon'>
               <label className="formLabel">Caution Fee:</label>
@@ -122,9 +151,11 @@ const Forms = () => {
           )}
         </div>
 
+        {/* Inspection Fee */}
         {(propertyType !== 'Hotel / Shortlet' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks' && propertyType !== 'Venue') && (
           <div className='moneyCon'>
             <label className="formLabel">Inspection Fee:</label>
+
             <input
               className="moneyInput"
               value={inspectionFee}
@@ -132,9 +163,20 @@ const Forms = () => {
               placeholder="Inspection Fee (Opt)"
               type="number"
             />
+
+            {/* Display message */}
+            {inspectionFee && (
+              <p className="commissionMsg">
+                You are setting 
+                <span className='displayedValue'> ₦{inspectionValue.toFixed(2)}</span>,
+                 Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.inspection.toFixed(2)} (10%)</span>.
+                  You'll earn <span className='displayedValue'>₦{inspectionEarnings.toFixed(2)}</span>.
+              </p>
+            )}
           </div>
         )}
 
+        {/* Other Fees 1 */}
         {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks' ) && (
           <div className='moneyCon'>
             <label className="formLabel">Other Fees:</label>
@@ -144,6 +186,7 @@ const Forms = () => {
               onChange={(e) => setOtherFeesName(e.target.value)}
               placeholder="Name of any other fee client pays (Opt)"
             />
+
             <input
               className="moneyInput"
               value={otherFeesPrice}
@@ -151,9 +194,20 @@ const Forms = () => {
               placeholder="Amount of other fee (Opt)"
               type="number"
             />
+
+            {/* Display message */}
+            {otherFeesPrice && (
+              <p className="commissionMsg">
+                You are setting 
+                <span className='displayedValue'> ₦{otherFeesValue.toFixed(2)}</span>,
+                 Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.other1.toFixed(2)} (10%)</span>.
+                  You'll earn <span className='displayedValue'>₦{otherFeesEarnings.toFixed(2)}</span>.
+              </p>
+            )}
           </div>
         )}
 
+        {/* Other Fees 2 */}
         {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks') && (
           <div className='moneyCon'>
             <label className="formLabel">2nd Other Fees:</label>
@@ -163,6 +217,7 @@ const Forms = () => {
               onChange={(e) => setOtherFeesName2(e.target.value)}
               placeholder="Name of any other 2nd fee client pays (Opt)"
             />
+
             <input
               className="moneyInput"
               value={otherFeesPrice2}
@@ -170,6 +225,16 @@ const Forms = () => {
               placeholder="Amount of other 2nd fee (Opt)"
               type="number"
             />
+
+            {/* Display message */}
+            {otherFeesPrice2 && (
+              <p className="commissionMsg">
+                You are setting 
+                <span className='displayedValue'> ₦{otherFeesValue2.toFixed(2)}</span>,
+                 Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.other2.toFixed(2)} (10%)</span>.
+                  You'll earn <span className='displayedValue'>₦{otherFeesEarnings2.toFixed(2)}</span>.
+              </p>
+            )}
           </div>
         )}
 

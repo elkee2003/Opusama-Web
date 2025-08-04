@@ -59,6 +59,9 @@ const UploadProperty = () => {
     setPrice,
     totalPrice,
     setTotalPrice,
+    setVendorCommissionAmount,
+    vendorCommissionAmount,
+    vendorCommissionBreakdown, setVendorCommissionBreakdown,
     country,
     setCountry,
     state,
@@ -115,6 +118,8 @@ const UploadProperty = () => {
     setOtherFeesName2("");
     setOtherFeesPrice2("");
     setTotalPrice("");
+    setVendorCommissionAmount("");
+    setVendorCommissionBreakdown({});
     setCountry("");
     setState("");
     setCity("");
@@ -223,6 +228,8 @@ const UploadProperty = () => {
           otherFeesPrice2: parseFloat(otherFeesPrice2),
           price: parseFloat(price),
           totalPrice: parseFloat(totalPrice),
+          vendorCommissionAmount:parseFloat(vendorCommissionAmount),
+          vendorCommissionBreakdown:JSON.stringify(vendorCommissionBreakdown), 
           bed,
           bedrooms,
           amenities,

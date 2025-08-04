@@ -89,9 +89,9 @@ const BankDetails = () => {
   }, [accountNumber, bankCode, debouncedVerify]);
 
   return (
-    <div>
+    <div >
       {/* Bank selection */}
-      <div style={{ marginBottom: 10 }}>
+      <div className="realtorProfileInputBankCon">
         <Select
           options={bankOptions}
           value={
@@ -107,11 +107,12 @@ const BankDetails = () => {
             }
           }}
           placeholder="Select or search bank"
+          className="realtorProfileInputBank"
         />
       </div>
 
       {/* Account number */}
-      <div style={{ marginBottom: 10 }}>
+      <div className="realtorProfileInputBankCon">
         <input
           type="text"
           value={accountNumber}
@@ -123,7 +124,7 @@ const BankDetails = () => {
             }
           }}
           placeholder="Account number"
-          style={{ width: "100%", padding: 8 }}
+          className="realtorProfileInputBank"
         />
       </div>
 
