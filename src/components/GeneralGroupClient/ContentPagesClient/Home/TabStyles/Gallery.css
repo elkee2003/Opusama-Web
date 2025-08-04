@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     background-color: #f8f9fa; /* Light background */
-    padding: 5px;
+    padding: 20px;
     box-sizing: border-box;
 }
   
@@ -111,9 +111,20 @@
   
 /* Responsive styling */
 @media (max-width: 1200px) {
+    .galleryContainer {
+        width: 70vw;
+        padding: 15px;
+    }
     .swiper {
       height: 80vh; 
       /* width: 70vw; */
+    }
+}
+
+@media (max-width: 900px) {
+    .galleryContainer {
+        width: 100%;
+        padding: 10px;
     }
 }
 @media (max-width: 768px) {

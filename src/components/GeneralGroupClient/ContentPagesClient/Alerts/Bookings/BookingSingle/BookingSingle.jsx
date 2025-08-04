@@ -80,11 +80,11 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           {/* Property Details */}
           <div onClick={(e) => {
             e.stopPropagation(); // Prevent the event from propagating to the parent div
-            navigate(`/clientcontent/detailedpost/${booking.PostID}`);
+            navigate(`/clientcontent/exploredetailedpost/${booking.PostID}`);
             }}>
             <h4
               className="subHeadingClick"
-            >Accommodation Type (Click to view):</h4>
+            >Opusable Type (Click to view):</h4>
             <p className="detail">{booking?.propertyType}</p>
           </div>
 

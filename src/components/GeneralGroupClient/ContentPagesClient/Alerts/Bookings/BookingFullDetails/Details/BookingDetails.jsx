@@ -277,7 +277,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
             )}
 
             {/* Show account details if ACCEPTED & Hotel/Shortlet */}
-            {notification.status === 'ACCEPTED' &&
+            {/* {notification.status === 'ACCEPTED' &&
               (notification.propertyType === 'Hotel / Shortlet' || notification.propertyType === 'Recreation') && (
                 <div>
                   <h3 className="bkSubHeader">Bank Name:</h3>
@@ -289,7 +289,7 @@ const BookingDetails = ({ notification, onStatusChange }) => {
                   <h3 className="bkSubHeader">Account Number:</h3>
                   <p className="detailsRealtor">{notification?.realtor?.accountNumber}</p>
                 </div>
-              )}
+              )} */}
           </div>
         )}
 

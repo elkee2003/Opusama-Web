@@ -7,6 +7,14 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import DbUserReviewSection from './DataBUserReview'
 import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
+
+// Swiper imports
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
 import {useAuthContext} from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import {useBookingShowingContext} from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
@@ -147,28 +155,37 @@ function Content({post, realtor,}) {
             onClick={()=>navigate(`/clientcontent/gallery/${post.id}`)}
           >
             {mediaUris.length > 0 ? (
-              mediaUris[0].type === 'video' ? (
-                <div className='pDetailVideoWrapper'>
-                  <video 
-                    className="pDetailMedia" 
-                    controls
-                    controlsList="nodownload"
-                    onContextMenu={(e) => e.preventDefault()}
-                  >
-                    <source src={mediaUris[0].url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
 
-                  <div className="pDetailVideoOverlay" onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/clientcontent/gallery/${post.id}`);
-                  }}/>
-                </div>
-              ) : (
-                <img src={mediaUris[0].url} alt="Post" className="image" />
-              )
+              <Swiper
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={10}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                loop={true}
+                className="gallerySwiper"
+              >
+                {mediaUris.map((media, index) => (
+                  <SwiperSlide key={index}>
+                    {media.type === 'video' ? (
+                      <video 
+                        className="pDetailMedia" 
+                        controls
+                        controlsList="nodownload"
+                        onContextMenu={(e) => e.preventDefault()}
+                      >
+                        <source src={media.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img src={media.url} alt={`Media ${index+1}`} className="image" />
+                    )}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             ) : (
-              <img src={DefaultImage} alt="Default" className='image' />
+              <img src={'/defaultImage.png'} alt="Default" className="image" />
             )}
           </div>
 
