@@ -175,15 +175,25 @@ function Content({post, realtor,}) {
                 {mediaUris.map((media, index) => (
                   <SwiperSlide key={index}>
                     {media.type === 'video' ? (
-                      <video 
-                        className="pDetailMedia" 
-                        controls
-                        controlsList="nodownload"
-                        onContextMenu={(e) => e.preventDefault()}
-                      >
-                        <source src={media.url} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                      <div className='pVideoWrapper'>
+                        <video 
+                          className="pDetailMedia" 
+                          controls
+                          controlsList="nodownload"
+                          onContextMenu={(e) => e.preventDefault()}
+                        >
+                          <source src={media.url} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+
+                        <div 
+                          className="pVideoOverlay" 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/clientcontent/gallery/${post.id}`);
+                          }}
+                        />
+                      </div>
                     ) : (
                       <img src={media.url} alt={`Media ${index+1}`} className="image" />
                     )}

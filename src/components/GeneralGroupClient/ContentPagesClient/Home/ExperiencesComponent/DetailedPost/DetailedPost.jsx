@@ -67,7 +67,7 @@ function DetailedPost() {
 
   if (loading) {
     return (
-      <div className="loading-container">
+      <div className="DtPostLoading-container">
         <div className="spinner" />
         <h2>Loading...</h2>
       </div>
