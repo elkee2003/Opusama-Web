@@ -4,6 +4,7 @@
   flex-direction: column;
   margin-bottom: 4.2rem;
   justify-content: center;
+  width: 80vw;
   padding: 30px;
 }
 
@@ -51,9 +52,8 @@
   color: #afadad;
   font-size: 30px;
   position: relative;
+  width: 100%;
   top: 30%;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .searchInput {
@@ -68,6 +68,7 @@
 /* Refreshing */
 .loading-container {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -111,11 +112,19 @@ to {
   .homeSearchBtn {
     width: 75%;
   }
+
+  .postListContainer {
+    width: 70vw;
+  }
 }
 @media (max-width: 900px) {
 
+  .postListContainer{
+    width: 100vw;
+  }
+
   .noListngsCon {
-    width: 85vw;
+    width: 100%;
   }
 
   .homeSearchBtn {

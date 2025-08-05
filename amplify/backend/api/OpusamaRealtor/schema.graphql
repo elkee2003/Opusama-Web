@@ -63,6 +63,13 @@ type PostComment @model @auth(rules: [{allow: public}]) {
   postID: ID! @index(name: "byPost")
 }
 
+type PostLike @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  like: Boolean
+  likedByID: String
+  postID: ID! @index(name: "byPost")
+}
+
 type RealtorReview @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Float
@@ -193,7 +200,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   state: String
   city: String
   isApproved: Boolean
-  likedByID: String
   realtorID: ID! @index(name: "byRealtor")
+  PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
 }
  

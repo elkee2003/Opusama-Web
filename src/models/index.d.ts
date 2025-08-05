@@ -204,6 +204,38 @@ export declare const PostComment: (new (init: ModelInit<PostComment>) => PostCom
   copyOf(source: PostComment, mutator: (draft: MutableModel<PostComment>) => MutableModel<PostComment> | void): PostComment;
 }
 
+type EagerPostLike = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PostLike, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly like?: boolean | null;
+  readonly likedByID?: string | null;
+  readonly postID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPostLike = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PostLike, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly like?: boolean | null;
+  readonly likedByID?: string | null;
+  readonly postID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PostLike = LazyLoading extends LazyLoadingDisabled ? EagerPostLike : LazyPostLike
+
+export declare const PostLike: (new (init: ModelInit<PostLike>) => PostLike) & {
+  copyOf(source: PostLike, mutator: (draft: MutableModel<PostLike>) => MutableModel<PostLike> | void): PostLike;
+}
+
 type EagerRealtorReview = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<RealtorReview, 'id'>;
@@ -517,8 +549,8 @@ type EagerPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
-  readonly likedByID?: string | null;
   readonly realtorID: string;
+  readonly PostLikes?: (PostLike | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -568,8 +600,8 @@ type LazyPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
-  readonly likedByID?: string | null;
   readonly realtorID: string;
+  readonly PostLikes: AsyncCollection<PostLike>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

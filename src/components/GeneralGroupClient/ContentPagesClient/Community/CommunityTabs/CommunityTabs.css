@@ -1,6 +1,7 @@
 .communPostListCon {
     display:flex;
     flex-direction: column;
+    width: 80vw;
 }
 
 .communityCategorySelect {
@@ -139,7 +140,6 @@
     align-items: center;
     justify-content: center;
     height: 70vh;
-    width: 70vw;
 }
 
 .communSpinner {
@@ -181,9 +181,16 @@
 }
 
 @media (max-width: 1300px) {
+    .communPostListCon { 
+        width: 70vw;
+    }
 }
 
 @media (max-width: 900px) {
+    .communPostListCon { 
+        width: 100vw;
+    }
+
     .communityCon{
         margin-bottom: 6rem;
     }

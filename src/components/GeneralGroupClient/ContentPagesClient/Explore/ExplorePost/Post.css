@@ -1,10 +1,12 @@
 /* styles.css */
 .explorePostContainer {
   margin-top: 25px;
-  width: 70%;
+  padding:20;
+  width: 80vw;
 }
 
 .imageContainer {
+  position: relative;
   aspect-ratio: 3/2; /* Aspect ratio for the image */
   width: 100%;
   border-radius: 20px;
@@ -56,17 +58,16 @@
 
 @media (max-width: 1300px) {
   .explorePostContainer{
-    width: 75%;
+    width: 70vw;
   }
 }
 @media (max-width: 900px) {
   .explorePostContainer{
-    width: 90%;
+    width: 100vw;
+    padding:15px
     
   }
 }
 @media (max-width: 500px) {
-  .explorePostContainer{
-    width: 100%;
-  }
+
 }

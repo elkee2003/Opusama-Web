@@ -1,11 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import '../../TabStyles/Post.css';
 import { useNavigate } from 'react-router-dom';
+import { FaRegHeart } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
+import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { getUrl } from 'aws-amplify/storage';
+import { DataStore } from "aws-amplify/datastore";
+import { Post as PostModel, PostLike, User } from '../../../../../../models';
 
 function Post({post}) {
     const navigate = useNavigate();
+    const { dbUser } = useAuthContext();
     const [mediaUris, setMediaUris] = useState([]);
+    const [liked, setLiked] = useState(false);
     const formattedPrice = Number(post.price)?.toLocaleString();
 
     // Fetch ONLY the first media item
@@ -37,6 +44,68 @@ function Post({post}) {
     useEffect(() => {
       fetchFirstMediaUrl();
     }, [post.media]);
+
+    // Check if post is already liked on mount
+    useEffect(() => {
+      if (!dbUser) return;
+      const checkLikeStatus = async () => {
+        const existingLikes = await DataStore.query(
+          PostLike,
+          (p) => p.and(p => [
+            p.postID.eq(post.id),
+            p.likedByID.eq(dbUser.id)
+          ])
+        );
+        setLiked(existingLikes.length > 0);
+      };
+      checkLikeStatus();
+    }, [dbUser, post.id]);
+
+    // Toggle like
+    const toggleLike = async (e) => {
+      e.stopPropagation(); 
+      if (!dbUser) {
+          alert("You need to be logged in to like a post!");
+          return;
+      }else if (!dbUser.username) {
+          alert('Please fill in your username to proceed.');
+          navigate('/clientcontent/editprofile');
+      }
+  
+      try {
+          // Check if the user already liked the post
+          const existingLikes = await DataStore.query(
+              PostLike,
+              (p) => p.and(p => [
+                  p.postID.eq(post.id),
+                  p.likedByID.eq(dbUser.id)
+              ])
+          );
+  
+          if (existingLikes.length > 0) {
+          // Unlike: delete the like entry
+          await Promise.all(existingLikes.map(async (like) => {
+              await DataStore.delete(like);
+          }));
+
+          setLiked(false);
+          } else {
+              // Like: create a new like entry
+              const savedLike = await DataStore.save(
+                  new PostLike({
+                      postID: post.id,
+                      likedByID: dbUser.id,
+                      like: true,
+                  })
+              );
+              
+              setLiked(true);  // <-- Update the state
+          }
+  
+      } catch (error) {
+          console.error("Error toggling like:", error);
+      }
+    };
 
     // function to navigate
     const handleNavigate = (postId) => {
@@ -88,6 +157,18 @@ function Post({post}) {
                 <div className="spinnerOverlay" />
               </div>
             )}
+
+            {/* Like Button */}
+            <div
+              onClick={toggleLike}
+              className='postLike'
+            >
+              {liked ? (
+                <GoHeartFill className='heartIcon' color="red" />
+              ) : (
+                <FaRegHeart className='heartIcon' color="white" />
+              )}
+            </div>
         </div>
 
         {/* Username */}

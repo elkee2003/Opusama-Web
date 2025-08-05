@@ -202,7 +202,7 @@ const EditProfile = () => {
 
           {/* Backbutton */}
           <button 
-            className='bckBtnCon' 
+            className='clientBckBtnCon' 
             onClick={() => navigate(-1)}
           >
             <FontAwesomeIcon 

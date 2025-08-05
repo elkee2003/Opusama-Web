@@ -8,7 +8,7 @@
     white-space: nowrap; /* Prevent wrapping of tabs */
     display: flex; /* Align tabs in a row */
     justify-content: center;
-    width: 100vw; /* Full viewport width */
+    width: 80vw; /* Full viewport width */
     box-sizing: border-box; /* Include padding and borders in width */
     scroll-snap-type: x mandatory; /* Smooth scrolling */
     padding-right: 26rem;
@@ -58,10 +58,14 @@ body {
 }
 
 @media (max-width: 1300px) {
+    .communityTabs-container {
+        width: 70vw;
+    }
 }
 
 @media (max-width: 900px) {
     .communityTabs-container {
+        width: 100vw;
         padding-right: 0;
     }
 }

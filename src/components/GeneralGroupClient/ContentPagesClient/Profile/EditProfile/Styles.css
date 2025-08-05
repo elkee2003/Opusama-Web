@@ -25,10 +25,10 @@
   margin: 10px;
 }
 
-.bckBtnCon {
+.clientBckBtnCon {
   position: absolute;
   top: 25px;
-  left: 15px;
+  left:18rem;
 }
 
 .bckBtnIcon {
@@ -323,6 +323,10 @@
   .profileContainer {
     width: 100vw;
     margin-left: 0;
+  }
+
+  .clientBckBtnCon {
+    left: 15px;
   }
 
   .reviewProContainer {

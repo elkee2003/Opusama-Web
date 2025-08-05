@@ -5,6 +5,7 @@
 }
 
 .imageContainer {
+  position: relative;
   aspect-ratio: 3/2; /* Aspect ratio for the image */
   width: 100%;
   border-radius: 20px;
@@ -69,6 +70,24 @@
   background: transparent;
   /* background-color: blue; */
   cursor: pointer;
+}
+
+.postLike {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  border-radius:100%;
+  padding: 8px;
+  cursor: pointer;
+  z-Index: 2;
+}
+
+.heartIcon {
+  font-size: 1.5rem;
 }
 
 .bedroom,
