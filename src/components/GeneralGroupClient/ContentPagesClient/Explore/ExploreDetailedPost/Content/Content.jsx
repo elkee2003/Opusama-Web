@@ -4,6 +4,8 @@ import DefaultImage from "/defaultImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FaRegCommentDots } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
 import DbUserReviewSection from './DataBUserReview'
 import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
@@ -20,7 +22,7 @@ import {useBookingShowingContext} from '../../../../../../../Providers/ClientPro
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { getUrl } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-import { PostReview } from '../../../../../../models';
+import { PostReview, Post as PostModel, PostLike, User } from '../../../../../../models';
 
 function Content({post, realtor,}) {
     const navigate = useNavigate();
@@ -34,6 +36,7 @@ function Content({post, realtor,}) {
     const [readMorePol, setReadMorePol] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
     const [mediaUris, setMediaUris] = useState([]); 
+    const [liked, setLiked] = useState(false);
 
     const formattedPrice = Number(post?.price)?.toLocaleString();
     const formattedCautionFee = Number(post?.cautionFee)?.toLocaleString();
@@ -116,6 +119,68 @@ function Content({post, realtor,}) {
       }
     };
 
+    // Check if post is already liked on mount
+    useEffect(() => {
+      if (!dbUser) return;
+      const checkLikeStatus = async () => {
+        const existingLikes = await DataStore.query(
+          PostLike,
+          (p) => p.and(p => [
+            p.postID.eq(post.id),
+            p.likedByID.eq(dbUser.id)
+          ])
+        );
+        setLiked(existingLikes.length > 0);
+      };
+      checkLikeStatus();
+    }, [dbUser, post.id]);
+
+    // Toggle like
+    const toggleLike = async (e) => {
+      e.stopPropagation(); 
+      if (!dbUser) {
+          alert("You need to be logged in to like a post!");
+          return;
+      }else if (!dbUser.username) {
+          alert('Please fill in your username to proceed.');
+          navigate('/clientcontent/editprofile');
+      }
+  
+      try {
+          // Check if the user already liked the post
+          const existingLikes = await DataStore.query(
+              PostLike,
+              (p) => p.and(p => [
+                  p.postID.eq(post.id),
+                  p.likedByID.eq(dbUser.id)
+              ])
+          );
+  
+          if (existingLikes.length > 0) {
+          // Unlike: delete the like entry
+          await Promise.all(existingLikes.map(async (like) => {
+              await DataStore.delete(like);
+          }));
+
+          setLiked(false);
+          } else {
+              // Like: create a new like entry
+              const savedLike = await DataStore.save(
+                  new PostLike({
+                      postID: post.id,
+                      likedByID: dbUser.id,
+                      like: true,
+                  })
+              );
+              
+              setLiked(true);  // <-- Update the state
+          }
+  
+      } catch (error) {
+          console.error("Error toggling like:", error);
+      }
+    };
+
     // useEffect for realtime update
     useEffect(()=>{
       if(!post) return;
@@ -129,7 +194,7 @@ function Content({post, realtor,}) {
       });
 
       return () => subscription.unsubscribe();
-    },[post.id])
+    },[post.id]);
 
   return (
     <div className='contentContainer'>
@@ -193,6 +258,18 @@ function Content({post, realtor,}) {
             ) : (
               <img src={'/defaultImage.png'} alt="Default" className="image" />
             )}
+
+            {/* Like Button */}
+            <div
+              onClick={toggleLike}
+              className='postLike'
+            >
+              {liked ? (
+                <GoHeartFill className='heartIcon' color="red" />
+              ) : (
+                <FaRegHeart className='heartIcon' color="white" />
+              )}
+            </div>
           </div>
 
           {/* Realtor Info */}
