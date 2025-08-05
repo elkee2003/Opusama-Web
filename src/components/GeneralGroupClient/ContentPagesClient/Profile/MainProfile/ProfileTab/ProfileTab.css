@@ -1,6 +1,5 @@
-.communityTabs-container {
-    position: fixed;
-    top:0;
+.clientProfTabs-container {
+    /* position: fixed; */
     z-index: 100;
     background-color: white;
     border-bottom: 1px solid #e0e0e0;
@@ -14,42 +13,20 @@
     padding-right: 26rem;
 }
 
-.communityTabs-container::-webkit-scrollbar {
+.clientProfTabs-container::-webkit-scrollbar {
     display: none; 
 }
 
-.communityTabs-container {
+.clientProfTabs-container {
     -ms-overflow-style: none; 
     scrollbar-width: none; 
 }
 
-.communityTab-panel {
+.clientProfTab-panel {
     margin-top: 2.5rem;
     padding: 16px; 
     width: 100%; 
     box-sizing: border-box; 
-}
-
-.addIconCon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 70%; 
-    right: 10px; 
-    transform: translateY(-70%);
-    z-index: 1000; 
-    /* width:40px;
-    height:40px; */
-    padding:10px;
-    background: var( --blue-gradient);
-    color:white;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.addIcon {
-    font-size: 28px;
 }
 
 body {
@@ -61,7 +38,7 @@ body {
 }
 
 @media (max-width: 900px) {
-    .communityTabs-container {
+    .clientProfTabs-container {
         padding-right: 0;
     }
 }
