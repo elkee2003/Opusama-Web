@@ -1,0 +1,23 @@
+/* .connectionLineCon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;   
+}
+
+.connectionLine {
+    height: 2rem;
+    width: 0.3px;
+    background-color: rgb(179, 179, 179);
+} */
+
+.userReplyCon {
+    background: #f9f9f9;
+    padding: 0.5rem;
+}
+
+.userReply {
+    white-space: pre-wrap;
+    margin: 5px 0;
+    font-size: 16px;
+}

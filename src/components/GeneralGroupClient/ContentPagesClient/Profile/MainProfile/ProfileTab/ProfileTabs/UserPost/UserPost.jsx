@@ -4,18 +4,19 @@ import { MdDelete } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
+import { IoMdAdd } from "react-icons/io";
 import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User } from '../../../../../../../../models';
 
 function UserPost() {
+  const navigate = useNavigate();
   const { dbUser } = useAuthContext();
   const [posts, setPosts] = useState([]);
   const [readMore, setReadMore] = useState(false);
   const [moreName, setMoreName] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -79,6 +80,7 @@ function UserPost() {
             DataStore.query(CommunityReply, r => r.communitydiscussionID.eq(post.id)),
             DataStore.query(CommunityLike, l => l.communitydiscussionID.eq(post.id))
           ]);
+          
 
           // Count valid comments
           const numComments = replies.filter(
@@ -187,7 +189,7 @@ function UserPost() {
   return (
     <div>
       {loading ? <p>Loading...</p> : posts.length === 0 ? (
-        <p>No discussions yet</p>
+        <p>No posts yet</p>
       ) : (
         posts.map(post => (
           <div 
@@ -270,7 +272,7 @@ function UserPost() {
                         <FaRegHeart className='engagementIcon'/>
                     )}
                     <p className='engagementNum'>
-                        {likesCount}
+                        {post.totalLikes}
                     </p>
                 </div>
             </div>
@@ -280,6 +282,15 @@ function UserPost() {
           </div>
         ))
       )}
+
+      {/* Add Post Icon */}
+      <div 
+        className='addIconCon'
+        onClick={()=>navigate('/clientcontent/create_post')}
+      >
+        <IoMdAdd className='addIcon'/>
+      </div>
+
     </div>
   )
 }

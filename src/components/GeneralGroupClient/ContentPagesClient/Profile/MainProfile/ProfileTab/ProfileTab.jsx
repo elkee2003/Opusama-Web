@@ -33,7 +33,7 @@ function ProfileTab() {
           aria-label="navigation tabs"
         >
           <Tab label="Posts" />
-          <Tab label="Replies" />
+          <Tab label="Replies & Likes" />
           <Tab label="Favourite" />
         </Tabs>
       </div>
