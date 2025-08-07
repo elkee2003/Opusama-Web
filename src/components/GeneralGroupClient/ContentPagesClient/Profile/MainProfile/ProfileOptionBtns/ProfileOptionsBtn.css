@@ -1,5 +1,7 @@
-.clientProBtnOptions {
+.clientProBtnOptionsCon {
     display: flex;
+    width: 80vw;
+    padding:20px;
     flex-direction: column;
 }
 
@@ -32,6 +34,10 @@
 }
 
 @media (max-width: 900px) {
+    .clientProBtnOptionsCon {
+        width: 100vw;
+        margin-top: 40%;
+    }
 
 }
 

@@ -112,7 +112,7 @@ const BankDetails = () => {
       </div>
 
       {/* Account number */}
-      <div className="realtorProfileInputBankCon">
+      <div className="realtorProfileInputBankConLast">
         <input
           type="text"
           value={accountNumber}

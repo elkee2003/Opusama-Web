@@ -17,6 +17,7 @@ import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseR
 import ReviewClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ReviewShowing/ReviewClientInfo';
 import BookingFullDetails from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookingFullDetails/DetailedBooking';
 import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/ReviewProfile/ReviewProfile';
+import ProfileOptionsPage from '../../GeneralGroupClient/ContentPagesClient/Profile/MainProfile/ProfileOptionBtns/ProfileOptionsBtn';
 import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
 import DeleteAccount from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import RealtorProfile from '../../GeneralGroupClient/ContentPagesClient/RealtorProfile/RealtorProfile';
@@ -78,6 +79,9 @@ const ClientRoutes = () => (
 
             {/* Edit Profile */}
             <Route path="editprofile" element={<EditProfile />} />
+
+            {/* Profile Options */}
+            <Route path="profileoptions" element={<ProfileOptionsPage />} />
 
             {/* Review Edit */}
             <Route path="reviewedit" element={<ReviewClientProfile />} />

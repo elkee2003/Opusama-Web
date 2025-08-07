@@ -223,26 +223,26 @@ function Post({post, onDelete}) {
 
             {/* Post Engagment */}
             <div className='postEngagementCon'>
-            <div className="engagementrow">
-                <FaRegCommentDots className='engagementIcon'/>
-                <p className='engagementNum'>
-                    {post.numComments}
-                </p>
-            </div>
+                <div className="engagementrow">
+                    <FaRegCommentDots className='engagementIcon'/>
+                    <p className='engagementNum'>
+                        {post.numComments}
+                    </p>
+                </div>
 
-            <div 
-                className="engagementrow"
-                onClick={handleToggleLike}
-            >
-                {isLiked ? (
-                    <GoHeartFill className='engagementFilledHeart'/>
-                ) : (
-                    <FaRegHeart className='engagementIcon'/>
-                )}
-                <p className='engagementNum'>
-                    {likesCount}
-                </p>
-            </div>
+                <div 
+                    className="engagementrow"
+                    onClick={handleToggleLike}
+                >
+                    {isLiked ? (
+                        <GoHeartFill className='engagementFilledHeart'/>
+                    ) : (
+                        <FaRegHeart className='engagementIcon'/>
+                    )}
+                    <p className='engagementNum'>
+                        {likesCount}
+                    </p>
+                </div>
             </div>
 
             {/* Border */}

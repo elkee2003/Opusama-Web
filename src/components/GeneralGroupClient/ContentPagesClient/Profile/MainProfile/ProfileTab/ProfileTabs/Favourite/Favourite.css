@@ -1,0 +1,20 @@
+.favouritePostContainer {
+  /* width: 100vw; */
+  width: 70%;
+}
+
+@media (max-width: 1300px) {
+  .favouritePostContainer{
+    width: 75%;
+  }
+}
+
+@media (max-width: 900px) {
+  .favouritePostContainer{
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+
+}

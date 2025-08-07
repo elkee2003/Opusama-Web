@@ -22,7 +22,7 @@ function ProfileOptionsBtn() {
         }
     };
   return (
-    <div className='clientProBtnOptions'>
+    <div className='clientProBtnOptionsCon'>
         <button onClick={() => window.open('https://sites.google.com/view/opusama-termsofservice/home', '_blank')} className='btnCard'>
             <p className='proBtnTxt'>
             Terms and Conditions

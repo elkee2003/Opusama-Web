@@ -7,10 +7,9 @@
     white-space: nowrap; 
     display: flex; 
     justify-content: center;
-    width: 100vw;
+    width: 80vw;
     box-sizing: border-box; 
     scroll-snap-type: x mandatory; 
-    padding-right: 26rem;
 }
 
 .clientProfTabs-container::-webkit-scrollbar {
@@ -23,7 +22,7 @@
 }
 
 .clientProfTab-panel {
-    margin-top: 2.5rem;
+    /* margin-top: 2.5rem; */
     padding: 16px; 
     width: 100%; 
     box-sizing: border-box; 
@@ -39,7 +38,7 @@ body {
 
 @media (max-width: 900px) {
     .clientProfTabs-container {
-        padding-right: 0;
+        width: 90vw;
     }
 }
 

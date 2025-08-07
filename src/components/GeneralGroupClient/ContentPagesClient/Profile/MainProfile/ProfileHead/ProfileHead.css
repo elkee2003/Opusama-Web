@@ -12,6 +12,17 @@
     cursor: pointer;
 }
 
+.clientDotCon {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    cursor:pointer;
+}
+
+.clientDotIcon {
+    font-size: 25px;
+}
+
 .img {
     width: 100%;
     height: 100%;
@@ -99,8 +110,8 @@
 
 @media (max-width: 500px) {
     .mainProfilePicContainer {
-        height: 120px;
-        width: 120px;
+        height: 100px;
+        width: 100px;
     } 
     
     .subHeader {

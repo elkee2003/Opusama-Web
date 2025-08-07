@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
+import './Favourite.css'
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { PostLike, Realtor, Post} from '../../../../../../../../models';
 import { DataStore } from "aws-amplify/datastore";
@@ -30,6 +31,7 @@ function Favourite() {
             setFavouritePosts([]);
             return;
         }
+
         // Step 2: Extract post IDs
         const likedPostIds = likes.map((like) => like.postID);
 
@@ -66,17 +68,17 @@ function Favourite() {
             })
         );
 
-        // Remove nulls and sort
+        // Step 7: Filter null and sort
         const sortedPosts = posts
             .filter((p) => p !== null)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         setFavouritePosts(sortedPosts);
         } catch (error) {
-        console.error('Error fetching realtors and posts', error);
+            console.error('Error fetching realtors and posts', error);
         } finally {
-        setLoading(false);
-        setRefreshing(false);
+            setLoading(false);
+            setRefreshing(false);
         }
     };
 
@@ -123,8 +125,6 @@ function Favourite() {
         }
     };
 
-    console.log(favouritePosts)
-
     // Realtime Update
     useEffect(()=>{
         fetchFavouritePosts();
@@ -145,63 +145,65 @@ function Favourite() {
     };
 
   return (
-    <div>
+    <div className='favouritePostContainer'>
         {favouritePosts.length === 0 && !loading ? (
             <p style={{ textAlign: "center", marginTop: "20px" }}>
                 You have no favourite
             </p>
         ) : (
             favouritePosts.map((post) => (
-                <div 
-                    key={post.id} 
-                    className={'imageContainer'}
-                    onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)}
-                >
-                    {post.mediaUris?.length > 0 ? (
-                    post.mediaUris[0].type === 'video' ? (
-                        <div className='pVideoWrapper'>
-                        <video
-                            className="pMedia"
-                            controls
-                            controlsList="nodownload"
-                            onContextMenu={(e) => e.preventDefault()}
-                        >
-                            <source src={post.mediaUris[0].url} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <div 
-                            className="pVideoOverlay" 
-                            onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/clientcontent/detailedpost/${post.id}`);
-                            }}
-                        />
-                        </div>
-                    ) : (
-                        <img 
-                        src={post.mediaUris[0].url} 
-                        alt="Post" 
-                        className='pImage' 
-                        loading="lazy"
-                        />
-                    )
-                    ) : (
-                    <div className="pImageLoading">
-                        <img src={'/defaultImage.png'} alt="Default" className='pImage' />
-                        <div className="spinnerOverlay" />
-                    </div>
-                    )}
-
-                    {/* Like Button */}
-                    <div
-                    onClick={(e) => toggleLike(e, post)}
-                    className='postLike'
+                <div> 
+                    <div 
+                        key={post.id} 
+                        className={'imageContainer'}
+                        onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)}
                     >
-                    {post.liked ? (
-                        <GoHeartFill className='heartIcon' color="red" />
-                    ) : (
-                        <FaRegHeart className='heartIcon' color="white" />
-                    )}
+                        {post.mediaUris?.length > 0 ? (
+                        post.mediaUris[0].type === 'video' ? (
+                            <div className='pVideoWrapper'>
+                            <video
+                                className="pMedia"
+                                controls
+                                controlsList="nodownload"
+                                onContextMenu={(e) => e.preventDefault()}
+                            >
+                                <source src={post.mediaUris[0].url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                            <div 
+                                className="pVideoOverlay" 
+                                onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/clientcontent/detailedpost/${post.id}`);
+                                }}
+                            />
+                            </div>
+                        ) : (
+                            <img 
+                            src={post.mediaUris[0].url} 
+                            alt="Post" 
+                            className='pImage' 
+                            loading="lazy"
+                            />
+                        )
+                        ) : (
+                        <div className="pImageLoading">
+                            <img src={'/defaultImage.png'} alt="Default" className='pImage' />
+                            <div className="spinnerOverlay" />
+                        </div>
+                        )}
+
+                        {/* Like Button */}
+                        <div
+                        onClick={(e) => toggleLike(e, post)}
+                        className='postLike'
+                        >
+                        {post.liked ? (
+                            <GoHeartFill className='heartIcon' color="red" />
+                        ) : (
+                            <FaRegHeart className='heartIcon' color="white" />
+                        )}
+                        </div>
                     </div>
 
                     {/* Username */}
@@ -209,7 +211,7 @@ function Favourite() {
                     className={'contact'}
                     onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
                     >
-                    <p className={'name'}>{post?.firstName}</p>
+                        <p className={'name'}>{post?.firstName}</p>
                     </div>
 
                     {post.type && <p className={'bedroom'}>{post?.type}</p>}
@@ -218,13 +220,13 @@ function Favourite() {
                     {post.generalLocation && <p className={'location'}>{post.generalLocation}</p>}
 
                     <p className={'description'}>
-                    {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
+                        {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
                     </p>
 
-                    <div className={'priceRow'}>
-                    <p className={'price'}> 
-                        ₦{Number(post.price)?.toLocaleString()} {post.timeFrame && `/ ${post.timeFrame}`}
-                    </p>
+                    <div className='priceRow'>
+                        <p className='price'> 
+                            ₦{Number(post.price)?.toLocaleString()} {post.timeFrame && `/ ${post.timeFrame}`}
+                        </p>
                     </div>
                 </div>
             ))

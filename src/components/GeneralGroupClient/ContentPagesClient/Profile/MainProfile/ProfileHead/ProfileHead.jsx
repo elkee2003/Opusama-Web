@@ -5,6 +5,7 @@ import './ProfileHead.css';
 import { FaPhone } from 'react-icons/fa';
 import { IoPerson } from 'react-icons/io5';
 import { MdLocationOn } from 'react-icons/md'; 
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
@@ -53,6 +54,13 @@ const ProfilePage = () => {
 
   return (
     <div className='clientProfileHeadCon'>
+
+      <button
+        className="clientDotCon"
+        onClick={() => navigate('/clientcontent/profileoptions')}
+      >
+          <BsThreeDotsVertical className='clientDotIcon' />
+      </button>
       <div className='mainProfilePicContainer' onClick={() => navigate('/clientcontent/editprofile')}>
         {loading || !profilePic ? (
           <img src={Placeholder} alt="Placeholder" className='img' />
@@ -61,7 +69,7 @@ const ProfilePage = () => {
         )}
       </div>
       <div className='pRow'>
-        <IoPerson size={24} />
+        {/* <IoPerson size={24} /> */}
         <p className='pName'>{firstName}</p>
       </div>
 
@@ -70,11 +78,11 @@ const ProfilePage = () => {
       </div>
       
       <div className='pRow'>
-        <FaPhone size={24} />
+        {/* <FaPhone size={24} /> */}
         <p className='pTxt'>{phoneNumber}</p>
       </div>
       <div className='pRow'>
-        <MdLocationOn size={24} />
+        {/* <MdLocationOn size={24} /> */}
         <p className='pTxt'>{address}</p>
       </div>
       <div className='profileSubrow'>

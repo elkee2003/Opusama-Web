@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import './ProfileTab.css'
 import { Tabs, Tab, Box } from '@mui/material';
-import PostReplies from './ProfileTabs/PostsReplies/PostReplies';
+import UserPost from './ProfileTabs/UserPost/UserPost';
+import UserReplies from './ProfileTabs/UserReplies/UserReplies';
 import Favourite from './ProfileTabs/Favourite/Favourite';
 
 function ProfileTab() {
@@ -31,14 +32,16 @@ function ProfileTab() {
           scrollButtons="auto"
           aria-label="navigation tabs"
         >
-          <Tab label="Posts & Replies" />
+          <Tab label="Posts" />
+          <Tab label="Replies" />
           <Tab label="Favourite" />
         </Tabs>
       </div>
       
       <div className="clientProfTab-panel">
-        {selectedTab === 0 && <PostReplies />}
-        {selectedTab === 1 && <Favourite />}
+        {selectedTab === 0 && <UserPost />}
+        {selectedTab === 1 && <UserReplies/>}
+        {selectedTab === 2 && <Favourite />}
       </div>
     </div>
   )
