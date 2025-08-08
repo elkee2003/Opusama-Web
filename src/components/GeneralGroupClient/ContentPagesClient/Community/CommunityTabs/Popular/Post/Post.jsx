@@ -171,7 +171,13 @@ function Post({post, onDelete}) {
             {/* Post Username and Time */}
             <div className='postUserTimeDeltCon'>
                 {/* Username & Time */}
-                <div className='postUserTimeCon'>
+                <div 
+                    className='postUserTimeCon'
+                    onClick={(e)=>{
+                        e.stopPropagation();
+                        navigate(`/clientcontent/userprofile/${post.creatorOfPostID}`)
+                    }}
+                >
                     <div className='postUsernameCon'>
                         <p className='postUsername'>
                             {moreName || post.instigatorName.length <= 10

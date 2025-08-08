@@ -1,0 +1,20 @@
+.userProfileContentCon {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+}
+
+@media (max-width: 1300px) {
+  .userProfileContentCon {
+    width: 70vw;
+  }
+}
+@media (max-width: 900px) {
+    .userProfileContentCon {
+        width: 90vw;
+    }
+  
+}
+@media (max-width: 500px) {
+  
+}

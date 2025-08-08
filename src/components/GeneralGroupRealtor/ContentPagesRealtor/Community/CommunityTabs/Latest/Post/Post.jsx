@@ -172,7 +172,9 @@ function Post({post, onDelete}) {
             <div className='postUserTimeDeltCon'>
                 {/* Username & Time */}
                 <div className='postUserTimeCon'>
-                    <div className='postUsernameCon'>
+                    <div 
+                        className='postUsernameCon'
+                    >
                         <p className='postUsername'>
                             {moreName || post.instigatorName.length <= 10
                             ? post.instigatorName

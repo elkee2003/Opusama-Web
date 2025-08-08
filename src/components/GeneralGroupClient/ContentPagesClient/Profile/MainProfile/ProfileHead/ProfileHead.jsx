@@ -12,7 +12,7 @@ import { DataStore } from "aws-amplify/datastore";
 import { User } from '../../../../../../models';
 import { getUrl } from 'aws-amplify/storage';
 
-const ProfilePage = () => {
+const ProfileHead = () => {
   const navigate = useNavigate();
   const { firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
   const { dbUser } = useAuthContext();
@@ -97,4 +97,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfileHead;

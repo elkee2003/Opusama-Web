@@ -1,0 +1,22 @@
+.userProfileCon {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    padding:20px;
+}
+
+@media (max-width: 1300px) {
+  .userProfileCon {
+    width: 70vw;
+  }
+}
+@media (max-width: 900px) {
+    .userProfileCon {
+        width: 90vw;
+        margin-bottom: 10rem;
+    }
+  
+}
+@media (max-width: 500px) {
+  
+}

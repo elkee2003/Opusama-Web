@@ -25,6 +25,7 @@ import RealtorUserReviews from '../../GeneralGroupClient/ContentPagesClient/Real
 import CreatePost from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/CreatePost/CreatePost';
 import CommunityDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/DetailedPost/DetailedPost';
 import CommunityPostResponse from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/DetailedPost/Content/Response/Response';
+import UserProfile from '../../GeneralGroupClient/ContentPagesClient/Community/UserProfile/UserProfile';
 import PaymentPage from '../../GeneralGroupClient/ContentPagesClient/Payment/Payment';
 
 // SearchPages
@@ -133,6 +134,9 @@ const ClientRoutes = () => (
 
             {/* Response Community Post */}
             <Route path="response_post/:postId" element={<CommunityPostResponse />} />
+
+            {/* Community UserProfile */}
+            <Route path="userprofile/:userId" element={<UserProfile />} />
 
             {/* Payment */}
             <Route path="payment" element={<PaymentPage />} />
