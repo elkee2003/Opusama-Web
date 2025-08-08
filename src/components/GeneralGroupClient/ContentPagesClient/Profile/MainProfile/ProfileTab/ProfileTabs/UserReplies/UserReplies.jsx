@@ -111,7 +111,7 @@ function UserReplies() {
     }
 
     if (postsWithUserActivity.length === 0) {
-        return <p>No posts liked or replied to yet.</p>;
+        return <p style={{ textAlign: "center", marginTop: "20px" }}>No posts liked or replied to yet.</p>;
     }
 
   return (

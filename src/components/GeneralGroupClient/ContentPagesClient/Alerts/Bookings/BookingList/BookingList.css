@@ -6,7 +6,7 @@
   /* padding-right: 4rem; */
   padding:20px;
   align-items: center;
-  width: 100%;
+  width: 80vw;
 }
 
 .header {
@@ -63,5 +63,6 @@
   .bookingTabContainer{
     margin-right: 0;
     margin-bottom: 6rem;
+    width: 90vw
   }
 }

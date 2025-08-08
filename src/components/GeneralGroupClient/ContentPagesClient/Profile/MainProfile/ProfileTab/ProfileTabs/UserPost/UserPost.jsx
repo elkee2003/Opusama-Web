@@ -189,7 +189,7 @@ function UserPost() {
   return (
     <div>
       {loading ? <p>Loading...</p> : posts.length === 0 ? (
-        <p>No posts yet</p>
+        <p style={{ textAlign: "center", marginTop: "20px" }}>No posts yet</p>
       ) : (
         posts.map(post => (
           <div 
