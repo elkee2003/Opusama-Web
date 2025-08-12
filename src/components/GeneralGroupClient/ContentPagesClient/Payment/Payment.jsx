@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdArrowBack } from 'react-icons/io';
+import { v4 as uuidv4 } from 'uuid';
 import PaystackPop from '@paystack/inline-js';
 import Logo from '/opusamaSolo.png';
 import { useProfileContext } from '../../../../../Providers/ClientProvider/ProfileProvider';
@@ -19,7 +20,8 @@ const PaymentComponent = () => {
     } = useProfileContext();
 
     const {transactionReference,
-        setTransactionReference, setTransactionStatus
+        setTransactionReference, setTransactionStatus,
+        onStatusChange
     } = useBookingShowingContext();
 
     const { userMail } = useAuthContext();
@@ -29,17 +31,23 @@ const PaymentComponent = () => {
         try {
             const apiUrl = import.meta.env.VITE_API_BASE_URL || 'https://opusama-backend.onrender.com';
 
-            const response = await fetch(`${apiUrl}/api/verify-payment`);
+            // const response = await fetch(`${apiUrl}/api/verify-payment`);
+            const response = await fetch(`${apiUrl}/api/verify-payment?reference=${reference}`);
             
             const result = await response.json();
 
             if (result.success) {
                 console.log('Verified payment:', result.data);
 
-                setTransactionReference(reference);
-                setTransactionStatus('Successful');
-                setIsPaymentSuccessful(true);
+                // ✅ Generate ticket details here
+                const ticketId = `TICKET-${uuidv4()}`;
+                const ticketStatus = 'unused';
 
+                 // ✅ Save to DataStore via context with full info
+                onStatusChange('PAID', reference, 'Successful', ticketId, ticketStatus);
+
+                setIsPaymentSuccessful(true); 
+                
                 setTimeout(() => {
                     navigate(-1);
                 }, 1000);
@@ -78,6 +86,10 @@ const PaymentComponent = () => {
                 console.log('Payment success:', response);
 
                 alert('Payment Successful! Ref: ' + response.reference);
+
+                setTransactionReference(response.reference);
+                
+                setTransactionStatus('Processing');
 
                 verifyPayment(response.reference);
             },

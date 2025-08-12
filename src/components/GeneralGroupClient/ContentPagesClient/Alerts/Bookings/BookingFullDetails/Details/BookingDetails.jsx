@@ -2,15 +2,14 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaInfoCircle } from 'react-icons/fa';
 import './BookingDetails.css'; 
-import { v4 as uuidv4 } from 'uuid';
 import TicketQRCode from '../QRCode/TicketQRCode';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
-const BookingDetails = ({ notification, onStatusChange }) => {
+const BookingDetails = ({ notification }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
-  const {transactionReference, setTransactionReference, transactionStatus, setTransactionStatus}= useBookingShowingContext();
+  const {transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
 
   const getStatusText = (status) => {
     const statusMap = {
@@ -76,13 +75,9 @@ const BookingDetails = ({ notification, onStatusChange }) => {
 
   useEffect(() => {
     if (isPaymentSuccessful && transactionReference && transactionStatus && !notification.ticketID) {
-      const ticketId = `TICKET-${uuidv4()}`;
-      const ticketStatus = 'unused';
-
-      onStatusChange('PAID', transactionReference, transactionStatus, ticketId, ticketStatus);
       setIsPaymentSuccessful(false);
     }
-  }, [isPaymentSuccessful, transactionReference, transactionStatus]);
+  }, [isPaymentSuccessful, transactionReference, transactionStatus, notification.ticketID]);
   
   const renderButton = () => {
     if (notification.status === 'ACCEPTED') {

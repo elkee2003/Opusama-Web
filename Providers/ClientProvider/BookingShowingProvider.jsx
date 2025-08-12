@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useContext, createContext} from 'react';
 import {useAuthContext} from './AuthProvider';
+import { DataStore } from "aws-amplify/datastore";
+import { Booking } from '../../src/models';
 
 const BookingShowingContext = createContext({})
 
@@ -7,6 +9,7 @@ const BookingShowingContextProvider = ({children}) => {
 
     // Booking Hotel/Shortlet
     const [bookings, setBookings] = useState('');
+    const [currentBooking, setCurrentBooking] = useState(null);
     const [adults, setAdults] = useState(0);
     const [kids, setKids] = useState(0);
     const [infants, setInfants] = useState(0);
@@ -40,117 +43,148 @@ const BookingShowingContextProvider = ({children}) => {
     const [transactionStatus, setTransactionStatus] = useState('');
     const {dbUser} = useAuthContext();
 
-        // Hotel Validation
-        const validateHotelInput = () => {
-            setErrorMessage(''); 
-
-            if (adults === 0 && kids === 0 && infants === 0) {
-                setErrorMessage('Please add the number of guests');
-                return false;
-            }
-        
-            if (!guestFirstName) {
-                setErrorMessage('First Name is Required');
-                return false;
-            }
-        
-            if (!guestLastName) {
-                setErrorMessage('Last Name is Required');
-                return false;
-            }
-        
-            if (guestPhoneNumber.length < 10) {
-                setErrorMessage('Phone Number must be at least 10 digits');
-                return false;
-            }
-        
-            return true;
-        };
-
-        const onValidateHotelInput = () =>{
-            if(validateHotelInput()){
-            return true;
-            }else {
-            return false;
-            }
+    // Function to change status of payment
+    const onStatusChange = async (status, reference, message, ticketId, ticketStatus) => {
+        if (!currentBooking) {
+            console.error("No booking set in context.");
+            return;
         }
 
-        // Recreation & Nightlife Validation
-        const validateRecreationInput = () => {
-            setErrorMessage(''); 
+        try {
+             // Save to DataStore using the booking from context
+            const updatedBooking = await DataStore.save(
+                Booking.copyOf(currentBooking, updated => {
+                    updated.paymentStatus = status;
+                    updated.transactionReference = reference;
+                    updated.statusMessage = message;
+                    updated.ticketID = ticketId;
+                    updated.ticketStatus = ticketStatus;
+                })
+            );
 
-            if (numberOfPeople === 0) {
-                setErrorMessage('Please add the number of people');
-                return false;
-            }
-        
-            if (!guestFirstName) {
-                setErrorMessage('First Name is Required');
-                return false;
-            }
-        
-            if (!guestLastName) {
-                setErrorMessage('Last Name is Required');
-                return false;
-            }
-        
-            if (guestPhoneNumber.length < 10) {
-                setErrorMessage('Phone Number must be at least 10 digits');
-                return false;
-            }
-        
-            return true;
-        };
 
-        const onValidateRecreationInput = () =>{
-            if(validateRecreationInput()){
-            return true;
-            }else {
-            return false;
-            }
+        // Keep context in sync
+        setCurrentBooking(updatedBooking);
+        setTransactionReference(reference);
+        setTransactionStatus(status);
+
+        console.log("Payment status saved:", status, reference, message);
+        } catch (error) {
+            console.error("Error saving payment status:", error);
         }
+    };
 
-        // Property Validation
-        const validatePropertyInput = () => {
-            setErrorMessage(''); 
-        
-            if (!guestFirstName) {
-                setErrorMessage('First Name is Required');
-                return false;
-            }
-        
-            if (!guestLastName) {
-                setErrorMessage('Last Name is Required');
-                return false;
-            }
-        
-            if (guestPhoneNumber.length < 10) {
-                setErrorMessage('Phone Number must be at least 10 digits');
-                return false;
-            }
-        
-            return true;
-        };
+    // Hotel Validation
+    const validateHotelInput = () => {
+        setErrorMessage(''); 
 
-        const onValidatePropertyInput = () =>{
-            if(validatePropertyInput()){
-            return true;
-            }else {
+        if (adults === 0 && kids === 0 && infants === 0) {
+            setErrorMessage('Please add the number of guests');
             return false;
-            }
         }
+    
+        if (!guestFirstName) {
+            setErrorMessage('First Name is Required');
+            return false;
+        }
+    
+        if (!guestLastName) {
+            setErrorMessage('Last Name is Required');
+            return false;
+        }
+    
+        if (guestPhoneNumber.length < 10) {
+            setErrorMessage('Phone Number must be at least 10 digits');
+            return false;
+        }
+    
+        return true;
+    };
 
-        useEffect(() => {
-            if (dbUser?.firstName) {
-                setGuestFirstName(dbUser.firstName);
-                setGuestLastName(dbUser.lastName);
-                setGuestPhoneNumber(dbUser.phoneNumber);
-            }
-        }, [dbUser]);
+    const onValidateHotelInput = () =>{
+        if(validateHotelInput()){
+        return true;
+        }else {
+        return false;
+        }
+    }
+
+    // Recreation & Nightlife Validation
+    const validateRecreationInput = () => {
+        setErrorMessage(''); 
+
+        if (numberOfPeople === 0) {
+            setErrorMessage('Please add the number of people');
+            return false;
+        }
+    
+        if (!guestFirstName) {
+            setErrorMessage('First Name is Required');
+            return false;
+        }
+    
+        if (!guestLastName) {
+            setErrorMessage('Last Name is Required');
+            return false;
+        }
+    
+        if (guestPhoneNumber.length < 10) {
+            setErrorMessage('Phone Number must be at least 10 digits');
+            return false;
+        }
+    
+        return true;
+    };
+
+    const onValidateRecreationInput = () =>{
+        if(validateRecreationInput()){
+        return true;
+        }else {
+        return false;
+        }
+    }
+
+    // Property Validation
+    const validatePropertyInput = () => {
+        setErrorMessage(''); 
+    
+        if (!guestFirstName) {
+            setErrorMessage('First Name is Required');
+            return false;
+        }
+    
+        if (!guestLastName) {
+            setErrorMessage('Last Name is Required');
+            return false;
+        }
+    
+        if (guestPhoneNumber.length < 10) {
+            setErrorMessage('Phone Number must be at least 10 digits');
+            return false;
+        }
+    
+        return true;
+    };
+
+    const onValidatePropertyInput = () =>{
+        if(validatePropertyInput()){
+        return true;
+        }else {
+        return false;
+        }
+    }
+
+    useEffect(() => {
+        if (dbUser?.firstName) {
+            setGuestFirstName(dbUser.firstName);
+            setGuestLastName(dbUser.lastName);
+            setGuestPhoneNumber(dbUser.phoneNumber);
+        }
+    }, [dbUser]);
 
 
   return (
-    <BookingShowingContext.Provider value={{bookings, setBookings, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice, transactionReference, setTransactionReference, transactionStatus, setTransactionStatus}}>
+    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice, transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
         {children}
     </BookingShowingContext.Provider>
   )
