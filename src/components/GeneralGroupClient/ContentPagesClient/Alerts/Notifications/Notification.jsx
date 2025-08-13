@@ -77,7 +77,9 @@ const NotificationCom = () => {
     } else if (recipientType === 'REVIEW_CLIENT' && isUser) {
         navigate('/clientcontent/userrating');
     } else if (recipientType === 'COMMENT_CLIENT_POST' && isUser && entityID) {
-        navigate(`/clientcontent/reviews_comments/${entityID}`);
+      navigate(`/clientcontent/reviews_comments/${entityID}`);
+    } else if (recipientType === 'BOOKING_CLIENT' && isUser && entityID) {
+      navigate(`/clientcontent/bookingdetails/${entityID}`);
     } else {
         console.warn('Unhandled recipientType:', recipientType);
     }

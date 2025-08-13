@@ -89,10 +89,14 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
           </>
         )}
         {notification?.propertyType && (
-          <>
-            <h3 className="dAlatSubHeader">Accommodation Type:</h3>
+          <div
+            onClick={() =>{ 
+              navigate(`/realtorcontent/postdetails/${notification?.PostID}`);
+            }}
+          >
+            <h3 className="dAlatSubHeader">Opusable Type (click to view):</h3>
             <p className="dAlatDetails">{notification.propertyType}</p>
-          </>
+          </div>
         )}
         {notification?.accommodationType && (
           <>

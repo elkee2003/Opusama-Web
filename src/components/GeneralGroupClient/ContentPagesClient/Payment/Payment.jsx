@@ -11,6 +11,7 @@ import './Payment.css';
 
 const PaymentComponent = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const {
         firstName,
@@ -29,6 +30,8 @@ const PaymentComponent = () => {
     // Verify payment
     const verifyPayment = async (reference) => {
         try {
+            setLoading(true);
+
             const apiUrl = import.meta.env.VITE_API_BASE_URL || 'https://opusama-backend.onrender.com';
 
             // const response = await fetch(`${apiUrl}/api/verify-payment`);
@@ -56,6 +59,8 @@ const PaymentComponent = () => {
             }
         } catch (error) {
             console.error('Error verifying payment:', error);
+        }finally {
+            setLoading(false); 
         }
     };
 
@@ -88,7 +93,7 @@ const PaymentComponent = () => {
                 alert('Payment Successful! Ref: ' + response.reference);
 
                 setTransactionReference(response.reference);
-                
+
                 setTransactionStatus('Processing');
 
                 verifyPayment(response.reference);

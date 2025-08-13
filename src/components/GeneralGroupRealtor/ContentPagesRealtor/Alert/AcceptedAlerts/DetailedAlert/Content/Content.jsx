@@ -1,9 +1,11 @@
 import React from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import { IoEllipsisVertical } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import './Content.css'
 
 const DetailedAlert = ({ notification, onStatusChange }) => {
+  const navigate = useNavigate();
   const getStatusText = (status) => {
     switch (status) {
       case 'PENDING': return 'Pending';
@@ -116,10 +118,14 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
           </>
         )}
         {notification?.propertyType && (
-          <>
-            <h3 className="dAlatSubHeader">Accommodation Type:</h3>
+          <div
+            onClick={() =>{ 
+              navigate(`/realtorcontent/postdetails/${notification?.PostID}`);
+            }}
+          >
+            <h3 className="dAlatSubHeader">pusable Type (click to view):</h3>
             <p className="dAlatDetails">{notification.propertyType}</p>
-          </>
+          </div>
         )}
         {notification?.accommodationType && (
           <>

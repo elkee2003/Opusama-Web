@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
 import {Notification} from '../../../../../models';
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
+import { Booking } from '../../../../../models';
 
 const NotificationCom = () => {
   const [notifications, setNotifications] = useState([]);
@@ -57,7 +58,21 @@ const NotificationCom = () => {
     }
 
     if (recipientType === 'BOOKING_REALTOR' && isRealtor && entityID) {
+      // ✅ Check booking status before navigating
+      const booking = await DataStore.query(Booking, entityID);
+
+      if (!booking) {
+        console.warn('Booking not found');
+        return;
+      }
+      if (booking.status === 'PENDING') {
         navigate(`/realtorcontent/pending_details/${entityID}`);
+      } else if (booking.status === 'ACCEPTED') {
+        navigate(`/realtorcontent/accepted_details/${entityID}`);
+      } else if (booking.status === 'DENIED') {
+        // Maybe show a toast instead of navigating
+        alert('This booking request has already been denied.');
+      }
     } else if (
         (recipientType === 'REVIEW_REALTOR_POST' || recipientType === 'COMMENT_REALTOR_POST') &&
         isRealtor &&
