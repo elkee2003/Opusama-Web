@@ -11,7 +11,7 @@ const ReviewSection = ({ post, dbUser }) => {
   const [review, setReview] = useState('');
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
-  const { realtorID } = useProfileContext();
+  const { realtorID, setRealtorID } = useProfileContext();
   const {propertyDetails} = useBookingShowingContext();
 
   // Function to handle rating click
@@ -26,6 +26,8 @@ const ReviewSection = ({ post, dbUser }) => {
 
     setLoading(true);
     try {
+      let reviewRecord; 
+
       const existingReview = await DataStore.query(PostReview, (c) =>
         c.and((c) => [
           c.postID.eq(post?.id),
@@ -34,7 +36,7 @@ const ReviewSection = ({ post, dbUser }) => {
       );
 
       if (existingReview.length > 0) {
-        await DataStore.save(
+        reviewRecord = await DataStore.save(
           PostReview.copyOf(existingReview[0], (updated) => {
             updated.rating = userRating;
             updated.review = review;
@@ -68,6 +70,7 @@ const ReviewSection = ({ post, dbUser }) => {
 
       setUserRating(0);
       setReview("");
+      setRealtorID(null);
     } catch (e) {
       console.error("Error saving review", e);
       alert("Error", e.message);

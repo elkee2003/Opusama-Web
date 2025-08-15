@@ -85,21 +85,21 @@ function Content({post, realtor,}) {
     }, [post.media]);
 
     // Calculate average rating
-    useEffect(() => {
-      const calculateAverageRating = async () => {
-        try {
-          const reviews = await DataStore.query(PostReview, (c) => c.postID.eq(post.id));
-          if (reviews.length > 0) {
-            const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-            setAverageRating((total / reviews.length).toFixed(1));
-          } else {
-            setAverageRating(0);
-          }
-        } catch (error) {
-          console.error("Error calculating average rating:", error);
+    const calculateAverageRating = async () => {
+      try {
+        const reviews = await DataStore.query(PostReview, (c) => c.postID.eq(post.id));
+        if (reviews.length > 0) {
+          const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+          setAverageRating((total / reviews.length).toFixed(1));
+        } else {
+          setAverageRating(0);
         }
-      };
+      } catch (error) {
+        console.error("Error calculating average rating:", error);
+      }
+    };
 
+    useEffect(() => {
       calculateAverageRating();
     }, [post.id]);
 

@@ -3,7 +3,7 @@ import '../../../../TabStyles/TopTab.css'
 import { Tabs, Tab, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UserReviews from './Content/UsersReviews';
-import UsersComment from './Content/UsersComment';
+import UsersComments from './Content/UsersComments';
 
 function ReviewCommentTab() {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ function ReviewCommentTab() {
       </div>
       <div className="topTab-panel">
         {selectedTab === 0 && <UserReviews />}
-        {selectedTab === 1 && <UsersComment />}
+        {selectedTab === 1 && <UsersComments />}
       </div>
     </div>
   )
