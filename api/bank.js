@@ -1,14 +1,16 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const PAYSTACK_SECRET_KEY =
-    process.env.NODE_ENV === "production"
-      ? process.env.PAYSTACK_SECRET_KEY_LIVE
-      : process.env.PAYSTACK_SECRET_KEY_TEST;
+  const isProduction = process.env.NODE_ENV === "production";
+  const PAYSTACK_SECRET_KEY = isProduction
+    ? process.env.PAYSTACK_SECRET_KEY_LIVE
+    : process.env.PAYSTACK_SECRET_KEY_TEST;
 
   try {
     const response = await axios.get('https://api.paystack.co/bank', {
-      headers: { Authorization: `Bearer ${PAYSTACK_SECRET_KEY}` },
+      headers: {
+        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+      },
     });
 
     res.status(200).json(response.data);

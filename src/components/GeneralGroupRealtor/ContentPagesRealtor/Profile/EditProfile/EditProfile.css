@@ -399,11 +399,14 @@
     margin-left: 0;
     margin-bottom: 7rem;
   }
+  
+  .realtorBankCon {
+    margin-bottom: 7rem;
+  }
 
   .realtorProfileInputBankConLast{
     margin-right: 0;
     margin-left: 0;
-    margin-bottom: 7rem;
   }
 
   .formContainer {

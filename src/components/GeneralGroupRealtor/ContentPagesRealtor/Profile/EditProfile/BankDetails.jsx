@@ -88,7 +88,7 @@ const BankDetails = () => {
   }, [accountNumber, bankCode, debouncedVerify]);
 
   return (
-    <div >
+    <div className="realtorBankCon" >
       {/* Bank selection */}
       <div className="realtorProfileInputBankCon">
         <Select

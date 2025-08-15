@@ -5,20 +5,24 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Only POST allowed' });
   }
 
-  const { account_number, bank_code } = req.body;
+  const { account_number, bank_code } = req.body || {};
   if (!account_number || !bank_code) {
     return res.status(400).json({ message: "Missing fields" });
   }
 
-  const PAYSTACK_SECRET_KEY =
-    process.env.NODE_ENV === "production"
-      ? process.env.PAYSTACK_SECRET_KEY_LIVE
-      : process.env.PAYSTACK_SECRET_KEY_TEST;
+  const isProduction = process.env.NODE_ENV === "production";
+  const PAYSTACK_SECRET_KEY = isProduction
+    ? process.env.PAYSTACK_SECRET_KEY_LIVE
+    : process.env.PAYSTACK_SECRET_KEY_TEST;
 
   try {
     const response = await axios.get(
       `https://api.paystack.co/bank/resolve?account_number=${account_number}&bank_code=${bank_code}`,
-      { headers: { Authorization: `Bearer ${PAYSTACK_SECRET_KEY}` } }
+      {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+        },
+      }
     );
 
     res.status(200).json(response.data);
