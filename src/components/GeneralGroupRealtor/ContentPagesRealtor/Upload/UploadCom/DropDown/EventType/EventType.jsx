@@ -40,6 +40,7 @@ const EventType = () => {
         { label: 'Conference/Seminar', value: 'Conference/Seminar' },
         { label: 'Product Launch', value: 'Product Launch' },
         { label: 'Exhibition/Expo', value: 'Exhibition/Expo' },
+        { label: 'Networking Event', value: 'Networking Event' },
         { label: 'Religious Event', value: 'Religious Event' },
         { label: 'Fundraiser/Gala', value: 'Fundraiser/Gala' },
         { label: 'Photo/Video Shoot', value: 'Photo/Video Shoot' },

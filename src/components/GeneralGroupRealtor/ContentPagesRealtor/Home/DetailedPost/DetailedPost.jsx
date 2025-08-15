@@ -67,7 +67,7 @@ function DetailedPost() {
 
   if (loading) {
     return (
-      <div className="loading-container">
+      <div className="detailed-realtor-loading-container">
         <div className="spinner" />
         <h2>Loading...</h2>
       </div>
