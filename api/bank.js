@@ -1,36 +1,15 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-
-  // Set CORS headers
-  const allowedOrigins = ['http://localhost:5173', 'https://opusama.com'];
-  const origin = req.headers.origin;
-
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  // Handle preflight (OPTIONS) requests
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  const isProduction = process.env.NODE_ENV === 'production';
-
-  const PAYSTACK_SECRET_KEY = isProduction
-  ? process.env.PAYSTACK_SECRET_KEY_LIVE
-  : process.env.PAYSTACK_SECRET_KEY_TEST;
+  const PAYSTACK_SECRET_KEY =
+    process.env.NODE_ENV === "production"
+      ? process.env.PAYSTACK_SECRET_KEY_LIVE
+      : process.env.PAYSTACK_SECRET_KEY_TEST;
 
   try {
     const response = await axios.get('https://api.paystack.co/bank', {
-      headers: {
-        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-      },
+      headers: { Authorization: `Bearer ${PAYSTACK_SECRET_KEY}` },
     });
-
-    console.log("Bank API response:", response.data);
 
     res.status(200).json(response.data);
   } catch (error) {
