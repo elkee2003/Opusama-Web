@@ -1,8 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Only POST allowed' });
+  // --- CORS HEADERS ---
+  res.setHeader("Access-Control-Allow-Origin", "https://opusama.com"); // Allow only your frontend domain
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Only POST allowed" });
   }
 
   const { account_number, bank_code } = req.body || {};
