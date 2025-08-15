@@ -15,8 +15,6 @@ const Response = () => {
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
     const {realtorID, setRealtorID} = useProfileContext();
-    console.log('real ID:', realtorID);
-    console.log('hi')
     const {propertyDetails} = useBookingShowingContext();
 
     const handleCommentSubmit = async () => {
@@ -43,14 +41,14 @@ const Response = () => {
                     recipientID:realtorID,
                     recipientType: 'COMMENT_REALTOR_POST',
                     type: "COMMENT",
-                    entityID: postComment.id,
+                    entityID: postId,
                     message: `Someone made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
                     read: false,
                 })
             );
 
             setComment('');
-            setRealtorID(null);
+            // setRealtorID(null);
             alert("Comment added successfully!");
             navigate(-1); 
         } catch (error) {

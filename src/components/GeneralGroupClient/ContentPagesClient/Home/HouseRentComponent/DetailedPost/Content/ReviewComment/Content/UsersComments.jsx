@@ -6,7 +6,7 @@ import { useParams, useNavigate} from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import '../../../../../TabStyles/ReviewsComments.css';
 
-const UsersComment = () => {
+const UsersComments = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const {authUser, dbUser} = useAuthContext();
@@ -143,4 +143,4 @@ const UsersComment = () => {
   );
 };
 
-export default UsersComment;
+export default UsersComments;

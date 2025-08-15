@@ -61,7 +61,7 @@ const ReviewSection = ({ post, dbUser }) => {
           recipientID:realtorID,
           recipientType: 'REVIEW_REALTOR_POST',
           type: "REVIEW",
-          entityID: reviewRecord.id,
+          entityID: post.id,
           message: `Someone rated and reviewed your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
           read: false,
         })
@@ -69,7 +69,7 @@ const ReviewSection = ({ post, dbUser }) => {
 
       setUserRating(0);
       setReview("");
-      setRealtorID(null);
+      // setRealtorID(null);
     } catch (e) {
       console.error("Error saving review", e);
       alert("Error", e.message);

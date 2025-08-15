@@ -67,7 +67,7 @@ const NotificationCom = () => {
       }
       if (booking.status === 'PENDING') {
         navigate(`/realtorcontent/pending_details/${entityID}`);
-      } else if (booking.status === 'ACCEPTED') {
+      } else if (booking.status === 'ACCEPTED' || booking.status === 'PAID' || booking.status === 'CHECKED_IN' || booking.status === 'VIEWING' || booking.status === 'VISITING' || booking.status === 'CHECKED_OUT' || booking.status === 'VIEWED' || booking.status === 'VISITED' || booking.status === 'SOLD') {
         navigate(`/realtorcontent/accepted_details/${entityID}`);
       } else if (booking.status === 'DENIED') {
         // Maybe show a toast instead of navigating
