@@ -374,8 +374,12 @@ const BookingDetails = ({ notification }) => {
 
         {/* Accommodation Type */}
         {notification.propertyType && (
-          <div>
-            <h3 className="bkSubHeader">Accommodation Type:</h3>
+          <div
+            onClick={()=>{
+              navigate(`/clientcontent/exploredetailedpost/${notification.PostID}`);
+            }}
+          >
+            <h3 className="bkSubHeader">Opusable Type (click to view):</h3>
             <p className="bkDetails">{notification?.propertyType}</p>
           </div>
         )}
@@ -418,7 +422,7 @@ const BookingDetails = ({ notification }) => {
       {/* QR Code */}
       {notification.ticketID && (
         <div className='qrCodeCon'>
-          <h3>Click to view QR Code:</h3>
+          {/* <h3>Click to view QR Code:</h3> */}
           <p>Show at entry </p>
 
           <TicketQRCode 

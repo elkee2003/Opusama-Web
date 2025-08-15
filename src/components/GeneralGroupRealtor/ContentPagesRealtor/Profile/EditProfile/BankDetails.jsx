@@ -5,7 +5,7 @@ import { debounce } from "lodash";
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
 
 // Get the base URL from .env
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://opusama-web-nc9b.vercel.app/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://opusama-web.vercel.app/api';
 console.log("API_BASE_URL:", API_BASE_URL);
 
 const BankDetails = () => {
