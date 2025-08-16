@@ -189,10 +189,10 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
         <div className="viewConInfoRow">
           <button
             className="view"
-            onClick={() => onStatusChange('RECEIVED')}
+            onClick={() => onStatusChange('CHECKED_IN')}
           >
             <p className='dAlaBtnTxt'>
-              Received
+              Checked In
             </p>
           </button>
           <button
