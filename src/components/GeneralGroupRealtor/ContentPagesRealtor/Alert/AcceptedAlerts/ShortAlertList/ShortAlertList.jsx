@@ -22,6 +22,7 @@ const ShortAlertList = () => {
     const [refreshing, setRefreshing] = useState(false);
 
     const fetchBookings = async () => {
+        if (!dbRealtor?.id) return;
         setLoading(true);
         try {
             const fetchedBookings = await DataStore.query(Booking, (b) =>
@@ -66,36 +67,47 @@ const ShortAlertList = () => {
         }
     };
 
+    // To manually click button to update
     const updateBookingStatus = async (bookingId, newStatus) => {
-      try {
-        const bookingToUpdate = await DataStore.query(Booking, bookingId);
-        if (bookingToUpdate) {
-          await DataStore.save(
-            Booking.copyOf(bookingToUpdate, updated => {
-              updated.status = newStatus;
-            })
-          );
-        }
-      } catch (e) {
-        console.error('Error updating booking status:', e);
-      }
-    };
+        // optimistic update
+        const prevAlerts = alerts; 
+        setAlerts(prev =>
+            prev.map(b => (b.id === bookingId ? { ...b, status: newStatus } : b))
+        );
 
-    // function to update TicketStatus
-    const updateTicketStatusToUsed = async (bookingId) => {
         try {
-            const original = await DataStore.query(Booking, bookingId);
-            if (original) {
+            const bookingToUpdate = await DataStore.query(Booking, bookingId);
+            if (bookingToUpdate) {
             await DataStore.save(
-                Booking.copyOf(original, updated => {
-                updated.ticketStatus = 'Used'; // or "used" if lowercase
+                Booking.copyOf(bookingToUpdate, updated => {
+                updated.status = newStatus;
                 })
             );
-            alert("Ticket status updated to Used");
             }
-        } catch (error) {
-            console.error("Error updating ticket status:", error);
-            alert("Failed to update ticket status.");
+        } catch (e) {
+            console.error('Error updating booking status:', e);
+            // rollback on error
+            setAlerts(prevAlerts);
+            alert("Failed to update status. Please try again.");
+        }
+    };
+
+    // For scanning and updating with camera
+    const checkInBooking = async (bookingId) => {
+        try {
+            const bookingToUpdate = await DataStore.query(Booking, bookingId);
+            if (bookingToUpdate) {
+            await DataStore.save(
+                Booking.copyOf(bookingToUpdate, updated => {
+                updated.status = "CHECKED_IN";
+                updated.ticketStatus = "Used";
+                })
+            );
+            alert(`Check-in successful for ${bookingToUpdate.clientFirstName || "User"}`);
+            }
+        } catch (e) {
+            console.error("Error checking in booking:", e);
+            alert("Failed to update booking status.");
         }
     };
 
@@ -113,7 +125,7 @@ const ShortAlertList = () => {
         });
 
         return () => subscription.unsubscribe();
-    }, [[dbRealtor?.id]]);
+    }, [dbRealtor?.id]);
 
     // For refresh
     const handleRefresh = () => {
@@ -201,9 +213,7 @@ const ShortAlertList = () => {
                     alert("This ticket has already been used.");
                     } else {
                     // Update booking + ticket status
-                    await updateBookingStatus(match.id, "CHECKED_IN");
-                    await updateTicketStatusToUsed(match.id);
-                    alert(`Check-in successful for ${match?.clientFirstName || "User"}`);
+                    await checkInBooking(match.id);
                     }
 
                     navigate(`/realtorcontent/accepted_details/${match.id}`);
