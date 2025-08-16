@@ -40,6 +40,21 @@ const DetailedBooking = () => {
     }
   };
 
+  const updateBookingStatus = async (newStatus) => {
+    if (booking) {
+      try {
+        const updatedBooking = await DataStore.save(
+          Booking.copyOf(booking, (updated) => {
+            updated.status = newStatus;
+          })
+        );
+        setBooking(updatedBooking); // Update local state with new status
+      } catch (error) {
+        alert('Error: Unable to update booking status');
+      }
+    }
+  };
+
 
 
   useEffect(() => {
@@ -74,7 +89,7 @@ const DetailedBooking = () => {
         booking={booking}   
         realtor={realtor}
         post={post}
-        // onStatusChange={updateBookingStatus} 
+        onStatusUpdatechange={updateBookingStatus} 
       />
     </div>
   );

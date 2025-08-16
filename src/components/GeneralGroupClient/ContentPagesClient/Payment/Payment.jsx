@@ -22,10 +22,12 @@ const PaymentComponent = () => {
 
     const {transactionReference,
         setTransactionReference, setTransactionStatus,
-        onStatusChange
+        onStatusChange, currentBooking
     } = useBookingShowingContext();
 
     const { userMail } = useAuthContext();
+
+    console.log('current booking:', currentBooking)
 
     // Verify payment
     const verifyPayment = async (reference) => {

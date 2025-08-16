@@ -56,7 +56,7 @@ const BookingShowingContextProvider = ({children}) => {
              // Save to DataStore using the booking from context
             const updatedBooking = await DataStore.save(
                 Booking.copyOf(currentBooking, updated => {
-                    updated.paymentStatus = status;
+                    updated.status = status;
                     updated.transactionReference = reference;
                     updated.transactionStatus = transactionStatus;
                     updated.ticketID = ticketId;

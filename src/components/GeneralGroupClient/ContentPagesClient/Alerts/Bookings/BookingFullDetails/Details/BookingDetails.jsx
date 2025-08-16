@@ -9,13 +9,12 @@ import { useBookingShowingContext } from '../../../../../../../../Providers/Clie
 const BookingDetails = ({ booking, realtor, post }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
-  const {setCurrentBooking, transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
+  const {setCurrentBooking, transactionReference, transactionStatus, onStatusUpdateChange}= useBookingShowingContext();
 
   useEffect(() => {
     if (booking?.id) {
       setCurrentBooking(booking);
     }
-    return () => setCurrentBooking(null);
   }, [booking, setCurrentBooking]);
 
   const getStatusText = (status) => {
@@ -41,38 +40,38 @@ const BookingDetails = ({ booking, realtor, post }) => {
 
   // Handle Viewing button click
   const handleViewingClick = () => {
-    onStatusChange('VIEWING');
+    onStatusUpdateChange('VIEWING');
   };
 
   // Handle Viewed button click
   const handleViewedClick = () => {
-    onStatusChange('VIEWED');
+    onStatusUpdateChange('VIEWED');
   };
 
   // Handle Check-in button click
   const handleCheckedInClick = () => {
-    onStatusChange('CHECKED_IN');
+    onStatusUpdateChange('CHECKED_IN');
   };
 
   // Handle Check-out button click
   const handleCheckedOutClick = () => {
-    onStatusChange('CHECKED_OUT');
+    onStatusUpdateChange('CHECKED_OUT');
   };
 
   // Handle Visiting button click
   const handleVisitingClick = () => {
-    onStatusChange('VISITING');
+    onStatusUpdateChange('VISITING');
   };
 
   // Handle Visited button click
   const handleVisitedClick = () => {
-    onStatusChange('VISITED');
+    onStatusUpdateChange('VISITED');
   };
 
   // Handle Paid button click
   const handlePaidClick = () => {
     // fallback if triggered manually, without payment
-    onStatusChange('PAID');
+    onStatusUpdateChange('PAID');
   };
 
   // Handle Payment
@@ -429,12 +428,9 @@ const BookingDetails = ({ booking, realtor, post }) => {
       {/* QR Code */}
       {booking.ticketID && (
         <div className='qrCodeCon'>
-          {/* <h3>Click to view QR Code:</h3> */}
-          <p>Show at entry </p>
-
           <TicketQRCode 
             ticketId={booking.ticketID} 
-            ticketStatus={booking.ticketStatus}
+            // ticketStatus={booking.ticketStatus}
             accommodationType={booking.accommodationType}
             propertyType={booking.propertyType}
           />

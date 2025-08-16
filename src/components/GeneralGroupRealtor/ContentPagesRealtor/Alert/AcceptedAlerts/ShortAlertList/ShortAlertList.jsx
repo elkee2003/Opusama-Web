@@ -195,7 +195,7 @@ const ShortAlertList = () => {
 
                 updateTicketStatusToUsed(match.id);
 
-                alert(`Check-in successful for ${match.user?.firstName || "User"}`);
+                alert(`Check-in successful for ${match?.clientFirstName || "User"}`);
             }
 
             navigate(`/realtorcontent/accepted_details/${match.id}`);
