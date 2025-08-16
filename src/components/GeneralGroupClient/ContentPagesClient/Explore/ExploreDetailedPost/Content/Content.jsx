@@ -28,7 +28,7 @@ function Content({post, realtor,}) {
     const navigate = useNavigate();
     const {dbUser, authUser} = useAuthContext();
 
-    const {setPostPrice, setPostCautionFee, setPostTotalPrice} = useBookingShowingContext();
+    const {setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice} = useBookingShowingContext();
 
     const {setRealtorID} = useProfileContext();
     const [readMore, setReadMore] = useState(false);
@@ -107,6 +107,10 @@ function Content({post, realtor,}) {
       setPostTotalPrice(post?.totalPrice);
       setPostPrice(post?.price);
       setPostCautionFee(post?.cautionFee);
+      setPostOtherFeesName(post?.otherFeesName);
+      setPostOtherFeesPrice(post?.otherFeesPrice);
+      setPostOtherFeesName2(post?.otherFeesName2);
+      setPostOtherFeesPrice2(post?.otherFeesPrice2);
     }, [formattedTotalPrice, realtor.id]);
 
     // Navigate function
