@@ -191,6 +191,12 @@ const ShortAlertList = () => {
                     return;
                     }
 
+                    // 🔒 Authorization check
+                    if (match.realtorID !== dbRealtor?.id) {
+                        alert("You are not authorized to check in this booking.");
+                        return;
+                    }
+
                     if (match.ticketStatus === 'Used') {
                     alert("This ticket has already been used.");
                     } else {
