@@ -178,28 +178,37 @@ const ShortAlertList = () => {
 
     // useEffect to find scannedData and find booking
     useEffect(() => {
-        if (scannedData?.ticketId) {
-            const match = alerts.find(alert => alert.ticketID === scannedData.ticketId);
+        const verifyBooking = async () => {
+            if (scannedData?.ticketId) {
+                try {
+                    // Always fetch the latest booking from DataStore
+                    const [match] = await DataStore.query(Booking, (b) =>
+                    b.ticketID.eq(scannedData.ticketId)
+                    );
 
-            if (!match) {
-            alert("No booking found for this ticket.");
-            return;
+                    if (!match) {
+                    alert("No booking found for this ticket.");
+                    return;
+                    }
+
+                    if (match.ticketStatus === 'Used') {
+                    alert("This ticket has already been used.");
+                    } else {
+                    // Update booking + ticket status
+                    await updateBookingStatus(match.id, "CHECKED_IN");
+                    await updateTicketStatusToUsed(match.id);
+                    alert(`Check-in successful for ${match?.clientFirstName || "User"}`);
+                    }
+
+                    navigate(`/realtorcontent/accepted_details/${match.id}`);
+                } catch (err) {
+                    console.error("Error verifying booking:", err);
+                    alert("Something went wrong while verifying ticket.");
+                }
             }
+        };
 
-            // Prevent duplicate check-in
-            if (match.ticketStatus === 'Used') {
-                alert("This ticket has already been used.");
-            }else {
-                // Update both booking status and ticket status
-                updateBookingStatus(match.id, "CHECKED_IN");
-
-                updateTicketStatusToUsed(match.id);
-
-                alert(`Check-in successful for ${match?.clientFirstName || "User"}`);
-            }
-
-            navigate(`/realtorcontent/accepted_details/${match.id}`);
-        }
+        verifyBooking();
     }, [scannedData]);
 
 
