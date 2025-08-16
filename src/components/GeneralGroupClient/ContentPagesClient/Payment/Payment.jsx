@@ -32,35 +32,33 @@ const PaymentComponent = () => {
         try {
             setLoading(true);
 
-            const apiUrl = import.meta.env.VITE_API_BASE_URL || 'https://opusama-backend.onrender.com';
+            const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
             // const response = await fetch(`${apiUrl}/api/verify-payment`);
-            const response = await fetch(`${apiUrl}/api/verify-payment?reference=${reference}`);
+            const response = await fetch(`${apiUrl}/verify-payment?reference=${reference}`);
             
             const result = await response.json();
 
-            if (result.success) {
-                console.log('Verified payment:', result.data);
+            if (result.success && result.data.status === "success") {
+                console.log("Verified payment:", result.data);
 
-                // ✅ Generate ticket details here
                 const ticketId = `TICKET-${uuidv4()}`;
-                const ticketStatus = 'unused';
+                const ticketStatus = "unused";
 
-                 // ✅ Save to DataStore via context with full info
-                onStatusChange('PAID', reference, 'Successful', ticketId, ticketStatus);
+                await onStatusChange("PAID", reference, "Successful", ticketId, ticketStatus);
 
-                setIsPaymentSuccessful(true); 
-                
+                setIsPaymentSuccessful(true);
+
                 setTimeout(() => {
                     navigate(-1);
                 }, 1000);
             } else {
-                console.warn('Verification failed');
+                    console.warn("Verification failed:", result);
             }
         } catch (error) {
-            console.error('Error verifying payment:', error);
-        }finally {
-            setLoading(false); 
+                console.error("Error verifying payment:", error);
+        } finally {
+                setLoading(false);
         }
     };
 

@@ -44,11 +44,13 @@ const BookingShowingContextProvider = ({children}) => {
     const {dbUser} = useAuthContext();
 
     // Function to change status of payment
-    const onStatusChange = async (status, reference, message, ticketId, ticketStatus) => {
+    const onStatusChange = async (status, reference, transactionStatus, ticketId, ticketStatus) => {
+        
         if (!currentBooking) {
             console.error("No booking set in context.");
             return;
         }
+        console.log("Updating booking:", currentBooking);
 
         try {
              // Save to DataStore using the booking from context
@@ -56,19 +58,25 @@ const BookingShowingContextProvider = ({children}) => {
                 Booking.copyOf(currentBooking, updated => {
                     updated.paymentStatus = status;
                     updated.transactionReference = reference;
-                    updated.statusMessage = message;
+                    updated.transactionStatus = transactionStatus;
                     updated.ticketID = ticketId;
                     updated.ticketStatus = ticketStatus;
                 })
             );
 
 
-        // Keep context in sync
-        setCurrentBooking(updatedBooking);
-        setTransactionReference(reference);
-        setTransactionStatus(status);
+            // Keep context in sync
+            setCurrentBooking(updatedBooking);
+            setTransactionReference(reference);
+            setTransactionStatus(status);
 
-        console.log("Payment status saved:", status, reference, message);
+            console.log("Payment status saved:", status, reference, message);
+
+            // ✅ Clear current booking if payment was successful
+            if (status === "PAID" || transactionStatus === "Successful") {
+                setCurrentBooking(null);
+            }
+
         } catch (error) {
             console.error("Error saving payment status:", error);
         }

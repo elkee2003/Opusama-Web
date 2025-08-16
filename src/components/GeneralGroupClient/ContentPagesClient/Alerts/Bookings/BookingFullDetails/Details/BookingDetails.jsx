@@ -6,10 +6,17 @@ import TicketQRCode from '../QRCode/TicketQRCode';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
-const BookingDetails = ({ notification }) => {
+const BookingDetails = ({ booking, realtor, post }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
-  const {transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
+  const {setCurrentBooking, transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
+
+  useEffect(() => {
+    if (booking?.id) {
+      setCurrentBooking(booking);
+    }
+    return () => setCurrentBooking(null);
+  }, [booking, setCurrentBooking]);
 
   const getStatusText = (status) => {
     const statusMap = {
@@ -74,21 +81,21 @@ const BookingDetails = ({ notification }) => {
   };
 
   useEffect(() => {
-    if (isPaymentSuccessful && transactionReference && transactionStatus && !notification.ticketID) {
+    if (isPaymentSuccessful && transactionReference && transactionStatus && !booking.ticketID) {
       setIsPaymentSuccessful(false);
     }
-  }, [isPaymentSuccessful, transactionReference, transactionStatus, notification.ticketID]);
+  }, [isPaymentSuccessful, transactionReference, transactionStatus, booking.ticketID]);
   
   const renderButton = () => {
-    if (notification.status === 'ACCEPTED') {
+    if (booking.status === 'ACCEPTED') {
       if (
         ['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(
-          notification.propertyType
+          booking.propertyType
         )
       ) {
         return (
           <div className="viewConInfoRow">
-            {notification?.post?.inspectionFee ? (
+            {post?.inspectionFee ? (
               <button className="view" onClick={handlePayment}>
                 <p className='bkBtnTxt'>
                   Make Payment
@@ -105,7 +112,7 @@ const BookingDetails = ({ notification }) => {
               className="infoIconCon"
               onClick={() =>
                 alert(
-                  notification?.post?.inspectionFee
+                  post?.inspectionFee
                     ? 'Click on "Make Payment" to proceed with the payment for the inspection fee.'
                     : 'Click on "Viewing" once you are viewing the property.'
                 )
@@ -115,7 +122,7 @@ const BookingDetails = ({ notification }) => {
             </button>
           </div>
         );
-      } else if (notification.propertyType === 'Hotel / Shortlet') {
+      } else if (booking.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
             {/* <button className="view" onClick={handlePaidClick}>
@@ -161,8 +168,8 @@ const BookingDetails = ({ notification }) => {
       }
     }
 
-    if (notification.status === 'VIEWING') {
-      if (['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(notification.propertyType)){
+    if (booking.status === 'VIEWING') {
+      if (['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(booking.propertyType)){
         return (
           <div className="viewConInfoRow">
             <button className="view" onClick={handleViewedClick}>
@@ -183,7 +190,7 @@ const BookingDetails = ({ notification }) => {
       }
     }
 
-    if (notification.status === 'PAID' && notification.propertyType === 'Hotel / Shortlet') {
+    if (booking.status === 'PAID' && booking.propertyType === 'Hotel / Shortlet') {
       return (
         <div className="viewConInfoRow">
           <button className="view" onClick={handleCheckedInClick}>
@@ -203,8 +210,8 @@ const BookingDetails = ({ notification }) => {
       );
     }
 
-    if (notification.status === 'CHECKED_IN') {
-      if (notification.propertyType === 'Hotel / Shortlet') {
+    if (booking.status === 'CHECKED_IN') {
+      if (booking.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
             {/* Button */}
@@ -245,44 +252,44 @@ const BookingDetails = ({ notification }) => {
   };
 
   useEffect(()=>{
-    if(notification?.post?.inspectionFee){
-      setPaymentPrice(notification?.post?.inspectionFee)
+    if(post?.inspectionFee){
+      setPaymentPrice(post?.inspectionFee)
     }else{
-      setPaymentPrice(notification?.totalPrice)
+      setPaymentPrice(booking?.totalPrice)
     }
-  }, [notification])
+  }, [booking])
 
   return (
     <div className="bkDetailsContainer">
       <div className="scrollview" style={{ overflowY: 'auto' }}>
         {/* Realtor's Details */}
-        {notification.status === 'ACCEPTED' && (
+        {booking.status === 'ACCEPTED' && (
           <div>
-            <h2 className="header">Realtor's Details</h2>
-            {notification?.realtor?.phoneNumber && (
+            <h2 className="header">Vendor's Details</h2>
+            {realtor?.phoneNumber && (
               <div>
                 {/* Realtor's name */}
-                <h3 className="bkSubHeader">Realtor Name:</h3>
-                <p className="detailsRealtor">{notification?.realtor?.firstName}</p>
+                <h3 className="bkSubHeader">Vendor Name:</h3>
+                <p className="detailsRealtor">{realtor?.firstName}</p>
 
                 {/* Realtor's phone number */}
-                <h3 className="bkSubHeader">Realtor Phone Number:</h3>
-                <p className="detailsRealtor">{notification?.realtor?.phoneNumber}</p>
+                <h3 className="bkSubHeader">Vendor Phone Number:</h3>
+                <p className="detailsRealtor">{realtor?.phoneNumber}</p>
               </div>
             )}
 
             {/* Show account details if ACCEPTED & Hotel/Shortlet */}
-            {/* {notification.status === 'ACCEPTED' &&
-              (notification.propertyType === 'Hotel / Shortlet' || notification.propertyType === 'Recreation') && (
+            {/* {booking.status === 'ACCEPTED' &&
+              (booking.propertyType === 'Hotel / Shortlet' || booking.propertyType === 'Recreation') && (
                 <div>
                   <h3 className="bkSubHeader">Bank Name:</h3>
-                  <p className="detailsRealtor">{notification?.realtor?.bankname}</p>
+                  <p className="detailsRealtor">{realtor?.bankname}</p>
 
                   <h3 className="bkSubHeader">Account Name:</h3>
-                  <p className="detailsRealtor">{notification?.realtor?.accountName}</p>
+                  <p className="detailsRealtor">{realtor?.accountName}</p>
 
                   <h3 className="bkSubHeader">Account Number:</h3>
-                  <p className="detailsRealtor">{notification?.realtor?.accountNumber}</p>
+                  <p className="detailsRealtor">{realtor?.accountNumber}</p>
                 </div>
               )} */}
           </div>
@@ -292,152 +299,152 @@ const BookingDetails = ({ notification }) => {
         <h2 className="header">My Details</h2>
         <div className="bkGuestUnit">
           {/* Adults */}
-          {notification?.adults && (
+          {booking?.adults && (
             <div>
               <h3 className="bkSubHeader">Adults:</h3>
-              <p className="bkUnitTxt">{notification.adults}</p>
+              <p className="bkUnitTxt">{booking.adults}</p>
             </div>
           )}
 
           {/* Children */}
-          {notification?.kids && (
+          {booking?.kids && (
             <div>
               <h3 className="bkSubHeader">Children:</h3>
-              <p className="bkUnitTxt">{notification.kids}</p>
+              <p className="bkUnitTxt">{booking.kids}</p>
             </div>
           )}
 
           {/* Infants */}
-          {notification?.infants && (
+          {booking?.infants && (
             <div>
               <h3 className="bkSubHeader">Infants:</h3>
-              <p className="bkUnitTxt">{notification.infants}</p>
+              <p className="bkUnitTxt">{booking.infants}</p>
             </div>
           )}
         </div>
 
         {/* FirstName */}
-        {notification?.clientFirstName && (
+        {booking?.clientFirstName && (
           <div>
             <h3 className="bkSubHeader">Name(s):</h3>
-            <p className="bkDetails">{notification?.clientFirstName}</p>
+            <p className="bkDetails">{booking?.clientFirstName}</p>
           </div>
         )}
 
         {/* LastName */}
-        {notification?.clientLastName && (
+        {booking?.clientLastName && (
           <div>
             <h3 className="bkSubHeader">Last Name(s):</h3>
-            <p className="bkDetails">{notification?.clientLastName}</p>
+            <p className="bkDetails">{booking?.clientLastName}</p>
           </div>
         )}
 
         {/* Phone Number */}
-        {notification?.clientPhoneNumber && (
+        {booking?.clientPhoneNumber && (
           <div>
             <h3 className="bkSubHeader">Phone Number:</h3>
-            <p className="bkDetails">{notification?.clientPhoneNumber}</p>
+            <p className="bkDetails">{booking?.clientPhoneNumber}</p>
           </div>
         )}
 
         {/* Note */}
-        {notification?.purpose && (
+        {booking?.purpose && (
           <div>
             <h3 className="bkSubHeader">Purpose:</h3>
-            <p className="bkDetails">{notification?.purpose}</p>
+            <p className="bkDetails">{booking?.purpose}</p>
           </div>
         )}
 
         {/* Duration */}
-        {notification?.duration && (
+        {booking?.duration && (
           <div>
             <h3 className="bkSubHeader">Duration:</h3>
-            <p className="bkDetails">{notification?.duration}</p>
+            <p className="bkDetails">{booking?.duration}</p>
           </div>
         )}
 
         {/* Check-in */}
-        {notification?.checkInDate && (
+        {booking?.checkInDate && (
           <div>
             <h3 className="bkSubHeader">Check-in:</h3>
-            <p className="bkDetails">{notification?.checkInDate}</p>
+            <p className="bkDetails">{booking?.checkInDate}</p>
           </div>
         )}
 
         {/* Check-out */}
-        {notification.checkOutDate && (
+        {booking.checkOutDate && (
           <div>
             <h3 className="bkSubHeader">Check-out:</h3>
-            <p className="bkDetails">{notification?.checkOutDate}</p>
+            <p className="bkDetails">{booking?.checkOutDate}</p>
           </div>
         )}
 
         {/* Accommodation Type */}
-        {notification.propertyType && (
+        {booking.propertyType && (
           <div
             onClick={()=>{
-              navigate(`/clientcontent/exploredetailedpost/${notification.PostID}`);
+              navigate(`/clientcontent/exploredetailedpost/${booking.PostID}`);
             }}
           >
             <h3 className="bkSubHeader">Opusable Type (click to view):</h3>
-            <p className="bkDetails">{notification?.propertyType}</p>
+            <p className="bkDetails">{booking?.propertyType}</p>
           </div>
         )}
 
         {/* Room Type */}
-        {notification.accommodationType && (
+        {booking.accommodationType && (
           <div>
             <h3 className="bkSubHeader">
-              {notification.propertyType === 'Hotel / Shortlet' ? 'Room Type:' : 'Property Type:'}
+              {booking.propertyType === 'Hotel / Shortlet' ? 'Room Type:' : 'Property Type:'}
             </h3>
-            <p className="bkDetails">{notification?.accommodationType}</p>
+            <p className="bkDetails">{booking?.accommodationType}</p>
           </div>
         )}
 
         {/* Room name */}
-        {notification.nameOfType && (
+        {booking.nameOfType && (
           <div>
             <h3 className="bkSubHeader">Room Name:</h3>
-            <p className="bkDetails">{notification?.nameOfType}</p>
+            <p className="bkDetails">{booking?.nameOfType}</p>
           </div>
         )}
 
         {/* Total Price */}
-        {notification.realtorPrice && (
+        {booking.realtorPrice && (
           <div>
             <h3 className="bkSubHeader">Price:</h3>
-            <p className="bkDetails">₦{Number(notification.totalPrice)?.toLocaleString()}</p>
+            <p className="bkDetails">₦{Number(booking.totalPrice)?.toLocaleString()}</p>
           </div>
         )}
 
         {/* Inspection Fee */}
-        {notification?.post?.inspectionFee && (
+        {post?.inspectionFee && (
           <div>
             <h3 className="bkSubHeader">Inspection Fee:</h3>
-            <p className="bkDetails">₦{Number(notification?.post?.inspectionFee)?.toLocaleString()}</p>
+            <p className="bkDetails">₦{Number(post?.inspectionFee)?.toLocaleString()}</p>
           </div>
         )}
       </div>
 
       {/* QR Code */}
-      {notification.ticketID && (
+      {booking.ticketID && (
         <div className='qrCodeCon'>
           {/* <h3>Click to view QR Code:</h3> */}
           <p>Show at entry </p>
 
           <TicketQRCode 
-            ticketId={notification.ticketID} 
-            ticketStatus={notification.ticketStatus}
-            accommodationType={notification.accommodationType}
-            propertyType={notification.propertyType}
+            ticketId={booking.ticketID} 
+            ticketStatus={booking.ticketStatus}
+            accommodationType={booking.accommodationType}
+            propertyType={booking.propertyType}
           />
         </div>
       )}
 
       {/* Status */}
       <div className="statusRow">
-        <p className="status">{getStatusText(notification.status)}</p>
-        {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'RECEIVED'].includes(notification.status) ? (
+        <p className="status">{getStatusText(booking.status)}</p>
+        {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'RECEIVED'].includes(booking.status) ? (
           <div className="greenIcon"></div>
         ) : (
           <div className="redIcon"></div>
