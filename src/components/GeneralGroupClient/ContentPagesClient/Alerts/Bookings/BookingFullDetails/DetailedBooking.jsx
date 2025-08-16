@@ -89,7 +89,7 @@ const DetailedBooking = () => {
         booking={booking}   
         realtor={realtor}
         post={post}
-        onStatusUpdatechange={updateBookingStatus} 
+        onStatusUpdateChange={updateBookingStatus} 
       />
     </div>
   );
