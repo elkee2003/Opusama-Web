@@ -6,10 +6,10 @@ import TicketQRCode from '../QRCode/TicketQRCode';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
-const BookingDetails = ({ booking, realtor, post }) => {
+const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
-  const {setCurrentBooking, transactionReference, transactionStatus, onStatusUpdateChange}= useBookingShowingContext();
+  const {setCurrentBooking, transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
 
   useEffect(() => {
     if (booking?.id) {
