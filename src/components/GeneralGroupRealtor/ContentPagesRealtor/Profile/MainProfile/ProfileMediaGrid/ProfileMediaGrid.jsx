@@ -102,6 +102,15 @@ const MediaGrid = ({ posts }) => {
                   className="proRealMediaImage"
                 />
               )}
+
+              {post.isSubscription && <div className='subscribeLabelRealtorProfile'>
+                <p>Subscription</p>
+              </div>}
+
+              {/* Unavailable Label */}
+              {!post.available && <div className='unavailableLabelRealtorProfile'>
+                <p>Unavailable</p>
+              </div>}
             </div>
           </button>
         );

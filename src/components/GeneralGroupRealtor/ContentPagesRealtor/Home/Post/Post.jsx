@@ -88,9 +88,14 @@ function Post({post}) {
             />
           )}
 
-          {/* Subcription label */}
+          {/* Subcription Label */}
           {post.isSubscription && <div className='subscribeLabel'>
             <p>Subscription</p>
+          </div>}
+
+          {/* Unavailable Label */}
+          {!post.available && <div className='unavailableLabel'>
+            <p>Unavailable</p>
           </div>}
         </div>
 

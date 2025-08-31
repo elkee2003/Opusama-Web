@@ -5,7 +5,7 @@ import { DataStore } from "aws-amplify/datastore";
 import { Post } from '../../../../../../../models';
 
 const ClientInfo = () => {
-  const { postId } = useParams(); // Retrieve route parameters
+  const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
