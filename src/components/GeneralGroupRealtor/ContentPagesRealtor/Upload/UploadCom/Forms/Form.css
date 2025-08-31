@@ -116,6 +116,11 @@
   flex-direction: column;
 }
 
+.openingClosingTimeCon {
+  display: flex;
+  flex-direction: column;
+}
+
 .acceptanceCon {
   display: flex;
   flex-direction: column;

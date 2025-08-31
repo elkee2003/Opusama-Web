@@ -92,6 +92,15 @@ const Forms = () => {
       setTotalPrice(updatedTotalPrice.toFixed(2));
   }, [price, cautionFee, inspectionFee, otherFeesPrice, otherFeesPrice2]);
 
+  // useEffect for manual
+  useEffect(() => {
+    if (bookingMode === "manual") {
+      setSessionDuration(null);
+      setOpeningHour(null);
+      setClosingHour(null);
+    }
+  }, [bookingMode, setSessionDuration, setOpeningHour, setClosingHour]);
+
   return (
     <div className="formUploadCon">
       <h1 className="formHeader">Property Details</h1>
@@ -247,7 +256,12 @@ const Forms = () => {
                   onChange={(e) => setSessionDuration(Number(e.target.value))}
                 />
               )}
+            </div>
+          )}
 
+          {/* Opening & Closing Time */}
+          {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
+            <div className='openingClosingTimeCon'>
               <label className="formLabel">Opening Hour:</label>
               <input
                 className='moneyInput'

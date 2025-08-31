@@ -26,7 +26,8 @@ function PostList() {
             // Query posts for each realtor
             const posts = await DataStore.query(Post, (p) => p.and((p)=>[
                 p.realtorID.eq(realtor.id),
-                p.available.eq(true)
+                p.available.eq(true),
+                // p.isApproved.eq(true)
             ]));
             const filteredPosts = posts.filter((post) => post.propertyType === 'Venue');
 

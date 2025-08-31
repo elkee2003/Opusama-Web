@@ -53,6 +53,15 @@ function Content({post, realtor,}) {
     const formattedTotalPrice = Number(post?.totalPrice)?.toLocaleString();
     const formattedInspectionFee = Number(post?.inspectionFee)?.toLocaleString();
 
+    const formatDuration = (minutes) => {
+      if (minutes < 60) return `${minutes} minutes`;
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return mins === 0 
+        ? `${hours} hour${hours > 1 ? 's' : ''}`
+        : `${hours} hr ${mins} min`;
+    };
+
     // useEffect to store realtorid for review
     useEffect(() => {
       if (realtor?.id) {
