@@ -205,6 +205,8 @@ type Post @model @auth(rules: [{allow: public}]) {
   PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
   isSubscription: Boolean
   bookingMode: String
+  allowMultiple: Boolean
+  maxCapacity: Int
   sessionDuration: Int
   openingHour: String
   closingHour: String

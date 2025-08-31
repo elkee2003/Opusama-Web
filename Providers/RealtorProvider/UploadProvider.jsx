@@ -43,7 +43,9 @@ const UploadContextProvider = ({children}) => {
     const [state, setState]= useState('');
     const [city, setCity] = useState('');
     const [isSubscription, setIsSubscription] = useState(false);
-    const [bookingMode, setBookingMode] = useState("manual"); 
+    const [bookingMode, setBookingMode] = useState("manual");
+    const [allowMultiple, setAllowMultiple] = useState(false);
+    const [maxCapacity, setMaxCapacity] = useState(null);
     const [sessionDuration, setSessionDuration] = useState(null); 
     const [openingHour, setOpeningHour] = useState(null);
     const [closingHour, setClosingHour] = useState(null); 
@@ -317,6 +319,8 @@ const UploadContextProvider = ({children}) => {
         errors, setErrors,
         isSubscription, setIsSubscription,
         bookingMode, setBookingMode,
+        allowMultiple, setAllowMultiple,
+        maxCapacity, setMaxCapacity,
         sessionDuration, setSessionDuration,
         openingHour, setOpeningHour,
         closingHour, setClosingHour,

@@ -556,6 +556,8 @@ type EagerPost = {
   readonly PostLikes?: (PostLike | null)[] | null;
   readonly isSubscription?: boolean | null;
   readonly bookingMode?: string | null;
+  readonly allowMultiple?: boolean | null;
+  readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
@@ -612,6 +614,8 @@ type LazyPost = {
   readonly PostLikes: AsyncCollection<PostLike>;
   readonly isSubscription?: boolean | null;
   readonly bookingMode?: string | null;
+  readonly allowMultiple?: boolean | null;
+  readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;

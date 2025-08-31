@@ -1763,6 +1763,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "allowMultiple": {
+                    "name": "allowMultiple",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "maxCapacity": {
+                    "name": "maxCapacity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "sessionDuration": {
                     "name": "sessionDuration",
                     "isArray": false,
@@ -1869,5 +1883,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "5681e3e9809a00f9d79c8fc8c43a801b"
+    "version": "6d5d92f148cb0117528b482f2a36c05a"
 };

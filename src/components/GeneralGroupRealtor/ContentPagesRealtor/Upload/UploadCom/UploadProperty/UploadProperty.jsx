@@ -80,6 +80,8 @@ const UploadProperty = () => {
     setIsSubscription,
     bookingMode, 
     setBookingMode,
+    allowMultiple, setAllowMultiple,
+    maxCapacity, setMaxCapacity,
     sessionDuration, 
     setSessionDuration,
     openingHour, 
@@ -137,6 +139,8 @@ const UploadProperty = () => {
     setAmenities("");
     setIsSubscription(false);
     setBookingMode("manual");
+    setAllowMultiple(false);
+    setMaxCapacity(null);
     setSessionDuration("");
     setOpeningHour("");
     setClosingHour("");
@@ -255,6 +259,8 @@ const UploadProperty = () => {
           isApproved: false,
           isSubscription,
           bookingMode,
+          allowMultiple,
+          maxCapacity,
           sessionDuration,
           openingHour,
           closingHour,

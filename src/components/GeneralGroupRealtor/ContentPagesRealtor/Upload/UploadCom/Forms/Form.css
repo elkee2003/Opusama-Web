@@ -157,6 +157,17 @@
   gap: 1.5rem;
 }
 
+.capacityOptions {
+  display: flex;
+  gap:1rem;
+  flex-direction: column;
+}
+
+.capacityLabel {
+  display: flex;
+  gap:8px;
+}
+
 .moneyCon {
   display: flex;
   flex-direction: column;
@@ -347,6 +358,10 @@
     .autoOptions {
       gap: 1rem;
       flex-direction: column;
+    }
+
+    .capacityOptions {
+      gap:0.7rem;
     }
 
     .moneyInput {

@@ -44,6 +44,8 @@ const Forms = () => {
     setTimeFrame,
     isSubscription, setIsSubscription,
     bookingMode, setBookingMode,
+    allowMultiple, setAllowMultiple,
+    maxCapacity, setMaxCapacity,
     sessionDuration, setSessionDuration,
     openingHour, setOpeningHour,
     closingHour, setClosingHour,
@@ -51,6 +53,8 @@ const Forms = () => {
     onValidate,
     media,
   } = useUploadContext();
+
+  console.log('allow multiple:', allowMultiple, 'max capacity:', maxCapacity)
 
   const [isCustom, setIsCustom] = useState(false);
 
@@ -99,7 +103,17 @@ const Forms = () => {
       setOpeningHour(null);
       setClosingHour(null);
     }
+
   }, [bookingMode, setSessionDuration, setOpeningHour, setClosingHour]);
+
+  // useEffect for maxCapacity 
+  useEffect(()=>{
+    if (!allowMultiple){
+      setMaxCapacity(null);
+    }
+  }, [allowMultiple, maxCapacity])
+
+
 
   return (
     <div className="formUploadCon">
@@ -168,7 +182,7 @@ const Forms = () => {
                   type="radio"
                   name="acceptance"
                   value="auto"
-                  checked={bookingMode === "auto_date" || bookingMode === "auto_datetime"}
+                  checked={["auto_date", "auto_datetime", "auto_event"].includes(bookingMode)}
                   onChange={() => setBookingMode("auto_date")} 
                 />
                 Automatically accept
@@ -176,8 +190,7 @@ const Forms = () => {
             </div>
 
             {/* Require date only / date & time → shown only if auto */}
-            {bookingMode === "auto_date" || bookingMode === "auto_datetime" ||
-            bookingMode === "auto_event" ? (
+            {["auto_date", "auto_datetime", "auto_event"].includes(bookingMode) && (
               <div className="autoOptions">
                 {/* Date only */}
                 <label className="radioOption">
@@ -214,8 +227,32 @@ const Forms = () => {
                   />
                   Fixed event date (book instantly)
                 </label>
+
+                {/* Capacity Options */}
+                <div className="capacityOptions">
+                  <label className='capacityLabel'>
+                    <input
+                      type="checkbox"
+                      checked={allowMultiple}
+                      onChange={(e) => setAllowMultiple(e.target.checked)}
+                    />
+                    {bookingMode === "auto_event"
+                      ? "Allow multiple tickets for this event"
+                      : "Allow multiple clients to book the same slot"}
+                  </label>
+
+                  {allowMultiple && (
+                    <input
+                      type="number"
+                      placeholder="Max capacity (leave empty for unlimited)"
+                      value={maxCapacity || ""}
+                      onChange={(e) => setMaxCapacity(Number(e.target.value))}
+                      className="moneyInput"
+                    />
+                  )}
+                </div>
               </div>
-            ) : null}
+            )}
           </div>
 
           {bookingMode === "auto_datetime" && (

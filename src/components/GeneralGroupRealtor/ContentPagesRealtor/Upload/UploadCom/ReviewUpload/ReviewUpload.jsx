@@ -33,6 +33,8 @@ const ReviewUpload = () => {
     amenities,
     isSubscription,
     bookingMode,
+    allowMultiple, 
+    maxCapacity,
     sessionDuration,
     openingHour,
     closingHour,
@@ -52,7 +54,7 @@ const ReviewUpload = () => {
   const bookingModeLabels = {
     auto_date: "Automatic Acceptance (Client requires date only)",
     auto_datetime: "Automatic Acceptance (Client requires time frame & date)",
-    auto_event: "Automatic Acceptance (Client can book directly)"
+    auto_event: "Automatic Acceptance (Client can book & Pay)"
   };
 
   return (
@@ -156,7 +158,7 @@ const ReviewUpload = () => {
         </div>
 
         {/* Session Duration */}
-        {bookingMode !== 'manual' && (
+        {bookingMode !== 'manual' && sessionDuration != null && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Session Duration:</p>
             <p className='uploadPropDetails'>{formatDuration(sessionDuration)}</p>
@@ -176,6 +178,22 @@ const ReviewUpload = () => {
           <div className='uploadPropRow'>
             <p className='displayLabel'>Closing Hour:</p>
             <p className='uploadPropDetails'>{closingHour}</p>
+          </div>
+        )}
+
+        {/* Allow Multiple book */}
+        {allowMultiple && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Allow Multiple Booking:</p>
+            <p className='uploadPropDetails'>Enabled</p>
+          </div>
+        )}
+
+        {/* Maximum Capacity */}
+        {maxCapacity && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Maximum Capacity:</p>
+            <p className='uploadPropDetails'>{maxCapacity}</p>
           </div>
         )}
 

@@ -409,6 +409,22 @@ function Content({post, realtor,}) {
           </>
         ): ''}
 
+        {/* Multiple booking */}
+        {post?.allowMultiple ? (
+          <>
+            <p>Multiple Booking:</p>
+            <p>Enabled</p>
+          </>
+        ): ''}
+
+        {/* Maximum Capacity */}
+        {post?.maxCapacity ? (
+          <>
+            <p>Maximum Booking Capacity:</p>
+            <p>{post.maxCapacity}</p>
+          </>
+        ): ''}
+
         {/* Session Duration */}
         {post?.sessionDuration ? (
           <>
