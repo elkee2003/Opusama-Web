@@ -27,7 +27,7 @@
   overflow-x: auto; /* Allow horizontal scrolling */
   white-space: nowrap; 
   display: flex;
-  width: 100vw; 
+  width: 80vw; 
   box-sizing: border-box;
   scroll-snap-type: x mandatory; /* Smooth scrolling */
   padding-right: 16px;
@@ -57,6 +57,10 @@ body {
 @media (max-width: 900px) {
   .client-logoForSmallScreen {
     display: flex;
+  }
+
+  .client-tabs-container{
+    width:100vw;
   }
 
   .client-tab-panel {

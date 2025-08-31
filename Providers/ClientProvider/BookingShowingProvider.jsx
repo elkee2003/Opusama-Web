@@ -27,8 +27,10 @@ const BookingShowingContextProvider = ({children}) => {
     const [bookingLng, setBookingLng] = useState(0);
     const [realtorContext, setRealtorContext] = useState(null);
     const [duration, setDuration] = useState('');
-    const [checkInDate, setCheckInDate] = useState('')
-    const [checkOutDate, setCheckOutDate] = useState('')
+    const [checkInDate, setCheckInDate] = useState('');
+    const [checkOutDate, setCheckOutDate] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
     const [postPrice, setPostPrice] = useState(null);
     const [postCautionFee, setPostCautionFee] = useState(null);
     const [postOtherFeesName, setPostOtherFeesName] = useState('');
@@ -192,7 +194,7 @@ const BookingShowingContextProvider = ({children}) => {
 
 
   return (
-    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice, transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
+    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople,  setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, startTime, setStartTime, endTime, setEndTime, duration, setDuration, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice, transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
         {children}
     </BookingShowingContext.Provider>
   )

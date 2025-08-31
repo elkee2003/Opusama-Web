@@ -1,6 +1,7 @@
 // import Layout and Sidebar Pages for Realtor
 import React from 'react';
 import { Routes, Route, Form } from 'react-router-dom';
+import './RealtorRoutes.css';
 import RealtorLayout from '../../../components/GeneralGroupRealtor/ContentLayout';
 import HomeRealtor from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Home/Home';
 import Upload from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Upload/SelectMedia';
@@ -91,7 +92,14 @@ const RealtorRoutes = () => (
             <Route path="response_post/:postId" element={<CommunityPostResponse />} />
 
             {/* for invalid route */}
-            <Route path='*' element={<div style={{marginTop:'200px',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
+            <Route 
+                path='*' 
+                element={
+                    <div className='realtorError404Con'>
+                        <p>404 Not Found</p>
+                    </div>
+                }
+            />
         </Route>
     </Routes>
 );

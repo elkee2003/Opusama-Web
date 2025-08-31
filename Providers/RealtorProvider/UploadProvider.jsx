@@ -15,7 +15,6 @@ const UploadContextProvider = ({children}) => {
     const [customInput, setCustomInput] = useState('');
     const [accommodationParts, setAccommodationParts] = useState('');
     const [media, setMedia] = useState([]);
-    const [description, setDescription] = useState('');
     const [fullAddress, setFullAddress] = useState('');
     const [generalLocation, setGeneralLocation] = useState('');
     const [lat, setLat] = useState(0);
@@ -43,6 +42,12 @@ const UploadContextProvider = ({children}) => {
     const [country, setCountry] = useState('');
     const [state, setState]= useState('');
     const [city, setCity] = useState('');
+    const [isSubscription, setIsSubscription] = useState(false);
+    const [bookingMode, setBookingMode] = useState("manual"); 
+    const [sessionDuration, setSessionDuration] = useState(null); 
+    const [openingHour, setOpeningHour] = useState(null);
+    const [closingHour, setClosingHour] = useState(null); 
+    const [description, setDescription] = useState('');
     const [amenities, setAmenities]= useState('');
     const [policies, setPolicies] = useState('');
     const [uploadPost, setUploadPost] = useState(null);
@@ -168,6 +173,11 @@ const UploadContextProvider = ({children}) => {
           setErrors('Total Price must be a number');
           return false;
         }
+
+        if (isSubscription && !timeFrame) {
+          setErrors('Time frame is required');
+          return false;
+        }
         
         return true;
     };
@@ -285,7 +295,6 @@ const UploadContextProvider = ({children}) => {
         customInput, setCustomInput,
         accommodationParts, setAccommodationParts,
         media, setMedia,
-        description, setDescription,
         fullAddress, setFullAddress,
         generalLocation, setGeneralLocation,
         lat, setLat, lng, setLng,
@@ -306,6 +315,12 @@ const UploadContextProvider = ({children}) => {
         state, setState,
         city, setCity,
         errors, setErrors,
+        isSubscription, setIsSubscription,
+        bookingMode, setBookingMode,
+        sessionDuration, setSessionDuration,
+        openingHour, setOpeningHour,
+        closingHour, setClosingHour,
+        description, setDescription,
         amenities, setAmenities,
         policies, setPolicies,
         uploadPost, setUploadPost,

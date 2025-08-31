@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './Form.css';
 import { FaArrowRight } from "react-icons/fa";
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import { useNavigate } from 'react-router-dom';
-import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
+import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 
-const libraries = ["places"]; // Declare libraries outside the component to maintain consistency.
+const libraries = ["places"]; // Keep libraries defined outside
 
 const GooglePlacesAutoCompleteCom = () => {
   const autocompleteRef = useRef(null);
@@ -17,73 +17,72 @@ const GooglePlacesAutoCompleteCom = () => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: googleApiKey,
-    libraries, // Use the consistent libraries array
+    libraries,
   });
 
   const [isFocused, setIsFocused] = useState(false);
-   const {authUser} = useAuthContext();
-  const { fullAddress, setFullAddress, generalLocation, setGeneralLocation, setLat, setLng } = useUploadContext();
+  const { authUser } = useAuthContext();
+  const { 
+    fullAddress, 
+    setFullAddress, 
+    generalLocation, 
+    setGeneralLocation, 
+    setLat, 
+    setLng 
+  } = useUploadContext();
+  
   const navigate = useNavigate();
 
-  const handleOnPlacesChanged = () => {
+  const handleOnPlaceChanged = () => {
     if (autocompleteRef.current) {
-      const places = autocompleteRef.current.getPlaces();
-      if (places?.length > 0) {
-        const place = places[0];
+      const place = autocompleteRef.current.getPlace();
+      if (!place?.geometry) return;
 
-        const selectedFullAddress = place?.formatted_address
-        // `${place?.name}, ${place?.formatted_address}`;
-        const selectedLat = place.geometry.location.lat();
-        const selectedLng = place.geometry.location.lng();
+      const selectedFullAddress = place.formatted_address;
+      const selectedLat = place.geometry.location.lat();
+      const selectedLng = place.geometry.location.lng();
 
-        let city = "";
-        let area = "";
+      let city = "";
+      let area = "";
 
-        place.address_components.forEach((component) => {
-          if (component.types.includes("locality")) {
-            city = component.long_name; // City
-          }
-          if (
-            component.types.includes("sublocality") ||
-            component.types.includes("sublocality_level_1") ||
-            component.types.includes("neighborhood")
-          ) {
-            area = component.long_name; // Area / Neighborhood
-          }
-        });
+      place.address_components?.forEach((component) => {
+        if (component.types.includes("locality")) {
+          city = component.long_name; // City
+        }
+        if (
+          component.types.includes("sublocality") ||
+          component.types.includes("sublocality_level_1") ||
+          component.types.includes("neighborhood")
+        ) {
+          area = component.long_name; // Area / Neighborhood
+        }
+      });
 
-        console.log('full address:', fullAddress)
-        console.log('gen Addy:', generalLocation);
+      // Debug logs
+      console.log('full address:', fullAddress);
+      console.log('gen Addy:', generalLocation);
 
-        // Store in context
-        setFullAddress(selectedFullAddress);
-        setGeneralLocation(`${area}, ${city}`);
-        setLat(selectedLat);
-        setLng(selectedLng);
-      }
+      // Store in context
+      setFullAddress(selectedFullAddress);
+      setGeneralLocation(`${area}, ${city}`);
+      setLat(selectedLat);
+      setLng(selectedLng);
     }
   };
 
-  const navigateToNxtPage = () =>{
-    if(!authUser){
-        alert('Sign In to access');
-        navigate('/?section=signin');
-        return;
+  const navigateToNxtPage = () => {
+    if (!authUser) {
+      alert('Sign In to access');
+      navigate('/?section=signin');
+      return;
     }
-
 
     if (fullAddress) {
       navigate('/realtorcontent/form');
-    }else{
+    } else {
       alert('Select an address to access the next page');
     }
-  }
-
-  // useEffect(() => {
-  //   if (address) {
-  //     navigate('/realtorcontent/form');
-  //   }
-  // }, [fullAddress, navigate]);
+  };
 
   return (
     <div className="formUploadCon">
@@ -92,11 +91,11 @@ const GooglePlacesAutoCompleteCom = () => {
       {/* Google Places Autocomplete */}
       <div className="autocompleteContainer">
         {isLoaded && (
-          <StandaloneSearchBox
+          <Autocomplete
             onLoad={(ref) => (autocompleteRef.current = ref)}
-            onPlacesChanged={handleOnPlacesChanged}
+            onPlaceChanged={handleOnPlaceChanged}
             options={{
-              componentRestrictions: { country: ["ng", "gh","us"] },
+              componentRestrictions: { country: ["ng", "gh", "us"] },
             }}
           >
             <input
@@ -106,17 +105,18 @@ const GooglePlacesAutoCompleteCom = () => {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             />
-          </StandaloneSearchBox>
+          </Autocomplete>
         )}
       </div>
 
       <button
         onClick={navigateToNxtPage}
-        className='nxtPageNavCon'
+        className="nxtPageNavCon"
       >
         {authUser ? (
-          <FaArrowRight className='nxtPageNavTxt' />
-        ) : ( <p className='signInAuthBtnTxt'>Sign In</p>
+          <FaArrowRight className="nxtPageNavTxt" />
+        ) : (
+          <p className="signInAuthBtnTxt">Sign In</p>
         )}
       </button>
     </div>

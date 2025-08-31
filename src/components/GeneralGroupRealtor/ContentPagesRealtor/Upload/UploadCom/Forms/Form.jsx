@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Form.css'; 
 import { IoArrowBack } from "react-icons/io5";
+import { Switch } from "@mui/material";
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import AccommodationDropDown from '../DropDown/AccommodationDropDown/Accommodation';
 import CountryDropDown from '../DropDown/CountryDropDown/CountryDropDown';
@@ -41,10 +42,17 @@ const Forms = () => {
     vendorCommissionBreakdown,
     timeFrame,
     setTimeFrame,
+    isSubscription, setIsSubscription,
+    bookingMode, setBookingMode,
+    sessionDuration, setSessionDuration,
+    openingHour, setOpeningHour,
+    closingHour, setClosingHour,
     errors,
     onValidate,
     media,
   } = useUploadContext();
+
+  const [isCustom, setIsCustom] = useState(false);
 
   // Earnings = Value - Commission
   const priceValue = parseFloat(price || 0);
@@ -60,10 +68,12 @@ const Forms = () => {
   const otherFeesEarnings2 = otherFeesValue2 - vendorCommissionBreakdown.other2;
 
   const timeOptions = [
+    { label: 'Day', value: 'Day' },
     { label: 'Night', value: 'Night' },
-    { label: 'Week', value: 'Week' },
-    { label: 'Month', value: 'Month' },
-    { label: 'Year', value: 'Year' },
+    { label: 'Weekly', value: 'Weekly' },
+    { label: 'Monthly', value: 'Monthly' },
+    { label: 'Quarterly', value: 'Quarterly' },
+    { label: 'Annually', value: 'Annually' },
   ];
 
   const goToReview = () => {
@@ -113,6 +123,148 @@ const Forms = () => {
         {propertyType === 'Office Space' && <OfficeSpace />}
 
         <div className="general-row">
+
+          {/* Subscription Toggle */}
+          {(propertyType === 'Recreation' || propertyType === 'Food & Drinks' ) && (
+              <div className='subToggle'>
+                <span className="formLabel">Offer as Subscription:</span>
+                <Switch
+                  checked={isSubscription}
+                  onChange={(e) => setIsSubscription(e.target.checked)}
+                  color='primary'
+                />
+              </div>
+          )}
+
+          {/* Manual Acceptance or Auto */}
+          <div className="acceptanceCon">
+            <p className="formLabel">Booking Acceptance:</p>
+
+            <div className="acceptanceOptions">
+              {/* Manual Acceptance */}
+              <label className="radioOption">
+                <input
+                  type="radio"
+                  name="acceptance"
+                  value="manual"
+                  checked={bookingMode === "manual"}
+                  onChange={() => setBookingMode("manual")}
+                />
+                Manually accept
+              </label>
+
+              {/* Auto Acceptance */}
+              <label className="radioOption">
+                <input
+                  type="radio"
+                  name="acceptance"
+                  value="auto"
+                  checked={bookingMode === "auto_date" || bookingMode === "auto_datetime"}
+                  onChange={() => setBookingMode("auto_date")} 
+                />
+                Automatically accept
+              </label>
+            </div>
+
+            {/* Require date only / date & time → shown only if auto */}
+            {bookingMode === "auto_date" || bookingMode === "auto_datetime" ||
+            bookingMode === "auto_event" ? (
+              <div className="autoOptions">
+                {/* Date only */}
+                <label className="radioOption">
+                  <input
+                    type="radio"
+                    name="autoMode"
+                    value="auto_date"
+                    checked={bookingMode === "auto_date"}
+                    onChange={() => setBookingMode("auto_date")}
+                  />
+                  Require date only (e.g. hotel stay)
+                </label>
+
+                {/* Date + Time */}
+                <label className="radioOption">
+                  <input
+                    type="radio"
+                    name="autoMode"
+                    value="auto_datetime"
+                    checked={bookingMode === "auto_datetime"}
+                    onChange={() => setBookingMode("auto_datetime")}
+                  />
+                  Require date & time (e.g. serviced pitch)
+                </label>
+
+                {/* Fixed Event */}
+                <label className="radioOption">
+                  <input
+                    type="radio"
+                    name="autoMode"
+                    value="auto_event"
+                    checked={bookingMode === "auto_event"}
+                    onChange={() => setBookingMode("auto_event")}
+                  />
+                  Fixed event date (book instantly)
+                </label>
+              </div>
+            ) : null}
+          </div>
+
+          {bookingMode === "auto_datetime" && (
+            <div className="sessionConfig">
+              <label className="formLabel">Session Duration:</label>
+              <select
+                className='moneyInput'
+                value={sessionDuration}
+                onChange={(e) => {
+                  if (e.target.value === "custom") {
+                    setIsCustom(true);
+                    setSessionDuration(null); 
+                  } else if (e.target.value === "0" || e.target.value === "") {
+                    setIsCustom(false);
+                    setSessionDuration(null);
+                  } else {
+                    setIsCustom(false);
+                    setSessionDuration(Number(e.target.value)); 
+                  }
+                }}
+              >
+                <option value={0}>-- Select duration (optional) --</option>
+                <option value={30}>30 minutes</option>
+                <option value={45}>45 minutes</option>
+                <option value={60}>1 hour</option>
+                <option value={90}>1 hr 30 mins</option>
+                <option value={120}>2 hours</option>
+                <option value="custom">Other (enter manually)</option>
+              </select>
+
+              {/* Show input only if user chooses "custom" */}
+              {isCustom && (
+                <input
+                  type="number"
+                  placeholder="Enter duration in minutes"
+                  className="moneyInput"
+                  value={sessionDuration || ""}
+                  onChange={(e) => setSessionDuration(Number(e.target.value))}
+                />
+              )}
+
+              <label className="formLabel">Opening Hour:</label>
+              <input
+                className='moneyInput'
+                type="time"
+                value={openingHour}
+                onChange={(e) => setOpeningHour(e.target.value)}
+              />
+
+              <label className="formLabel">Closing Hour:</label>
+              <input
+                className='moneyInput'
+                type="time"
+                value={closingHour}
+                onChange={(e) => setClosingHour(e.target.value)}
+              />
+            </div>
+          )}
 
           {/* Price */}
           <div className='moneyCon'>

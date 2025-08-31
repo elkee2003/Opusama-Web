@@ -172,51 +172,53 @@ function Post({post}) {
           </div>
         </div>
 
+        <div className='clientSummaryContainer'>
         {/* Username */}
-        <div 
-            className={'contact'}
-            onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
-        >
-            <p className={'name'}>{post.firstName}</p>
-        </div>
+          <div 
+              className={'contact'}
+              onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
+          >
+              <p className={'name'}>{post.firstName}</p>
+          </div>
 
-        {post.type && (
-            <p className={'bedroom'}>{post.type}</p>
-        )}
+          {post.type && (
+              <p className={'bedroom'}>{post.type}</p>
+          )}
 
-        {post.packageType && (
-            <p className={'bedroom'}>{post.packageType}</p>
-        )}
+          {post.packageType && (
+              <p className={'bedroom'}>{post.packageType}</p>
+          )}
 
-        {/* Bed & Bedrooms */}
-        {post.bed && (
-            <p className={'bedroom'}>Beds: {post.bed} </p>
-        )}
+          {/* Bed & Bedrooms */}
+          {post.bed && (
+              <p className={'bedroom'}>Beds: {post.bed} </p>
+          )}
 
-        {post.bedrooms && (
-          <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
-        )}
+          {post.bedrooms && (
+            <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
+          )}
 
-        {/* Location */}
-        {post.generalLocation && (
-          <p className={'location'}>
-            {post.generalLocation}
+          {/* Location */}
+          {post.generalLocation && (
+            <p className={'location'}>
+              {post.generalLocation}
+            </p>
+          )}
+
+          {/* Type & Description */}
+          <p 
+              className={'description'}
+          >
+              {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
           </p>
-        )}
 
-        {/* Type & Description */}
-        <p 
-            className={'description'}
-        >
-            {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
-        </p>
-
-        {/* Old Price & New Price */}
-        {/* Rent */}
-        <div className={'priceRow'}>
-          <p className={'price'}> 
-            ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
-          </p>
+          {/* Old Price & New Price */}
+          {/* Rent */}
+          <div className={'priceRow'}>
+            <p className={'price'}> 
+              ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
+            </p>
+          </div>
         </div>
     </div>
   )

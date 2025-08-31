@@ -39,6 +39,13 @@ function Content({post, realtor,}) {
     const [mediaUris, setMediaUris] = useState([]);  
     const [liked, setLiked] = useState(false); 
 
+    const bookingModeLabels = {
+      manual: "Manual Acceptance",
+      auto_date: "Auto Acceptance",
+      auto_datetime: "Auto Acceptance",
+      auto_event: "Auto Acceptance",
+    };
+
     const formattedPrice = Number(post?.price)?.toLocaleString();
     const formattedCautionFee = Number(post?.cautionFee)?.toLocaleString();
     const formattedOtherFeesPrice = Number(post?.otherFeesPrice)?.toLocaleString();
@@ -203,241 +210,285 @@ function Content({post, realtor,}) {
 
   return (
     <div className='contentContainer'>
-        <button 
-          className='bckContainer' 
-          onClick={() => navigate(-1)}
+      <button 
+        className='bckContainer' 
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon 
+          icon={faArrowLeft}
+          className='backIcon' 
+          size="2x"
+        />
+      </button>
+
+      {/* Scrollable Content */}
+      <div className='scrollContainer'>
+        <div 
+          className='imageContainer'
+          onClick={()=>navigate(`/clientcontent/gallery/${post.id}`, {
+            state: {
+              images: mediaUris.map(m => m.url),
+              selectedIndex: 0
+            }
+          })}
         >
-          <FontAwesomeIcon 
-            icon={faArrowLeft}
-            className='backIcon' 
-            size="2x"
-          />
-        </button>
+          {mediaUris.length > 0 ? (
 
-        {/* Scrollable Content */}
-        <div className='scrollContainer'>
-          <div 
-            className='imageContainer'
-            onClick={()=>navigate(`/clientcontent/gallery/${post.id}`, {
-              state: {
-                images: mediaUris.map(m => m.url),
-                selectedIndex: 0
-              }
-            })}
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={10}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              loop={true}
+              className="gallerySwiper"
+            >
+              {mediaUris.map((media, index) => (
+                <SwiperSlide key={index}>
+                  {media.type === 'video' ? (
+                    <div className='pVideoWrapper'>
+                      <video 
+                        className="pDetailMedia" 
+                        controls
+                        controlsList="nodownload"
+                        onContextMenu={(e) => e.preventDefault()}
+                      >
+                        <source src={media.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+
+                      <div 
+                        className="pVideoOverlay" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/clientcontent/gallery/${post.id}`);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <img src={media.url} alt={`Media ${index+1}`} className="image" />
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <img src={'/defaultImage.png'} alt="Default" className="image" />
+          )}
+
+          {/* Like Button */}
+          <div
+            onClick={toggleLike}
+            className='postLike'
           >
-            {mediaUris.length > 0 ? (
-
-              <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                spaceBetween={10}
-                slidesPerView={1}
-                navigation
-                pagination={{ clickable: true }}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                loop={true}
-                className="gallerySwiper"
-              >
-                {mediaUris.map((media, index) => (
-                  <SwiperSlide key={index}>
-                    {media.type === 'video' ? (
-                      <div className='pVideoWrapper'>
-                        <video 
-                          className="pDetailMedia" 
-                          controls
-                          controlsList="nodownload"
-                          onContextMenu={(e) => e.preventDefault()}
-                        >
-                          <source src={media.url} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-
-                        <div 
-                          className="pVideoOverlay" 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/clientcontent/gallery/${post.id}`);
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <img src={media.url} alt={`Media ${index+1}`} className="image" />
-                    )}
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+            {liked ? (
+              <GoHeartFill className='heartIcon' color="red" />
             ) : (
-              <img src={'/defaultImage.png'} alt="Default" className="image" />
+              <FaRegHeart className='heartIcon' color="white" />
             )}
-
-            {/* Like Button */}
-            <div
-              onClick={toggleLike}
-              className='postLike'
-            >
-              {liked ? (
-                <GoHeartFill className='heartIcon' color="red" />
-              ) : (
-                <FaRegHeart className='heartIcon' color="white" />
-              )}
-            </div>
           </div>
+        </div>
 
-          {/* Realtor Info */}
-          <RealtorNameRating realtor={realtor}/>
+        {/* Realtor Info */}
+        <RealtorNameRating realtor={realtor}/>
 
-          {/* Property Details */}
-          <div className='propertyTypeRow'>
-            {post.propertyType && <p className='propertyType'>
-              {post.propertyType}
-            </p>}
+        {/* Property Details */}
+        <div className='propertyTypeRow'>
+          {post.propertyType && <p className='propertyType'>
+            {post.propertyType}
+          </p>}
 
-            <div 
-              className='commentContentRow'
-              onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
-            >
-              <FaRegCommentDots className='commentContentIcon'/>
-              <p>{post?.totalFeedback}</p>
-            </div>
+          <div 
+            className='commentContentRow'
+            onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
+          >
+            <FaRegCommentDots className='commentContentIcon'/>
+            <p>{post?.totalFeedback}</p>
           </div>
+        </div>
 
-          {/* Type */}
-          {post.type && <p className='type'>{post.type}</p>}
-          
-          {/* Name of Type */}
-          {post.nameOfType && (
-            <p className='typeName'>Name: {post.nameOfType}</p>
-          )}
+        {/* Type */}
+        {post.type && <p className='type'>{post.type}</p>}
+        
+        {/* Name of Type */}
+        {post.nameOfType && (
+          <p className='typeName'>Name: {post.nameOfType}</p>
+        )}
 
-          {/* Available Documents */}
-          {post.availableDocs && (
-            <div>
-              <h4 className='subheader'>Available Documents:</h4>
-              <p className='details'>{post.availableDocs}</p>
-            </div>
-          )}
-
-          <div className='topBorderLine' />
-
-          {/* Capacity */}
-          {post?.capacity ? (
-            <>
-              <p className='subheader'>Capacity</p>
-              <p className='bedroom'>
-                {post.capacity}
-              </p>
-            </>
-          ) : ''}
-
-          {/* Accommodation Parts */}
-          {post.accommodationParts && (
-            <>
-              <p className='subheader'>Accommodation Parts</p>
-              <p className='bedroom'>
-                {post.accommodationParts}
-              </p>
-            </>
-          )}
-          
-          {/* Bed & Bedrooms */}
-          {post.bed && (
-            <p className='bedroom'>Beds: {post.bed} </p>
-          )}
-
-
-          {post.bedrooms && (
-            <p className='bedroom'>Bedrooms: {post.bedrooms} </p>
-          )}
-
-          <div className='topBorderLine' />
-
-          {/* Location */}
-          {post.generalLocation && (
-            <p className='location'>{post.generalLocation}</p>
-          )}
-
-          {/* City, State, Country, */}
+        {/* Available Documents */}
+        {post.availableDocs && (
           <div>
-            <p className='subheader'>Location</p>
-            {post.city && (
-              <div className='locationRow'>
-                <p className='location'>
-                  City:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.city}
-                </p>
-              </div>
-            )}
-
-            {post.state && (
-              <div className='locationRow'>
-                <p className='location'>
-                  State:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.state}
-                </p>
-              </div>
-            )}
-            {post.country && (
-              <div className='locationRow'>
-                <p className='location'>
-                  Country:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.country}
-                </p>
-              </div>
-            )}
+            <h4 className='subheader'>Available Documents:</h4>
+            <p className='details'>{post.availableDocs}</p>
           </div>
+        )}
 
-          <div className='topBorderLine' />
+        <div className='topBorderLine' />
 
-          {/* Ratings */}
-          <div className='reviewIconRow'>
-            <FontAwesomeIcon icon={faStar} className='star' />
-            <span className='starTxt'>{averageRating}</span>
-          </div>
+        {/* Capacity */}
+        {post?.capacity ? (
+          <>
+            <p className='subheader'>Capacity</p>
+            <p className='bedroom'>
+              {post.capacity}
+            </p>
+          </>
+        ) : ''}
 
-          {/* Type & Description */}
-          {post.description && (
-            <div>
-              <h4 className='luxPolHeadTxt'>Description</h4>
-              <p className='detailedDesc'>
-                {readMore || post.description.length <= 150
-                  ? post.description
-                  : `${post.description.substring(0, 150)}...`}
-                {post.description.length > 150 && (
-                  <button
-                    className={readMore ? 'readLessButton' : 'readMoreButton'}
-                    onClick={() => setReadMore(!readMore)}
-                  >
-                    {readMore ? 'Show Less' : 'Read More'}
-                  </button>
-                )}
+        {/* Accommodation Parts */}
+        {post.accommodationParts && (
+          <>
+            <p className='subheader'>Accommodation Parts</p>
+            <p className='bedroom'>
+              {post.accommodationParts}
+            </p>
+          </>
+        )}
+        
+        {/* Bed & Bedrooms */}
+        {post.bed && (
+          <p className='bedroom'>Beds: {post.bed} </p>
+        )}
+
+
+        {post.bedrooms && (
+          <p className='bedroom'>Bedrooms: {post.bedrooms} </p>
+        )}
+
+        <div className='topBorderLine' />
+
+        {/* Location */}
+        {post.generalLocation && (
+          <p className='location'>{post.generalLocation}</p>
+        )}
+
+        {/* City, State, Country, */}
+        <div>
+          <p className='subheader'>Location</p>
+          {post.city && (
+            <div className='locationRow'>
+              <p className='location'>
+                City:
+              </p>
+              <p className='bedroom'>
+                {' '}{post.city}
               </p>
             </div>
           )}
 
-          {/* Dress Code */}
-          {post?.dressCode ? (
-            <>
-              <p className='subheader'>Dress Code</p>
-              <p className='bedroom'>
-                {post.dressCode}
+          {post.state && (
+            <div className='locationRow'>
+              <p className='location'>
+                State:
               </p>
-            </>
-          ) : ''}
+              <p className='bedroom'>
+                {' '}{post.state}
+              </p>
+            </div>
+          )}
+          {post.country && (
+            <div className='locationRow'>
+              <p className='location'>
+                Country:
+              </p>
+              <p className='bedroom'>
+                {' '}{post.country}
+              </p>
+            </div>
+          )}
+        </div>
 
-          {/* Time and Date */}
-          {post?.eventDateTime ? (
-            <>
-              <p className='subheader'>Date & Time</p>
-              <p className='bedroom'>
-                {post.eventDateTime}
-              </p>
-            </>
-          ) : ''}
+        <div className='topBorderLine' />
+
+        {/* Ratings */}
+        <div className='reviewIconRow'>
+          <FontAwesomeIcon icon={faStar} className='star' />
+          <span className='starTxt'>{averageRating}</span>
+        </div>
+
+        {/* Type & Description */}
+        {post.description && (
+          <div>
+            <h4 className='luxPolHeadTxt'>Description</h4>
+            <p className='detailedDesc'>
+              {readMore || post.description.length <= 150
+                ? post.description
+                : `${post.description.substring(0, 150)}...`}
+              {post.description.length > 150 && (
+                <button
+                  className={readMore ? 'readLessButton' : 'readMoreButton'}
+                  onClick={() => setReadMore(!readMore)}
+                >
+                  {readMore ? 'Show Less' : 'Read More'}
+                </button>
+              )}
+            </p>
+          </div>
+        )}
+
+        {/* Dress Code */}
+        {post?.dressCode ? (
+          <>
+            <p className='subheader'>Dress Code</p>
+            <p className='bedroom'>
+              {post.dressCode}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Time and Date */}
+        {post?.eventDateTime ? (
+          <>
+            <p className='subheader'>Date & Time</p>
+            <p className='bedroom'>
+              {post.eventDateTime}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Subcription Enabled or not */}
+        {post?.isSubscription ? (
+          <>
+            <p className='subheader'>
+              Post Type:
+            </p>
+            <p className='bedroom'>
+              Subscription
+            </p>
+          </>
+        ): ''}
+
+        {/* Booking Mode */}
+        {post?.bookingMode ? (
+          <>
+            <p className='subheader'>Booking Mode:</p>
+            <p className='bedroom'>{bookingModeLabels[post.bookingMode] || "N/A"}</p>
+          </>
+        ): ''}
+
+        {/* Session Duration */}
+        {post?.sessionDuration ? (
+          <>
+            <p className='subheader'>Session Duration:</p>
+            <p className='bedroom'>{formatDuration(post.sessionDuration)}</p>
+          </>
+        ) : ''}
+
+        {/* Opening Hour */}
+        {post?.openingHour ? (
+          <>
+            <p className='subheader'>Opening Hour:</p>
+            <p className='bedroom'>{post.openingHour}</p>
+          </>
+        ): ''}
+
+        {/* Closing Hour */}
+        {post?.closingHour ? (
+          <>
+            <p className='subheader'>Closing Hour:</p>
+            <p className='bedroom'>{post.closingHour}</p>
+          </>
+        ): ''}
 
         {/* Pricing */}
         <div className='priceRoww'>
@@ -551,7 +602,6 @@ function Content({post, realtor,}) {
         <button className='getinTouchContainer' onClick={handleNavigate}>
             <p className='getInTouchTxt'>Get in Touch!</p>
         </button>
-
       </div>
 
     </div>

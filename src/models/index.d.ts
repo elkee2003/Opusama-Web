@@ -323,6 +323,8 @@ type EagerBooking = {
   readonly duration?: string | null;
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;
+  readonly startTime?: string | null;
+  readonly endTime?: string | null;
   readonly propertyType?: string | null;
   readonly accommodationType?: string | null;
   readonly nameOfType?: string | null;
@@ -360,6 +362,8 @@ type LazyBooking = {
   readonly duration?: string | null;
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;
+  readonly startTime?: string | null;
+  readonly endTime?: string | null;
   readonly propertyType?: string | null;
   readonly accommodationType?: string | null;
   readonly nameOfType?: string | null;
@@ -549,8 +553,13 @@ type EagerPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
-  readonly realtorID: string;
   readonly PostLikes?: (PostLike | null)[] | null;
+  readonly isSubscription?: boolean | null;
+  readonly bookingMode?: string | null;
+  readonly sessionDuration?: number | null;
+  readonly openingHour?: string | null;
+  readonly closingHour?: string | null;
+  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -600,8 +609,13 @@ type LazyPost = {
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
-  readonly realtorID: string;
   readonly PostLikes: AsyncCollection<PostLike>;
+  readonly isSubscription?: boolean | null;
+  readonly bookingMode?: string | null;
+  readonly sessionDuration?: number | null;
+  readonly openingHour?: string | null;
+  readonly closingHour?: string | null;
+  readonly realtorID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

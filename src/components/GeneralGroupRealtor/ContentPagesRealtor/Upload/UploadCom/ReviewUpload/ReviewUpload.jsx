@@ -10,6 +10,7 @@ const ReviewUpload = () => {
     nameOfType,
     availableDocs,
     capacity,
+    dressCode,
     bedrooms,
     bed,
     accommodationParts,
@@ -30,9 +31,29 @@ const ReviewUpload = () => {
     media,
     policies,
     amenities,
+    isSubscription,
+    bookingMode,
+    sessionDuration,
+    openingHour,
+    closingHour,
   } = useUploadContext();
 
   const formatCurrency = (amount) => Number(amount)?.toLocaleString();
+
+  const formatDuration = (minutes) => {
+    if (minutes < 60) return `${minutes} minutes`;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return mins === 0 
+      ? `${hours} hour${hours > 1 ? 's' : ''}`
+      : `${hours} hr ${mins} min`;
+  };
+
+  const bookingModeLabels = {
+    auto_date: "Automatic Acceptance (Client requires date only)",
+    auto_datetime: "Automatic Acceptance (Client requires time frame & date)",
+    auto_event: "Automatic Acceptance (Client can book directly)"
+  };
 
   return (
     <div className='reviewUploadCon'>
@@ -56,16 +77,19 @@ const ReviewUpload = () => {
 
       {/* Data Display */}
       <div className='inputDisplay'>
+        {/* Property Type */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Property Type:</p>
           <p className='uploadPropDetails'>{propertyType}</p>
         </div>
 
+        {/* Property Sub Type */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Property Sub Type:</p>
           <p className='uploadPropDetails'>{type}</p>
         </div>
 
+        {/* Package Type Name */}
         {packageType && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Type of Package:</p>
@@ -73,6 +97,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Name of Accommodation */}
         {nameOfType && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Name of Accommodation:</p>
@@ -80,6 +105,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Available Docs */}
         {availableDocs && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Available Documents:</p>
@@ -87,31 +113,73 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Address */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Address:</p>
           <p className='uploadPropDetails'>{fullAddress?.trim()}</p>
         </div>
 
+        {/* City */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>City:</p>
           <p className='uploadPropDetails'>{city}</p>
         </div>
 
+        {/* State */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>State:</p>
           <p className='uploadPropDetails'>{state}</p>
         </div>
 
+        {/* Country */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Country:</p>
           <p className='uploadPropDetails'>{country}</p>
         </div>
 
+        {/* Price */}
         <div className='uploadPropRow'>
-      <p className='displayLabel'>Price:</p>
+          <p className='displayLabel'>Price:</p>
           <p className='uploadPropDetails'>₦{formatCurrency(price)}</p>
         </div>
 
+        {/* Subscription */}
+        <div className='uploadPropRow'>
+          <p className='displayLabel'>Subscription:</p>
+          <p className='uploadPropDetails'>{isSubscription ? 'Enabled' : 'Disabled'}</p>
+        </div>
+
+        {/* Booking Mode acceptance */}
+        <div className='uploadPropRow'>
+          <p className='displayLabel'>Booking Mode (How booking is accepted):</p>
+          <p className='uploadPropDetails'>{(bookingModeLabels[bookingMode]) || "Manual Acceptance"}</p>
+        </div>
+
+        {/* Session Duration */}
+        {bookingMode !== 'manual' && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Session Duration:</p>
+            <p className='uploadPropDetails'>{formatDuration(sessionDuration)}</p>
+          </div>
+        )}
+
+        {/* Opening Hour */}
+        {bookingMode !== 'manual' && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Opening Hour:</p>
+            <p className='uploadPropDetails'>{openingHour}</p>
+          </div>
+        )}
+
+        {/* Closing Hour */}
+        {bookingMode !== 'manual' && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Closing Hour:</p>
+            <p className='uploadPropDetails'>{closingHour}</p>
+          </div>
+        )}
+
+        {/* Time Frame */}
         {timeFrame && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Time Frame:</p>
@@ -126,6 +194,14 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {dressCode && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Dress Code:</p>
+            <p className='uploadPropDetails'>{dressCode}</p>
+          </div>
+        )}
+
+        {/* Caution Fee */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Caution Fee:</p>
           <p className='uploadPropDetails'>₦{formatCurrency(cautionFee)}</p>
@@ -138,6 +214,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* OtherFees 1 */}
         {otherFeesPrice && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>{otherFeesName}:</p>
@@ -145,6 +222,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* OtherFees 2 */}
         {otherFeesPrice2 && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>{otherFeesName2}:</p>
@@ -152,11 +230,13 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Total Price */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Total Price:</p>
           <p className='uploadPropDetails'>₦{formatCurrency(totalPrice)}</p>
         </div>
 
+        {/* Bedrooms */}
         {bedrooms && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Number of Rooms:</p>
@@ -164,6 +244,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Beds */}
         {bed && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Number of Beds:</p>
@@ -171,6 +252,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* AccommocationParts */}
         {accommodationParts && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Accommodation Parts:</p>
@@ -182,6 +264,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
+        {/* Description */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Description:</p>
           <p className='uploadPropDetails'>{description?.trim()}</p>
@@ -191,6 +274,7 @@ const ReviewUpload = () => {
           /> */}
         </div>
 
+        {/* Amenties */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Amenities:</p>
           <p className='uploadPropDetails'>{amenities?.trim()}</p>
@@ -200,6 +284,7 @@ const ReviewUpload = () => {
           /> */}
         </div>
 
+        {/* Policies */}
         <div className='uploadPropRow'>
           <p className='displayLabel'>Policies:</p>
           <p className='uploadPropDetails'>{policies?.trim()}</p>

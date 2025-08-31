@@ -1,0 +1,28 @@
+.clientError404Con {
+    display: flex;
+    width: 80vw;
+    margin-top: 250px;
+    align-items: center;
+    justify-content: center;
+}
+
+.clientError404Con p {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(192, 191, 191);
+}
+
+@media (max-width: 1300px) {
+  
+}
+
+@media (max-width: 900px) {
+    .clientError404Con {
+        width: 100vw;
+    }
+}
+
+@media (max-width: 500px) {
+
+}

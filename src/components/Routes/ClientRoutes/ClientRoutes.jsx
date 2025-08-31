@@ -1,6 +1,7 @@
 // import Layout and Sidebar for client
 import React from 'react';
 import {Routes, Route } from 'react-router-dom';
+import "./ClientRoutes.css"
 import ClientLayout from '../../../components/GeneralGroupClient/ContentLayout'
 import HomeClient from '../../../components/GeneralGroupClient/ContentPagesClient/Home/Home';
 import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
@@ -189,7 +190,14 @@ const ClientRoutes = () => (
             <Route path="venue_detailedpost/:postId" element={<VenueDetailedPost />} />
 
             {/* for invalid route */}
-            <Route path='*' element={<div style={{display: 'flex', width:'100vw', marginTop:'200px', paddingLeft:'20%',textAlign:'center', fontSize:'30px', fontWeight:'bold', color:'rgb(192, 191, 191)'}}>404 Not Found</div>}/>
+            <Route 
+                path='*' 
+                element={
+                    <div className='clientError404Con'>
+                        <p>404 Not Found</p>
+                    </div>
+                }
+            />
         </Route>
     </Routes>
 );

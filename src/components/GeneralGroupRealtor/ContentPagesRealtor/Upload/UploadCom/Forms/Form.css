@@ -27,7 +27,7 @@
 
 .formLabel {
   color: #02061b;
-  font-size: 15px;
+  font-size: 1.2rem;
   font-weight: 600;
   font-style: italic;
   margin-left: 5px;
@@ -109,6 +109,47 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.sessionConfig {
+  display: flex;
+  flex-direction: column;
+}
+
+.acceptanceCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.acceptanceOptions {
+  margin: 0.5rem 0 1.2rem 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.radioOption input[type="radio"] {
+  accent-color: #007bff;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.autoOptions {
+  margin: 0.5rem 0 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .moneyCon {
@@ -287,6 +328,20 @@
 
     .formReviewBtnDiv {
       margin-right: 0;
+    }
+
+    .acceptanceOptions {
+      gap: 1rem;
+      flex-direction: column;
+    }
+
+    .radioOption {
+      gap:5px;
+    }
+
+    .autoOptions {
+      gap: 1rem;
+      flex-direction: column;
     }
 
     .moneyInput {

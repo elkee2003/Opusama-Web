@@ -76,6 +76,16 @@ const UploadProperty = () => {
     setLat,
     lng,
     setLng,
+    isSubscription, 
+    setIsSubscription,
+    bookingMode, 
+    setBookingMode,
+    sessionDuration, 
+    setSessionDuration,
+    openingHour, 
+    setOpeningHour,
+    closingHour, 
+    setClosingHour,
     amenities,
     setAmenities,
     policies,
@@ -125,6 +135,11 @@ const UploadProperty = () => {
     setCity("");
     setPolicies("");
     setAmenities("");
+    setIsSubscription(false);
+    setBookingMode("manual");
+    setSessionDuration("");
+    setOpeningHour("");
+    setClosingHour("");
   };
 
   // Function to compress images
@@ -238,6 +253,11 @@ const UploadProperty = () => {
           state,
           city,
           isApproved: false,
+          isSubscription,
+          bookingMode,
+          sessionDuration,
+          openingHour,
+          closingHour,
           realtorID: dbRealtor.id,
         })
       );

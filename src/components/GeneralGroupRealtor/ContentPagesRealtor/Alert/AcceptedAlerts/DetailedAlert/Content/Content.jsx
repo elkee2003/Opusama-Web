@@ -197,7 +197,26 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
           </button>
           <button
             className="infoIconCon"
-            onClick={() => alert('Booking Info: Click on "Received" once you have received payment for booking.')}
+            onClick={() => alert('Booking Info: Click on "Checked In" once client has checked in.')}
+          >
+            <FaInfoCircle className="infoIcon" />
+          </button>
+        </div>
+      )}
+
+      {notification.propertyType === 'Hotel / Shortlet' && notification.status === 'CHECKED_IN' && (
+        <div className="viewConInfoRow">
+          <button
+            className="view"
+            onClick={() => onStatusChange('CHECKED_OUT')}
+          >
+            <p className='dAlaBtnTxt'>
+              Checked Out
+            </p>
+          </button>
+          <button
+            className="infoIconCon"
+            onClick={() => alert('Booking Info: Click on "Checked Out" once client has checked out.')}
           >
             <FaInfoCircle className="infoIcon" />
           </button>

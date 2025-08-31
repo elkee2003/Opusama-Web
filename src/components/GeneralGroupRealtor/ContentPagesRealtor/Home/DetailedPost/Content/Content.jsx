@@ -27,11 +27,26 @@ function Content({post, realtor,}) {
     const [averageRating, setAverageRating] = useState(0);
     const [mediaUris, setMediaUris] = useState([]); 
     const [loading, setLoading] = useState(false); 
+    const bookingModeLabels = {
+      manual: "Manual Acceptance (Host approval required)",
+      auto_date: "Auto Acceptance (Date required)",
+      auto_datetime: "Auto Acceptance (Date & time required)",
+      auto_event: "Auto Acceptance (Instant booking)",
+    };
 
     const formattedPrice = Number(post?.price)?.toLocaleString();
     const formattedCautionFee = Number(post?.cautionFee)?.toLocaleString();
     const formattedTotalPrice = Number(post?.totalPrice)?.toLocaleString();
     const formattedInspectionFee = Number(post?.inspectionFee)?.toLocaleString();
+
+    const formatDuration = (minutes) => {
+      if (minutes < 60) return `${minutes} minutes`;
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return mins === 0 
+        ? `${hours} hour${hours > 1 ? 's' : ''}`
+        : `${hours} hr ${mins} min`;
+    };
     
 
     // useEffect to store realtorid for review
@@ -79,12 +94,19 @@ function Content({post, realtor,}) {
 
     // Function to handle the availability switch toggle
     const toggleAvailability = async () => {
-      setIsAvailable((prev) => !prev);
       try {
-        const updatedPost = Post.copyOf(post, (updated) => {
-          updated.available = !post.available;
+        const original = await DataStore.query(Post, post.id);
+        if (!original) {
+          alert("Post not found");
+          return;
+        }
+
+        const updatedPost = Post.copyOf(original, (updated) => {
+          updated.available = !original.available;
         });
+
         await DataStore.save(updatedPost);
+        setIsAvailable(updatedPost.available);
       } catch (e) {
         alert(`Failed to update availability: ${e.message}`);
       }
@@ -157,203 +179,259 @@ function Content({post, realtor,}) {
 
   return (
     <div className='realtorContentContainer'>
-        <button 
-          className='bckContainer' 
-          onClick={() => navigate(-1)}
+      <button 
+        className='bckContainer' 
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon 
+          icon={faArrowLeft}
+          className='backIcon' 
+          size="2x"
+        />
+      </button>
+
+      {/* Scrollable Content */}
+      <div className='scrollContainer'>
+        <div 
+          className='imageContainer'
+          onClick={()=>navigate(`/realtorcontent/postgallery/${post.id}`)}
         >
-          <FontAwesomeIcon 
-            icon={faArrowLeft}
-            className='backIcon' 
-            size="2x"
+          {mediaUris.length > 0 ? (
+          mediaUris[0].type === 'video' ? (
+            <div className='postDetailVideoWrapper'>
+              <video 
+                className="detailMedia" 
+                controls
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                <source src={mediaUris[0].url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              <div className="postDetailVideoOverlay" onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/realtorcontent/postgallery/${post.id}`);
+              }}/>
+            </div>
+          ) : (
+            <img src={mediaUris[0].url} alt="Post" className="image" />
+          )) : (
+            <img src={'/defaultImage.png'} alt="Default" className="image" />
+          )}
+        </div>
+
+        <div className='toggleCon'>
+          <span className='availableTxt'>Available:</span>
+          <Switch
+            checked={isAvailable}
+            onChange={toggleAvailability}
+            color="primary"
           />
-        </button>
+        </div>
 
-        {/* Scrollable Content */}
-        <div className='scrollContainer'>
+        {/* Realtor Info */}
+        <RealtorNameRating realtor={realtor}/>
+
+        {/* Property Details */}
+        <div className='propertyTypeRow'>
+          {post.propertyType && <p className='propertyType'>
+            {post.propertyType}
+          </p>}
+
           <div 
-            className='imageContainer'
-            onClick={()=>navigate(`/realtorcontent/postgallery/${post.id}`)}
+            className='commentContentRow'
+            onClick={()=>navigate(`/realtorcontent/reviews_comments/${post.id}`)}
           >
-            {mediaUris.length > 0 ? (
-            mediaUris[0].type === 'video' ? (
-              <div className='postDetailVideoWrapper'>
-                <video 
-                  className="detailMedia" 
-                  controls
-                  controlsList="nodownload"
-                  onContextMenu={(e) => e.preventDefault()}
-                >
-                  <source src={mediaUris[0].url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-
-                <div className="postDetailVideoOverlay" onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/realtorcontent/postgallery/${post.id}`);
-                }}/>
-              </div>
-            ) : (
-              <img src={mediaUris[0].url} alt="Post" className="image" />
-            )) : (
-              <img src={'/defaultImage.png'} alt="Default" className="image" />
-            )}
+            <FaRegCommentDots className='commentContentIcon'/>
+            <p>{post?.totalFeedback}</p>
           </div>
+        </div>
 
-          <div className='toggleCon'>
-            <span className='availableTxt'>Available:</span>
-            <Switch
-              checked={isAvailable}
-              onChange={toggleAvailability}
-              color="primary"
-            />
-          </div>
+        {/* Type */}
+        {post.type && <p className='type'>{post.type}</p>}
+        
+        {/* Name of Type */}
+        {post.nameOfType && (
+          <p className='typeName'>Name: {post.nameOfType}</p>
+        )}
 
-          {/* Realtor Info */}
-          <RealtorNameRating realtor={realtor}/>
-
-          {/* Property Details */}
-          <div className='propertyTypeRow'>
-            {post.propertyType && <p className='propertyType'>
-              {post.propertyType}
-            </p>}
-
-            <div 
-              className='commentContentRow'
-              onClick={()=>navigate(`/realtorcontent/reviews_comments/${post.id}`)}
-            >
-              <FaRegCommentDots className='commentContentIcon'/>
-              <p>{post?.totalFeedback}</p>
-            </div>
-          </div>
-
-          {/* Type */}
-          {post.type && <p className='type'>{post.type}</p>}
-          
-          {/* Name of Type */}
-          {post.nameOfType && (
-            <p className='typeName'>Name: {post.nameOfType}</p>
-          )}
-
-          {/* Available Documents */}
-          {post.availableDocs && (
-            <div>
-              <h4 className='subheader'>Available Documents:</h4>
-              <p className='realtorDetailss'>{post.availableDocs}</p>
-            </div>
-          )}
-
-          <div className='topBorderLine' />
-
-          {/* Accommodation Parts */}
-          {post.accommodationParts && (
-            <>
-              <p className='subheader'>Accommodation Parts</p>
-              <p className='bedroom'>
-                {post.accommodationParts}
-              </p>
-            </>
-          )}
-          
-          {/* Bed & Bedrooms */}
-          {post.bed && (
-            <p className='bedroom'>Beds: {post.bed} </p>
-          )}
-
-
-          {post.bedrooms && (
-            <p className='bedroom'>Bedrooms: {post.bedrooms} </p>
-          )}
-
-          <div className='topBorderLine' />
-
-          {/* Location */}
-          {post.fullAddress && (
-            <p className='location'>{post.fullAddress}</p>
-          )}
-
-          {/* City, State, Country, */}
+        {/* Available Documents */}
+        {post.availableDocs && (
           <div>
-            <p className='subheader'>Location</p>
-            {post.city && (
-              <div className='locationRow'>
-                <p className='location'>
-                  City:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.city}
-                </p>
-              </div>
-            )}
-
-            {post.state && (
-              <div className='locationRow'>
-                <p className='location'>
-                  State:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.state}
-                </p>
-              </div>
-            )}
-            {post.country && (
-              <div className='locationRow'>
-                <p className='location'>
-                  Country:
-                </p>
-                <p className='bedroom'>
-                  {' '}{post.country}
-                </p>
-              </div>
-            )}
+            <h4 className='subheader'>Available Documents:</h4>
+            <p className='realtorDetailss'>{post.availableDocs}</p>
           </div>
+        )}
 
-          <div className='topBorderLine' />
+        <div className='topBorderLine' />
 
-          {/* Ratings */}
-          <div className='reviewIconRow'>
-            <FontAwesomeIcon icon={faStar} className='star' />
-            <span className='starTxt'>{averageRating}</span>
-          </div>
+        {/* Accommodation Parts */}
+        {post.accommodationParts && (
+          <>
+            <p className='subheader'>Accommodation Parts</p>
+            <p className='bedroom'>
+              {post.accommodationParts}
+            </p>
+          </>
+        )}
+        
+        {/* Bed & Bedrooms */}
+        {post.bed && (
+          <p className='bedroom'>Beds: {post.bed} </p>
+        )}
 
-          {/* Type & Description */}
-          {post.description && (
-            <div>
-              <h4 className='luxPolHeadTxt'>Description</h4>
-              <p className='realtorPropDesc'>
-                {readMore || post.description.length <= 150
-                  ? post.description
-                  : `${post.description.substring(0, 150)}...`}
-                {post.description.length > 150 && (
-                  <button
-                    className={readMore ? 'readLessButton' : 'readMoreButton'}
-                    onClick={() => setReadMore(!readMore)}
-                  >
-                    {readMore ? 'Show Less' : 'Read More'}
-                  </button>
-                )}
+
+        {post.bedrooms && (
+          <p className='bedroom'>Bedrooms: {post.bedrooms} </p>
+        )}
+
+        <div className='topBorderLine' />
+
+        {/* Location */}
+        {post.fullAddress && (
+          <p className='location'>{post.fullAddress}</p>
+        )}
+
+        {/* City, State, Country, */}
+        <div>
+          <p className='subheader'>Location</p>
+          {post.city && (
+            <div className='locationRow'>
+              <p className='location'>
+                City:
+              </p>
+              <p className='bedroom'>
+                {' '}{post.city}
               </p>
             </div>
           )}
 
-          {/* Dress Code */}
-          {post?.dressCode ? (
-            <>
-              <p className='subheader'>Dress Code</p>
-              <p className='bedroom'>
-                {post.dressCode}
+          {post.state && (
+            <div className='locationRow'>
+              <p className='location'>
+                State:
               </p>
-            </>
-          ) : ''}
+              <p className='bedroom'>
+                {' '}{post.state}
+              </p>
+            </div>
+          )}
+          {post.country && (
+            <div className='locationRow'>
+              <p className='location'>
+                Country:
+              </p>
+              <p className='bedroom'>
+                {' '}{post.country}
+              </p>
+            </div>
+          )}
+        </div>
 
-          {/* Time and Date */}
-          {post?.eventDateTime ? (
-            <>
-              <p className='subheader'>Date & Time</p>
-              <p className='bedroom'>
-                {post.eventDateTime}
-              </p>
-            </>
-          ) : ''}
+        <div className='topBorderLine' />
+
+        {/* Ratings */}
+        <div className='reviewIconRow'>
+          <FontAwesomeIcon icon={faStar} className='star' />
+          <span className='starTxt'>{averageRating}</span>
+        </div>
+
+        {/* Capacity */}
+        {post?.capacity ? (
+          <>
+            <p>
+              Capacity:
+            </p>
+            <p className='bedroom'>
+              {post.capacity}
+            </p>
+          </>
+        ): ''}
+
+        {/* Type & Description */}
+        {post.description && (
+          <div>
+            <h4 className='luxPolHeadTxt'>Description</h4>
+            <p className='realtorPropDesc'>
+              {readMore || post.description.length <= 150
+                ? post.description
+                : `${post.description.substring(0, 150)}...`}
+              {post.description.length > 150 && (
+                <button
+                  className={readMore ? 'readLessButton' : 'readMoreButton'}
+                  onClick={() => setReadMore(!readMore)}
+                >
+                  {readMore ? 'Show Less' : 'Read More'}
+                </button>
+              )}
+            </p>
+          </div>
+        )}
+
+        {/* Dress Code */}
+        {post?.dressCode ? (
+          <>
+            <p className='subheader'>Dress Code</p>
+            <p className='bedroom'>
+              {post.dressCode}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Time and Date */}
+        {post?.eventDateTime ? (
+          <>
+            <p className='subheader'>Date & Time</p>
+            <p className='bedroom'>
+              {post.eventDateTime}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Subcription Enabled or not */}
+        {post?.isSubscription ? (
+          <>
+            <p>
+              Post Type:
+            </p>
+            <p className='bedroom'>
+              Subscription Enabled
+            </p>
+          </>
+        ): ''}
+
+        {/* Booking Mode */}
+        {post?.bookingMode ? (
+          <>
+            <p>Booking Mode:</p>
+            <p>{bookingModeLabels[post.bookingMode] || "N/A"}</p>
+          </>
+        ): ''}
+
+        {/* Session Duration */}
+        {post?.sessionDuration ? (
+          <>
+            <p>Session Duration:</p>
+            <p>{formatDuration(post.sessionDuration)}</p>
+          </>
+        ) : ''}
+
+        {/* Opening Hour */}
+        {post?.openingHour ? (
+          <>
+            <p>Opening Hour:</p>
+            <p>{post.openingHour}</p>
+          </>
+        ): ''}
+
+        {/* Closing Hour */}
+        {post?.closingHour ? (
+          <>
+            <p>Closing Hour:</p>
+            <p>{post.closingHour}</p>
+          </>
+        ): ''}
 
         {/* Pricing */}
         <div className='priceRoww'>
@@ -451,7 +529,6 @@ function Content({post, realtor,}) {
               <p className='deleteTxt'>{loading ? 'Deleting...' : 'Delete'}</p>
           </button>
         </div>
-
       </div>
 
     </div>

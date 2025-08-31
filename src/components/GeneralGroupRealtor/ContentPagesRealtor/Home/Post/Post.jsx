@@ -87,6 +87,11 @@ function Post({post}) {
               className="image" 
             />
           )}
+
+          {/* Subcription label */}
+          {post.isSubscription && <div className='subscribeLabel'>
+            <p>Subscription</p>
+          </div>}
         </div>
 
         {/* Username */}
@@ -96,44 +101,47 @@ function Post({post}) {
             <p className={'name'}>{post.firstName}</p>
         </div> */}
 
-        {post.type && (
-            <p className='propertType'>{post.propertyType}</p>
-        )}
+        <div className='realtorSummaryContainer'>
 
-        {/* Type */}
-        {post.type && (
-            <p className={'bedroom'}>{post.type}</p>
-        )}
+          {post.type && (
+              <p className='propertType'>{post.propertyType}</p>
+          )}
 
-        {/* Bed & Bedrooms */}
-        {post.bed && (
-            <p className={'bedroom'}>Beds: {post.bed} </p>
-        )}
+          {/* Type */}
+          {post.type && (
+              <p className={'bedroom'}>{post.type}</p>
+          )}
 
-        {post.bedrooms && (
-          <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
-        )}
+          {/* Bed & Bedrooms */}
+          {post.bed && (
+              <p className={'bedroom'}>Beds: {post.bed} </p>
+          )}
 
-        {/* Location */}
-        {post.fullAddress && (
-          <p className={'location'}>
-            {post.fullAddress}
+          {post.bedrooms && (
+            <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
+          )}
+
+          {/* Location */}
+          {post.fullAddress && (
+            <p className={'location'}>
+              {post.fullAddress}
+            </p>
+          )}
+
+          {/* Type & Description */}
+          <p 
+              className={'description'}
+          >
+              {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
           </p>
-        )}
 
-        {/* Type & Description */}
-        <p 
-            className={'description'}
-        >
-            {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
-        </p>
-
-        {/* Old Price & New Price */}
-        {/* Rent */}
-        <div className={'priceRow'}>
-          <p className={'price'}> 
-            ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
-          </p>
+          {/* Old Price & New Price */}
+          {/* Rent */}
+          <div className={'priceRow'}>
+            <p className={'price'}> 
+              ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
+            </p>
+          </div>
         </div>
     </div>
   )

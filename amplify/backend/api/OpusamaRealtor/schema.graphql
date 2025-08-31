@@ -100,6 +100,8 @@ type Booking @model @auth(rules: [{allow: public}]) {
   duration: String
   checkInDate: String
   checkOutDate: String
+  startTime: String
+  endTime: String
   propertyType: String
   accommodationType: String
   nameOfType: String
@@ -200,7 +202,12 @@ type Post @model @auth(rules: [{allow: public}]) {
   state: String
   city: String
   isApproved: Boolean
-  realtorID: ID! @index(name: "byRealtor")
   PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
+  isSubscription: Boolean
+  bookingMode: String
+  sessionDuration: Int
+  openingHour: String
+  closingHour: String
+  realtorID: ID! @index(name: "byRealtor")
 }
  

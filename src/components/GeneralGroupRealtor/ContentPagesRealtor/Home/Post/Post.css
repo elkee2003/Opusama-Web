@@ -1,7 +1,9 @@
 .realtorPostContainer {
+  display: flex;
   margin-top: 25px;
   width: 80vw;
-  padding:20px
+  padding:20px;
+  gap:1.5rem;
   /* background-color: red; */
 }
 
@@ -13,6 +15,13 @@
   background-color: #15141a;
 }
 
+.realtorSummaryContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* background-color: blue; */
+}
+
 .propertType {
     font-size: 19px;
     font-weight: bold;
@@ -21,12 +30,13 @@
 .media {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
+
 .image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .postVideoWrapper {
@@ -89,12 +99,13 @@
 }
 @media (max-width: 900px) {
   .realtorPostContainer{
+    flex-direction: column;
+    gap:0;
     padding:10px;
     width: 100%;
   }
 }
 @media (max-width: 500px) {
-  .realtorPostContainer{
-    width: 100%;
-  }
+  /* .realtorPostContainer{
+  } */
 }

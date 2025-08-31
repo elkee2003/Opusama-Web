@@ -854,6 +854,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "startTime": {
+                    "name": "startTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "endTime": {
+                    "name": "endTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "propertyType": {
                     "name": "propertyType",
                     "isArray": false,
@@ -1719,13 +1733,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "realtorID": {
-                    "name": "realtorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "PostLikes": {
                     "name": "PostLikes",
                     "isArray": true,
@@ -1741,6 +1748,48 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "isSubscription": {
+                    "name": "isSubscription",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bookingMode": {
+                    "name": "bookingMode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "sessionDuration": {
+                    "name": "sessionDuration",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "openingHour": {
+                    "name": "openingHour",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "closingHour": {
+                    "name": "closingHour",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "realtorID": {
+                    "name": "realtorID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1820,5 +1869,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "ebd4180617f837a6a98bbbc77ab850b9"
+    "version": "5681e3e9809a00f9d79c8fc8c43a801b"
 };
