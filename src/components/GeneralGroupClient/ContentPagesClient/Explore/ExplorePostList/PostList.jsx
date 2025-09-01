@@ -73,7 +73,7 @@ function PostList() {
             // Step 1: Query all realtors
             const realtors = await DataStore.query(Realtor);
 
-            // Step 2: Fetch all posts without any filtering
+            // Step 2: Fetch all posts that are available and approved
             const posts = await DataStore.query(Post, (p) => p.and ((p) =>[
                 p.available.eq(true),
                 // p.isApproved.eq(true)

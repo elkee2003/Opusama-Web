@@ -16,8 +16,14 @@ const RealtorProfilePageScreen = () => {
         const foundRealtor = await DataStore.query(Realtor, realtorId);
         setRealtor(foundRealtor);
 
-        // Fetch posts related to the realtor by filtering on realtorId
-        const realtorPosts = await DataStore.query(Post, (post) => post.realtorID.eq(realtorId));
+        // Fetch posts related to the realtor by filtering on realtorId, available, and isApproved
+        const realtorPosts = await DataStore.query(Post, (post) =>
+          post.and((p) => [
+            p.realtorID.eq(realtorId),
+            p.available.eq(true),
+            // p.isApproved.eq(true),
+          ])
+        );
 
         const sortedPosts = realtorPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setPosts(sortedPosts);
@@ -29,7 +35,28 @@ const RealtorProfilePageScreen = () => {
 
   useEffect(() => {
     fetchRealtor();
-  }, [realtorId]); 
+
+    if (!realtorId) return;
+
+    // ✅ Observe realtor changes
+    const realtorSub = DataStore.observe(Realtor, realtorId).subscribe(() => {
+      fetchRealtor();
+    });
+
+    // ✅ Observe post changes for this realtor
+    const postSub = DataStore.observe(Post).subscribe(({ element, opType }) => {
+      if (element.realtorID === realtorId) {
+        if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+          fetchRealtor();
+        }
+      }
+    });
+
+    return () => {
+      realtorSub.unsubscribe();
+      postSub.unsubscribe();
+    };
+  }, [realtorId]);
 
   if (!realtor) {
     return <div>Loading...</div>; // Show a loading state or an appropriate message

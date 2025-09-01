@@ -42,7 +42,12 @@ const HotelSearch = () => {
   const fetchRealtorsAndPosts = async () => {
     try {
       const realtors = await DataStore.query(Realtor);
-      const posts = await DataStore.query(Post);
+      const posts = await DataStore.query(Post, (p) =>
+        p.and((p) => [
+          p.available.eq(true),
+          // p.isApproved.eq(true),
+        ])
+      );
 
       const filteredPosts = posts.filter((post) => post.propertyType === 'Venue');
 
@@ -56,8 +61,13 @@ const HotelSearch = () => {
         };
       });
 
-      setVenuePosts(venuePostData);
-      setFilteredData(venuePostData);
+      // ✅ sort by createdAt (newest first)
+      const sortedPosts = venuePostData.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      setVenuePosts(sortedPosts);
+      setFilteredData(sortedPosts);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -69,6 +79,15 @@ const HotelSearch = () => {
 
   useEffect(() => {
     fetchRealtorsAndPosts();
+
+    // ✅ Realtime updates
+    const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
+      if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+        fetchRealtorsAndPosts();
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   return (

@@ -8,36 +8,34 @@ const SearchResultCom = ({ post }) => {
   const formattedPrice = Number(post.price)?.toLocaleString();
   const navigate = useNavigate();
 
-  // Fetch signed URLs for each media item (image/video) in post.media
-  const fetchMediaUrls = async () => {
-    try {
-      const urls = await Promise.all(
-        post.media.map(async (path) => {
-          const result = await getUrl({
-            path,
-            options: {
-              validateObjectExistence: true,
-              expiresIn: null, // No expiration limit
-            },
-          });
-          return {
-            url: result.url.toString(),
-            type: path.endsWith('.mp4') ? 'video' : 'image',
-          };
-        })
-      );
+  // Fetch ONLY the first media item
+  const fetchFirstMediaUrl = async () => {
+    if (!post.media?.length) return;
 
-      // Store valid URLs (either video or image)
-      setMediaUris(urls.filter(media => media.url !== null));
+    const path = post.media[0];
+
+    try {
+      const result = await getUrl({
+        path,
+        options: {
+          validateObjectExistence: true,
+          expiresIn: null, // no expiration
+        },
+      });
+
+      setMediaUris([
+        {
+          url: result.url.toString(),
+          type: path.endsWith('.mp4') ? 'video' : 'image',
+        },
+      ]);
     } catch (error) {
-        console.error('Error fetching media URLs:', error);
+      console.error('Error fetching first media URL:', error);
     }
   };
 
   useEffect(() => {
-    if (post.media?.length > 0) {
-      fetchMediaUrls();
-    }
+    fetchFirstMediaUrl();
   }, [post.media]);
 
   return (
