@@ -1,15 +1,18 @@
 .singlePostContainer {
   display: flex;
+  background: rgb(245, 245, 245);
   /* width: 100vw; */
   margin-top: 25px;
   width: 70%;
   gap:1.5rem;
+  border-radius: 30px;
 }
 
 .imageContainer {
   position: relative;
-  aspect-ratio: 3/2; /* Aspect ratio for the image */
-  width: 100%;
+  flex-shrink: 0;
+  width: 400px;
+  aspect-ratio: 3/2; 
   border-radius: 20px;
   overflow: hidden;
   background-color: #15141a;
@@ -113,7 +116,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* background-color: rgb(0, 255, 34); */
+  /* background-color: rgb(31, 194, 186); */
 }
 
 .bedroom,
@@ -149,7 +152,7 @@
 .priceRow {
   display: flex;
   margin-top: 5px;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
 }
 
 
@@ -157,13 +160,28 @@
   .singlePostContainer{
     width: 75%;
   }
+
+  .imageContainer {
+    width: 350px;
+  }
 }
+
+@media (max-width: 1200px) {
+  .imageContainer {
+    width: 320px;
+  }
+}
+
 @media (max-width: 900px) {
   .singlePostContainer{
     flex-direction: column;
     gap:0;
     padding:10px;
     width: 90%;
+  }
+
+  .imageContainer {
+    width: 100%;
   }
 
   .subscribeLabel p {

@@ -110,8 +110,9 @@ function Post({post}) {
     };
 
     useEffect(() => {
+      if (!post) return;
       fetchFirstMediaUrl();
-    }, [post.media]);
+    }, [post]);
 
     // function to navigate
     const handleNavigate = (postId) => {
@@ -210,11 +211,13 @@ function Post({post}) {
           )}
 
           {/* Type & Description */}
-          <p 
-              className={'description'}
-          >
-              {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
-          </p>
+          {post.description && (
+            <p className="description">
+              {post.description.length <= 150
+                ? post.description
+                : `${post.description.substring(0, 150)}...`}
+            </p>
+          )}
 
           {/* Old Price & New Price */}
           {/* Rent */}
