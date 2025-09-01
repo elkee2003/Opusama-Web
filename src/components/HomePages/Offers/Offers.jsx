@@ -96,7 +96,7 @@ const Offers = () => {
         <div className="paddings innerWidth flexColStart offer-container">
             <h1 className="primaryText offer-section-header-txt">What We Offer</h1>
             <p className="secondaryText offer-section-txt">
-                Opusama is a bridge between discovery and experience — where people and places meet.
+                Opusama is a bridge between discovery and experience, where people and places meet.
             </p>
             
 
@@ -173,7 +173,7 @@ const Offers = () => {
                             <div className='offer-list-con'>
                                 <RiUserSearchFill className='offer-icon'/>
                                 <p>
-                                    Get discovered by users actively searching for what you offer — not by chance, but by intent.
+                                    Get discovered by users actively searching for what you offer, not by chance but by intent.
                                 </p>
                             </div>
 
@@ -194,7 +194,7 @@ const Offers = () => {
                             <div className='offer-list-con'>
                                 <HiMiniUserGroup className='offer-icon'/>
                                 <p>
-                                    Tap into community conversations — get tagged, respond to feedback, and build loyalty.
+                                    Tap into community conversations, get tagged, respond to feedback, and build loyalty.
                                 </p>
                             </div>
                         </div>

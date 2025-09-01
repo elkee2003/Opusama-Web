@@ -14,10 +14,10 @@ const Contact = () => {
           <span className="greenText">Our Contacts</span>
           <span className="primaryText">Easy to Contact us</span>
           <span className="secondaryText">
-            Whether you're listing your space, joining the movement, or need help exploring your next experience — we're always here.
+            Whether you're listing your space, joining the movement, or exploring your next experience, we're always here.
           </span>
           <span className="secondaryText">
-            Tap any of the options below — we're all ears and ready to help.
+            Feel free to tap any option below, we're here to help.
           </span>
 
           <div className='swipe-left-con'>

@@ -3,7 +3,8 @@ import PostFeed from '../Post/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider'
+import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
+import { Hub } from 'aws-amplify/utils';
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
@@ -70,17 +71,42 @@ function PostList() {
         }
     };
 
-    useEffect(()=>{
-        fetchRealtorsAndPosts();
+    // useEffect(()=>{
+    //     fetchRealtorsAndPosts();
 
-        const subscription = DataStore.observe(Post).subscribe(({opType})=>{
-        if(opType === "UPDATE"){
+    //     const subscription = DataStore.observe(Post).subscribe(({opType})=>{
+    //     if(opType === "UPDATE"){
+    //         fetchRealtorsAndPosts();
+    //     }
+    //     });
+
+    //     return () => subscription.unsubscribe();
+    // },[])
+
+    useEffect(() => {
+        // listen for datastore ready event
+        const hubListener = Hub.listen('datastore', (capsule) => {
+        const { event } = capsule.payload;
+        if (event === 'ready') {
+            // Sync complete, fetch posts
             fetchRealtorsAndPosts();
         }
         });
 
-        return () => subscription.unsubscribe();
-    },[])
+        // Also fetch immediately (in case cache is available)
+        fetchRealtorsAndPosts();
+
+        const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
+        if (opType === "UPDATE" || opType === "INSERT" || opType === "DELETE") {
+            fetchRealtorsAndPosts();
+        }
+        });
+
+        return () => {
+        hubListener(); // cleanup hub
+        subscription.unsubscribe();
+        };
+    }, []);
 
     // Function to Restore Scroll Position When Returning
     // useEffect(() => {
