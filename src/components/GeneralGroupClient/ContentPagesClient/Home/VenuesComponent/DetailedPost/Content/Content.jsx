@@ -279,6 +279,11 @@ function Content({post, realtor,}) {
             <img src={'/defaultImage.png'} alt="Default" className="image" />
           )}
 
+          {/* Subcription label */}
+          {post?.isSubscription && <div className='subscribeLabel'>
+            <p>Subscribe</p>
+          </div>}
+
           {/* Like Button */}
           <div
             onClick={toggleLike}

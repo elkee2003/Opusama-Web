@@ -57,8 +57,8 @@ const SelectMedia = () => {
     if (images.length + videos.length > 10) {
       alert('You can select up to 10 images and a video combined.');
       return;
-    } else if (images.length < 3 && videos.length === 0) {
-      alert('Select at least 3 images or 1 video and any number of images.');
+    } else if (images.length < 1 && videos.length === 0) {
+      alert('Select at least 1 image or 1 video and a number of images.');
       return;
     }
 

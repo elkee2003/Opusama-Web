@@ -29,6 +29,9 @@ export declare type UserCreateFormInputValues = {
     profilePic?: string;
     phoneNumber?: string;
     address?: string;
+    cardNumber?: string;
+    cardExpiry?: string;
+    cardCvv?: string;
     push_token?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -39,6 +42,9 @@ export declare type UserCreateFormValidationValues = {
     profilePic?: ValidationFunction<string>;
     phoneNumber?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
+    cardNumber?: ValidationFunction<string>;
+    cardExpiry?: ValidationFunction<string>;
+    cardCvv?: ValidationFunction<string>;
     push_token?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -51,6 +57,9 @@ export declare type UserCreateFormOverridesProps = {
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     phoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;
+    cardNumber?: PrimitiveOverrideProps<TextFieldProps>;
+    cardExpiry?: PrimitiveOverrideProps<TextFieldProps>;
+    cardCvv?: PrimitiveOverrideProps<TextFieldProps>;
     push_token?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{

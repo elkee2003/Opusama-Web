@@ -28,10 +28,10 @@ const DisplayMedia = () => {
 
     if (videos.length === 1 && imageCount <= 10) {
       navigate('/realtorcontent/selectaddress');
-    } else if (videos.length === 0 && imageCount >= 3) {
+    } else if (videos.length === 0 && imageCount >= 1) {
       navigate('/realtorcontent/selectaddress');
     } else {
-      alert('Select at least 3 images OR 1 video with any number of images (up to 10).');
+      alert('Select at least 1 image OR 1 video with any number of images (up to 10).');
     }
   };
 

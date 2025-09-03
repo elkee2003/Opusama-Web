@@ -780,28 +780,28 @@ export const schema = {
                 "adults": {
                     "name": "adults",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
                 "kids": {
                     "name": "kids",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
                 "infants": {
                     "name": "infants",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
                 "numberOfPeople": {
                     "name": "numberOfPeople",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -854,17 +854,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "startTime": {
-                    "name": "startTime",
+                "bookedSessionDuration": {
+                    "name": "bookedSessionDuration",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "endTime": {
-                    "name": "endTime",
+                "subscription": {
+                    "name": "subscription",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1148,6 +1148,27 @@ export const schema = {
                             "userID"
                         ]
                     }
+                },
+                "cardNumber": {
+                    "name": "cardNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cardExpiry": {
+                    "name": "cardExpiry",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cardCvv": {
+                    "name": "cardCvv",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "push_token": {
                     "name": "push_token",
@@ -1883,5 +1904,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "6d5d92f148cb0117528b482f2a36c05a"
+    "version": "a2e38d9133f336562695164d883f13c7"
 };

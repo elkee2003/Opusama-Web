@@ -151,12 +151,14 @@ function PostList() {
                 <p className="noListings">No House listings</p>
             </div>
         )}
+        
         {refreshing && (
             <div className="loading-container">
                 <div className="spinner" />
                 <h2>Loading...</h2>
             </div>
         )}
+
         <div className='refreshBtnPListCon'>
             <button onClick={handleRefreshHouse} className='refreshBtnPList'>
                 {refreshing ? "Refreshing..." : "Refresh"}

@@ -30,6 +30,9 @@ export declare type UserUpdateFormInputValues = {
     profilePic?: string;
     phoneNumber?: string;
     address?: string;
+    cardNumber?: string;
+    cardExpiry?: string;
+    cardCvv?: string;
     push_token?: string;
 };
 export declare type UserUpdateFormValidationValues = {
@@ -40,6 +43,9 @@ export declare type UserUpdateFormValidationValues = {
     profilePic?: ValidationFunction<string>;
     phoneNumber?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
+    cardNumber?: ValidationFunction<string>;
+    cardExpiry?: ValidationFunction<string>;
+    cardCvv?: ValidationFunction<string>;
     push_token?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -52,6 +58,9 @@ export declare type UserUpdateFormOverridesProps = {
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     phoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;
+    cardNumber?: PrimitiveOverrideProps<TextFieldProps>;
+    cardExpiry?: PrimitiveOverrideProps<TextFieldProps>;
+    cardCvv?: PrimitiveOverrideProps<TextFieldProps>;
     push_token?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{

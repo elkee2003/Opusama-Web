@@ -33,8 +33,15 @@ const HotelSearch = () => {
 
       const matchesPrice = item?.price >= minPriceParsed && item?.price <= maxPriceParsed;
 
-      return matchesQuery && matchesPrice;
-    });
+      // ✅ Check subscription search
+      const matchesSubscription =
+        (lowercasedQuery.startsWith("sub") || lowercasedQuery.includes("subscr")) &&
+        item?.isSubscription === true;
+
+
+      // ✅ Either matches normal query OR subscription keyword
+      return (matchesQuery || matchesSubscription) && matchesPrice;
+      });
 
     setFilteredData(filtered);
   };

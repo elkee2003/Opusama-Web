@@ -89,10 +89,10 @@ type PostReview @model @auth(rules: [{allow: public}]) {
 
 type Booking @model @auth(rules: [{allow: public}]) {
   id: ID!
-  adults: String
-  kids: String
-  infants: String
-  numberOfPeople: String
+  adults: Int
+  kids: Int
+  infants: Int
+  numberOfPeople: Int
   clientFirstName: String
   clientLastName: String
   clientPhoneNumber: String
@@ -100,8 +100,8 @@ type Booking @model @auth(rules: [{allow: public}]) {
   duration: String
   checkInDate: String
   checkOutDate: String
-  startTime: String
-  endTime: String
+  bookedSessionDuration: String
+  subscription: Boolean
   propertyType: String
   accommodationType: String
   nameOfType: String
@@ -132,6 +132,9 @@ type User @model @auth(rules: [{allow: public}]) {
   RealtorReviews: [RealtorReview] @hasMany(indexName: "byUser", fields: ["id"])
   address: String
   Bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+  cardNumber: String
+  cardExpiry: String
+  cardCvv: String
   push_token: String
 }
 

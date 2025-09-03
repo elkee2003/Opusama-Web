@@ -54,8 +54,6 @@ const Forms = () => {
     media,
   } = useUploadContext();
 
-  console.log('allow multiple:', allowMultiple, 'max capacity:', maxCapacity)
-
   const [isCustom, setIsCustom] = useState(false);
 
   // Earnings = Value - Commission
@@ -161,7 +159,7 @@ const Forms = () => {
 
           {/* Manual Acceptance or Auto */}
           <div className="acceptanceCon">
-            <p className="formLabel">Booking Acceptance:</p>
+            <p className="formLabel">Booking Acceptance Type:</p>
 
             <div className="acceptanceOptions">
               {/* Manual Acceptance */}
@@ -201,7 +199,7 @@ const Forms = () => {
                     checked={bookingMode === "auto_date"}
                     onChange={() => setBookingMode("auto_date")}
                   />
-                  Require date only (e.g. hotel stay)
+                  Booking requires date only (e.g. hotel stay)
                 </label>
 
                 {/* Date + Time */}
@@ -213,7 +211,7 @@ const Forms = () => {
                     checked={bookingMode === "auto_datetime"}
                     onChange={() => setBookingMode("auto_datetime")}
                   />
-                  Require date & time (e.g. serviced pitch)
+                  Booking requires date & time (e.g. serviced pitch)
                 </label>
 
                 {/* Fixed Event */}
@@ -225,7 +223,7 @@ const Forms = () => {
                     checked={bookingMode === "auto_event"}
                     onChange={() => setBookingMode("auto_event")}
                   />
-                  Fixed event date (book instantly)
+                  Booking doesn't require date nor time (book instantly)
                 </label>
 
                 {/* Capacity Options */}

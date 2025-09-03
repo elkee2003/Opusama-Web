@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
+import { Hub } from 'aws-amplify/utils'; 
 import { Post } from '../../../../../models'
 
 function PostList() {
@@ -47,16 +48,28 @@ function PostList() {
     };
 
     useEffect(() => {
-        fetchMyPosts();
-    
-        const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
-          if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+        // listen for datastore ready event
+        const hubListener = Hub.listen('datastore', (capsule) => {
+        const { event } = capsule.payload;
+        if (event === 'ready') {
             fetchMyPosts();
-          }
+        }
         });
-    
-        return () => subscription.unsubscribe();
-    }, []);
+
+        // fetch immediately too (for cached data)
+        fetchMyPosts();
+
+        const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
+        if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+            fetchMyPosts();
+        }
+        });
+
+        return () => {
+        hubListener(); // cleanup Hub
+        subscription.unsubscribe();
+        };
+    }, [dbRealtor?.id]);
     
     // Function to Restore Scroll Position When Returning
     // useEffect(() => {
@@ -90,17 +103,24 @@ function PostList() {
         </div>
 
 
-        {myPostList && myPostList.length > 0 ? (
-            <div >
-                {myPostList.map((post) => (
-                    <PostFeed key={post.id} post={post} />
-                ))}
+        {loading ? (
+            <div className="loading-container">
+            <div className="spinner" />
+                <h2>Loading...</h2>
+            </div>
+        ) : myPostList && myPostList.length > 0 ? (
+            <div>
+            {myPostList.map((post) => (
+                <PostFeed key={post.id} post={post} />
+            ))}
             </div>
         ) : (
             <div className='realtorNoListngsCon'>
                 <p className="realtorNoListings">You have not made any posts yet.</p>
             </div>
         )}
+
+
         {refreshing && (
             <div className="loading-container">
                 <div className="spinner" />
@@ -110,7 +130,7 @@ function PostList() {
 
         <div className='realtorRefreshBtnCon'>
             <button onClick={handleRefresh} className='refreshButton'>
-                {refreshing ? "Refreshing..." : "Refresh"}
+            {refreshing ? "Refreshing..." : "Refresh"}
             </button>
         </div>
     </div>

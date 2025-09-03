@@ -102,6 +102,20 @@ const UploadContextProvider = ({children}) => {
           return false;
         }
 
+        // Session-based validation
+        if (sessionDuration) {
+          if (!openingHour || !closingHour) {
+            setErrors('Opening and Closing Hours are required when Session Duration is set');
+            return false;
+          }
+        }
+
+        // Subscription validation
+        if (isSubscription && !timeFrame) {
+          setErrors('Time frame is required');
+          return false;
+        }
+
         // Specific validations for each property type
         if (propertyType === 'House Rent') {
           if (!bedrooms) {
@@ -173,11 +187,6 @@ const UploadContextProvider = ({children}) => {
 
         if (isNaN(parseFloat(totalPrice))) {
           setErrors('Total Price must be a number');
-          return false;
-        }
-
-        if (isSubscription && !timeFrame) {
-          setErrors('Time frame is required');
           return false;
         }
         

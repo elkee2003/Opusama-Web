@@ -26,6 +26,7 @@ const ClientDetails = ({ post }) => {
     setGuestPhoneNumber,
     note,
     setNote,
+    setSubscription,
     errorMessage,
     onValidateHotelInput,
     onValidateRecreationInput,
@@ -35,14 +36,45 @@ const ClientDetails = ({ post }) => {
   // For PropertyType of Recreation
   const [temporaryPrice, setTemporaryPrice] = useState(postTotalPrice);
 
+  // const handleProceedToBooking = () => {
+  //   if (post?.propertyType === 'Hotel / Shortlet') {
+  //     if (onValidateHotelInput()) {
+  //       navigate(`/clientcontent/bookingdetails`);
+  //     }
+  //   } else if(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
+  //     if(onValidateRecreationInput()){
+  //       navigate(`/clientcontent/reviewinfo`);
+  //     }
+  //   } else {
+  //     if (onValidatePropertyInput()) {
+  //       navigate(`/clientcontent/reviewinfo`);
+  //     }
+  //   }
+  // };
+
   const handleProceedToBooking = () => {
+    if (post?.isSubscription){
+      if(post?.bookingMode === 'manual'){
+        setSubscription(true);
+      }
+      if (post?.bookingMode === 'auto_date'){}
+      if (post?.bookingMode === 'auto_datetime'){}
+      if (post?.bookingMode === 'auto_event'){}
+    }
+
+    if(post?.bookingMode === 'manual'){}
+    if (post?.bookingMode === 'auto_date'){}
+    if (post?.bookingMode === 'auto_datetime'){}
+    if (post?.bookingMode === 'auto_event'){}
+    
     if (post?.propertyType === 'Hotel / Shortlet') {
       if (onValidateHotelInput()) {
         navigate(`/clientcontent/bookingdetails`);
       }
     } else if(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
       if(onValidateRecreationInput()){
-        navigate(`/clientcontent/reviewinfo`);
+        // navigate(`/clientcontent/reviewinfo`);
+        navigate(`/clientcontent/bookingdetails`);
       }
     } else {
       if (onValidatePropertyInput()) {

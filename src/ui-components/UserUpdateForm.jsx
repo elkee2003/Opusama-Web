@@ -30,6 +30,9 @@ export default function UserUpdateForm(props) {
     profilePic: "",
     phoneNumber: "",
     address: "",
+    cardNumber: "",
+    cardExpiry: "",
+    cardCvv: "",
     push_token: "",
   };
   const [sub, setSub] = React.useState(initialValues.sub);
@@ -41,6 +44,9 @@ export default function UserUpdateForm(props) {
     initialValues.phoneNumber
   );
   const [address, setAddress] = React.useState(initialValues.address);
+  const [cardNumber, setCardNumber] = React.useState(initialValues.cardNumber);
+  const [cardExpiry, setCardExpiry] = React.useState(initialValues.cardExpiry);
+  const [cardCvv, setCardCvv] = React.useState(initialValues.cardCvv);
   const [push_token, setPush_token] = React.useState(initialValues.push_token);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -54,6 +60,9 @@ export default function UserUpdateForm(props) {
     setProfilePic(cleanValues.profilePic);
     setPhoneNumber(cleanValues.phoneNumber);
     setAddress(cleanValues.address);
+    setCardNumber(cleanValues.cardNumber);
+    setCardExpiry(cleanValues.cardExpiry);
+    setCardCvv(cleanValues.cardCvv);
     setPush_token(cleanValues.push_token);
     setErrors({});
   };
@@ -76,6 +85,9 @@ export default function UserUpdateForm(props) {
     profilePic: [],
     phoneNumber: [],
     address: [],
+    cardNumber: [],
+    cardExpiry: [],
+    cardCvv: [],
     push_token: [],
   };
   const runValidationTasks = async (
@@ -111,6 +123,9 @@ export default function UserUpdateForm(props) {
           profilePic,
           phoneNumber,
           address,
+          cardNumber,
+          cardExpiry,
+          cardCvv,
           push_token,
         };
         const validationResponses = await Promise.all(
@@ -174,6 +189,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -205,6 +223,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -236,6 +257,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -267,6 +291,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -298,6 +325,9 @@ export default function UserUpdateForm(props) {
               profilePic: value,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -329,6 +359,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber: value,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -360,6 +393,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address: value,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token,
             };
             const result = onChange(modelFields);
@@ -374,6 +410,108 @@ export default function UserUpdateForm(props) {
         errorMessage={errors.address?.errorMessage}
         hasError={errors.address?.hasError}
         {...getOverrideProps(overrides, "address")}
+      ></TextField>
+      <TextField
+        label="Card number"
+        isRequired={false}
+        isReadOnly={false}
+        value={cardNumber}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              profilePic,
+              phoneNumber,
+              address,
+              cardNumber: value,
+              cardExpiry,
+              cardCvv,
+              push_token,
+            };
+            const result = onChange(modelFields);
+            value = result?.cardNumber ?? value;
+          }
+          if (errors.cardNumber?.hasError) {
+            runValidationTasks("cardNumber", value);
+          }
+          setCardNumber(value);
+        }}
+        onBlur={() => runValidationTasks("cardNumber", cardNumber)}
+        errorMessage={errors.cardNumber?.errorMessage}
+        hasError={errors.cardNumber?.hasError}
+        {...getOverrideProps(overrides, "cardNumber")}
+      ></TextField>
+      <TextField
+        label="Card expiry"
+        isRequired={false}
+        isReadOnly={false}
+        value={cardExpiry}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              profilePic,
+              phoneNumber,
+              address,
+              cardNumber,
+              cardExpiry: value,
+              cardCvv,
+              push_token,
+            };
+            const result = onChange(modelFields);
+            value = result?.cardExpiry ?? value;
+          }
+          if (errors.cardExpiry?.hasError) {
+            runValidationTasks("cardExpiry", value);
+          }
+          setCardExpiry(value);
+        }}
+        onBlur={() => runValidationTasks("cardExpiry", cardExpiry)}
+        errorMessage={errors.cardExpiry?.errorMessage}
+        hasError={errors.cardExpiry?.hasError}
+        {...getOverrideProps(overrides, "cardExpiry")}
+      ></TextField>
+      <TextField
+        label="Card cvv"
+        isRequired={false}
+        isReadOnly={false}
+        value={cardCvv}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              profilePic,
+              phoneNumber,
+              address,
+              cardNumber,
+              cardExpiry,
+              cardCvv: value,
+              push_token,
+            };
+            const result = onChange(modelFields);
+            value = result?.cardCvv ?? value;
+          }
+          if (errors.cardCvv?.hasError) {
+            runValidationTasks("cardCvv", value);
+          }
+          setCardCvv(value);
+        }}
+        onBlur={() => runValidationTasks("cardCvv", cardCvv)}
+        errorMessage={errors.cardCvv?.errorMessage}
+        hasError={errors.cardCvv?.hasError}
+        {...getOverrideProps(overrides, "cardCvv")}
       ></TextField>
       <TextField
         label="Push token"
@@ -391,6 +529,9 @@ export default function UserUpdateForm(props) {
               profilePic,
               phoneNumber,
               address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
               push_token: value,
             };
             const result = onChange(modelFields);

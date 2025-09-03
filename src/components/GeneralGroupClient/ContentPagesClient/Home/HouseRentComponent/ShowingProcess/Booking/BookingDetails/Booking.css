@@ -63,6 +63,45 @@
   color: grey;
 }
 
+.slotsContainer {
+  margin-top: 20px;
+}
+
+.slotsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.slotBtn {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slotBtn:hover:not(:disabled) {
+  background: #e6f2ff;
+  border-color: #3399ff;
+}
+
+.slotBtn.selected {
+  background: #07da11;
+  color: white;
+  border-color: #07da11;
+  font-weight: 600;
+}
+
+.slotBtn:disabled {
+  background: #f0f0f0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
 .priceLabel {
   font-weight: bold;
   font-size: 20px;
@@ -109,6 +148,10 @@
     /* background-color: red; */
     max-width: 600px;
     justify-self: center;
+  }
+
+  .slotsGrid {
+    margin-bottom: 12rem;
   }
   
   .bookingNxtBtn {

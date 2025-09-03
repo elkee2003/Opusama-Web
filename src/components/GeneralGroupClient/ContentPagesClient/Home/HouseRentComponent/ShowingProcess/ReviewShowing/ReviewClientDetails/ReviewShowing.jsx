@@ -51,6 +51,10 @@ const ReviewClientDetails = () => {
     setCheckOutDate,
     duration,
     setDuration,
+    bookedSessionDuration, 
+    setBookedSessionDuration,
+    subscription, 
+    setSubscription,
     postPrice,
     setPostPrice,
     postCautionFee,
@@ -105,10 +109,10 @@ const ReviewClientDetails = () => {
     try {
       const booking = await DataStore.save(
         new Booking({
-          adults: String(adults),
-          kids: String(kids),
-          infants: String(infants),
-          numberOfPeople: String(numberOfPeople),
+          adults,
+          kids,
+          infants,
+          numberOfPeople,
           clientFirstName: guestFirstName,
           clientLastName: guestLastName,
           clientPhoneNumber: guestPhoneNumber,
@@ -116,6 +120,8 @@ const ReviewClientDetails = () => {
           duration: String(duration),
           checkInDate: String(checkInDate),
           checkOutDate: String(checkOutDate),
+          bookedSessionDuration: bookedSessionDuration.label,
+          subscription,
           propertyType,
           nameOfType,
           accommodationType,
@@ -157,6 +163,8 @@ const ReviewClientDetails = () => {
       setDuration("");
       setCheckInDate("");
       setCheckOutDate("");
+      setBookedSessionDuration("");
+      setSubscription(false);
       setPostOtherFeesName("");
       setPostOtherFeesPrice("");
       setPostOtherFeesName2("");
@@ -229,6 +237,34 @@ const ReviewClientDetails = () => {
 
         <h4>Purpose of stay:</h4>
         <p className="txtInputReview">{note?.trim()}</p>
+
+        {checkInDate && (
+          <>
+            <h4>Selected Date:</h4>
+            <p className="txtInputReview">{checkInDate}</p>
+          </>
+        )}
+
+        {checkOutDate && (
+          <>
+            <h4>Selected Date:</h4>
+            <p className="txtInputReview">{checkOutDate}</p>
+          </>
+        )}
+
+        {bookedSessionDuration && (
+          <>
+            <h4>Booked Session:</h4>
+            <p className="txtInputReview">{bookedSessionDuration.label}</p>
+          </>
+        )}
+
+        {subscription && (
+          <>
+            <h4>Booking Type:</h4>
+            <p className="txtInputReview">Subscription</p>
+          </>
+        )}
 
         {postCautionFee && (
           <>
