@@ -211,6 +211,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   allowMultiple: Boolean
   maxCapacity: Int
   sessionDuration: Int
+  sessionGap: Int
   openingHour: String
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")

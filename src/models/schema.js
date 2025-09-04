@@ -1805,6 +1805,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "sessionGap": {
+                    "name": "sessionGap",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "openingHour": {
                     "name": "openingHour",
                     "isArray": false,
@@ -1904,5 +1911,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "a2e38d9133f336562695164d883f13c7"
+    "version": "c4aa9e0595209c6f2f3b027b6bfa24ab"
 };

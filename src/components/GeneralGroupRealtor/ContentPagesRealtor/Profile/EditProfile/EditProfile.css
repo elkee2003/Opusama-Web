@@ -461,6 +461,11 @@
 }
 
 @media (max-width: 500px) {
+
+  .signoutBtn {
+    right: 10px;
+  }
+  
   .profileNxtBtn  {
     right: 120px;
     left: 120px;
