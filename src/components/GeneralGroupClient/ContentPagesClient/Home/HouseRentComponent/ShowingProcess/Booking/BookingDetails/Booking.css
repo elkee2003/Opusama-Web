@@ -69,7 +69,7 @@
 
 .slotsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
   gap: 12px;
 }
 
@@ -171,6 +171,13 @@
     margin-bottom: 5rem;
   }
 }
+
+@media (max-width: 700px) {
+  .slotsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
 @media (max-width: 500px) {
   /* .bookingContainer {
   } */

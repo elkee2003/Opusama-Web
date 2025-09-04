@@ -52,29 +52,78 @@ const ClientDetails = ({ post }) => {
   //   }
   // };
 
+  // Validator Function
+  const getValidator = () => {
+    if (post?.propertyType === 'Hotel / Shortlet') return onValidateHotelInput;
+    if (post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife' || post?.propertyType === 'Event')
+      return onValidateRecreationInput;
+    return onValidatePropertyInput;
+  };
+
   const handleProceedToBooking = () => {
+    const validate = getValidator();
+
+    // Subscription booking
     if (post?.isSubscription){
+      setSubscription(true);
+
+      // Manual subscription
       if(post?.bookingMode === 'manual'){
-        setSubscription(true);
+        if (post?.propertyType === 'Recreation' && onValidateRecreationInput()){
+          navigate(`/clientcontent/bookingdetails`);
+          return;
+        }
+        if (post?.propertyType === 'Food & Drinks' && onValidatePropertyInput()) {
+          navigate(`/clientcontent/bookingdetails`);
+          return;
+        }
       }
-      if (post?.bookingMode === 'auto_date'){}
-      if (post?.bookingMode === 'auto_datetime'){}
-      if (post?.bookingMode === 'auto_event'){}
+
+      // Auto subscription (must always validate)
+      if (post?.bookingMode === 'auto_date' || post?.bookingMode === 'auto_datetime' || post?.bookingMode === 'auto_event'){
+        if(validate()) {
+          navigate(`/clientcontent/bookingdetails`);
+        }
+        return;
+      }
     }
 
-    if(post?.bookingMode === 'manual'){}
-    if (post?.bookingMode === 'auto_date'){}
-    if (post?.bookingMode === 'auto_datetime'){}
-    if (post?.bookingMode === 'auto_event'){}
+    // Manual booking
+    if(post?.bookingMode === 'manual'){
+      if (validate()) {
+        if (post?.propertyType === 'Hotel / Shortlet' || post?.propertyType === 'Recreation') {
+          navigate(`/clientcontent/bookingdetails`);
+        } else {
+          navigate(`/clientcontent/reviewinfo`);
+        }
+      }
+      return;
+    }
+
+    // Auto Date or Auto Date_Time booking
+    if (post?.bookingMode === 'auto_date' || post?.bookingMode === 'auto_datetime'){
+      if (validate()) {
+        navigate(`/clientcontent/bookingdetails`);
+      }
+      return;
+    }
     
+    // Auto Event
+    if (post?.bookingMode === 'auto_event'){
+      if (onValidateRecreationInput()) {
+        navigate(`/clientcontent/reviewinfo`);
+      }
+      return;
+    }
+
+    // IF condition for old posts
     if (post?.propertyType === 'Hotel / Shortlet') {
       if (onValidateHotelInput()) {
         navigate(`/clientcontent/bookingdetails`);
       }
     } else if(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
       if(onValidateRecreationInput()){
-        // navigate(`/clientcontent/reviewinfo`);
-        navigate(`/clientcontent/bookingdetails`);
+        navigate(`/clientcontent/reviewinfo`);
       }
     } else {
       if (onValidatePropertyInput()) {
@@ -84,7 +133,7 @@ const ClientDetails = ({ post }) => {
   };
 
   useEffect(()=>{
-    if (post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
+    if (post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife'|| post?.propertyType === 'Event') {
       const newTotalPrice = postTotalPrice * numberOfPeople;
       setTemporaryPrice(newTotalPrice);
       setOverAllPrice(newTotalPrice); // Save for global access
@@ -166,7 +215,7 @@ const ClientDetails = ({ post }) => {
         )}
 
         {/* Counting for Recreation and Nightlife */}
-        {(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') && (
+        {(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife' || post?.propertyType === 'Event') && (
           <div className='card'>
             <div className='row'>
               <div>

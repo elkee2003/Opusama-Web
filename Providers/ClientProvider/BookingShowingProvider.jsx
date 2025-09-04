@@ -15,7 +15,7 @@ const BookingShowingContextProvider = ({children}) => {
     const [adults, setAdults] = useState(0);
     const [kids, setKids] = useState(0);
     const [infants, setInfants] = useState(0);
-    const [numberOfPeople, setNumberOfPeople] = useState(0);
+    const [numberOfPeople, setNumberOfPeople] = useState(1);
     const [guestFirstName, setGuestFirstName] = useState('');
     const [guestLastName, setGuestLastName] = useState('');
     const [guestPhoneNumber, setGuestPhoneNumber]= useState('');
