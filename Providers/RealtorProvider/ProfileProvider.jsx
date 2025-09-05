@@ -18,6 +18,7 @@ const ProfileContextProvider = ({children}) => {
     const [bankCode, setBankCode,]= useState("");
     const [accountName, setAccountName]= useState("");
     const [accountNumber, setAccountNumber]= useState("");
+    const [directPayment, setDirectPayment] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
       const validateInput = () =>{
@@ -82,7 +83,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
         {children}
     </ProfileContext.Provider>
   )

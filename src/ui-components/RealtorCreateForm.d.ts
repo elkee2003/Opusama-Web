@@ -35,6 +35,7 @@ export declare type RealtorCreateFormInputValues = {
     bankCode?: string;
     accountName?: string;
     accountNumber?: string;
+    directPayment?: boolean;
     push_token?: string;
     isVerified?: boolean;
     isPartner?: boolean;
@@ -56,6 +57,7 @@ export declare type RealtorCreateFormValidationValues = {
     bankCode?: ValidationFunction<string>;
     accountName?: ValidationFunction<string>;
     accountNumber?: ValidationFunction<string>;
+    directPayment?: ValidationFunction<boolean>;
     push_token?: ValidationFunction<string>;
     isVerified?: ValidationFunction<boolean>;
     isPartner?: ValidationFunction<boolean>;
@@ -79,6 +81,7 @@ export declare type RealtorCreateFormOverridesProps = {
     bankCode?: PrimitiveOverrideProps<TextFieldProps>;
     accountName?: PrimitiveOverrideProps<TextFieldProps>;
     accountNumber?: PrimitiveOverrideProps<TextFieldProps>;
+    directPayment?: PrimitiveOverrideProps<SwitchFieldProps>;
     push_token?: PrimitiveOverrideProps<TextFieldProps>;
     isVerified?: PrimitiveOverrideProps<SwitchFieldProps>;
     isPartner?: PrimitiveOverrideProps<SwitchFieldProps>;

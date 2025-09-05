@@ -1368,6 +1368,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "directPayment": {
+                    "name": "directPayment",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "push_token": {
                     "name": "push_token",
                     "isArray": false,
@@ -1911,5 +1918,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "c4aa9e0595209c6f2f3b027b6bfa24ab"
+    "version": "5c3245c4cb50407758abaef52b0cf309"
 };

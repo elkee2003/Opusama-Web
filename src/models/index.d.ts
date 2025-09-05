@@ -466,6 +466,7 @@ type EagerRealtor = {
   readonly RealtorReview?: (RealtorReview | null)[] | null;
   readonly accountName?: string | null;
   readonly accountNumber?: string | null;
+  readonly directPayment?: boolean | null;
   readonly push_token?: string | null;
   readonly isVerified?: boolean | null;
   readonly isPartner?: boolean | null;
@@ -498,6 +499,7 @@ type LazyRealtor = {
   readonly RealtorReview: AsyncCollection<RealtorReview>;
   readonly accountName?: string | null;
   readonly accountNumber?: string | null;
+  readonly directPayment?: boolean | null;
   readonly push_token?: string | null;
   readonly isVerified?: boolean | null;
   readonly isPartner?: boolean | null;

@@ -42,6 +42,7 @@ export default function RealtorUpdateForm(props) {
     bankCode: "",
     accountName: "",
     accountNumber: "",
+    directPayment: false,
     push_token: "",
     isVerified: false,
     isPartner: false,
@@ -70,6 +71,9 @@ export default function RealtorUpdateForm(props) {
   const [accountNumber, setAccountNumber] = React.useState(
     initialValues.accountNumber
   );
+  const [directPayment, setDirectPayment] = React.useState(
+    initialValues.directPayment
+  );
   const [push_token, setPush_token] = React.useState(initialValues.push_token);
   const [isVerified, setIsVerified] = React.useState(initialValues.isVerified);
   const [isPartner, setIsPartner] = React.useState(initialValues.isPartner);
@@ -94,6 +98,7 @@ export default function RealtorUpdateForm(props) {
     setBankCode(cleanValues.bankCode);
     setAccountName(cleanValues.accountName);
     setAccountNumber(cleanValues.accountNumber);
+    setDirectPayment(cleanValues.directPayment);
     setPush_token(cleanValues.push_token);
     setIsVerified(cleanValues.isVerified);
     setIsPartner(cleanValues.isPartner);
@@ -127,6 +132,7 @@ export default function RealtorUpdateForm(props) {
     bankCode: [],
     accountName: [],
     accountNumber: [],
+    directPayment: [],
     push_token: [],
     isVerified: [],
     isPartner: [],
@@ -173,6 +179,7 @@ export default function RealtorUpdateForm(props) {
           bankCode,
           accountName,
           accountNumber,
+          directPayment,
           push_token,
           isVerified,
           isPartner,
@@ -247,6 +254,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -289,6 +297,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -331,6 +340,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -373,6 +383,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -415,6 +426,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -457,6 +469,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -499,6 +512,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -541,6 +555,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -583,6 +598,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -625,6 +641,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -667,6 +684,7 @@ export default function RealtorUpdateForm(props) {
               bankCode: value,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -709,6 +727,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName: value,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -751,6 +770,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber: value,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -771,6 +791,49 @@ export default function RealtorUpdateForm(props) {
         hasError={errors.accountNumber?.hasError}
         {...getOverrideProps(overrides, "accountNumber")}
       ></TextField>
+      <SwitchField
+        label="Direct payment"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={directPayment}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              myDescription,
+              profilePic,
+              email,
+              address,
+              phoneNumber,
+              bankName,
+              bankCode,
+              accountName,
+              accountNumber,
+              directPayment: value,
+              push_token,
+              isVerified,
+              isPartner,
+              isPremium,
+              isElite,
+              isTrusted,
+            };
+            const result = onChange(modelFields);
+            value = result?.directPayment ?? value;
+          }
+          if (errors.directPayment?.hasError) {
+            runValidationTasks("directPayment", value);
+          }
+          setDirectPayment(value);
+        }}
+        onBlur={() => runValidationTasks("directPayment", directPayment)}
+        errorMessage={errors.directPayment?.errorMessage}
+        hasError={errors.directPayment?.hasError}
+        {...getOverrideProps(overrides, "directPayment")}
+      ></SwitchField>
       <TextField
         label="Push token"
         isRequired={false}
@@ -793,6 +856,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token: value,
               isVerified,
               isPartner,
@@ -835,6 +899,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified: value,
               isPartner,
@@ -877,6 +942,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner: value,
@@ -919,6 +985,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -961,6 +1028,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,
@@ -1003,6 +1071,7 @@ export default function RealtorUpdateForm(props) {
               bankCode,
               accountName,
               accountNumber,
+              directPayment,
               push_token,
               isVerified,
               isPartner,

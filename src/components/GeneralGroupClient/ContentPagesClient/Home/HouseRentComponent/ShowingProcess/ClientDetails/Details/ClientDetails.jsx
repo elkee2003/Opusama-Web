@@ -91,7 +91,7 @@ const ClientDetails = ({ post }) => {
     // Manual booking
     if(post?.bookingMode === 'manual'){
       if (validate()) {
-        if (post?.propertyType === 'Hotel / Shortlet' || post?.propertyType === 'Recreation') {
+        if (post?.propertyType === 'Hotel / Shortlet' || post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
           navigate(`/clientcontent/bookingdetails`);
         } else {
           navigate(`/clientcontent/reviewinfo`);

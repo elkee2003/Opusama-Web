@@ -11,7 +11,7 @@ import { uploadData, remove } from 'aws-amplify/storage';
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const {firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, myDescription} = useProfileContext()
+  const {firstName, lastName, username, myDescription, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
 
   const { dbRealtor, setDbRealtor, sub } = useAuthContext();
 
@@ -111,6 +111,7 @@ const ReviewDetails = () => {
       const user = await DataStore.save(
         new Realtor({
           profilePic: uploadedImagePath,
+          directPayment: false,
           firstName, lastName, username, myDescription, address, phoneNumber, bankName, accountName, accountNumber,
           sub
         })

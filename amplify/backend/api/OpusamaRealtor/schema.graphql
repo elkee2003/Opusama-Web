@@ -156,6 +156,7 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
   accountName: String
   accountNumber: String
+  directPayment: Boolean
   push_token: String
   isVerified: Boolean
   isPartner: Boolean
