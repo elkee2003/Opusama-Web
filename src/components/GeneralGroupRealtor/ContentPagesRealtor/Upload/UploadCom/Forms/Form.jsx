@@ -321,13 +321,35 @@ const Forms = () => {
             <input
               className="moneyInput"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                // Allow empty input while typing
+                if (value === '') {
+                  setPrice('');
+                  return;
+                }
+
+                // Convert to number and only allow >= 0
+                const num = Number(value);
+                if (num >= 0) {
+                  setPrice(num);
+                }
+              }}
               placeholder="Price"
               type="number"
+              min="0"
             />
+
+            {/* Price Helper text */}
+            {price === '' && (
+              <p className="priceHelperText">
+                If service / listing is free, please enter 0
+              </p>
+            )}
             
             {/* Display message */}
-            {price && propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
+            {price !== '' && propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
               <p className="commissionMsg">
                 You are setting 
                 <span className='displayedValue'> ₦{priceValue.toFixed(2)}</span>,
@@ -344,9 +366,24 @@ const Forms = () => {
               <input
                 className="moneyInput"
                 value={cautionFee}
-                onChange={(e) => setCautionFee(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                
+                  // Allow empty input while typing
+                  if (value === '') {
+                    setCautionFee('');
+                    return;
+                  }
+
+                  // Convert to number and only allow >= 0
+                  const num = Number(value);
+                  if (num >= 0) {
+                    setCautionFee(num);
+                  }
+                }}
                 placeholder="Caution Fee"
                 type="number"
+                min={"0"}
               />
             </div>
           )}
@@ -360,9 +397,24 @@ const Forms = () => {
             <input
               className="moneyInput"
               value={inspectionFee}
-              onChange={(e) => setInspectionFee(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                
+                // Allow empty input while typing
+                if (value === '') {
+                  setInspectionFee('');
+                  return;
+                }
+
+                // Convert to number and only allow >= 0
+                const num = Number(value);
+                if (num >= 0) {
+                  setInspectionFee(num);
+                }
+              }}
               placeholder="Inspection Fee (Opt)"
               type="number"
+              min={"0"}
             />
 
             {/* Display message */}
@@ -391,9 +443,24 @@ const Forms = () => {
             <input
               className="moneyInput"
               value={otherFeesPrice}
-              onChange={(e) => setOtherFeesPrice(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                
+                // Allow empty input while typing
+                if (value === '') {
+                  setOtherFeesPrice('');
+                  return;
+                }
+
+                // Convert to number and only allow >= 0
+                const num = Number(value);
+                if (num >= 0) {
+                  setOtherFeesPrice(num);
+                }
+              }}
               placeholder="Amount of other fee (Opt)"
               type="number"
+              min={"0"}
             />
 
             {/* Display message */}
@@ -422,9 +489,24 @@ const Forms = () => {
             <input
               className="moneyInput"
               value={otherFeesPrice2}
-              onChange={(e) => setOtherFeesPrice2(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                
+                // Allow empty input while typing
+                if (value === '') {
+                  setOtherFeesPrice2('');
+                  return;
+                }
+
+                // Convert to number and only allow >= 0
+                const num = Number(value);
+                if (num >= 0) {
+                  setOtherFeesPrice2(num);
+                }
+              }}
               placeholder="Amount of other 2nd fee (Opt)"
               type="number"
+              min={"0"}
             />
 
             {/* Display message */}
