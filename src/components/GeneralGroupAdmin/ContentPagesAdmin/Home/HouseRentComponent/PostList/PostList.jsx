@@ -3,22 +3,29 @@ import PostFeed from '../Post/Post';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
+import { Hub } from 'aws-amplify/utils';
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
+    const {dbUser, authUser} = useAuthContext()
     const [realtorPosts, setRealtorPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    
-    // helper function: get expiry date (1 week after event date)
-    const oneWeekAfter = (dateString) => {
-        const eventDate = new Date(dateString);
-        eventDate.setDate(eventDate.getDate() + 7);
-        return eventDate;
-    };
 
+    useEffect(()=>{
+        if(authUser){
+            if(!dbUser){
+                alert(
+                    'Kindly fill in your data to access pages. Thank you.'
+                );
+                navigate('/clientcontent/profile')
+            }
+        };
+        
+    },[dbUser])
 
     // Alternative to for loop
     const fetchRealtorsAndPosts = async () => {
@@ -31,42 +38,24 @@ function PostList() {
         // Step 2: Use map and Promise.all to fetch posts for each realtor in parallel
         const allPosts = await Promise.all(
             realtors.map(async (realtor) => {
-                // Query posts for each realtor
-                const posts = await DataStore.query(Post, (p) => p.and((p)=>[
-                    p.realtorID.eq(realtor.id),
-                    p.available.eq(true),
-                    // p.isApproved.eq(true)
-                ]));
-                // filter + auto-expire logic
-                const filteredPosts = await Promise.all(
-                    posts.map(async (post) => {
-                        if (post.propertyType === 'Event' && post.eventDateTime) {
-                            const expiryDate = oneWeekAfter(post.eventDateTime);
-                            const now = new Date();
+            // Query posts for each realtor
+            const posts = await DataStore.query(Post, (p) => p.and((p)=>[
+                p.realtorID.eq(realtor.id),
+                p.available.eq(true),
+                // p.isApproved.eq(true)
+            ]));
+            const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent' || post.propertyType === 'Student Accommodation');
 
-                            // if past expiry date, set available = false
-                            if (now > expiryDate && post.available === true) {
-                                await DataStore.save(
-                                    Post.copyOf(post, (updated) => {
-                                        updated.available = false;
-                                    })
-                                );
-                                return null; // don’t include this post
-                            }
-                        }
-                        return post.propertyType === 'Event' ? {
-                            ...post,
-                            realtorId: realtor.id,
-                            firstName: realtor.firstName,
-                            lastName: realtor.lastName,
-                            email: realtor.email,
-                            profilepic: realtor.profilePic,
-                            phoneNumber: realtor.phoneNumber,
-                        } : null;
-                    })
-                );
-                // filter out null (expired or not event)
-                return filteredPosts.filter(Boolean);
+            // Map the realtor details to each post
+            return filteredPosts.map((post) => ({
+                ...post,
+                realtorId: realtor.id,
+                firstName: realtor.firstName,
+                lastName: realtor.lastName,
+                email: realtor.email,
+                profilepic: realtor.profilePic,
+                phoneNumber: realtor.phoneNumber,
+            }));
             })
         );
 
@@ -75,24 +64,49 @@ function PostList() {
 
         setRealtorPosts(flatPosts);
         } catch (error) {
-            console.error('Error fetching realtors and posts', error);
+        console.error('Error fetching realtors and posts', error);
         } finally {
-            setLoading(false);
-         setRefreshing(false);
+        setLoading(false);
+        setRefreshing(false);
         }
     };
 
-    useEffect(()=>{
-        fetchRealtorsAndPosts();
+    // useEffect(()=>{
+    //     fetchRealtorsAndPosts();
 
-        const subscription = DataStore.observe(Post).subscribe(({opType})=>{
-        if(opType === "UPDATE"){
+    //     const subscription = DataStore.observe(Post).subscribe(({opType})=>{
+    //     if(opType === "UPDATE"){
+    //         fetchRealtorsAndPosts();
+    //     }
+    //     });
+
+    //     return () => subscription.unsubscribe();
+    // },[])
+
+    useEffect(() => {
+        // listen for datastore ready event
+        const hubListener = Hub.listen('datastore', (capsule) => {
+        const { event } = capsule.payload;
+        if (event === 'ready') {
+            // Sync complete, fetch posts
             fetchRealtorsAndPosts();
         }
         });
 
-        return () => subscription.unsubscribe();
-    },[])
+        // Also fetch immediately (in case cache is available)
+        fetchRealtorsAndPosts();
+
+        const subscription = DataStore.observe(Post).subscribe(({ opType }) => {
+        if (opType === "UPDATE" || opType === "INSERT" || opType === "DELETE") {
+            fetchRealtorsAndPosts();
+        }
+        });
+
+        return () => {
+        hubListener(); // cleanup hub
+        subscription.unsubscribe();
+        };
+    }, []);
 
     // Function to Restore Scroll Position When Returning
     // useEffect(() => {
@@ -101,12 +115,12 @@ function PostList() {
     //     if (scrollPosition) {
     //         setTimeout(() => {
     //             window.scrollTo(0, parseInt(scrollPosition, 10));
-    //         }, 100); 
+    //         }, 100);
     //     }
     // }, []);
 
     // Function to Refresh
-    const handleRefresh = () => {
+    const handleRefreshHouse = () => {
         // sessionStorage.removeItem("scrollPosition");
         setRefreshing(true);
         fetchRealtorsAndPosts();
@@ -119,10 +133,10 @@ function PostList() {
         <div className="stickySearchBar">
             <button 
                 className="homeSearchBtn"
-                onClick={()=>navigate(`/clientcontent/search_events`)}
+                onClick={()=>navigate(`/clientcontent/search_house`)}
             >
                 <FontAwesomeIcon icon={faSearch} size="2x" />
-                <span className="homeSearchBtnTxt">Search for Events</span>
+                <span className="homeSearchBtnTxt">Search for Houses</span>
             </button>
         </div>
 
@@ -134,9 +148,10 @@ function PostList() {
             </div>
         ) : (
             <div className='noListngsCon'>
-                <p className="noListings">No Events listings</p>
+                <p className="noListings">No House listings</p>
             </div>
         )}
+        
         {refreshing && (
             <div className="loading-container">
                 <div className="spinner" />
@@ -144,9 +159,8 @@ function PostList() {
             </div>
         )}
 
-        {/* Refresh Button */}
         <div className='refreshBtnPListCon'>
-            <button onClick={handleRefresh} className='refreshBtnPList'>
+            <button onClick={handleRefreshHouse} className='refreshBtnPList'>
                 {refreshing ? "Refreshing..." : "Refresh"}
             </button>
         </div>

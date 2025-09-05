@@ -1,0 +1,13 @@
+.completeProCon{
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+    margin-bottom: 2rem;
+
+}
+
+@media (max-width: 900px) {
+    .completeProCon{
+        margin-bottom: 6rem;
+    }
+}

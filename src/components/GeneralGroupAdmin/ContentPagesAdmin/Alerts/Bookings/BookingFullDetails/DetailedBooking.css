@@ -1,0 +1,25 @@
+.waitResponseCon {
+    margin-top: 30%;
+    display: flex;
+    width: 70vw;
+    justify-content: center; align-items: center; 
+}
+.waitResponse{
+    font-size: 30px;
+    font-weight: bold;
+    color: #afadad;
+}
+
+@media (max-width: 900px) {
+    .waitResponseCon{
+        margin-top: 30%;
+        width: 100vw;
+    }
+    .waitResponse{
+        text-align:center;
+    }
+}
+
+@media (max-width: 500px) {
+
+}

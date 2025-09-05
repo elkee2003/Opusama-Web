@@ -1,0 +1,155 @@
+.bkDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    padding-right: 15rem;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.bkSubHeader {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.bkDetails {
+    color: white;
+    min-width:460px;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 17px;
+    margin-bottom: 15px;
+    background-color: #0b0b29;
+}
+
+.detailsRealtor {
+    color: white;
+    padding: 8px;
+    border: 2px solid #0b0b29;
+    border-radius: 10px;
+    background-color: #747272;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.bkGuestUnit {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bkUnitTxt {
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    background-color: #0b0b29;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.status {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.greenIcon {
+    width: 13px;
+    height: 13px;
+    border-radius: 5px;
+    background-color: #03eb03;
+}
+
+.redIcon {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #eb1e03;
+}
+
+.viewConInfoRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.infoIconCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.infoIcon {
+    font-size: 20px;
+}
+
+.view {
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0ac00a;
+    border-radius: 20px;
+    margin: 15px auto 25px;
+}
+
+.sold {
+    padding: 10px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0ac00a;
+    border-radius: 20px;
+    margin: 15px auto 25px;
+}
+
+.bkBtnTxt {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .bkDetailsContainer {
+        width: 100vw;
+        margin-right: 0;
+        margin-bottom: 5rem;
+        padding:10px
+    }
+
+    .bkDetails {
+        min-width: 360px;
+    }
+
+    .qrCodeCon {
+        align-self: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .bkDetailsContainer {
+        align-items: stretch;
+    }
+    .bkDetails {
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+}

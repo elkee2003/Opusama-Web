@@ -1,0 +1,137 @@
+.realtorHeadContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    /* margin-left: 10px;
+    margin-right: 10px; */
+}
+
+.realtorProfilePicContainer {
+    height: 130px;
+    width: 130px;
+    border-radius: 35px;
+    background-color: #a2a2a8;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.realtorImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* replace resizeMode: "contain" */
+    border-radius: 35px;
+}
+
+.realtorName {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #01011b;
+}
+
+.realtorRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.reviewIconRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.userRealtorProUsernameCon {
+    margin-bottom: 7px;
+}
+
+.userRealtorProUsername {
+    font-size: 1.3rem;
+}
+
+.star {
+    color: #333236;
+    font-size: 18px;
+}
+
+.starTxt {
+    font-size: 18px;
+    color: #383737;
+}
+
+.txtDesc {
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+    color: #484849;
+    margin-bottom: 20px;
+}
+
+.readMoreLess {
+    color: #009b0f;
+    cursor: pointer;
+}
+
+.readMoreLess.active {
+  color: red; 
+  cursor: pointer;
+}
+
+.profileBtnCon {
+    align-self: center;
+}
+
+.rateReviewBtn {
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: #020425;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.rateReviewBtnTxt {
+    color: #ededee;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@media (max-width: 900px) {
+    .realtorName {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #01011b;
+    }
+
+    .userRealtorProUsername {
+        font-size: 1.1rem;
+    }
+
+    .txtDesc {
+        font-size: 1.2rem;
+        /* font-weight: bold; */
+        color: #484849;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .realtorName {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #01011b;
+    }
+
+    .txtDesc {
+        font-size: 1rem;
+        /* font-weight: bold; */
+        color: #484849;
+        margin-bottom: 20px;
+    }
+}

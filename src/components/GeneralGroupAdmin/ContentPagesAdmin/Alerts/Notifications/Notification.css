@@ -1,0 +1,110 @@
+.notificationCon {
+    display: flex;
+    flex-direction: column;
+}
+
+.clientNotificationHeaderCon {
+  display: flex;
+  width: 75vw;
+  justify-content: center;
+  margin-bottom: 1.3rem;
+}
+
+.clientNotificationHeaderTxt {
+  font-size: 2.7rem;
+  font-weight: bold;
+}
+
+.clientNoNotificationCon {
+  display: flex;
+  width: 75vw;
+  justify-content: center;
+}
+
+.clientNoNotificationTxt {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 8rem;
+  color: #c2c1c1;
+}
+
+.notificationCon > p:first-child {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.notificationList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notificationItem {
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.notificationItem:hover {
+  background-color: #eaeaea;
+}
+
+.notificationContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.redDot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.unreadText {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.readText {
+  color: #888;
+  font-size: 16px;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+  .clientNotificationHeaderCon {
+    width: 90vw;
+  }
+
+  .clientNotificationHeaderTxt {
+    font-size: 2rem;
+  }
+
+  .clientNoNotificationCon {
+    width: 90vw;
+  }
+
+  .clientNoNotificationTxt {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+
+}

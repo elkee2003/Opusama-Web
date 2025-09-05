@@ -1,0 +1,120 @@
+.userReviewContainer {
+  /* height: 100vh; */
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* margin-bottom: 5rem; */
+}
+
+.noReviews {
+  margin-top: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #b6b3b3;
+  text-align: center;
+}
+
+.realtorRatingScrollContainer {
+  margin-bottom: 230px;
+}
+
+.realtorReviewsContainer {
+  padding: 10px;
+}
+
+.rateTxt {
+  text-align: center;
+  font-size: 25.888px;
+  font-weight: bold;
+  color: #07021f; /* Assuming Colors.HEADING = #07021f */
+}
+
+.reviewerName {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.reviewText {
+  color: #0e0d0d;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.usersStarContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.rateContainer {
+  gap: 10px;
+}
+
+.starContainer {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.realtorReviewInput {
+  font-size: 16px;
+  border-width: 1px;
+  border-radius: 20px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.realtorSubmitReviewBtn {
+  margin-top: 10px;
+  padding: 5px;
+  margin-left: 90px;
+  margin-right: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: 1px;
+  border-color: #020425;
+  border-radius: 30px;
+}
+
+.realtorSubmitReviewTxt {
+  color: #05072b;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reviewSection {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding:15px;
+  background-color: #dadada;
+  border-radius: 20px;
+  bottom: 0;
+  left:30rem;
+  right: 10rem;
+}
+
+@media (max-width: 1300px) {
+  .reviewSection {
+    padding:8px;
+    left:18rem;
+    right: 4rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .userReviewContainer {
+    margin-bottom: 4rem;
+  }
+  .reviewSection {
+    padding:8px;
+    left:20px;
+    right: 20px;
+    bottom:5rem
+  }
+}

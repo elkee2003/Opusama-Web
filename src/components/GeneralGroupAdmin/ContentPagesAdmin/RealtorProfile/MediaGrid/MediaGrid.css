@@ -1,0 +1,61 @@
+.gridContainer {
+    display: -webkit-grid; /* Force webkit rendering */
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px; 
+    row-gap: 5px; /* Ensures consistent spacing between rows */
+    column-gap: 5px; /* Ensures consistent column spacing */
+}
+
+.gridItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.mediaImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
+  aspect-ratio: 3/4; 
+  overflow: hidden;
+  position: relative;
+}
+
+.realMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.realMediaImage {
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.realPostVideoWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.realPostVideoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+  background: transparent;
+  /* background-color: blue; */
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .gridContainer {
+    row-gap: 5px; /* Ensure consistent spacing on smaller screens */
+  }
+}

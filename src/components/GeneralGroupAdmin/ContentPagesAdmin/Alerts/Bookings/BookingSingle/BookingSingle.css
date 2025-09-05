@@ -1,0 +1,178 @@
+.bookingSingleContainer {
+  position: relative;
+  padding: 10px;
+  background-color: #dddbdb;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  min-width: 50vw;
+  box-shadow: 6px 9px 8px rgba(0, 0, 0, 0.4);
+}
+
+.removeButtonContainer {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  z-index: 1;
+}
+
+.bkRemoveBtn {
+  color: #c70f0f;
+  font-size: 25px;
+}
+
+.subHeadingContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.subHeading {
+  font-size: 16px;
+  font-weight: bold;
+}
+.subHeadingClick {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  /* z-index: 20; */
+}
+
+.subHeadingView {
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+  color: #575656;
+}
+
+.detail {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.priceTypeRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.priceType {
+  font-size: 15px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wait {
+  font-style: italic;
+  color: #797777;
+}
+
+.greenIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #03eb03;
+}
+.middleCon {
+  justify-self: center;
+}
+
+.redIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #eb1e03;
+}
+
+.deleteButtonCon {
+  padding: 10px;
+  margin-top: 10px;
+  /* align-self: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: #f31d1d;
+}
+
+.deleteButtonTxt {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.viewConInfoRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.infoIconCon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.infoIcon {
+  font-size: 20px;
+}
+
+.viewCon {
+  padding: 10px;
+  width: 150px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0ac00a;
+  border-radius: 15px;
+}
+
+.viewTxt {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.removeCon {
+  padding: 10px;
+  width: 150px;
+  margin-top: 10px;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #970303;
+  border-radius: 15px;
+}
+
+.removeTxt {
+  color: #f7f4f4;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.delCon {
+  padding: 10px;
+  width: 150px;
+  margin-top: 10px;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f31d1d;
+  border-radius: 15px;
+}
+
+.delTxt {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .bookingSingleContainer{
+      min-width: 85vw;
+  }
+}

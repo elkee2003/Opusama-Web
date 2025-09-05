@@ -1,0 +1,100 @@
+.reviewContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.header {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.guestUnit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.unitTxt {
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: #272727;
+}
+
+.reviewTxtInputHeader {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.txtInputReview {
+  width: 50vw;
+  font-size: 16px;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: #08021f;
+  margin-bottom: 10px;
+}
+
+.addedAlready {
+  color: grey;
+  font-style: italic;
+}
+
+.paymentBtn  {
+  position: fixed;
+  background-color: #23a508;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  left: 680px;
+  right: 380px;
+  margin-top: 20px;
+  bottom: 0.7rem;
+  border-radius: 20px;
+}
+
+.paymentTxt {
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 1300px) {
+  .paymentBtn {
+    left: 480px;
+    right: 180px;
+  }
+}
+@media (max-width: 900px) {
+  .txtInputReview {
+    width: 90vw;
+  }
+  .paymentBtn {
+      position: fixed;
+      background-color: #23a508;
+      padding: 2px;
+      right: 160px;
+      left: 160px;
+      margin-top: 20px;
+      margin-bottom: 5rem;
+  }
+
+}
+
+@media (max-width: 500px) {
+  .paymentBtn {
+    right: 120px;
+    left: 120px;
+  }
+}
