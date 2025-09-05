@@ -379,6 +379,78 @@ function Content({post, realtor,}) {
           </div>
         )}
 
+        {/* Type & Description */}
+        {post.description && (
+          <div>
+            <h4 className='luxPolHeadTxt'>Description</h4>
+            <p className='detailedDesc'>
+              {readMore || post.description.length <= 150
+                ? post.description
+                : `${post.description.substring(0, 150)}...`}
+              {post.description.length > 150 && (
+                <button
+                  className={readMore ? 'readLessButton' : 'readMoreButton'}
+                  onClick={() => setReadMore(!readMore)}
+                >
+                  {readMore ? 'Show Less' : 'Read More'}
+                </button>
+              )}
+            </p>
+          </div>
+        )}
+
+        {/* Event Start Date and Time  */}
+        {post?.eventDateTime ? (
+          <>
+            <p className='subheader'> Start Date & Time</p>
+            <p className='bedroom'>
+              {new Date(post.eventDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event End Date and Time */}
+        {post?.eventEndDateTime ? (
+          <>
+            <p className='subheader'>End Date & Time</p>
+            <p className='bedroom'>
+              {new Date(post.eventEndDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event Frequency */}
+        {post?.eventFrequency ? (
+          <>
+            <p className='subheader'>Event Frequency</p>
+            <p className='bedroom'>
+              {post.eventFrequency}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event Recurrence */}
+        {post?.recurrence ? (
+          <>
+            <p className='subheader'>Event Recurrence</p>
+            <p className='bedroom'>
+              {post.recurrence}
+            </p>
+          </>
+        ) : ''}
+
         {/* Dress Code */}
         {post?.dressCode ? (
           <>
@@ -389,15 +461,6 @@ function Content({post, realtor,}) {
           </>
         ) : ''}
 
-        {/* Time and Date */}
-        {post?.eventDateTime ? (
-          <>
-            <p className='subheader'>Date & Time</p>
-            <p className='bedroom'>
-              {post.eventDateTime}
-            </p>
-          </>
-        ) : ''}
 
         {/* Subcription Enabled or not */}
         {post?.isSubscription ? (
@@ -442,6 +505,14 @@ function Content({post, realtor,}) {
             <p>{formatDuration(post.sessionDuration)}</p>
           </>
         ) : ''}
+
+        {/* Service Days */}
+        {post?.serviceDay ? (
+          <>
+            <p>Days o Service:</p>
+            <p>{post.serviceDay}</p>
+          </>
+        ): ''}
 
         {/* Opening Hour */}
         {post?.openingHour ? (

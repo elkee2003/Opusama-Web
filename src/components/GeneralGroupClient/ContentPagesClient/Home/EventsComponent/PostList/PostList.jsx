@@ -12,11 +12,11 @@ function PostList() {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     
-    // helper function: get expiry date (1 week after event date)
-    const oneWeekAfter = (dateString) => {
-        const eventDate = new Date(dateString);
-        eventDate.setDate(eventDate.getDate() + 7);
-        return eventDate;
+    // helper function: get expiry date (1 day after event date)
+    const nextDay = (dateString) => {
+        const d = new Date(dateString);
+        d.setDate(d.getDate() + 1);
+        return d;
     };
 
 
@@ -40,21 +40,34 @@ function PostList() {
                 // filter + auto-expire logic
                 const filteredPosts = await Promise.all(
                     posts.map(async (post) => {
-                        if (post.propertyType === 'Event' && post.eventDateTime) {
-                            const expiryDate = oneWeekAfter(post.eventDateTime);
+                        if (post.propertyType === 'Event') {
                             const now = new Date();
+                            let expiryDate = null;
 
-                            // if past expiry date, set available = false
-                            if (now > expiryDate && post.available === true) {
+                            if (post.eventFrequency === 'one-time' && post.eventDateTime) {
+                                expiryDate = nextDay(post.eventDateTime);
+                            } 
+                            else if (post.eventFrequency === 'multi-day' && post.eventEndDateTime) {
+                                expiryDate = nextDay(post.eventEndDateTime);
+                            } 
+                            else if (post.eventFrequency === 'recurring') {
+                                // recurring events should never expire automatically
+                                expiryDate = null;
+                            }
+
+                            // if expiryDate is set and already passed, expire the post
+                            if (expiryDate && now > expiryDate && post.available === true) {
                                 await DataStore.save(
-                                    Post.copyOf(post, (updated) => {
-                                        updated.available = false;
-                                    })
+                                Post.copyOf(post, (updated) => {
+                                    updated.available = false;
+                                })
                                 );
-                                return null; // don’t include this post
+                                return null;
                             }
                         }
-                        return post.propertyType === 'Event' ? {
+
+                        return post.propertyType === 'Event'
+                        ? {
                             ...post,
                             realtorId: realtor.id,
                             firstName: realtor.firstName,
@@ -62,7 +75,8 @@ function PostList() {
                             email: realtor.email,
                             profilepic: realtor.profilePic,
                             phoneNumber: realtor.phoneNumber,
-                        } : null;
+                            }
+                        : null;
                     })
                 );
                 // filter out null (expired or not event)

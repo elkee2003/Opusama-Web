@@ -10,6 +10,10 @@ const ReviewUpload = () => {
     nameOfType,
     availableDocs,
     capacity,
+    eventDateTime,
+    eventEndDateTime,
+    recurrence,
+    eventFrequency,
     dressCode,
     bedrooms,
     bed,
@@ -36,6 +40,7 @@ const ReviewUpload = () => {
     allowMultiple, 
     maxCapacity,
     sessionDuration,
+    serviceDay,
     openingHour,
     closingHour,
   } = useUploadContext();
@@ -189,7 +194,7 @@ const ReviewUpload = () => {
           </div>
         )}
 
-        {/* Maximum Capacity */}
+        {/* Maximum Capacity of tickets */}
         {maxCapacity && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Maximum Capacity:</p>
@@ -209,6 +214,61 @@ const ReviewUpload = () => {
           <div className='uploadPropRow'>
             <p className='displayLabel'>Capacity:</p>
             <p className='uploadPropDetails'>{capacity}</p>
+          </div>
+        )}
+
+        {serviceDay && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Service Day:</p>
+            <p className='uploadPropDetails'>{serviceDay}</p>
+          </div>
+        )}
+
+        {/* Event Start Date & Time */}
+        {eventDateTime && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Event Start Date & Time:</p>
+            <p className='uploadPropDetails'>
+             {new Date(eventDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </div>
+        )}
+
+        {/* Event End Date & Time */}
+        {eventEndDateTime && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Event End Date & Time:</p>
+            <p className='uploadPropDetails'>
+              {new Date(eventEndDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </div>
+        )}
+
+        {/* Event Frequency */}
+        {eventFrequency && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Event Frequency:</p>
+            <p className='uploadPropDetails'>{eventFrequency}</p>
+          </div>
+        )}
+
+        {/* Event Recurrence */}
+        {recurrence && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Event Recurrence:</p>
+            <p className='uploadPropDetails'>{recurrence}</p>
           </div>
         )}
 

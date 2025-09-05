@@ -29,6 +29,12 @@ const UploadProperty = () => {
     setCapacity,
     eventDateTime, 
     setEventDateTime,
+    eventEndDateTime, 
+    setEventEndDateTime,
+    recurrence, 
+    setRecurrence,
+    eventFrequency, 
+    setEventFrequency,
     dressCode, 
     setDressCode,
     accommodationParts,
@@ -84,6 +90,8 @@ const UploadProperty = () => {
     maxCapacity, setMaxCapacity,
     sessionDuration, 
     setSessionDuration,
+    serviceDay, 
+    setServiceDay,
     openingHour, 
     setOpeningHour,
     closingHour, 
@@ -122,8 +130,11 @@ const UploadProperty = () => {
     setTimeFrame("");
     setCapacity("");
     setEventDateTime("");
+    setEventEndDateTime("");
+    setRecurrence("");
+    setEventFrequency("");
     setDressCode("");
-    setPrice("");
+    setPrice(null);
     setInspectionFee("");
     setOtherFeesName("");
     setOtherFeesPrice("");
@@ -142,8 +153,9 @@ const UploadProperty = () => {
     setAllowMultiple(false);
     setMaxCapacity(null);
     setSessionDuration("");
-    setOpeningHour("");
-    setClosingHour("");
+    setServiceDay(null);
+    setOpeningHour(null);
+    setClosingHour(null);
   };
 
   // Function to compress images
@@ -233,6 +245,9 @@ const UploadProperty = () => {
           available: true,
           capacity,
           eventDateTime,
+          eventEndDateTime,
+          recurrence,
+          eventFrequency,
           dressCode,
           fullAddress,
           generalLocation,
@@ -262,6 +277,7 @@ const UploadProperty = () => {
           allowMultiple,
           maxCapacity,
           sessionDuration,
+          serviceDay,
           openingHour,
           closingHour,
           realtorID: dbRealtor.id,

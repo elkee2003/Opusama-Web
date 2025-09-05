@@ -176,16 +176,19 @@ type Post @model @auth(rules: [{allow: public}]) {
   media: [String]
   description: String!
   eventDateTime: String
+  eventEndDateTime: String
+  recurrence: String
+  eventFrequency: String
   capacity: String
   dressCode: String
   available: Boolean
   address: String
   fullAddress: String
   generalLocation: String
+  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
   lat: Float
   lng: Float
-  price: Float!
-  PostReviews: [PostReview] @hasMany(indexName: "byPost", fields: ["id"])
+  price: Float
   cautionFee: Float
   totalPrice: Float!
   inspectionFee: Float
@@ -195,24 +198,25 @@ type Post @model @auth(rules: [{allow: public}]) {
   otherFeesPrice2: Float
   vendorCommissionAmount: Float
   vendorCommissionBreakdown: AWSJSON
+  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   clientServiceFee: Float
   timeFrame: String
   bed: String
   bedrooms: String
-  PostComments: [PostComment] @hasMany(indexName: "byPost", fields: ["id"])
   amenities: String
   policies: String
+  PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
   country: String!
   state: String
   city: String
   isApproved: Boolean
-  PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
   isSubscription: Boolean
   bookingMode: String
   allowMultiple: Boolean
   maxCapacity: Int
   sessionDuration: Int
   sessionGap: Int
+  serviceDay: String
   openingHour: String
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")

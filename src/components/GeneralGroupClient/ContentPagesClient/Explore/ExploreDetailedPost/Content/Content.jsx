@@ -434,22 +434,74 @@ function Content({post, realtor,}) {
           </div>
         )}
 
+        {/* Service Days  */}
+        {post?.serviceDay ? (
+          <>
+            <p className='subheader'> Days of Service</p>
+            <p className='bedroom'>
+              {post.serviceDay}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event Start Date and Time  */}
+        {post?.eventDateTime ? (
+          <>
+            <p className='subheader'> Start Date & Time</p>
+            <p className='bedroom'>
+              {new Date(post.eventDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event End Date and Time */}
+        {post?.eventEndDateTime ? (
+          <>
+            <p className='subheader'>End Date & Time</p>
+            <p className='bedroom'>
+              {new Date(post.eventEndDateTime).toLocaleString([], {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event Frequency */}
+        {post?.eventFrequency ? (
+          <>
+            <p className='subheader'>Event Frequency</p>
+            <p className='bedroom'>
+              {post.eventFrequency}
+            </p>
+          </>
+        ) : ''}
+
+        {/* Event Recurrence */}
+        {post?.recurrence ? (
+          <>
+            <p className='subheader'>Event Recurrence</p>
+            <p className='bedroom'>
+              {post.recurrence}
+            </p>
+          </>
+        ) : ''}
+
         {/* Dress Code */}
         {post?.dressCode ? (
           <>
             <p className='subheader'>Dress Code</p>
             <p className='bedroom'>
               {post.dressCode}
-            </p>
-          </>
-        ) : ''}
-
-        {/* Time and Date */}
-        {post?.eventDateTime ? (
-          <>
-            <p className='subheader'>Date & Time</p>
-            <p className='bedroom'>
-              {post.eventDateTime}
             </p>
           </>
         ) : ''}

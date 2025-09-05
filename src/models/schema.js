@@ -1533,6 +1533,27 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "eventEndDateTime": {
+                    "name": "eventEndDateTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "recurrence": {
+                    "name": "recurrence",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "eventFrequency": {
+                    "name": "eventFrequency",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "capacity": {
                     "name": "capacity",
                     "isArray": false,
@@ -1575,6 +1596,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "PostReviews": {
+                    "name": "PostReviews",
+                    "isArray": true,
+                    "type": {
+                        "model": "PostReview"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "postID"
+                        ]
+                    }
+                },
                 "lat": {
                     "name": "lat",
                     "isArray": false,
@@ -1593,24 +1630,8 @@ export const schema = {
                     "name": "price",
                     "isArray": false,
                     "type": "Float",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "PostReviews": {
-                    "name": "PostReviews",
-                    "isArray": true,
-                    "type": {
-                        "model": "PostReview"
-                    },
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "postID"
-                        ]
-                    }
+                    "attributes": []
                 },
                 "cautionFee": {
                     "name": "cautionFee",
@@ -1675,6 +1696,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "PostComments": {
+                    "name": "PostComments",
+                    "isArray": true,
+                    "type": {
+                        "model": "PostComment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "postID"
+                        ]
+                    }
+                },
                 "clientServiceFee": {
                     "name": "clientServiceFee",
                     "isArray": false,
@@ -1703,22 +1740,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "PostComments": {
-                    "name": "PostComments",
-                    "isArray": true,
-                    "type": {
-                        "model": "PostComment"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "postID"
-                        ]
-                    }
-                },
                 "amenities": {
                     "name": "amenities",
                     "isArray": false,
@@ -1732,6 +1753,22 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "PostLikes": {
+                    "name": "PostLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "PostLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "postID"
+                        ]
+                    }
                 },
                 "country": {
                     "name": "country",
@@ -1760,22 +1797,6 @@ export const schema = {
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
-                },
-                "PostLikes": {
-                    "name": "PostLikes",
-                    "isArray": true,
-                    "type": {
-                        "model": "PostLike"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "postID"
-                        ]
-                    }
                 },
                 "isSubscription": {
                     "name": "isSubscription",
@@ -1816,6 +1837,13 @@ export const schema = {
                     "name": "sessionGap",
                     "isArray": false,
                     "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "serviceDay": {
+                    "name": "serviceDay",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1918,5 +1946,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "5c3245c4cb50407758abaef52b0cf309"
+    "version": "6ed069cab4fe19b80473f21e91588cd1"
 };

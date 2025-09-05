@@ -10,6 +10,9 @@ const UploadContextProvider = ({children}) => {
     const [packageType, setPackageType] = useState('');
     const [capacity, setCapacity] = useState('');
     const [eventDateTime, setEventDateTime] = useState('');
+    const [eventEndDateTime, setEventEndDateTime] = useState('');
+    const [ recurrence, setRecurrence ] = useState('');
+    const [eventFrequency, setEventFrequency ] = useState('');
     const [dressCode, setDressCode] = useState('');
     const [availableDocs, setAvailableDocs] = useState('');
     const [customInput, setCustomInput] = useState('');
@@ -27,7 +30,7 @@ const UploadContextProvider = ({children}) => {
     const [otherFeesName2, setOtherFeesName2] = useState('');
     const [otherFeesPrice, setOtherFeesPrice] = useState('');
     const [otherFeesPrice2, setOtherFeesPrice2] = useState('');
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState(null);
     const [totalPrice, setTotalPrice] = useState('');
     const [vendorCommissionAmount, setVendorCommissionAmount] = useState(0);
     const [vendorCommissionBreakdown, setVendorCommissionBreakdown] = useState({
@@ -47,6 +50,8 @@ const UploadContextProvider = ({children}) => {
     const [allowMultiple, setAllowMultiple] = useState(false);
     const [maxCapacity, setMaxCapacity] = useState(null);
     const [sessionDuration, setSessionDuration] = useState(null); 
+    const [serviceDay, 
+    setServiceDay] = useState(null);
     const [openingHour, setOpeningHour] = useState(null);
     const [closingHour, setClosingHour] = useState(null); 
     const [description, setDescription] = useState('');
@@ -69,10 +74,12 @@ const UploadContextProvider = ({children}) => {
           setErrors('Field under Property Type is Required');
           return false;
         }
-        if (!price) {
-          setErrors('Price is Required');
+        
+        if (price === '' || price === null || price === undefined || isNaN(price)) {
+          setErrors('Price is required');
           return false;
         }
+        
         if (!totalPrice) {
           setErrors('Total Price is Required');
           return false;
@@ -173,10 +180,26 @@ const UploadContextProvider = ({children}) => {
             return false;
           }
         }else if (propertyType === 'Event') {
-          if(!eventDateTime){
-            setErrors('Event Date & Time required');
+          if(!eventFrequency){
+            setErrors('Event Frequency is required');
             return false;
           }
+          if(eventFrequency === 'one-time' && !eventDateTime){
+            setErrors('Event Start Date is required');
+            return false;
+          }
+          if(eventFrequency === 'multi-day' && (!eventDateTime || !eventEndDateTime) ){
+            setErrors('Event Start Date and End Date is required');
+            return false;
+          }
+          if (eventFrequency === 'recurring' && (!serviceDay || !openingHour)) {
+            setErrors('Recurring events require a day and an opening hour');
+            return false;
+          }
+          // if(!eventDateTime){
+          //   setErrors('Event Date & Time required');
+          //   return false;
+          // }
         }
 
         // Price validations
@@ -240,8 +263,8 @@ const UploadContextProvider = ({children}) => {
         alert('Cannot upload empty fields');
         return false;
       }
-      if(!price){
-        alert('Cannot upload empty fields');
+      if (price === null || price === undefined || price === '' || isNaN(price)) {
+        alert('Price is required');
         return false;
       }
       if(!country){
@@ -301,6 +324,9 @@ const UploadContextProvider = ({children}) => {
         packageType, setPackageType,
         capacity, setCapacity,
         eventDateTime, setEventDateTime,
+        eventEndDateTime, setEventEndDateTime,
+        recurrence, setRecurrence,
+        eventFrequency, setEventFrequency,
         dressCode, setDressCode,
         availableDocs, setAvailableDocs,
         customInput, setCustomInput,
@@ -331,6 +357,7 @@ const UploadContextProvider = ({children}) => {
         allowMultiple, setAllowMultiple,
         maxCapacity, setMaxCapacity,
         sessionDuration, setSessionDuration,
+        serviceDay, setServiceDay,
         openingHour, setOpeningHour,
         closingHour, setClosingHour,
         description, setDescription,

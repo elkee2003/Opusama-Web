@@ -22,6 +22,10 @@ const Forms = () => {
 
   const {
     propertyType,
+    setServiceDay,
+    eventFrequency,
+    setEventDateTime,
+    setEventEndDateTime,
     cautionFee,
     setCautionFee,
     otherFeesName, 
@@ -103,6 +107,19 @@ const Forms = () => {
     }
 
   }, [bookingMode, setSessionDuration, setOpeningHour, setClosingHour]);
+
+  useEffect (()=>{
+    if(eventFrequency === 'recurring'){
+      setEventDateTime(null);
+      setEventEndDateTime(null);
+    }
+  }, [eventFrequency])
+
+  useEffect (()=>{
+    if(eventFrequency !== 'recurring'){
+      setServiceDay(null);
+    }
+  }, [eventFrequency])
 
   // useEffect for maxCapacity 
   useEffect(()=>{
@@ -295,7 +312,7 @@ const Forms = () => {
           )}
 
           {/* Opening & Closing Time */}
-          {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
+          {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && !(propertyType === 'Event' && eventFrequency !== 'recurring')  && (
             <div className='openingClosingTimeCon'>
               <label className="formLabel">Opening Hour:</label>
               <input
