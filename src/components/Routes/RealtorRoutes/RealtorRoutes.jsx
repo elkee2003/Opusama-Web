@@ -20,6 +20,7 @@ import UserReviewsProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Pr
 import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
 import DetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/DetailedPost';
+import EditPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/EditPost/EditPost';
 import ReviewComment from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/TopTab';
 import DetailResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/Response';
 import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/UsersReviews'
@@ -77,6 +78,9 @@ const RealtorRoutes = () => (
             <Route path="postreviews/:postId" element={<UsersReview/>} />
 
             <Route path="postgallery/:postId" element={<PostGallery/>} />
+
+            {/* Edit Post */}
+            <Route path="edit_post/:postId" element={<EditPost />} />
 
             <Route path="pending_details/:alertId" element={<PendingDetailedAlert/>} />
 

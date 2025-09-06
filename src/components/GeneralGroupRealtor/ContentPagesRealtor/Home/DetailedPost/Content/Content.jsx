@@ -190,6 +190,13 @@ function Content({post, realtor,}) {
         />
       </button>
 
+      <div 
+        className='editPostBtnCon'
+        onClick={()=>navigate(`/realtorcontent/edit_post/${post.id}`)}
+      >
+        <p>Edit</p>
+      </div>
+
       {/* Scrollable Content */}
       <div className='scrollContainer'>
         <div 
@@ -379,25 +386,6 @@ function Content({post, realtor,}) {
           </div>
         )}
 
-        {/* Type & Description */}
-        {post.description && (
-          <div>
-            <h4 className='luxPolHeadTxt'>Description</h4>
-            <p className='detailedDesc'>
-              {readMore || post.description.length <= 150
-                ? post.description
-                : `${post.description.substring(0, 150)}...`}
-              {post.description.length > 150 && (
-                <button
-                  className={readMore ? 'readLessButton' : 'readMoreButton'}
-                  onClick={() => setReadMore(!readMore)}
-                >
-                  {readMore ? 'Show Less' : 'Read More'}
-                </button>
-              )}
-            </p>
-          </div>
-        )}
 
         {/* Event Start Date and Time  */}
         {post?.eventDateTime ? (
