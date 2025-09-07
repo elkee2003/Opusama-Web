@@ -40,6 +40,7 @@ const ReviewUpload = () => {
     allowMultiple, 
     maxCapacity,
     sessionDuration,
+    sessionGap,
     serviceDay,
     openingHour,
     closingHour,
@@ -169,6 +170,12 @@ const ReviewUpload = () => {
             <p className='uploadPropDetails'>{formatDuration(sessionDuration)}</p>
           </div>
         )}
+        {sessionDuration && sessionGap && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Session Gap:</p>
+            <p className='uploadPropDetails'>{formatDuration(sessionGap)}</p>
+          </div>
+        )}
 
         {/* Opening Hour */}
         {bookingMode !== 'manual' && (
@@ -217,10 +224,10 @@ const ReviewUpload = () => {
           </div>
         )}
 
-        {serviceDay && (
+        {serviceDay.length > 0 && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Service Day:</p>
-            <p className='uploadPropDetails'>{serviceDay}</p>
+            <p className='uploadPropDetails'>{serviceDay.join(", ")}</p>
           </div>
         )}
 

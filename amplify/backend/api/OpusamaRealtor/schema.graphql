@@ -216,7 +216,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   maxCapacity: Int
   sessionDuration: Int
   sessionGap: Int
-  serviceDay: String
+  serviceDay: [String]
   openingHour: String
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")

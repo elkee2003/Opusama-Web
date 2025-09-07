@@ -179,20 +179,23 @@ const EventType = () => {
           {/* Recurring */}
           {eventFrequency === "recurring" && (
             <div className='accommoDiv'>
-              <select
+              <label className="formLabel">Service Days:</label>
+              <Select
+                isMulti
                 className="formInput"
-                value={serviceDay}
-                onChange={(e) => setServiceDay(e.target.value)}
-              >
-                <option value="">Select day</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-              </select>
+                options={[
+                  { value: "Monday", label: "Monday" },
+                  { value: "Tuesday", label: "Tuesday" },
+                  { value: "Wednesday", label: "Wednesday" },
+                  { value: "Thursday", label: "Thursday" },
+                  { value: "Friday", label: "Friday" },
+                  { value: "Saturday", label: "Saturday" },
+                  { value: "Sunday", label: "Sunday" }
+                ]}
+                value={serviceDay.map(day => ({ value: day, label: day }))} 
+                onChange={(selected) => setServiceDay(selected.map(opt => opt.value))}
+                placeholder="Select days"
+              />
 
               <label className="formLabel">Recurrence:</label>
               <select

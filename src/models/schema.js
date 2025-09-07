@@ -1842,10 +1842,11 @@ export const schema = {
                 },
                 "serviceDay": {
                     "name": "serviceDay",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "String",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "openingHour": {
                     "name": "openingHour",
@@ -1946,5 +1947,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "6ed069cab4fe19b80473f21e91588cd1"
+    "version": "e9d9b98154178591899f6708ac6de817"
 };

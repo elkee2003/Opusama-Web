@@ -571,7 +571,7 @@ type EagerPost = {
   readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly sessionGap?: number | null;
-  readonly serviceDay?: string | null;
+  readonly serviceDay?: (string | null)[] | null;
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
@@ -634,7 +634,7 @@ type LazyPost = {
   readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly sessionGap?: number | null;
-  readonly serviceDay?: string | null;
+  readonly serviceDay?: (string | null)[] | null;
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;

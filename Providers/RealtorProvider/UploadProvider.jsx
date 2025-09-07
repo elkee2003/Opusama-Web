@@ -50,8 +50,9 @@ const UploadContextProvider = ({children}) => {
     const [allowMultiple, setAllowMultiple] = useState(false);
     const [maxCapacity, setMaxCapacity] = useState(null);
     const [sessionDuration, setSessionDuration] = useState(null); 
+    const [sessionGap, setSessionGap] = useState(null); 
     const [serviceDay, 
-    setServiceDay] = useState(null);
+    setServiceDay] = useState([]);
     const [openingHour, setOpeningHour] = useState(null);
     const [closingHour, setClosingHour] = useState(null); 
     const [description, setDescription] = useState('');
@@ -357,6 +358,7 @@ const UploadContextProvider = ({children}) => {
         allowMultiple, setAllowMultiple,
         maxCapacity, setMaxCapacity,
         sessionDuration, setSessionDuration,
+        sessionGap, setSessionGap,
         serviceDay, setServiceDay,
         openingHour, setOpeningHour,
         closingHour, setClosingHour,

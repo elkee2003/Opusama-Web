@@ -212,4 +212,4 @@ function EditPostContent({post}) {
   )
 }
 
-export default EditPostContent
+export default EditPostContent;

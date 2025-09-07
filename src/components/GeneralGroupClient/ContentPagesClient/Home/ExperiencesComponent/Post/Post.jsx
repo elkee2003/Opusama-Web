@@ -219,7 +219,9 @@ function Post({post}) {
           {/* Rent */}
           <div className={'priceRow'}>
             <p className={'price'}> 
-              ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
+              {Number(post.price) === 0
+              ? 'Free'
+              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
             </p>
           </div>
         </div>

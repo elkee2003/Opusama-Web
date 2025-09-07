@@ -50,7 +50,7 @@ const FoodDrinks = () => {
           <Select
             className={`dropdown ${isFocus ? 'focus' : ''}`}
             options={foodDrinkData}
-            placeholder="Select Commercial Space"
+            placeholder="Select Food & Drink Type"
             value={foodDrinkData.find((option) => option.value === type)}
             onChange={(selectedOption) => setType(selectedOption.value)}
             onFocus={() => setIsFocus(true)}

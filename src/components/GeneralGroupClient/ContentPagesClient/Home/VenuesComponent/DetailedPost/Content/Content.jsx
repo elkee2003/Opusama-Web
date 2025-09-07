@@ -485,6 +485,14 @@ function Content({post, realtor,}) {
           </>
         ) : ''}
 
+        {/* Session Gap */}
+        {post?.sessionGap ? (
+          <>
+            <p className='subheader'>Session Gap:</p>
+            <p className='bedroom'>{formatDuration(post.sessionGap)}</p>
+          </>
+        ) : ''}
+
         {/* Opening Hour */}
         {post?.openingHour ? (
           <>

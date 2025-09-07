@@ -51,6 +51,7 @@ const Forms = () => {
     allowMultiple, setAllowMultiple,
     maxCapacity, setMaxCapacity,
     sessionDuration, setSessionDuration,
+    sessionGap, setSessionGap,
     openingHour, setOpeningHour,
     closingHour, setClosingHour,
     errors,
@@ -58,7 +59,8 @@ const Forms = () => {
     media,
   } = useUploadContext();
 
-  const [isCustom, setIsCustom] = useState(false);
+  const [isCustomDuration, setIsCustomDuration] = useState(false);
+  const [isCustomGap, setIsCustomGap] = useState(false);
 
   // Earnings = Value - Commission
   const priceValue = parseFloat(price || 0);
@@ -117,7 +119,7 @@ const Forms = () => {
 
   useEffect (()=>{
     if(eventFrequency !== 'recurring'){
-      setServiceDay(null);
+      setServiceDay([]);
     }
   }, [eventFrequency])
 
@@ -275,16 +277,16 @@ const Forms = () => {
               <label className="formLabel">Session Duration:</label>
               <select
                 className='moneyInput'
-                value={sessionDuration}
+                value={sessionDuration || ""}
                 onChange={(e) => {
                   if (e.target.value === "custom") {
-                    setIsCustom(true);
+                    setIsCustomDuration(true);
                     setSessionDuration(null); 
                   } else if (e.target.value === "0" || e.target.value === "") {
-                    setIsCustom(false);
+                    setIsCustomDuration(false);
                     setSessionDuration(null);
                   } else {
-                    setIsCustom(false);
+                    setIsCustomDuration(false);
                     setSessionDuration(Number(e.target.value)); 
                   }
                 }}
@@ -299,7 +301,7 @@ const Forms = () => {
               </select>
 
               {/* Show input only if user chooses "custom" */}
-              {isCustom && (
+              {isCustomDuration && (
                 <input
                   type="number"
                   placeholder="Enter duration in minutes"
@@ -308,6 +310,45 @@ const Forms = () => {
                   onChange={(e) => setSessionDuration(Number(e.target.value))}
                 />
               )}
+
+              {/* Gap Between Sessions */}
+              <div className="sessionGapConfig">
+                <label className="formLabel">Gap Between Sessions:</label>
+                <select
+                  className="moneyInput"
+                  value={sessionGap || ""}
+                  onChange={(e) => {
+                    if (e.target.value === "custom") {
+                      setIsCustomGap(true);
+                      setSessionGap(null);
+                    } else if (e.target.value === "0" || e.target.value === "") {
+                      setIsCustomGap(false);
+                      setSessionGap(null);
+                    } else {
+                      setIsCustomGap(false);
+                      setSessionGap(Number(e.target.value));
+                    }
+                  }}
+                >
+                  <option value={0}>-- No gap (not recommended) --</option>
+                  <option value={15}>15 minutes</option>
+                  <option value={30}>30 minutes</option>
+                  <option value={45}>45 minutes</option>
+                  <option value={60}>1 hour</option>
+                  <option value="custom">Other (enter manually)</option>
+                </select>
+
+                {/* Show input if custom */}
+                {isCustomGap && sessionDuration && (
+                  <input
+                    type="number"
+                    placeholder="Enter gap in minutes"
+                    className="moneyInput"
+                    value={sessionGap || ""}
+                    onChange={(e) => setSessionGap(Number(e.target.value))}
+                  />
+                )}
+              </div>
             </div>
           )}
 

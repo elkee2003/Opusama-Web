@@ -438,11 +438,11 @@ function Content({post, realtor,}) {
         )}
 
         {/* Service Days  */}
-        {post?.serviceDay ? (
+        {post?.serviceDay?.length > 0 ? (
           <>
             <p className='subheader'> Days of Service</p>
             <p className='bedroom'>
-              {post.serviceDay}
+              {post.serviceDay.join(", ")}
             </p>
           </>
         ) : ''}
@@ -535,6 +535,14 @@ function Content({post, realtor,}) {
           <>
             <p className='subheader'>Session Duration:</p>
             <p className='bedroom'>{formatDuration(post.sessionDuration)}</p>
+          </>
+        ) : ''}
+
+        {/* Session Gap */}
+        {post?.sessionGap ? (
+          <>
+            <p className='subheader'>Session Gap:</p>
+            <p className='bedroom'>{formatDuration(post.sessionGap)}</p>
           </>
         ) : ''}
 

@@ -90,6 +90,7 @@ const UploadProperty = () => {
     maxCapacity, setMaxCapacity,
     sessionDuration, 
     setSessionDuration,
+    sessionGap, setSessionGap,
     serviceDay, 
     setServiceDay,
     openingHour, 
@@ -152,8 +153,9 @@ const UploadProperty = () => {
     setBookingMode("manual");
     setAllowMultiple(false);
     setMaxCapacity(null);
-    setSessionDuration("");
-    setServiceDay(null);
+    setSessionDuration(null);
+    setSessionGap(null);
+    setServiceDay([]);
     setOpeningHour(null);
     setClosingHour(null);
   };
@@ -277,6 +279,7 @@ const UploadProperty = () => {
           allowMultiple,
           maxCapacity,
           sessionDuration,
+          sessionGap,
           serviceDay,
           openingHour,
           closingHour,

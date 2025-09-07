@@ -495,10 +495,10 @@ function Content({post, realtor,}) {
         ) : ''}
 
         {/* Service Days */}
-        {post?.serviceDay ? (
+        {post?.serviceDay?.length > 0 ? (
           <>
-            <p>Days o Service:</p>
-            <p>{post.serviceDay}</p>
+            <p>Days of Service:</p>
+            <p>{post.serviceDay.join(", ")}</p>
           </>
         ): ''}
 

@@ -125,6 +125,7 @@ const Booking = () => {
         propertyDetails.openingHour,
         propertyDetails.closingHour,
         propertyDetails.sessionDuration,
+        propertyDetails.sessionGap,
         bookedSlots
       );
       setTimeSlots(slots);
