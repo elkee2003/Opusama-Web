@@ -22,7 +22,20 @@ const BookingStatus = {
   "REMOVED_REALTOR_PAYMENT_DELAYED": "REMOVED_REALTOR_PAYMENT_DELAYED"
 };
 
-const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, Realtor, Post } = initSchema(schema);
+const PickUpStatus = {
+  "PENDING": "PENDING",
+  "PREPARING": "PREPARING",
+  "READY": "READY",
+  "PICKED_UP": "PICKED_UP"
+};
+
+const BookingPostOptionType = {
+  "RESERVATION": "RESERVATION",
+  "VOUCHER": "VOUCHER",
+  "PICKUP": "PICKUP"
+};
+
+const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, Realtor, BookingPostOptions, Post } = initSchema(schema);
 
 export {
   Notification,
@@ -36,6 +49,9 @@ export {
   Booking,
   User,
   Realtor,
+  BookingPostOptions,
   Post,
-  BookingStatus
+  BookingStatus,
+  PickUpStatus,
+  BookingPostOptionType
 };

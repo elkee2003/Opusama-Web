@@ -8,6 +8,7 @@ import CountryDropDown from '../DropDown/CountryDropDown/CountryDropDown';
 import PropertySale from '../DropDown/PropertySale/PropertySale';
 import Recreation from '../DropDown/Recreation/Recreation';
 import NightLife from '../DropDown/NightLife/NightLife';
+import BookingPostOption from './BookingPostOption';
 import WriteDescription from '../DropDown/Desription/Description';
 import OfficeSpace from '../DropDown/OfficeSpace/OfficeSpace';
 import CommercialSpace from '../DropDown/CommercialSpace/CommercialSpace';
@@ -24,6 +25,7 @@ const Forms = () => {
     propertyType,
     setServiceDay,
     eventFrequency,
+    options,
     setEventDateTime,
     setEventEndDateTime,
     cautionFee,
@@ -110,6 +112,7 @@ const Forms = () => {
 
   }, [bookingMode, setSessionDuration, setOpeningHour, setClosingHour]);
 
+  // For Recurring
   useEffect (()=>{
     if(eventFrequency === 'recurring'){
       setEventDateTime(null);
@@ -163,6 +166,9 @@ const Forms = () => {
         {propertyType === 'Office Space' && <OfficeSpace />}
 
         <div className="general-row">
+
+          {/* Booking Post Options */}
+          <BookingPostOption/>
 
           {/* Subscription Toggle */}
           {(propertyType === 'Recreation' || propertyType === 'Food & Drinks' ) && (
@@ -374,48 +380,50 @@ const Forms = () => {
           )}
 
           {/* Price */}
-          <div className='moneyCon'>
-            <label className="formLabel">Price:</label>
-            <input
-              className="moneyInput"
-              value={price}
-              onChange={(e) => {
-                const value = e.target.value;
+          {propertyType !== "Food & Drinks" && (
+            <div className='moneyCon'>
+              <label className="formLabel">Price:</label>
+              <input
+                className="moneyInput"
+                value={price}
+                onChange={(e) => {
+                  const value = e.target.value;
 
-                // Allow empty input while typing
-                if (value === '') {
-                  setPrice('');
-                  return;
-                }
+                  // Allow empty input while typing
+                  if (value === '') {
+                    setPrice('');
+                    return;
+                  }
 
-                // Convert to number and only allow >= 0
-                const num = Number(value);
-                if (num >= 0) {
-                  setPrice(num);
-                }
-              }}
-              placeholder="Price"
-              type="number"
-              min="0"
-            />
+                  // Convert to number and only allow >= 0
+                  const num = Number(value);
+                  if (num >= 0) {
+                    setPrice(num);
+                  }
+                }}
+                placeholder="Price"
+                type="number"
+                min="0"
+              />
 
-            {/* Price Helper text */}
-            {price === '' && (
-              <p className="priceHelperText">
-                If service / listing is free, please enter 0
-              </p>
-            )}
-            
-            {/* Display message */}
-            {price !== '' && propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
-              <p className="commissionMsg">
-                You are setting 
-                <span className='displayedValue'> ₦{priceValue.toFixed(2)}</span>,
-                 Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.price.toFixed(2)} (10%)</span>.
-                  You'll earn <span className='displayedValue'>₦{priceEarnings.toFixed(2)}</span>.
-              </p>
-            )}
-          </div>
+              {/* Price Helper text */}
+              {!price && price !== 0 && (
+                <p className="priceHelperText">
+                  If service / listing is free, please enter 0
+                </p>
+              )}
+              
+              {/* Display message */}
+              {price !== '' && propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && (
+                <p className="commissionMsg">
+                  You are setting 
+                  <span className='displayedValue'> ₦{priceValue.toFixed(2)}</span>,
+                  Opusama will take <span className='displayedValue'>₦{vendorCommissionBreakdown.price.toFixed(2)} (10%)</span>.
+                    You'll earn <span className='displayedValue'>₦{priceEarnings.toFixed(2)}</span>.
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Caution Fee */}
           {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Recreation' && propertyType !== 'Nightlife' && propertyType !== 'Event' && propertyType !== 'Food & Drinks') && (

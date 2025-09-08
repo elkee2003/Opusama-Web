@@ -44,6 +44,7 @@ const ReviewUpload = () => {
     serviceDay,
     openingHour,
     closingHour,
+    options,
   } = useUploadContext();
 
   const formatCurrency = (amount) => Number(amount)?.toLocaleString();
@@ -146,10 +147,12 @@ const ReviewUpload = () => {
         </div>
 
         {/* Price */}
-        <div className='uploadPropRow'>
-          <p className='displayLabel'>Price:</p>
-          <p className='uploadPropDetails'>₦{formatCurrency(price)}</p>
-        </div>
+        {options.length === 0 && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Price:</p>
+            <p className='uploadPropDetails'>₦{formatCurrency(price)}</p>
+          </div>
+        )}
 
         {/* Subscription */}
         <div className='uploadPropRow'>
@@ -174,6 +177,32 @@ const ReviewUpload = () => {
           <div className='uploadPropRow'>
             <p className='displayLabel'>Session Gap:</p>
             <p className='uploadPropDetails'>{formatDuration(sessionGap)}</p>
+          </div>
+        )}
+        
+        {/* Booking Options */}
+        {options && options.length > 0 && (
+          <div className="uploadPropRow">
+            <p className="displayLabel">Booking Options:</p>
+            <div className="uploadPropDetails">
+              {options.map((opt, index) => (
+                <div key={index} className="optionCard">
+                  <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
+                  <p><strong>Name:</strong> {opt.bookingName}</p>
+                  <p><strong>Price:</strong> ₦{formatCurrency(opt.optionPrice)}</p>
+
+                  {opt.minSpend && (
+                    <p><strong>Min Spend:</strong> ₦{formatCurrency(opt.minSpend)}</p>
+                  )}
+                  {opt.maxGuests && (
+                    <p><strong>Max Guests:</strong> {opt.maxGuests}</p>
+                  )}
+                  {opt.pickupStatus && (
+                    <p><strong>Status:</strong> {opt.pickupStatus}</p>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

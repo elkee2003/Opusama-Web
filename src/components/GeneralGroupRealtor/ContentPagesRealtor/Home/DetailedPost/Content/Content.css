@@ -73,6 +73,10 @@
     white-space: pre-wrap; /* Preserves whitespace, including newlines */
 }
 
+.realtorBookingOptionCard {
+    margin-bottom: 10px;
+}
+
 .deleteDiv {
     display: flex;
     justify-content: center;

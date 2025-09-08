@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useParams} from "react-router-dom";
 import { DataStore } from "aws-amplify/datastore";
-import {Post, Realtor} from '../../../../../models';
+import {Post, BookingPostOptions, Realtor} from '../../../../../models';
 import Content from './Content/Content';
 import {useProfileContext} from '../../../../../../Providers/ClientProvider/ProfileProvider';
 import {useBookingShowingContext} from '../../../../../../Providers/ClientProvider/BookingShowingProvider';
@@ -43,12 +43,19 @@ function DetailedPost() {
         const numComments = comments.length;
         const totalFeedback = numReviews + numComments; 
 
+        // Fetch booking options linked to this post
+        const bookingOptions = await DataStore.query(
+          BookingPostOptions,
+          (o) => o.postID.eq(postId)
+        );
+
         // Update the post state with review and comment counts
         setPost({
           ...foundPost,
           numReviews,
           numComments,
           totalFeedback,
+          bookingOptions,
         });
       } catch (error) {
         console.error('Error fetching post', error);

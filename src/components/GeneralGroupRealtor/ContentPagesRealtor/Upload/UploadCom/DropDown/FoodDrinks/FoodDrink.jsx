@@ -65,17 +65,6 @@ const FoodDrinks = () => {
               onBlur={handleCustomInputSubmit}
             />
           )}
-
-          {/* Capacity */}
-          <div className='accommoDiv'>
-            <label className="formLabel">Capacity:</label>
-            <input
-              className="formInput"
-              value={capacity}
-              onChange={(e) => setCapacity(e.target.value)}
-              placeholder="(optional)"
-            />
-          </div>
         </>
       )}
       

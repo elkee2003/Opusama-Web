@@ -22,6 +22,19 @@ export enum BookingStatus {
   REMOVED_REALTOR_PAYMENT_DELAYED = "REMOVED_REALTOR_PAYMENT_DELAYED"
 }
 
+export enum PickUpStatus {
+  PENDING = "PENDING",
+  PREPARING = "PREPARING",
+  READY = "READY",
+  PICKED_UP = "PICKED_UP"
+}
+
+export enum BookingPostOptionType {
+  RESERVATION = "RESERVATION",
+  VOUCHER = "VOUCHER",
+  PICKUP = "PICKUP"
+}
+
 
 
 type EagerNotification = {
@@ -516,6 +529,44 @@ export declare const Realtor: (new (init: ModelInit<Realtor>) => Realtor) & {
   copyOf(source: Realtor, mutator: (draft: MutableModel<Realtor>) => MutableModel<Realtor> | void): Realtor;
 }
 
+type EagerBookingPostOptions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<BookingPostOptions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly postID: string;
+  readonly bookingPostOptionType?: BookingPostOptionType | keyof typeof BookingPostOptionType | null;
+  readonly bookingName?: string | null;
+  readonly optionPrice?: number | null;
+  readonly minSpend?: number | null;
+  readonly pickupStatus?: PickUpStatus | keyof typeof PickUpStatus | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyBookingPostOptions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<BookingPostOptions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly postID: string;
+  readonly bookingPostOptionType?: BookingPostOptionType | keyof typeof BookingPostOptionType | null;
+  readonly bookingName?: string | null;
+  readonly optionPrice?: number | null;
+  readonly minSpend?: number | null;
+  readonly pickupStatus?: PickUpStatus | keyof typeof PickUpStatus | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type BookingPostOptions = LazyLoading extends LazyLoadingDisabled ? EagerBookingPostOptions : LazyBookingPostOptions
+
+export declare const BookingPostOptions: (new (init: ModelInit<BookingPostOptions>) => BookingPostOptions) & {
+  copyOf(source: BookingPostOptions, mutator: (draft: MutableModel<BookingPostOptions>) => MutableModel<BookingPostOptions> | void): BookingPostOptions;
+}
+
 type EagerPost = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Post, 'id'>;
@@ -575,6 +626,7 @@ type EagerPost = {
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
+  readonly BookingPostOptions?: (BookingPostOptions | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -638,6 +690,7 @@ type LazyPost = {
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
+  readonly BookingPostOptions: AsyncCollection<BookingPostOptions>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

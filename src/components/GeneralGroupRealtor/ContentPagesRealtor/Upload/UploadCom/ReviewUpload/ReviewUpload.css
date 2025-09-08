@@ -37,11 +37,13 @@
 }
 .uploadPropDetails {
     white-space: pre-wrap; /* Preserves whitespace, including newlines */
-    background: rgb(4, 4, 49);
+    background-color: rgba(219, 219, 219, 0.4);
+    /* border-radius: 15px; */
+    box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 15px;
     font-size: 1.2rem;
-    color:white;
+    color:rgb(0, 0, 0);
     width:100%;
 }
 

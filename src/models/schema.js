@@ -1459,6 +1459,113 @@ export const schema = {
                 }
             ]
         },
+        "BookingPostOptions": {
+            "name": "BookingPostOptions",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "postID": {
+                    "name": "postID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "bookingPostOptionType": {
+                    "name": "bookingPostOptionType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "BookingPostOptionType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bookingName": {
+                    "name": "bookingName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "optionPrice": {
+                    "name": "optionPrice",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "minSpend": {
+                    "name": "minSpend",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "pickupStatus": {
+                    "name": "pickupStatus",
+                    "isArray": false,
+                    "type": {
+                        "enum": "PickUpStatus"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "BookingPostOptions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPost",
+                        "fields": [
+                            "postID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Post": {
             "name": "Post",
             "fields": {
@@ -1869,6 +1976,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "BookingPostOptions": {
+                    "name": "BookingPostOptions",
+                    "isArray": true,
+                    "type": {
+                        "model": "BookingPostOptions"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "postID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1943,9 +2066,26 @@ export const schema = {
                 "REMOVED_REALTOR",
                 "REMOVED_REALTOR_PAYMENT_DELAYED"
             ]
+        },
+        "PickUpStatus": {
+            "name": "PickUpStatus",
+            "values": [
+                "PENDING",
+                "PREPARING",
+                "READY",
+                "PICKED_UP"
+            ]
+        },
+        "BookingPostOptionType": {
+            "name": "BookingPostOptionType",
+            "values": [
+                "RESERVATION",
+                "VOUCHER",
+                "PICKUP"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "e9d9b98154178591899f6708ac6de817"
+    "version": "feae92b2094669238ea8dc9755f2fed8"
 };

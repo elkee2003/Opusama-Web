@@ -165,6 +165,29 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   isTrusted: Boolean
 }
 
+enum PickUpStatus {
+  PENDING
+  PREPARING
+  READY
+  PICKED_UP
+}
+
+enum BookingPostOptionType {
+  RESERVATION
+  VOUCHER
+  PICKUP
+}
+
+type BookingPostOptions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  postID: ID! @index(name: "byPost")
+  bookingPostOptionType: BookingPostOptionType
+  bookingName: String
+  optionPrice: Float
+  minSpend: Float
+  pickupStatus: PickUpStatus
+}
+
 type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
   propertyType: String!
@@ -220,5 +243,6 @@ type Post @model @auth(rules: [{allow: public}]) {
   openingHour: String
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")
+  BookingPostOptions: [BookingPostOptions] @hasMany(indexName: "byPost", fields: ["id"])
 }
  

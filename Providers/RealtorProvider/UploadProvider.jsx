@@ -8,7 +8,7 @@ const UploadContextProvider = ({children}) => {
     const [type, setType] = useState('')
     const [nameOfType, setNameOfType] = useState('');
     const [packageType, setPackageType] = useState('');
-    const [capacity, setCapacity] = useState('');
+    const [capacity, setCapacity] = useState(''); //Event hall capacity to hold event
     const [eventDateTime, setEventDateTime] = useState('');
     const [eventEndDateTime, setEventEndDateTime] = useState('');
     const [ recurrence, setRecurrence ] = useState('');
@@ -48,7 +48,7 @@ const UploadContextProvider = ({children}) => {
     const [isSubscription, setIsSubscription] = useState(false);
     const [bookingMode, setBookingMode] = useState("manual");
     const [allowMultiple, setAllowMultiple] = useState(false);
-    const [maxCapacity, setMaxCapacity] = useState(null);
+    const [maxCapacity, setMaxCapacity] = useState(null); //tickets 
     const [sessionDuration, setSessionDuration] = useState(null); 
     const [sessionGap, setSessionGap] = useState(null); 
     const [serviceDay, 
@@ -58,6 +58,8 @@ const UploadContextProvider = ({children}) => {
     const [description, setDescription] = useState('');
     const [amenities, setAmenities]= useState('');
     const [policies, setPolicies] = useState('');
+    const [options, setOptions] = useState([]);
+
     const [uploadPost, setUploadPost] = useState(null);
 
     const [errors, setErrors] = useState('');
@@ -74,6 +76,19 @@ const UploadContextProvider = ({children}) => {
         if (!type) {
           setErrors('Field under Property Type is Required');
           return false;
+        }
+
+         // ✅ Specific validation for Food & Drinks
+        if (propertyType === 'Food & Drinks') {
+          if (!options.length) {
+            setErrors('At least one booking option is required');
+            return false;
+          }
+          const hasInvalidOption = options.some(opt => !opt.optionPrice || isNaN(opt.optionPrice));
+          if (hasInvalidOption) {
+            setErrors('Each option must have a valid price');
+            return false;
+          }
         }
         
         if (price === '' || price === null || price === undefined || isNaN(price)) {
@@ -365,6 +380,7 @@ const UploadContextProvider = ({children}) => {
         description, setDescription,
         amenities, setAmenities,
         policies, setPolicies,
+        options, setOptions,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
         removeMedia, addMedia, updateMedia

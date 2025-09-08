@@ -23,7 +23,7 @@ function Content({post, realtor,}) {
     const [readMoreLux, setReadMoreLux] = useState(false);
     const [readMorePol, setReadMorePol] 
     = useState(false);
-    const [isAvailable, setIsAvailable] = useState(post.available);
+    const [isAvailable, setIsAvailable] = useState(post?.available);
     const [averageRating, setAverageRating] = useState(0);
     const [mediaUris, setMediaUris] = useState([]); 
     const [loading, setLoading] = useState(false); 
@@ -517,6 +517,17 @@ function Content({post, realtor,}) {
             <p>{post.closingHour}</p>
           </>
         ): ''}
+
+        {post?.bookingOptions?.map((opt, idx) => (
+          <div 
+            key={idx} 
+            className="realtorBookingOptionCard"
+          >
+            <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
+            <p><strong>Name:</strong> {opt.bookingName}</p>
+            <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+          </div>
+        ))}
 
         {/* Pricing */}
         <div className='priceRoww'>

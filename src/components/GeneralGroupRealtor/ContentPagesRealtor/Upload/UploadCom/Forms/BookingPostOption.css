@@ -1,0 +1,97 @@
+.checkboxGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkboxLabel {
+    display: flex;
+    gap:10px;
+}
+
+.addBtn {
+  background-color: #4CAF50; /* green */
+  color: white;
+  padding: 8px 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.addBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.optionCard {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.optionCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.optionCard h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Labels */
+.optionCard label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 6px 0 4px;
+  color: #444;
+}
+
+/* Inputs */
+.optionCard input,
+.optionCard select,
+.optionCard textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.addBtn, .removeBtn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addBtn {
+  background: #007bff;
+  color: white;
+  margin-top: 12px;
+}
+
+.addBtn:hover {
+  background: #0069d9;
+}
+
+.removeBtn {
+  background: #f44336;
+  color: white;
+  margin-top: 8px;
+}
+
+.removeBtn:hover {
+  background: #d32f2f;
+}

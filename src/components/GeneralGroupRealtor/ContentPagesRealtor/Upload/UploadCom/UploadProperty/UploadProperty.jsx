@@ -8,7 +8,7 @@ import { useAuthContext } from "../../../../../../../Providers/ClientProvider/Au
 import { useUploadContext } from "../../../../../../../Providers/RealtorProvider/UploadProvider";
 import { DataStore } from "aws-amplify/datastore";
 import { uploadData } from "aws-amplify/storage";
-import { Post } from "../../../../../../models";
+import { Post, BookingPostOptions } from "../../../../../../models";
 
 const UploadProperty = () => {
   const navigate = useNavigate();
@@ -101,6 +101,12 @@ const UploadProperty = () => {
     setAmenities,
     policies,
     setPolicies,
+    bookingPostOptionType, setBookingPostOptionType,
+    bookingTypes, setBookingTypes,
+    bookingName, setBookingName,
+    optionPrice, setOptionPrice,
+    minSpend, setMinSpend,
+    options, setOptions,
     uploadPost,
     setUploadPost,
     onValidateUpload,
@@ -158,6 +164,12 @@ const UploadProperty = () => {
     setServiceDay([]);
     setOpeningHour(null);
     setClosingHour(null);
+    // setBookingPostOptionType("");
+    // setBookingTypes([]);
+    // setBookingName("");
+    // setOptionPrice(null);
+    // setMinSpend(null);
+    setOptions([]);
   };
 
   // Function to compress images
@@ -283,10 +295,28 @@ const UploadProperty = () => {
           serviceDay,
           openingHour,
           closingHour,
+          
           realtorID: dbRealtor.id,
         })
       );
       setUploadPost(post);
+
+      // Upload BookingPostOptions linked to this post
+      await Promise.all(
+        options.map(async (opt) => {
+          await DataStore.save(
+            new BookingPostOptions({
+              postID: post.id, // link to the Post
+              bookingPostOptionType: opt.bookingPostOptionType,
+              bookingName: opt.bookingName,
+              optionPrice: parseFloat(opt.optionPrice) || 0,
+              minSpend: parseFloat(opt.minSpend) || 0,
+              maxGuests: opt.maxGuests || null,
+            })
+          );
+        })
+      );
+      
       alert("Post uploaded successfully!");
 
       // Reset form fields after upload
