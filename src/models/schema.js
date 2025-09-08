@@ -805,6 +805,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "numberOfItems": {
+                    "name": "numberOfItems",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "clientFirstName": {
                     "name": "clientFirstName",
                     "isArray": false,
@@ -830,6 +837,13 @@ export const schema = {
                     "name": "purpose",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "selectedOption": {
+                    "name": "selectedOption",
+                    "isArray": false,
+                    "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -2087,5 +2101,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "feae92b2094669238ea8dc9755f2fed8"
+    "version": "3c69ebb3a13a1c2874c9561764939ef7"
 };

@@ -93,10 +93,12 @@ type Booking @model @auth(rules: [{allow: public}]) {
   kids: Int
   infants: Int
   numberOfPeople: Int
+  numberOfItems: Int
   clientFirstName: String
   clientLastName: String
   clientPhoneNumber: String
   purpose: String
+  selectedOption: AWSJSON
   duration: String
   checkInDate: String
   checkOutDate: String

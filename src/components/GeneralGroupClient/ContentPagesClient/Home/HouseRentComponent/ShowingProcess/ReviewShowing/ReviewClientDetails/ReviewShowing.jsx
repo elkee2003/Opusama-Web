@@ -12,6 +12,8 @@ const ReviewClientDetails = () => {
   const navigate = useNavigate();
   const { dbUser } = useAuthContext();
   const {
+    selectedOption, 
+    setSelectedOption,
     setBookings,
     adults,
     setAdults,
@@ -21,6 +23,8 @@ const ReviewClientDetails = () => {
     setInfants,
     numberOfPeople, 
     setNumberOfPeople,
+    numberOfItems, 
+    setNumberOfItems,
     guestFirstName,
     setGuestFirstName,
     guestLastName,
@@ -108,15 +112,17 @@ const ReviewClientDetails = () => {
 
     try {
       const booking = await DataStore.save(
-        new Booking({
+        new Booking({ 
           adults,
           kids,
           infants,
           numberOfPeople,
+          numberOfItems,
           clientFirstName: guestFirstName,
           clientLastName: guestLastName,
           clientPhoneNumber: guestPhoneNumber,
           purpose: note,
+          selectedOption,
           duration: String(duration),
           checkInDate: String(checkInDate),
           checkOutDate: String(checkOutDate),
@@ -152,10 +158,12 @@ const ReviewClientDetails = () => {
       alert("Booking was a success");
 
       // Reset state
+      setSelectedOption(null);
       setAdults(0);
       setKids(0);
       setInfants(0);
       setNumberOfPeople(0);
+      setNumberOfItems(0)
       setGuestFirstName(dbUser?.firstName);
       setGuestLastName(dbUser?.lastName);
       setGuestPhoneNumber(dbUser?.phoneNumber);
@@ -225,6 +233,21 @@ const ReviewClientDetails = () => {
               <p className="unitTxt">{infants}</p>
             </div>
           )}
+
+          {numberOfPeople > 0 && (
+            <div>
+              <h4>Number Of People:</h4>
+              <p className="unitTxt">{numberOfPeople}</p>
+            </div>
+          )}
+
+          {numberOfItems > 0 && (
+            <div>
+              <h4>Number Of items:</h4>
+              <p className="unitTxt">{numberOfItems}</p>
+            </div>
+          )}
+
         </div>
         <h4>First Name(s):</h4>
         <p className="txtInputReview">{guestFirstName?.trim()}</p>
@@ -237,6 +260,27 @@ const ReviewClientDetails = () => {
 
         <h4>Purpose of stay:</h4>
         <p className="txtInputReview">{note?.trim()}</p>
+
+        {selectedOption?.bookingPostOptionType &&
+          <div>
+            <h4>Type</h4>
+            <p className="txtInputReview"> {selectedOption.bookingPostOptionType}</p>
+          </div>
+        }
+        
+        {selectedOption?.optionPrice &&
+          <div>
+            <h4>Sub Price</h4>
+            <p className="txtInputReview">₦{selectedOption.optionPrice?.toLocaleString()}</p>
+          </div>
+        }
+
+        {selectedOption?.bookingName && (
+          <div>
+            <h4>Booking Name:</h4>
+            <p className="txtInputReview">{selectedOption.bookingName}</p>
+          </div>
+        )}
 
         {checkInDate && (
           <>
@@ -297,10 +341,10 @@ const ReviewClientDetails = () => {
         )}
 
         {overAllPrice && (
-          <>
+          <div className="lastReviewInputClient">
             <h4>Total:</h4>
             <p className="txtInputReview">₦{overAllPrice?.toLocaleString()}</p>
-          </>
+          </div>
         )}
       </div>
       <button

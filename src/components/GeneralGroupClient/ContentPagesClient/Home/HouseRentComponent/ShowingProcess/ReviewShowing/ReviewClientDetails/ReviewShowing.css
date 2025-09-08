@@ -40,14 +40,19 @@
   border: 1px solid;
   border-radius: 20px;
   padding: 10px;
-  color: white;
-  background-color: #08021f;
+  background-color: rgba(219, 219, 219, 0.4);
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.2);
+  color: black;
   margin-bottom: 10px;
 }
 
 .addedAlready {
   color: grey;
   font-style: italic;
+}
+
+.lastReviewInputClient {
+  margin-bottom: 3rem;
 }
 
 .paymentBtn  {

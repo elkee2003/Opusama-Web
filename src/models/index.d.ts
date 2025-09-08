@@ -329,10 +329,12 @@ type EagerBooking = {
   readonly kids?: number | null;
   readonly infants?: number | null;
   readonly numberOfPeople?: number | null;
+  readonly numberOfItems?: number | null;
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;
   readonly purpose?: string | null;
+  readonly selectedOption?: string | null;
   readonly duration?: string | null;
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;
@@ -368,10 +370,12 @@ type LazyBooking = {
   readonly kids?: number | null;
   readonly infants?: number | null;
   readonly numberOfPeople?: number | null;
+  readonly numberOfItems?: number | null;
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;
   readonly purpose?: string | null;
+  readonly selectedOption?: string | null;
   readonly duration?: string | null;
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;

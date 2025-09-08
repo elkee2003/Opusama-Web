@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
-import {Realtor, Post} from '../../../../../models'
+import {Realtor, Post, BookingPostOptions} from '../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
@@ -79,20 +79,30 @@ function PostList() {
                 // p.isApproved.eq(true)
             ]));
 
-            // Step 3: Map realtor details to each post
-            const allPosts = posts.map((post) => {
-                const realtor = realtors.find((r) => r.id === post.realtorID);
-                return {
-                ...post,
-                realtorId: realtor?.id,
-                firstName: realtor?.firstName,
-                userName: realtor?.username,
-                lastName: realtor?.lastName,
-                email: realtor?.email,
-                profilepic: realtor?.profilePic,
-                phoneNumber: realtor?.phoneNumber,
-                };
-            });
+            // Step 3: For each post, fetch its booking options + map realtor
+            const allPosts = await Promise.all(
+                posts.map(async (post) => {
+                    const realtor = realtors.find((r) => r.id === post.realtorID);
+
+                    // fetch booking options for this post
+                    const bookingOptions = await DataStore.query(
+                    BookingPostOptions,
+                    (o) => o.postID.eq(post.id)
+                    );
+
+                    return {
+                        ...post,
+                        realtorId: realtor?.id,
+                        firstName: realtor?.firstName,
+                        userName: realtor?.username,
+                        lastName: realtor?.lastName,
+                        email: realtor?.email,
+                        profilepic: realtor?.profilePic,
+                        phoneNumber: realtor?.phoneNumber,
+                        bookingOptions, // attach here
+                    };
+                })
+            );
 
             // Sort posts by createdAt or updatedAt
             const sortedPosts = allPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));

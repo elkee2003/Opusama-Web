@@ -16,6 +16,8 @@ const ClientDetails = ({ post }) => {
     setInfants,
     numberOfPeople, 
     setNumberOfPeople,
+    numberOfItems, 
+    setNumberOfItems,
     postTotalPrice, 
     setOverAllPrice, 
     guestFirstName,
@@ -31,6 +33,7 @@ const ClientDetails = ({ post }) => {
     onValidateHotelInput,
     onValidateRecreationInput,
     onValidatePropertyInput,
+    onValidateFoodInput,
   } = useBookingShowingContext();
 
   // For PropertyType of Recreation
@@ -73,7 +76,7 @@ const ClientDetails = ({ post }) => {
           navigate(`/clientcontent/bookingdetails`);
           return;
         }
-        if (post?.propertyType === 'Food & Drinks' && onValidatePropertyInput()) {
+        if (post?.propertyType === 'Food & Drinks' && onValidateFoodInput()) {
           navigate(`/clientcontent/bookingdetails`);
           return;
         }
@@ -138,7 +141,13 @@ const ClientDetails = ({ post }) => {
       setTemporaryPrice(newTotalPrice);
       setOverAllPrice(newTotalPrice); // Save for global access
     }
-  },[numberOfPeople, postTotalPrice, setOverAllPrice, post?.propertyType])
+
+    if (post?.propertyType === 'Food & Drinks') {
+      const newTotalPrice = postTotalPrice * numberOfItems;
+      setTemporaryPrice(newTotalPrice);
+      setOverAllPrice(newTotalPrice);
+    }
+  },[numberOfPeople, numberOfItems, postTotalPrice, setOverAllPrice, post?.propertyType])
 
   return (
     <div className='clientContainer'>
@@ -228,6 +237,31 @@ const ClientDetails = ({ post }) => {
                 </button>
                 <span className='num'>{numberOfPeople}</span>
                 <button className='btnValue' onClick={() => setNumberOfPeople(numberOfPeople + 1)}>
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className='row'>
+              <p className='age'>Price:</p>
+              <p className='value'>₦{temporaryPrice}</p>
+            </div>
+          </div>
+        )}
+        {/* Counting for Food & Drinks */}
+        {(post?.propertyType === 'Food & Drinks') && (
+          <div className='card'>
+            <div className='row'>
+              <div>
+                <p className='guest'>Number of items</p>
+                {/* <p className='age'>Ages 16 or above</p> */}
+              </div>
+              <div className='value'>
+                <button className='btnValue' onClick={() => setNumberOfItems(Math.max(0, numberOfItems - 1))}>
+                  -
+                </button>
+                <span className='num'>{numberOfItems}</span>
+                <button className='btnValue' onClick={() => setNumberOfItems(numberOfItems + 1)}>
                   +
                 </button>
               </div>

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
-import {Realtor, Post} from '../../../../../../models'
+import {Realtor, Post, BookingPostOptions} from '../../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
@@ -31,8 +31,15 @@ function PostList() {
             ]));
             const filteredPosts = posts.filter((post) => post.propertyType === 'Food & Drinks');
 
-            // Map the realtor details to each post
-            return filteredPosts.map((post) => ({
+            // For each post, also fetch its booking options
+            const postsWithOptions = await Promise.all(
+            filteredPosts.map(async (post) => {
+                const bookingOptions = await DataStore.query(
+                BookingPostOptions,
+                (o) => o.postID.eq(post.id)
+                );
+
+                return {
                 ...post,
                 realtorId: realtor.id,
                 firstName: realtor.firstName,
@@ -40,7 +47,12 @@ function PostList() {
                 email: realtor.email,
                 profilepic: realtor.profilePic,
                 phoneNumber: realtor.phoneNumber,
-            }));
+                bookingOptions, // attach here
+                };
+            })
+            );
+            
+            return postsWithOptions;
             })
         );
 
