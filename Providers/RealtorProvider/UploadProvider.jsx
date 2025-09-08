@@ -51,8 +51,8 @@ const UploadContextProvider = ({children}) => {
     const [maxCapacity, setMaxCapacity] = useState(null); //tickets 
     const [sessionDuration, setSessionDuration] = useState(null); 
     const [sessionGap, setSessionGap] = useState(null); 
-    const [serviceDay, 
-    setServiceDay] = useState([]);
+    const [servicingDay, 
+    setServicingDay] = useState([]);
     const [openingHour, setOpeningHour] = useState(null);
     const [closingHour, setClosingHour] = useState(null); 
     const [description, setDescription] = useState('');
@@ -208,7 +208,7 @@ const UploadContextProvider = ({children}) => {
             setErrors('Event Start Date and End Date is required');
             return false;
           }
-          if (eventFrequency === 'recurring' && (!serviceDay || !openingHour)) {
+          if (eventFrequency === 'recurring' && (!servicingDay || !openingHour)) {
             setErrors('Recurring events require a day and an opening hour');
             return false;
           }
@@ -374,7 +374,7 @@ const UploadContextProvider = ({children}) => {
         maxCapacity, setMaxCapacity,
         sessionDuration, setSessionDuration,
         sessionGap, setSessionGap,
-        serviceDay, setServiceDay,
+        servicingDay, setServicingDay,
         openingHour, setOpeningHour,
         closingHour, setClosingHour,
         description, setDescription,

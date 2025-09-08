@@ -626,11 +626,11 @@ type EagerPost = {
   readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly sessionGap?: number | null;
-  readonly serviceDay?: (string | null)[] | null;
+  readonly servicingDay?: (string | null)[] | null;
   readonly openingHour?: string | null;
+  readonly BookingPostOptions?: (BookingPostOptions | null)[] | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
-  readonly BookingPostOptions?: (BookingPostOptions | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -690,11 +690,11 @@ type LazyPost = {
   readonly maxCapacity?: number | null;
   readonly sessionDuration?: number | null;
   readonly sessionGap?: number | null;
-  readonly serviceDay?: (string | null)[] | null;
+  readonly servicingDay?: (string | null)[] | null;
   readonly openingHour?: string | null;
+  readonly BookingPostOptions: AsyncCollection<BookingPostOptions>;
   readonly closingHour?: string | null;
   readonly realtorID: string;
-  readonly BookingPostOptions: AsyncCollection<BookingPostOptions>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

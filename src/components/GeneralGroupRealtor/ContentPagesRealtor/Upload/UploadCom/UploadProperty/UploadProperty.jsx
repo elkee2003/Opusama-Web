@@ -91,8 +91,8 @@ const UploadProperty = () => {
     sessionDuration, 
     setSessionDuration,
     sessionGap, setSessionGap,
-    serviceDay, 
-    setServiceDay,
+    servicingDay, 
+    setServicingDay,
     openingHour, 
     setOpeningHour,
     closingHour, 
@@ -161,7 +161,7 @@ const UploadProperty = () => {
     setMaxCapacity(null);
     setSessionDuration(null);
     setSessionGap(null);
-    setServiceDay([]);
+    setServicingDay([]);
     setOpeningHour(null);
     setClosingHour(null);
     // setBookingPostOptionType("");
@@ -292,7 +292,7 @@ const UploadProperty = () => {
           maxCapacity,
           sessionDuration,
           sessionGap,
-          serviceDay,
+          servicingDay: Array.isArray(servicingDay) ? servicingDay : [servicingDay],
           openingHour,
           closingHour,
           

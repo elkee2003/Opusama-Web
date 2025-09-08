@@ -41,7 +41,7 @@ const ReviewUpload = () => {
     maxCapacity,
     sessionDuration,
     sessionGap,
-    serviceDay,
+    servicingDay,
     openingHour,
     closingHour,
     options,
@@ -253,10 +253,10 @@ const ReviewUpload = () => {
           </div>
         )}
 
-        {serviceDay.length > 0 && (
+        {servicingDay.length > 0 && (
           <div className='uploadPropRow'>
             <p className='displayLabel'>Service Day:</p>
-            <p className='uploadPropDetails'>{serviceDay.join(", ")}</p>
+            <p className='uploadPropDetails'>{servicingDay.join(", ")}</p>
           </div>
         )}
 

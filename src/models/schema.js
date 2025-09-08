@@ -1961,8 +1961,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "serviceDay": {
-                    "name": "serviceDay",
+                "servicingDay": {
+                    "name": "servicingDay",
                     "isArray": true,
                     "type": "String",
                     "isRequired": false,
@@ -1974,20 +1974,6 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
-                    "attributes": []
-                },
-                "closingHour": {
-                    "name": "closingHour",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "realtorID": {
-                    "name": "realtorID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
                     "attributes": []
                 },
                 "BookingPostOptions": {
@@ -2005,6 +1991,20 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "closingHour": {
+                    "name": "closingHour",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "realtorID": {
+                    "name": "realtorID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -2101,5 +2101,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "3c69ebb3a13a1c2874c9561764939ef7"
+    "version": "5b611a2edc4256f26ecb484b9f178d2c"
 };

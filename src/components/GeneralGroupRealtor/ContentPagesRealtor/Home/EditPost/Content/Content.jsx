@@ -46,7 +46,7 @@ function EditPostContent({post}) {
         allowMultiple, setAllowMultiple,
         maxCapacity, setMaxCapacity,
         sessionDuration, setSessionDuration,
-        serviceDay, setServiceDay,
+        servicingDay, setServicingDay,
         openingHour, setOpeningHour,
         closingHour, setClosingHour,
         uploadPost, setUploadPost,

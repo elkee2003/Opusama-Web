@@ -8,7 +8,7 @@ const EventType = () => {
     const {propertyType, 
         type, setType,
         packageType, setPackageType,
-        serviceDay, setServiceDay,
+        servicingDay, setServicingDay,
         eventDateTime, setEventDateTime,
         eventEndDateTime, setEventEndDateTime,
         recurrence, setRecurrence,    
@@ -192,8 +192,8 @@ const EventType = () => {
                   { value: "Saturday", label: "Saturday" },
                   { value: "Sunday", label: "Sunday" }
                 ]}
-                value={serviceDay.map(day => ({ value: day, label: day }))} 
-                onChange={(selected) => setServiceDay(selected.map(opt => opt.value))}
+                value={servicingDay.map(day => ({ value: day, label: day }))} 
+                onChange={(selected) => setServicingDay(selected.map(opt => opt.value))}
                 placeholder="Select days"
               />
 

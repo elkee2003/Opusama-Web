@@ -241,10 +241,10 @@ type Post @model @auth(rules: [{allow: public}]) {
   maxCapacity: Int
   sessionDuration: Int
   sessionGap: Int
-  serviceDay: [String]
+  servicingDay: [String]
   openingHour: String
+  BookingPostOptions: [BookingPostOptions] @hasMany(indexName: "byPost", fields: ["id"])
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")
-  BookingPostOptions: [BookingPostOptions] @hasMany(indexName: "byPost", fields: ["id"])
 }
  

@@ -23,7 +23,7 @@ const Forms = () => {
 
   const {
     propertyType,
-    setServiceDay,
+    setServicingDay,
     eventFrequency,
     options,
     setEventDateTime,
@@ -122,7 +122,7 @@ const Forms = () => {
 
   useEffect (()=>{
     if(eventFrequency !== 'recurring'){
-      setServiceDay([]);
+      setServicingDay([]);
     }
   }, [eventFrequency])
 
