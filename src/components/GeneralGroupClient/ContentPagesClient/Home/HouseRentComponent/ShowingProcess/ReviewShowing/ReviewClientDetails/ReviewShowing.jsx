@@ -103,10 +103,10 @@ const ReviewClientDetails = () => {
 
   const handleBooking = async () => {
     if (loading) return;
-    if (!postTotalPrice) {
-      alert("Error: Incompelete details. Booking cannot proceed.");
-      return; 
-    }
+    // if (!postTotalPrice) {
+    //   alert("Error: Incompelete details. Booking cannot proceed.");
+    //   return; 
+    // }
 
     setLoading(true);
 

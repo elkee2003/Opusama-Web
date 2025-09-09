@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import './DetailedBooking.css'; 
 import { DataStore } from "aws-amplify/datastore";
-import { Booking, Realtor, Post } from '../../../../../../models';
+import { Booking, Realtor, Post, BookingPostOptions  } from '../../../../../../models';
 
 const DetailedBooking = () => {
   const { bookingId } = useParams();

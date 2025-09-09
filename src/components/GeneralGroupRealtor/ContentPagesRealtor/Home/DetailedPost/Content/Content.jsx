@@ -518,27 +518,33 @@ function Content({post, realtor,}) {
           </>
         ): ''}
 
-        {post?.bookingOptions?.map((opt, idx) => (
-          <div 
-            key={idx} 
-            className="realtorBookingOptionCard"
-          >
-            <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
-            <p><strong>Name:</strong> {opt.bookingName}</p>
-            <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+        {/* Price */}
+        {post?.bookingOptions?.length > 0 ? (
+          // Show booking options (no price)
+          <div className="optionsContainer">
+            <p className="optionSubTitle">Available Options:</p>
+            {post.bookingOptions.map((opt, idx) => (
+              <div 
+                key={idx} 
+                className="realtorBookingOptionCard"
+              >
+                <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
+                <p><strong>Name:</strong> {opt.bookingName}</p>
+                <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+              </div>
+            ))}
           </div>
-        ))}
-
-        {/* Pricing */}
-        <div className='priceRoww'>
-          <p className='sub'>Price:</p>
-
-          <p className='price'>
-            {Number(post.price) === 0
-              ? 'Free'
-              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
-          </p>
-        </div>
+        ) : (
+          // Show base price only if no bookingOptions
+          <div className="priceRoww">
+            <p className="sub">Price:</p>
+            <p className="price">
+              {Number(post.price) === 0
+                ? "Free"
+                : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ""}`}
+            </p>
+          </div>
+        )}
 
         {/* Caution Fee */}
         {post?.cautionFee ? (
@@ -549,12 +555,15 @@ function Content({post, realtor,}) {
           ) : ''
         }
 
-        <div className="priceRowTotal">
-          <p className='sub'>Total Price:</p>
-          <p className='totalPrice'>
-            {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
-          </p>
-        </div>
+        {/* Total Price */}
+        {post?.bookingOptions?.length > 0 ? null : (
+          <div className="priceRowTotal">
+            <p className='sub'>Total Price:</p>
+            <p className='totalPrice'>
+              {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
+            </p>
+          </div>
+        )}
 
         {/* Inspection Fee */}
           {post?.inspectionFee ? (

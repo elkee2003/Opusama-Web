@@ -211,6 +211,13 @@ function Post({post}) {
               {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
           </p>
 
+          {/* Booking Name */}
+          {post?.bookingOptions?.bookingName && (
+            <div>
+              <p>{post.bookingOptions.bookingName}</p>
+            </div>
+          )}
+
           {/* Old Price & New Price */}
           {!post?.bookingOptions?.length && (
             <div className={'priceRow'}>

@@ -83,10 +83,10 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
     if (isPaymentSuccessful && transactionReference && transactionStatus && !booking.ticketID) {
       setIsPaymentSuccessful(false);
     }
-  }, [isPaymentSuccessful, transactionReference, transactionStatus, booking.ticketID]);
+  }, [isPaymentSuccessful, transactionReference, transactionStatus, booking?.ticketID]);
   
   const renderButton = () => {
-    if (booking.status === 'ACCEPTED') {
+    if (booking?.status === 'ACCEPTED') {
       if (
         ['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(
           booking.propertyType
@@ -121,7 +121,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
             </button>
           </div>
         );
-      } else if (booking.propertyType === 'Hotel / Shortlet') {
+      } else if (booking?.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
             {/* <button className="view" onClick={handlePaidClick}>
@@ -167,8 +167,8 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
       }
     }
 
-    if (booking.status === 'VIEWING') {
-      if (['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(booking.propertyType)){
+    if (booking?.status === 'VIEWING') {
+      if (['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(booking?.propertyType)){
         return (
           <div className="viewConInfoRow">
             <button className="view" onClick={handleViewedClick}>
@@ -189,7 +189,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
       }
     }
 
-    if (booking.status === 'PAID' && booking.propertyType === 'Hotel / Shortlet') {
+    if (booking?.status === 'PAID' && booking?.propertyType === 'Hotel / Shortlet') {
       return (
         <div className="viewConInfoRow">
           <button className="view" onClick={handleCheckedInClick}>
@@ -209,8 +209,8 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
       );
     }
 
-    if (booking.status === 'CHECKED_IN') {
-      if (booking.propertyType === 'Hotel / Shortlet') {
+    if (booking?.status === 'CHECKED_IN') {
+      if (booking?.propertyType === 'Hotel / Shortlet') {
         return (
           <div className="viewConInfoRow">
             {/* Button */}
@@ -262,7 +262,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
     <div className="bkDetailsContainer">
       <div className="scrollview" style={{ overflowY: 'auto' }}>
         {/* Realtor's Details */}
-        {booking.status === 'ACCEPTED' && (
+        {booking?.status === 'ACCEPTED' && (
           <div>
             <h2 className="header">Vendor's Details</h2>
             {realtor?.phoneNumber && (
@@ -371,7 +371,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Check-out */}
-        {booking.checkOutDate && (
+        {booking?.checkOutDate && (
           <div>
             <h3 className="bkSubHeader">Check-out:</h3>
             <p className="bkDetails">{booking?.checkOutDate}</p>
@@ -379,10 +379,14 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Accommodation Type */}
-        {booking.propertyType && (
+        {booking?.propertyType && (
           <div
+            className='opusableTypeCon'
+            // onClick={()=>{
+            //   navigate(`/clientcontent/exploredetailedpost/${booking.PostID}`);
+            // }}
             onClick={()=>{
-              navigate(`/clientcontent/exploredetailedpost/${booking.PostID}`);
+              navigate(`/clientcontent/booked_property_post/${booking.PostID}`);
             }}
           >
             <h3 className="bkSubHeader">Opusable Type (click to view):</h3>
@@ -391,7 +395,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Room Type */}
-        {booking.accommodationType && (
+        {booking?.accommodationType && (
           <div>
             <h3 className="bkSubHeader">
               {booking.propertyType === 'Hotel / Shortlet' ? 'Room Type:' : 'Property Type:'}
@@ -401,7 +405,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Room name */}
-        {booking.nameOfType && (
+        {booking?.nameOfType && (
           <div>
             <h3 className="bkSubHeader">Room Name:</h3>
             <p className="bkDetails">{booking?.nameOfType}</p>
@@ -409,7 +413,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Total Price */}
-        {booking.realtorPrice && (
+        {booking?.realtorPrice && (
           <div>
             <h3 className="bkSubHeader">Price:</h3>
             <p className="bkDetails">₦{Number(booking.totalPrice)?.toLocaleString()}</p>
@@ -426,7 +430,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
       </div>
 
       {/* QR Code */}
-      {booking.ticketID && (
+      {booking?.ticketID && (
         <div className='qrCodeCon'>
           <TicketQRCode 
             ticketId={booking.ticketID} 
@@ -439,8 +443,8 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
 
       {/* Status */}
       <div className="statusRow">
-        <p className="status">{getStatusText(booking.status)}</p>
-        {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'RECEIVED'].includes(booking.status) ? (
+        <p className="status">{getStatusText(booking?.status)}</p>
+        {['ACCEPTED', 'VIEWING', 'CHECKED_IN', 'VISITING', 'VIEWED', 'CHECKED_OUT', 'VISITED', 'PAID', 'RECEIVED'].includes(booking?.status) ? (
           <div className="greenIcon"></div>
         ) : (
           <div className="redIcon"></div>

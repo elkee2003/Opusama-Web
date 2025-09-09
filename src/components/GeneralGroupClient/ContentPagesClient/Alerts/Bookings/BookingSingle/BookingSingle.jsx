@@ -73,7 +73,9 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
 
       {/* Navigate to Booking Details */}
       {booking.post ? (
-        <div onClick={() => navigate(`/clientcontent/bookingdetails/${booking.id}`)}>
+        <div onClick={() => {
+          navigate(`/clientcontent/bookingdetails/${booking.id}`)
+          }}>
           <h3 className="subHeading">Realtor:</h3>
           <p className="detail">{booking?.realtor?.firstName}</p>
 

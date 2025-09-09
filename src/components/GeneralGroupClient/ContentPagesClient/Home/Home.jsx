@@ -46,12 +46,12 @@ function Home() {
             <Tab label="House" />
             <Tab label="Hotel / Shortlet" />
             <Tab label="Experiences" />
-            <Tab label="Events" />
-            <Tab label="Venues" />
-            <Tab label="Commercial Spaces" />
-            <Tab label="Property Sale" />
-            <Tab label="Office Spaces" />
             <Tab label="Food & Drinks" />
+            <Tab label="Property Sale" />
+            <Tab label="Venues" />
+            <Tab label="Events" />
+            <Tab label="Commercial Spaces" />
+            <Tab label="Office Spaces" />
           </Tabs>
         </div>
       </div>
@@ -60,12 +60,12 @@ function Home() {
         {selectedTab === 0 && <HouseRent />}
         {selectedTab === 1 && <Hotel />}
         {selectedTab === 2 && <Experiences />}
-        {selectedTab === 3 && <EventsTab />}
-        {selectedTab === 4 && <Venues />}
-        {selectedTab === 5 && <CommercialSpaces />}
-        {selectedTab === 6 && <PropertySale />}
-        {selectedTab === 7 && <OfficeSpace />}
-        {selectedTab === 8 && <FoodDrinks />}
+        {selectedTab === 3 && <FoodDrinks />}
+        {selectedTab === 4 && <PropertySale />}
+        {selectedTab === 5 && <Venues />}
+        {selectedTab === 6 && <EventsTab />}
+        {selectedTab === 7 && <CommercialSpaces />}
+        {selectedTab === 8 && <OfficeSpace />}
       </div>
     </div>
   )
@@ -73,63 +73,3 @@ function Home() {
 
 export default Home;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import './Home.css';
-// import HouseRent from './HouseRentComponent';
-// import Hotel from './HotelComponent';
-// import StudentAccommodation from './StudentAccommodationComponent';
-// import PropertySale from './PropertySaleComponent';
-// import OfficeSpace from './OfficeSpaceComponent';
-
-// function Tabs() {
-//   const [activeTab, setActiveTab] = useState('House (Rent)');
-
-//   const tabs = ['House (Rent)', 'Hotel / Shortlet', 'Property Sale', 'Student Accommodation', 'Office Space' ];
-
-//   return (
-//     <div>
-//       {/* Header with tabs */}
-//       <header className="navbar">
-//         {tabs.map((tab) => (
-//           <div
-//             key={tab}
-//             className={`tab ${activeTab === tab ? 'active' : ''}`}
-//             onClick={() => setActiveTab(tab)}
-//           >
-//             {tab}
-//           </div>
-//         ))}
-//       </header>
-
-//       {/* Body */}
-//       <main className="content">
-//         {activeTab === "House (Rent)" && <HouseRent />}
-//         {activeTab === "Hotel / Shortlet" && <Hotel />}
-//         {activeTab === "Property Sale" && <PropertySale />}
-//         {activeTab === "Student Accommodation" && <StudentAccommodation />}
-//         {activeTab === "Office Space" && <OfficeSpace />}
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default Tabs;

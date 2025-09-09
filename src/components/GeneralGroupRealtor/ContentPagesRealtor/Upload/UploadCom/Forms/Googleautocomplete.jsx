@@ -4,21 +4,10 @@ import { FaArrowRight } from "react-icons/fa";
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import { useNavigate } from 'react-router-dom';
-import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
-
-const libraries = ["places"]; // Keep libraries defined outside
+import { Autocomplete } from '@react-google-maps/api';
 
 const GooglePlacesAutoCompleteCom = () => {
   const autocompleteRef = useRef(null);
-
-  const googleApiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-
-  // Load the Google Maps API
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: googleApiKey,
-    libraries,
-  });
 
   const [isFocused, setIsFocused] = useState(false);
   const { authUser } = useAuthContext();
@@ -90,23 +79,21 @@ const GooglePlacesAutoCompleteCom = () => {
 
       {/* Google Places Autocomplete */}
       <div className="autocompleteContainer">
-        {isLoaded && (
-          <Autocomplete
-            onLoad={(ref) => (autocompleteRef.current = ref)}
-            onPlaceChanged={handleOnPlaceChanged}
-            options={{
-              componentRestrictions: { country: ["ng", "gh", "us"] },
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Search Address"
-              className="inputAutoComplete"
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            />
-          </Autocomplete>
-        )}
+        <Autocomplete
+          onLoad={(ref) => (autocompleteRef.current = ref)}
+          onPlaceChanged={handleOnPlaceChanged}
+          options={{
+            componentRestrictions: { country: ["ng", "gh", "us"] },
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Search Address"
+            className="inputAutoComplete"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+        </Autocomplete>
       </div>
 
       <button

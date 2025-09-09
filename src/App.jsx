@@ -11,6 +11,7 @@ import UserProfileProvider from '../Providers/ClientProvider/ProfileProvider';
 import ShowingProvider from '../Providers/ClientProvider/ShowingProvider';
 import BookingProvider from '../Providers/ClientProvider/BookingProvider';
 import BookingShowingProvider from '../Providers/ClientProvider/BookingShowingProvider';
+import GoogleMapsProvider from '../Providers/ClientProvider/GoogleMapsProvider';
 
 // Provider for Realtor
 import RealtorProfileProvider from '../Providers/RealtorProvider/ProfileProvider';
@@ -37,15 +38,17 @@ function App() {
                   {/* Realtor Providers */}
                   <RealtorProfileProvider>
                     <UploadContextProvider>
-                      <Routes>
+                      <GoogleMapsProvider>
+                        <Routes>
 
-                        <Route path="/*" element={<AuthRoutes />} />
+                          <Route path="/*" element={<AuthRoutes />} />
 
-                        <Route path="/clientcontent/*" element={<ClientRoutes />} />
-                              
-                        <Route path="/realtorcontent/*" element={<RealtorRoutes />} />
-                        
-                      </Routes>
+                          <Route path="/clientcontent/*" element={<ClientRoutes />} />
+                                
+                          <Route path="/realtorcontent/*" element={<RealtorRoutes />} />
+                          
+                        </Routes>
+                      </GoogleMapsProvider>
                     </UploadContextProvider>
                   </RealtorProfileProvider>
                 </BookingShowingProvider>

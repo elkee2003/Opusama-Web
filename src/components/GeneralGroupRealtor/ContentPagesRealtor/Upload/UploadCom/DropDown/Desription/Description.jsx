@@ -110,7 +110,7 @@ const WriteDescription = () => {
             {propertyType === 'Food & Drinks' &&
                 renderFields('Food & Drinks', 'Describe food, drink or list ingredients etc.', 
                 'Why one would get food or drink', 
-                'Criteria of getting food or drink')
+                'Criteria for getting food or drink, age restrictions etc')
             }
         </div>
     );

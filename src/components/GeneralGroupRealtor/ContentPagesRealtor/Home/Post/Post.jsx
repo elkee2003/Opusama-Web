@@ -141,12 +141,15 @@ function Post({post}) {
           </p>
 
           {/* Old Price & New Price */}
-          {/* Rent */}
-          <div className={'priceRow'}>
-            <p className={'price'}> 
-              ₦{formattedPrice} {post.timeFrame && `/ ${post.timeFrame}`}
-            </p>
-          </div>
+          {!post?.bookingOptions?.length && (
+            <div className={'priceRow'}>
+              <p className={'price'}> 
+                {Number(post.price) === 0
+                  ? 'Free'
+                  : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
+              </p>
+            </div>
+          )}
         </div>
     </div>
   )

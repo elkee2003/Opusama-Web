@@ -50,6 +50,10 @@
     background-color: #0b0b29;
 }
 
+.opusableTypeCon {
+    cursor: pointer;
+}
+
 .statusRow {
     display: flex;
     align-items: center;

@@ -7,7 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
 import { Hub } from 'aws-amplify/utils'; 
-import { Post } from '../../../../../models'
+import { Post, BookingPostOptions } from '../../../../../models'
 
 function PostList() {
     const navigate = useNavigate();
@@ -36,14 +36,33 @@ function PostList() {
     const fetchMyPosts = async () => {
         setLoading(true);
         try {
-        const myPosts = await DataStore.query(Post, (p) => p.realtorID.eq(dbRealtor.id));
-        const sortedPosts = myPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setMyPostList(sortedPosts);
+            const myPosts = await DataStore.query(Post, (p) => p.realtorID.eq(dbRealtor.id));
+
+            // for each post, fetch bookingOptions
+            const postsWithOptions = await Promise.all(
+                myPosts.map(async (post) => {
+                    const bookingOptions = await DataStore.query(
+                    BookingPostOptions,
+                    (o) => o.postID.eq(post.id)
+                    );
+                    return {
+                        ...post,
+                        bookingOptions, // attach here
+                    };
+                })
+            );
+            
+            // sort after enrichment
+            const sortedPosts = postsWithOptions.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            
+            setMyPostList(sortedPosts);
         } catch (e) {
-        alert('Error fetching posts: ' + e.message);
+            alert('Error fetching posts: ' + e.message);
         } finally {
-        setLoading(false);
-        setRefreshing(false);
+            setLoading(false);
+            setRefreshing(false);
         }
     };
 

@@ -10,13 +10,17 @@ import ClientCommunity from '../../../components/GeneralGroupClient/ContentPages
 import ClientProfile from '../../../components/GeneralGroupClient/ContentPagesClient/Profile/Profile';
 import EditProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/index';
 import ReviewClientProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/EditProfile/ReviewProfile';
-import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
-import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
+import ReviewComment from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PropertyDetails/DetailedPost/Content/ReviewComment/TopTab';
+import DetailResponse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PropertyDetails/DetailedPost/Content/ReviewComment/Content/Response';
 import PostGallery from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PostGallery/PostGallery';
 import ClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ClientDetails/ClientInfo';
 import BookingInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/Booking/BookingInfo';
 import ReviewClientInfo from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/ShowingProcess/ReviewShowing/ReviewClientInfo';
+// BookingFullDetails
 import BookingFullDetails from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookingFullDetails/DetailedBooking';
+
+import BookedProperty from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookedProperty/BookedProperty';
+// import BookedPropertyMap from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookedProperty/BookedPropertyMap/BookedPropertyMap';
 import ReviewProfile from '../../GeneralGroupClient/ContentPagesClient/Profile/ReviewProfile/ReviewProfile';
 import ProfileOptionsPage from '../../GeneralGroupClient/ContentPagesClient/Profile/MainProfile/ProfileOptionBtns/ProfileOptionsBtn';
 import Support from '../../GeneralGroupClient/ContentPagesClient/Profile/ProfileBtnsCom/Support/Support';
@@ -41,25 +45,25 @@ import SearchPageOfficeSpace from '../../GeneralGroupClient/ContentPagesClient/H
 import SearchPagePropertySale from '../../GeneralGroupClient/ContentPagesClient/Home/PropertySaleComponent/Search/Search';
 
 // Other DetailedPost
-import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/DetailedPost/DetailedPost';
+import DetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/PropertyDetails/PropertyDetails';
 
-// Explor DetailedPost
-import ExploreDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Explore/ExploreDetailedPost/DetailedPost';
+// Explore DetailedPost
+import ExploreDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Explore/PropertyDetails/PropertyDetails';
 
 // HotelDetailedPost
-import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/DetailedPost/DetailedPost';
+import HotelDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/HotelComponent/PropertyDetails/PropertyDetails';
 
 // Experiences DetailedPost 
-import ExperiencesDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/ExperiencesComponent/DetailedPost/DetailedPost';
+import ExperiencesDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/ExperiencesComponent/PropertyDetails/PropertyDetails';
 
 // Events DetailedPost 
-import EventsDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/EventsComponent/DetailedPost/DetailedPost';
+import EventsDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/EventsComponent/PropertyDetails/PropertyDetails';
 
 // Food & Drinks DetailedPost 
-import FoodDrinksDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/FoodDrinksComponent/DetailedPost/DetailedPost';
+import FoodDrinksDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/FoodDrinksComponent/PropertyDetails/PropertyDetails';
 
 // Venue DetailedPost 
-import VenueDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/DetailedPost/DetailedPost';
+import VenueDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/PropertyDetails/PropertyDetails';
 
 const ClientRoutes = () => (
     <Routes>
@@ -141,6 +145,12 @@ const ClientRoutes = () => (
 
             {/* Payment */}
             <Route path="payment" element={<PaymentPage />} />
+
+            {/* Booked Propert Details */}
+            <Route path="booked_property_post/:postId" element={<BookedProperty />} />
+
+            {/* Booked PropertyMap */}
+            {/* <Route path="booked_property_map/:postId" element={<BookedPropertyMap />} /> */}
 
             {/* Search */}
             {/* House Search */}
