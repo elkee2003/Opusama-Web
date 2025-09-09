@@ -1,9 +1,10 @@
 .propertyDetailsMapCon {
-    display: flex;
-    flex-direction: column;
-    /* padding:20px; */
-    width: 78vw;
-    height: 90vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* padding:20px; */
+  width: 78vw;
+  height: 90vh;
 }
 
 .propertyDetailsGoogleMapContainer {
@@ -12,6 +13,20 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1.5rem;
+}
+
+.myLocationButton {
+  position: absolute;
+  bottom: 4rem;
+  left: 10px;
+  background: rgb(199, 196, 196);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 2;
 }
 
 
@@ -33,6 +48,6 @@
 @media (max-width: 500px) {
   .propertyDetailsMapCon {
     width: 92vw;
-    height: 87vh;
+    height: 83vh;
   }
 }

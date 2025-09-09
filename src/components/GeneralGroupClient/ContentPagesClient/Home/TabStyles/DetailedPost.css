@@ -75,6 +75,7 @@
     .DtPostLoading-container {
         width: 100vw;
         height: 100vh;
+        /* background-color: blue; */
     }
 }
 @media (max-width: 500px) {

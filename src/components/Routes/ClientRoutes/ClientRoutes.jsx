@@ -2,6 +2,7 @@
 import React from 'react';
 import {Routes, Route } from 'react-router-dom';
 import "./ClientRoutes.css"
+import GoogleMapsProvider from '../../../../Providers/ClientProvider/GoogleMapsProvider';
 import ClientLayout from '../../../components/GeneralGroupClient/ContentLayout'
 import HomeClient from '../../../components/GeneralGroupClient/ContentPagesClient/Home/Home';
 import Explore from '../../../components/GeneralGroupClient/ContentPagesClient/Explore/Explore';
@@ -66,150 +67,152 @@ import FoodDrinksDetailedPost from '../../GeneralGroupClient/ContentPagesClient/
 import VenueDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/PropertyDetails/PropertyDetails';
 
 const ClientRoutes = () => (
-    <Routes>
-        <Route path="/" element={<ClientLayout />}>
-            {/* Home */}
-            <Route path="home" element={<HomeClient />} />
+    <GoogleMapsProvider>
+        <Routes>
+            <Route path="/" element={<ClientLayout />}>
+                {/* Home */}
+                <Route path="home" element={<HomeClient />} />
 
-            {/* Explore */}
-            <Route path="explore" element={<Explore />} />
+                {/* Explore */}
+                <Route path="explore" element={<Explore />} />
 
-            {/* Bookings */}
-            <Route path="bookings" element={<Bookings />} />
+                {/* Bookings */}
+                <Route path="bookings" element={<Bookings />} />
 
-            {/* Community */}
-            <Route path="community" element={<ClientCommunity />} />
+                {/* Community */}
+                <Route path="community" element={<ClientCommunity />} />
 
-            {/* Profile */}
-            <Route path="profile" element={<ClientProfile />} />
+                {/* Profile */}
+                <Route path="profile" element={<ClientProfile />} />
 
-            {/* Edit Profile */}
-            <Route path="editprofile" element={<EditProfile />} />
+                {/* Edit Profile */}
+                <Route path="editprofile" element={<EditProfile />} />
 
-            {/* Profile Options */}
-            <Route path="profileoptions" element={<ProfileOptionsPage />} />
+                {/* Profile Options */}
+                <Route path="profileoptions" element={<ProfileOptionsPage />} />
 
-            {/* Review Edit */}
-            <Route path="reviewedit" element={<ReviewClientProfile />} />
+                {/* Review Edit */}
+                <Route path="reviewedit" element={<ReviewClientProfile />} />
 
-            {/* Detailed Post */}
-            <Route path="detailedpost/:postId" element={<DetailedPost />} />
+                {/* Detailed Post */}
+                <Route path="detailedpost/:postId" element={<DetailedPost />} />
 
-            {/* UserReview Post */}
-            <Route path="reviews_comments/:postId" element={<ReviewComment />} />
+                {/* UserReview Post */}
+                <Route path="reviews_comments/:postId" element={<ReviewComment />} />
 
-            {/* Response for Detailed Post */}
-            <Route path="detail_response_post/:postId" element={<DetailResponse />} />
+                {/* Response for Detailed Post */}
+                <Route path="detail_response_post/:postId" element={<DetailResponse />} />
 
-            {/* Gallery of Post */}
-            <Route path="gallery/:postId" element={<PostGallery />} />
+                {/* Gallery of Post */}
+                <Route path="gallery/:postId" element={<PostGallery />} />
 
-            {/* Client Info */}
-            <Route path="clientdetails/:postId" element={<ClientInfo/>} />
+                {/* Client Info */}
+                <Route path="clientdetails/:postId" element={<ClientInfo/>} />
 
-            {/* Booking for Hotel Info */}
-            <Route path="bookingdetails" element={<BookingInfo/>} />
+                {/* Booking for Hotel Info */}
+                <Route path="bookingdetails" element={<BookingInfo/>} />
 
-            {/* Review Booking/Showing Info */}
-            <Route path="reviewinfo" element={<ReviewClientInfo/>} />
+                {/* Review Booking/Showing Info */}
+                <Route path="reviewinfo" element={<ReviewClientInfo/>} />
 
-            {/* Booking Full Details */}
-            <Route path="bookingdetails/:bookingId" element={<BookingFullDetails/>} />
+                {/* Booking Full Details */}
+                <Route path="bookingdetails/:bookingId" element={<BookingFullDetails/>} />
 
-            {/* Review User Profile */}
-            <Route path="reviewprofile" element={<ReviewProfile/>} />
+                {/* Review User Profile */}
+                <Route path="reviewprofile" element={<ReviewProfile/>} />
 
-            {/* Support Page */}
-            <Route path="support" element={<Support/>} />
+                {/* Support Page */}
+                <Route path="support" element={<Support/>} />
 
-            {/* Delete Account */}
-            <Route path="deleteaccount" element={<DeleteAccount/>} />
+                {/* Delete Account */}
+                <Route path="deleteaccount" element={<DeleteAccount/>} />
 
-            {/* Realtor Profile */}
-            <Route path="realtorprofile/:realtorId" element={<RealtorProfile/>} />
+                {/* Realtor Profile */}
+                <Route path="realtorprofile/:realtorId" element={<RealtorProfile/>} />
 
-            {/* Realtor Users Reviews */}
-            <Route path="realtorusersreview/:realtorId" element={<RealtorUserReviews/>} />
+                {/* Realtor Users Reviews */}
+                <Route path="realtorusersreview/:realtorId" element={<RealtorUserReviews/>} />
 
-            {/* Create Post */}
-            <Route path="create_post" element={<CreatePost />} />
+                {/* Create Post */}
+                <Route path="create_post" element={<CreatePost />} />
 
-            {/* Community Detailed Post */}
-            <Route path="community_post/:postId" element={<CommunityDetailedPost />} />
+                {/* Community Detailed Post */}
+                <Route path="community_post/:postId" element={<CommunityDetailedPost />} />
 
-            {/* Response Community Post */}
-            <Route path="response_post/:postId" element={<CommunityPostResponse />} />
+                {/* Response Community Post */}
+                <Route path="response_post/:postId" element={<CommunityPostResponse />} />
 
-            {/* Community UserProfile */}
-            <Route path="userprofile/:userId" element={<UserProfile />} />
+                {/* Community UserProfile */}
+                <Route path="userprofile/:userId" element={<UserProfile />} />
 
-            {/* Payment */}
-            <Route path="payment" element={<PaymentPage />} />
+                {/* Payment */}
+                <Route path="payment" element={<PaymentPage />} />
 
-            {/* Booked Propert Details */}
-            <Route path="booked_property_post/:postId" element={<BookedProperty />} />
+                {/* Booked Propert Details */}
+                <Route path="booked_property_post/:postId" element={<BookedProperty />} />
 
-            {/* Booked PropertyMap */}
-            {/* <Route path="booked_property_map/:postId" element={<BookedPropertyMap />} /> */}
+                {/* Booked PropertyMap */}
+                {/* <Route path="booked_property_map/:postId" element={<BookedPropertyMap />} /> */}
 
-            {/* Search */}
-            {/* House Search */}
-            <Route path="search_house" element={<SearchPageHouse />} />
+                {/* Search */}
+                {/* House Search */}
+                <Route path="search_house" element={<SearchPageHouse />} />
 
-            {/* Hotel Search */}
-            <Route path="search_hotel" element={<SearchPageHotel />} />
+                {/* Hotel Search */}
+                <Route path="search_hotel" element={<SearchPageHotel />} />
 
-            {/* Experience Search */}
-            <Route path="search_experience" element={<SearchPageExperience />} />
+                {/* Experience Search */}
+                <Route path="search_experience" element={<SearchPageExperience />} />
 
-            {/* Events Search */}
-            <Route path="search_events" element={<SearchPageEvents />} />
+                {/* Events Search */}
+                <Route path="search_events" element={<SearchPageEvents />} />
 
-            {/* CommercialSpace Search */}
-            <Route path="search_commercial_spaces" element={<SearchPageCommercialSpaces />} />
+                {/* CommercialSpace Search */}
+                <Route path="search_commercial_spaces" element={<SearchPageCommercialSpaces />} />
 
-            {/* Food&Drinks Search */}
-            <Route path="search_food_drinks" element={<SearchPageFoodDrinks />} />
+                {/* Food&Drinks Search */}
+                <Route path="search_food_drinks" element={<SearchPageFoodDrinks />} />
 
-            {/* Venue Search */}
-            <Route path="search_venue" element={<SearchPageVenue />} />
+                {/* Venue Search */}
+                <Route path="search_venue" element={<SearchPageVenue />} />
 
-            {/* Office Space Search */}
-            <Route path="search_office_space" element={<SearchPageOfficeSpace />} />
+                {/* Office Space Search */}
+                <Route path="search_office_space" element={<SearchPageOfficeSpace />} />
 
-            {/* Property Sale Search */}
-            <Route path="search_property_sale" element={<SearchPagePropertySale />} />
+                {/* Property Sale Search */}
+                <Route path="search_property_sale" element={<SearchPagePropertySale />} />
 
 
-            {/* Explore Detailed Route */}
-            <Route path="exploredetailedpost/:postId" element={<ExploreDetailedPost />} />
+                {/* Explore Detailed Route */}
+                <Route path="exploredetailedpost/:postId" element={<ExploreDetailedPost />} />
 
-            {/* Hotel Detailed Route */}
-            <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
+                {/* Hotel Detailed Route */}
+                <Route path="hoteldetailedpost/:postId" element={<HotelDetailedPost />} />
 
-            {/* Experiences Detailed Route */}
-            <Route path="experience_detailedpost/:postId" element={<ExperiencesDetailedPost />} />
+                {/* Experiences Detailed Route */}
+                <Route path="experience_detailedpost/:postId" element={<ExperiencesDetailedPost />} />
 
-            {/* Events Detailed Route */}
-            <Route path="events_detailedpost/:postId" element={<EventsDetailedPost />} />
+                {/* Events Detailed Route */}
+                <Route path="events_detailedpost/:postId" element={<EventsDetailedPost />} />
 
-            {/* Food&Drinks Detailed Route */}
-            <Route path="food_drinks_detailedpost/:postId" element={<FoodDrinksDetailedPost />} />
+                {/* Food&Drinks Detailed Route */}
+                <Route path="food_drinks_detailedpost/:postId" element={<FoodDrinksDetailedPost />} />
 
-            {/* Venue Detailed Route */}
-            <Route path="venue_detailedpost/:postId" element={<VenueDetailedPost />} />
+                {/* Venue Detailed Route */}
+                <Route path="venue_detailedpost/:postId" element={<VenueDetailedPost />} />
 
-            {/* for invalid route */}
-            <Route 
-                path='*' 
-                element={
-                    <div className='clientError404Con'>
-                        <p>404 Not Found</p>
-                    </div>
-                }
-            />
-        </Route>
-    </Routes>
+                {/* for invalid route */}
+                <Route 
+                    path='*' 
+                    element={
+                        <div className='clientError404Con'>
+                            <p>404 Not Found</p>
+                        </div>
+                    }
+                />
+            </Route>
+        </Routes>
+    </GoogleMapsProvider>
 );
 
 export default ClientRoutes;

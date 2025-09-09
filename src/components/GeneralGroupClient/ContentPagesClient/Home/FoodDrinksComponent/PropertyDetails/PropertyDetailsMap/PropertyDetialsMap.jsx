@@ -92,21 +92,11 @@ function PropertyDetailsMap() {
         onLoad={setMap}
         onUnmount={() => setMap(null)}
       >
-        {/* Show user location */}
-        {currentPosition && (
-          <Marker
-            position={currentPosition}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            }}
-          />
-        )}
-
-        {/* If price > 0 → Blur with circle; else → Exact marker + directions */}
+        {/* Marker or Circle */}
         {Number(post.totalPrice) > 0 ? (
           <Circle
             center={displayCoords}
-            radius={500} // adjust 300–500m for privacy
+            radius={700} // ~700m blur
             options={{
               strokeColor: "#4A90E2",
               strokeOpacity: 0.5,
@@ -117,11 +107,54 @@ function PropertyDetailsMap() {
           />
         ) : (
           <>
-            <Marker position={{ lat: post.lat, lng: post.lng }} />
-            {directions && <DirectionsRenderer directions={directions} />}
+            <Marker position={displayCoords} />
           </>
         )}
+
+        {/* Directions service + renderer (only if free post) */}
+        {currentPosition && post && Number(post.totalPrice) === 0 && (
+          <DirectionsService
+            options={{
+              origin: currentPosition,
+              destination: { lat: post.lat, lng: post.lng },
+              travelMode: window.google.maps.TravelMode.DRIVING,
+            }}
+            callback={(result, status) => {
+              if (status === "OK") {
+                setDirections(result);
+              } else {
+                console.error("Directions request failed:", status);
+              }
+            }}
+          />
+        )}
+
+        {directions && (
+          <DirectionsRenderer
+            options={{
+              directions: directions,
+              suppressMarkers: false,
+              polylineOptions: {
+                strokeColor: "#4285F4",
+                strokeWeight: 5,
+              },
+            }}
+          />
+        )}
       </GoogleMap>
+
+      {/* Floating My Location button */}
+      <button
+        className='myLocationButton'
+        onClick={() => {
+          if (map && currentPosition) {
+            map.panTo(currentPosition);
+            map.setZoom(14);
+          }
+        }}
+      >
+        📍
+      </button>
     </div>
   );
 }
