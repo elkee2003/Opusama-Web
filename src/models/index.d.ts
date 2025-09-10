@@ -461,6 +461,42 @@ export declare const User: (new (init: ModelInit<User>) => User) & {
   copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
 }
 
+type EagerVendorScanner = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorScanner, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly vendorID?: string | null;
+  readonly name?: string | null;
+  readonly token?: string | null;
+  readonly expiresAt?: string | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyVendorScanner = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorScanner, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly vendorID?: string | null;
+  readonly name?: string | null;
+  readonly token?: string | null;
+  readonly expiresAt?: string | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type VendorScanner = LazyLoading extends LazyLoadingDisabled ? EagerVendorScanner : LazyVendorScanner
+
+export declare const VendorScanner: (new (init: ModelInit<VendorScanner>) => VendorScanner) & {
+  copyOf(source: VendorScanner, mutator: (draft: MutableModel<VendorScanner>) => MutableModel<VendorScanner> | void): VendorScanner;
+}
+
 type EagerRealtor = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Realtor, 'id'>;

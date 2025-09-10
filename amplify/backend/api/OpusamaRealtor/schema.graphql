@@ -140,6 +140,15 @@ type User @model @auth(rules: [{allow: public}]) {
   push_token: String
 }
 
+type VendorScanner @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  vendorID: String
+  name: String
+  token: String
+  expiresAt: String
+  isActive: Boolean
+}
+
 type Realtor @model @auth(rules: [{allow: public}]) {
   id: ID!
   sub: String!

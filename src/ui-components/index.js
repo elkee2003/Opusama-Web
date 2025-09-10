@@ -12,4 +12,6 @@ export { default as RealtorCreateForm } from "./RealtorCreateForm";
 export { default as RealtorUpdateForm } from "./RealtorUpdateForm";
 export { default as UserCreateForm } from "./UserCreateForm";
 export { default as UserUpdateForm } from "./UserUpdateForm";
+export { default as VendorScannerCreateForm } from "./VendorScannerCreateForm";
+export { default as VendorScannerUpdateForm } from "./VendorScannerUpdateForm";
 export { default as studioTheme } from "./studioTheme";

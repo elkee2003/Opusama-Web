@@ -35,7 +35,7 @@ const BookingPostOptionType = {
   "PICKUP": "PICKUP"
 };
 
-const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, Realtor, BookingPostOptions, Post } = initSchema(schema);
+const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, VendorScanner, Realtor, BookingPostOptions, Post } = initSchema(schema);
 
 export {
   Notification,
@@ -48,6 +48,7 @@ export {
   PostReview,
   Booking,
   User,
+  VendorScanner,
   Realtor,
   BookingPostOptions,
   Post,

@@ -21,6 +21,12 @@ const ProfileContextProvider = ({children}) => {
     const [directPayment, setDirectPayment] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Scan State
+    const [name, setName] = useState("");
+    const [scanToken, setScanToken] = useState("");
+    const [isActive, setIsActive] = useState(true);
+    const [expiresAt, setExpiresAt] = useState("");
+
       const validateInput = () =>{
         setErrorMessage('')
         if(!profilePic){
@@ -83,7 +89,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput, name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt}}>
         {children}
     </ProfileContext.Provider>
   )

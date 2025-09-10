@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import './ProfileOptions.css'
 import { AiFillEdit, AiOutlineLogout, AiFillDelete } from "react-icons/ai";
-import { MdSupportAgent, MdPolicy } from "react-icons/md";
+import { MdSupportAgent, MdPolicy, MdQrCodeScanner } from "react-icons/md";
 import { RiFileList2Fill } from "react-icons/ri";
 import { signOut } from 'aws-amplify/auth';
 
@@ -39,6 +39,14 @@ const ProfileOptionsPage = () => {
             >
             <AiFillEdit className="proOptIcon" />
             <span className="proOptTxt">Edit Profile</span>
+            </button>
+
+            <button
+            className="proOptBtnRow"
+            onClick={() => navigate("/realtorcontent/vendor_scanner_generator")}
+            >
+                <MdQrCodeScanner className="proOptIcon" />
+                <span className="proOptTxt">Generate Scanner</span>
             </button>
 
             <button
