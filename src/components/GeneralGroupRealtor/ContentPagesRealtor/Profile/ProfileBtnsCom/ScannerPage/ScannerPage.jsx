@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef  } from 'react';
+import { useEffect, useState } from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { VendorScanner, Booking, User, Post, Realtor } from '../../../../../../models';
@@ -9,9 +9,9 @@ function ScannerPage() {
     const [scanner, setScanner] = useState(null);
     const [vendorName, setVendorName] = useState("");
     const [loading, setLoading] = useState(true);
-    const [scanResult, setScanResult] = useState(null);
+    const [scannedData, setScannedData] = useState(null);
+    const [isScannerActive, setIsScannerActive] = useState(false);
 
-    const readerRef = useRef(null);
     const navigate = useNavigate();
 
     // ✅ Fetch scanner by token
@@ -153,32 +153,34 @@ function ScannerPage() {
         verifyBooking();
     }, [scannedData]);
 
-
-     // ✅ Initialize QR scanner once scanner is valid
+    // ✅ Initialize QR scanner
     useEffect(() => {
-        if (!scanner || !readerRef.current) return;
+        if (!isScannerActive) return;
 
-        const html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader",
-            { fps: 10, qrbox: 250 },
-            false
-        );
+        const scannerInstance = new Html5QrcodeScanner('qr-reader', {
+        fps: 10,
+        qrbox: 250,
+        });
 
-        html5QrcodeScanner.render(
-            (decodedText) => {
-            console.log("Scan success:", decodedText);
-            setScanResult(decodedText);
-            alert(`Scanned: ${decodedText}`);
-            },
-            () => {}
+        scannerInstance.render(
+        (decodedText) => {
+            try {
+            const data = JSON.parse(decodedText);
+            if (!data.ticketId) throw new Error();
+            setScannedData(data);
+            setIsScannerActive(false);
+            scannerInstance.clear();
+            } catch {
+            alert('Invalid QR code format');
+            }
+        },
+        (errorMessage) => console.warn('QR scan error:', errorMessage)
         );
 
         return () => {
-            html5QrcodeScanner.clear().catch(err =>
-            console.error("Failed to clear scanner:", err)
-            );
+        scannerInstance.clear().catch((err) => console.error('Failed to clear scanner:', err));
         };
-    }, [scanner]);
+    }, [isScannerActive]);
 
     if (loading) return <p>Loading scanner...</p>;
     if (!scanner) return <p>No valid scanner found.</p>;
@@ -186,22 +188,32 @@ function ScannerPage() {
   return (
     <div>
         <h2>{scanner.name}</h2>
-        <p>Authorized for vendor: {vendorName || scanner.vendorID}</p>
+        <p>
+            Authorized for vendor: {vendorName || scanner.vendorID}
+        </p>
 
         {scanner.expiresAt && (
             <p>Expires: {new Date(scanner.expiresAt).toLocaleString()}</p>
         )}
 
-        {/* ✅ Use ref instead of relying only on id */}
-        <div
-            id="reader"
-            ref={readerRef}
-            style={{ width: "500px", marginTop: "20px" }}
-        ></div>
+        {/* ✅ Toggle Scanner Button */}
+        <button 
+            onClick={() => setIsScannerActive(true)}
+            className="openScannerBtn"
+        >
+            {isScannerActive ? 'Scanning...' : 'Open QR Scanner'}
+        </button>
 
-        {scanResult && (
+        {/* ✅ QR Scanner Area */}
+        {isScannerActive && (
+            <div 
+                id="qr-reader" 
+                style={{ width: '500px', marginTop: '20px' }}></div>
+        )}
+
+        {scannedData && (
             <div style={{ marginTop: "20px", color: "green" }}>
-            <strong>Last Scan Result:</strong> {scanResult}
+            <strong>Last Scan Result:</strong> {scannedData}
             </div>
         )}
     </div>

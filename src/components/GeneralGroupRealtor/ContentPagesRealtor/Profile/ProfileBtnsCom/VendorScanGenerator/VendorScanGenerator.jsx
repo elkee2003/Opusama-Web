@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import './VendorScanGenerator.css';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useProfileContext } from '../../../../../../../Providers/RealtorProvider/ProfileProvider';
+import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
 import { VendorScanner } from '../../../../../../models';
 import { v4 as uuidv4 } from 'uuid'; 
 
 function VendorScanGenerator() {
+    const navigate = useNavigate();
     const { dbRealtor } = useAuthContext();
     const {name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt} = useProfileContext();
     const [scannerLinks, setScannerLinks] = useState([]); 
@@ -25,17 +27,14 @@ function VendorScanGenerator() {
         const expiry = expiresAt ? new Date(expiresAt).toISOString() : null;
 
         const scanner = await DataStore.save(
-        new VendorScanner({
-            vendorID: dbRealtor.id,
-            name: name || "Unnamed Link",
-            token,
-            isActive,
-            expiresAt: expiry, 
-        })
+            new VendorScanner({
+                vendorID: dbRealtor.id,
+                name: name || "Unnamed Link",
+                token,
+                isActive,
+                expiresAt: expiry, 
+            })
         );
-
-        // add newly created scanner to UI immediately
-        setScannerLinks((prev) => [...prev, scanner]);
 
         // Reset Fields to default
         setName("");
@@ -150,10 +149,37 @@ function VendorScanGenerator() {
         <ul>
             {scannerLinks.map((scanner) => (
             <li key={scanner.id} className="scanner-item">
-                {scanner.name} - 
-                <a href={`/realtorcontent/scanner?token=${scanner.token}`} target="_blank" rel="noreferrer">
-                    Open Scanner {''}
-                </a>
+                <div className='scanner-name'>
+                    {scanner.name}
+
+                    {!scanner.isActive && <span> (revoked)</span>}
+                </div>
+
+                <div className='open-copy-scanner-con'>
+                    <button
+                        className='open-scanner-btn'
+                        onClick={() =>
+                            window.open(
+                            `/realtorcontent/scanner?token=${scanner.token}`, 
+                            "_blank",
+                            "noopener,noreferrer"
+                            )
+                        }
+                    >
+                        Open Scanner
+                    </button>
+
+                    <button
+                        className="btn-copy"
+                        onClick={() =>
+                            navigator.clipboard.writeText(
+                            `${window.location.origin}/realtorcontent/scanner?token=${scanner.token}`
+                            ).then(() => alert("Link copied!"))
+                        }
+                    >
+                    Copy
+                    </button>
+                </div>
 
                 {scanner.expiresAt && (
                 <span> 
@@ -161,7 +187,7 @@ function VendorScanGenerator() {
                 </span>
                 )}
 
-                {!scanner.isActive && <span> (revoked)</span>}
+                {/* {!scanner.isActive && <span> (revoked)</span>} */}
 
                 {/* Scan Actions */}
                 <div className="scanner-actions">
@@ -185,4 +211,4 @@ function VendorScanGenerator() {
   )
 }
 
-export default VendorScanGenerator
+export default VendorScanGenerator;
