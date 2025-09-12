@@ -7,6 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
+import { remove, getUrl } from "aws-amplify/storage"; 
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User } from '../../../../../../../../models';
 
@@ -36,6 +37,19 @@ function UserPost() {
           const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
           await Promise.all(likes.map(like => DataStore.delete(like)));
 
+          // Delete media from S3
+          if (post.media?.length) {
+            await Promise.all(
+              post.media.map(async (path) => {
+                try {
+                  await remove({ path });
+                } catch (err) {
+                  console.error("Error deleting media from S3:", err);
+                }
+              })
+            );
+          }
+
           // Delete the post itself
           await DataStore.delete(CommunityDiscussion, post.id);
           
@@ -45,8 +59,38 @@ function UserPost() {
           console.error("Error deleting post:", error);
       }
   };
+
+  // Fetch Media
+  const fetchMediaUrls = async (mediaPaths) => {
+    if (!mediaPaths?.length) return [];
+
+    try {
+      const urls = await Promise.all(
+        mediaPaths.map(async (path) => {
+          const result = await getUrl({
+            path,
+            options: {
+              validateObjectExistence: true,
+              expiresIn: null, // permanent link
+            },
+          });
+
+          return {
+            url: result.url.toString(),
+            type: path.endsWith('.mp4') ? 'video' : 'image',
+          };
+        })
+      );
+
+      return urls;
+    } catch (error) {
+        console.error("Error fetching media URLs:", error);
+        return [];
+    }
+  };
   
 
+  // Fetch Discussions Related to User
   const fetchUserDiscussions = async () => {
     if (!dbUser) return;
 
@@ -76,9 +120,10 @@ function UserPost() {
                              users.find(u => u.id === post.instigatorID);
 
           // Fetch replies & likes for this discussion
-          const [replies, likes] = await Promise.all([
+          const [replies, likes, media] = await Promise.all([
             DataStore.query(CommunityReply, r => r.communitydiscussionID.eq(post.id)),
-            DataStore.query(CommunityLike, l => l.communitydiscussionID.eq(post.id))
+            DataStore.query(CommunityLike, l => l.communitydiscussionID.eq(post.id)),
+            fetchMediaUrls(post.media)
           ]);
           
 
@@ -142,7 +187,9 @@ function UserPost() {
             totalLikes,
             likes: likesWithUsers,
             replies: repliesWithCommenters,
-            formattedTime
+            formattedTime,
+            mediaUris: media,
+            media: post.media    
           };
         }) 
       );
@@ -252,6 +299,30 @@ function UserPost() {
                     </button>
                 )}
             </p>
+
+            {/* Media display */}
+            {post.mediaUris && post.mediaUris.length > 0 && (
+              <div className="display-media-community">
+                {post.mediaUris.map((media, index) =>
+                  media.type === "video" ? (
+                    <video
+                      key={index}
+                      src={media.url}
+                      controls
+                      className="pCommunityMedia"
+                    />
+                  ) : (
+                    <img
+                      key={index}
+                      src={media.url}
+                      alt={`Post media ${index}`}
+                      className="pCommunityImage"
+                      loading="lazy"
+                    />
+                  )
+                )}
+              </div>
+            )}
 
             {/* Post Engagment */}
             <div className='postEngagementCon'>

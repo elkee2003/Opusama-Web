@@ -175,7 +175,9 @@ const UploadProperty = () => {
   // Function to compress images
   const compressImage = async (fileBlob, filename) => {
     const file = new File([fileBlob], filename, { type: fileBlob.type });
+
     const options = { maxSizeMB: 0.5, maxWidthOrHeight: 600, useWebWorker: true };
+
     const compressedFile = await browserImageCompression(file, options);
     return new Blob([compressedFile], { type: "image/jpeg" });
   };
@@ -190,7 +192,7 @@ const UploadProperty = () => {
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
         let compressedBlob = fileBlob;
-        let fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
+        const fileExtension = file.name.split('.').pop(); 
 
         // Compress Image
         if (item.type.startsWith("image")) {

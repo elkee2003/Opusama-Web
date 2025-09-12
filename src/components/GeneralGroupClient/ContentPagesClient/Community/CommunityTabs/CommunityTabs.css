@@ -1,7 +1,7 @@
 .communPostListCon {
     display:flex;
     flex-direction: column;
-    width: 80vw;
+    width: 70vw;
 }
 
 .communityCategorySelect {
@@ -101,6 +101,21 @@
     color: #9b0000;
     border:none;
     background: transparent;
+}
+
+.display-media-community {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 8px; 
+  margin-top: 10px;
+}
+
+.pCommunityImage,
+.pCommunityMedia {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .postEngagementCon {

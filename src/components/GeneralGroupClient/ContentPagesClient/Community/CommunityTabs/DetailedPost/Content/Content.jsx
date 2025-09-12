@@ -9,6 +9,7 @@ import { useAuthContext } from '../../../../../../../../Providers/ClientProvider
 import { useNavigate} from "react-router-dom";
 import { formatDistanceStrict } from "date-fns";
 import UsersComment from './UsersComment';
+import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, CommunityLike, Notification } from '../../../../../../../models';
 
@@ -19,6 +20,36 @@ const Content = ({post, onDelete}) => {
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
     const [repliesCount, setRepliesCount] = useState(0);
+    const [mediaUris, setMediaUris] = useState([]);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    // Fetch Media
+    const fetchMediaUrls = async () => {
+      if (!post.media?.length) return;
+
+      try {
+        const urls = await Promise.all(
+          post.media.map(async (path) => {
+            const result = await getUrl({
+              path,
+              options: {
+                validateObjectExistence: true,
+                expiresIn: null,
+              },
+            });
+
+            return {
+              url: result.url.toString(),
+              type: path.endsWith('.mp4') ? 'video' : 'image',
+            };
+          })
+        );
+
+        setMediaUris(urls.filter(Boolean));
+      } catch (error) {
+        console.error("Error fetching media URLs:", error);
+      }
+    };
 
     // Time format
     const formattedTime = post.createdAt
@@ -70,6 +101,19 @@ const Content = ({post, onDelete}) => {
 
           // Delete all likes
           await Promise.all(likes.map(like => DataStore.delete(like)));
+
+          // ✅ Delete media from S3
+          if (post.media && post.media.length > 0) {
+            await Promise.all(
+              post.media.map(async (path) => {
+                try {
+                  await remove({ path });
+                } catch (err) {
+                  console.error(`Failed to delete ${path} from S3:`, err);
+                }
+              })
+            );
+          }
 
           // Delete the post
           await DataStore.delete(CommunityDiscussion, post.id);
@@ -216,6 +260,11 @@ const Content = ({post, onDelete}) => {
       fetchLikeStatus();
     }, [post.id, dbUser]);
 
+    // UseEffect for media
+    useEffect(() => {
+      fetchMediaUrls();
+    }, [post.media]);
+
   return (
     <div className="communityDetailedPostCon">
 
@@ -275,6 +324,31 @@ const Content = ({post, onDelete}) => {
           )}
         </p>
 
+        {/* Display media */}
+        {mediaUris.length > 0 && (
+          <div className="display-media-community">
+            {mediaUris.map((media, index) =>
+              media.type === 'video' ? (
+                <video
+                  key={index}
+                  src={media.url}
+                  controls
+                  className="pCommunityMedia"
+                />
+              ) : (
+                <img
+                  key={index}
+                  src={media.url}
+                  alt={`Post media ${index}`}
+                  className="pCommunityImage"
+                  loading="lazy"
+                  onClick={() => setSelectedImage(media.url)}
+                />
+              )
+            )}
+          </div>
+        )}
+
         {/* Post Engagment */}
         <div className='detPostEngagementCon'>
             <div className="detEngagementrow">
@@ -320,6 +394,16 @@ const Content = ({post, onDelete}) => {
         >
             <IoMdAdd className='addIcon'/>
         </div>
+
+        {/* Selected Image */}
+        {selectedImage && (
+          <div 
+            className="fullscreen-overlay" 
+            onClick={() => setSelectedImage(null)} // close on click
+          >
+            <img src={selectedImage} alt="Full screen view" className="fullscreen-image" />
+          </div>
+        )}
     </div>
   );
 };

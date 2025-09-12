@@ -7,6 +7,7 @@ import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
+import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, CommunityLike, Notification, Realtor, User } from '../../../../../../../models';
 
@@ -19,6 +20,36 @@ function Post({post, onDelete}) {
     const [moreName, setMoreName] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
+    const [mediaUris, setMediaUris] = useState([]);
+
+    // Fetch all media URLs
+    const fetchMediaUrls = async () => {
+        if (!post.media?.length) return;
+
+        try {
+            const urls = await Promise.all(
+            post.media.map(async (path) => {
+                const result = await getUrl({
+                path,
+                options: {
+                    validateObjectExistence: true,
+                    expiresIn: null,
+                },
+                });
+
+                return {
+                url: result.url.toString(),
+                type: path.endsWith('.mp4') ? 'video' : 'image',
+                };
+            })
+            );
+
+            setMediaUris(urls);
+        } catch (error) {
+            console.error("Error fetching media URLs:", error);
+        }
+    };
+
 
     // Time format
     const formattedTime = post.createdAt
@@ -54,6 +85,19 @@ function Post({post, onDelete}) {
             // Delete associated likes
             const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
             await Promise.all(likes.map(like => DataStore.delete(like)));
+
+            // ✅ Delete media from S3
+            if (post.media && post.media.length > 0) {
+                await Promise.all(
+                    post.media.map(async (path) => {
+                    try {
+                        await remove({ path });
+                    } catch (err) {
+                        console.error(`Failed to delete ${path} from S3:`, err);
+                    }
+                    })
+                );
+            }
 
             // Delete the post itself
             await DataStore.delete(CommunityDiscussion, post.id);
@@ -156,6 +200,11 @@ function Post({post, onDelete}) {
         fetchUserLike();
     }, [dbUser, post.id]);
 
+    // useEffect for Images
+    useEffect(() => {
+        fetchMediaUrls();
+    }, [post.media]);
+
   return (
     <div>
         <div 
@@ -228,6 +277,31 @@ function Post({post, onDelete}) {
                     </button>
                 )}
             </p>
+
+            {/* Display media */}
+            {mediaUris.length > 0 && (
+                <div className="display-media-community">
+                    {mediaUris.map((media, index) => (
+                    media.type === 'video' ? (
+                        <video 
+                        key={index} 
+                        src={media.url} 
+                        controls 
+                        className="pCommunityMedia"
+                        />
+                    ) : (
+                        <img
+                        key={index}
+                        src={media.url}
+                        alt={`Post media ${index}`}
+                        className="pCommunityImage"
+                        loading="lazy"
+                        />
+                    )
+                    ))}
+                </div>
+            )}
+        
 
             {/* Post Engagment */}
             <div className='postEngagementCon'>

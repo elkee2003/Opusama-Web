@@ -197,6 +197,27 @@
     margin-bottom: 20px;
 }
 
+/* Selected Image style */
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.fullscreen-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
 @media (max-width: 900px) {
     .communityDetailedPostCon {
         width: 100vw;
