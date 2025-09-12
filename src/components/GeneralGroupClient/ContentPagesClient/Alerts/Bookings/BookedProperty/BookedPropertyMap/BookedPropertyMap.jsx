@@ -92,6 +92,19 @@ function BookedPropertyMap() {
         {/* Render the route */}
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
+
+      {/* Floating My Location button */}
+      <button
+        className='myLocationButton'
+        onClick={() => {
+          if (map && currentPosition) {
+            map.panTo(currentPosition);
+            map.setZoom(14);
+          }
+        }}
+      >
+        📍
+      </button>
     </div>
   )
 }

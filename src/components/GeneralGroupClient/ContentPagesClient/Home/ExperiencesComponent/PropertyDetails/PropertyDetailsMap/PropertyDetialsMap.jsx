@@ -112,7 +112,7 @@ function PropertyDetailsMap() {
         )}
 
         {/* Directions service + renderer (only if free post) */}
-        {currentPosition && post && Number(post.totalPrice) === 0 && (
+        {currentPosition && post && Number(post?.totalPrice) === 0 && (
           <DirectionsService
             options={{
               origin: currentPosition,

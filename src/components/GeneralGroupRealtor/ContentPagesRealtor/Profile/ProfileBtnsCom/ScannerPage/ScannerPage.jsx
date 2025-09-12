@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './ScannerPage.css';
 import { DataStore } from 'aws-amplify/datastore';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { VendorScanner, Booking, User, Post, Realtor } from '../../../../../../models';
@@ -186,7 +187,7 @@ function ScannerPage() {
     if (!scanner) return <p>No valid scanner found.</p>;
 
   return (
-    <div>
+    <div className='scanner-page-con'>
         <h2>{scanner.name}</h2>
         <p>
             Authorized for vendor: {vendorName || scanner.vendorID}
@@ -208,12 +209,15 @@ function ScannerPage() {
         {isScannerActive && (
             <div 
                 id="qr-reader" 
-                style={{ width: '500px', marginTop: '20px' }}></div>
+                className='qrCodeScaner'></div>
         )}
 
         {scannedData && (
             <div style={{ marginTop: "20px", color: "green" }}>
-            <strong>Last Scan Result:</strong> {scannedData}
+                <strong>Last Scan Result:</strong>
+                <p>Ticket ID: {scannedData.ticketId}</p>
+                <p>Accommodation: {scannedData.accommodationType}</p>
+                <p>Property Type: {scannedData.propertyType}</p>
             </div>
         )}
     </div>

@@ -67,7 +67,7 @@ import FoodDrinksDetailedPost from '../../GeneralGroupClient/ContentPagesClient/
 import VenueDetailedPost from '../../GeneralGroupClient/ContentPagesClient/Home/VenuesComponent/PropertyDetails/PropertyDetails';
 
 const ClientRoutes = () => (
-    <GoogleMapsProvider>
+    // <GoogleMapsProvider>
         <Routes>
             <Route path="/" element={<ClientLayout />}>
                 {/* Home */}
@@ -212,7 +212,7 @@ const ClientRoutes = () => (
                 />
             </Route>
         </Routes>
-    </GoogleMapsProvider>
+    // </GoogleMapsProvider>
 );
 
 export default ClientRoutes;

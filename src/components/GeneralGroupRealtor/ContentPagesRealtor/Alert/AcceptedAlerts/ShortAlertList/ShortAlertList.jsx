@@ -246,6 +246,13 @@ const ShortAlertList = () => {
             {isScannerActive ? "Scanning..." : "Open QR Scanner"}
         </button>
 
+        <button 
+            className='generateScannerBtn'
+            onClick={() => navigate("/realtorcontent/vendor_scanner_generator")}
+        >
+            Generate Scanner for Others
+        </button>
+
         {/* QR Scanner Area */}
         {isScannerActive && (
         <div id="qr-reader" className='qrCodeScaner'></div>

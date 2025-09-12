@@ -370,10 +370,14 @@ function Content({post, realtor,}) {
         <div className='topBorderLine' />
 
         {/* Location */}
-        {post.generalLocation && (
-          <p className='location'>{post.generalLocation}</p>
+        {post?.generalLocation && (
+          post?.totalPrice ? (
+            <p className="location">{post.fullAddress}</p>
+          ) : (
+            <p className="location">{post.generalLocation}</p>
+          )
         )}
-
+        
         {/* City, State, Country, */}
         <div>
           <p className='subheader'>Location</p>

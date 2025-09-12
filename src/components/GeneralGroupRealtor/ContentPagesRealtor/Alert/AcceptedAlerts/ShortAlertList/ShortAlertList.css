@@ -14,6 +14,7 @@
   width: fit-content;
 }
 
+
 .openScannerBtn:hover {
   background-color: #45a049;
   transform: scale(1.05);
@@ -29,6 +30,20 @@
     max-width: 400px; 
     margin: auto;
     margin-bottom: 1.5rem;
+}
+
+.generateScannerBtn {
+  background-color: #1f9907;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 20px auto;
+  display: block;
+  width: fit-content;
 }
 
 @media (max-width: 900px) {
