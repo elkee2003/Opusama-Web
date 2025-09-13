@@ -147,6 +147,18 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             <p className="dAlatDetails">₦{Number(notification.realtorPrice).toLocaleString()}</p>
           </>
         )}
+
+        {/* Staff who checkedIn */}
+        {notification?.checkedInByUser && (
+          <>
+            <h3 className="dAlatSubHeader">Checked In By:</h3>
+            <p className="dAlatDetails">
+              {notification?.checkedInByUser}
+            </p>
+          </>
+        )}
+
+        {/* Booked By */}
         <p className="bookedBy">by: {notification?.user?.firstName}</p>
       </div>
 

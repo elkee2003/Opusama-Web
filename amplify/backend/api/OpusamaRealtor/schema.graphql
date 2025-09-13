@@ -120,6 +120,7 @@ type Booking @model @auth(rules: [{allow: public}]) {
   ticketID: String
   qrCodeUrl: String
   ticketStatus: String
+  checkedInByID: String
 }
 
 type User @model @auth(rules: [{allow: public}]) {

@@ -996,6 +996,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "checkedInByID": {
+                    "name": "checkedInByID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -2188,5 +2195,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "eaf5fdf207dba41af584ffbca083c5c9"
+    "version": "eb56bdbe0c07cffb0daa92e1f6980099"
 };

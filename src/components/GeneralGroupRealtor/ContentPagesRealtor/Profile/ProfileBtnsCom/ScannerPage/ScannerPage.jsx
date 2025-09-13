@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import './ScannerPage.css';
 import { DataStore } from 'aws-amplify/datastore';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
+import AuthenticatorPage from './AuthenticatorPage';
 import { VendorScanner, Booking, User, Post, Realtor } from '../../../../../../models';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
 function ScannerPage() {
+    const { authUser, dbUser } = useAuthContext();
     const [searchParams] = useSearchParams();
     const [scanner, setScanner] = useState(null);
     const [vendorName, setVendorName] = useState("");
@@ -14,6 +17,16 @@ function ScannerPage() {
     const [isScannerActive, setIsScannerActive] = useState(false);
 
     const navigate = useNavigate();
+
+    // Authentication for AuthUser
+    if (!authUser) {
+        return (
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
+                <AuthenticatorPage/>
+            </div>
+        )
+    };
+    
 
     // ✅ Fetch scanner by token
     useEffect(() => {
@@ -105,8 +118,11 @@ function ScannerPage() {
         try {
             await DataStore.save(
                 Booking.copyOf(booking, (updated) => {
-                updated.status = "CHECKED_IN";
-                updated.ticketStatus = "Used";
+                    updated.status = "CHECKED_IN";
+                    updated.ticketStatus = "Used";
+                    if (dbUser?.id) {
+                        updated.checkedInByID = dbUser.id;
+                    }
                 })
             );
         alert(

@@ -356,6 +356,7 @@ type EagerBooking = {
   readonly ticketID?: string | null;
   readonly qrCodeUrl?: string | null;
   readonly ticketStatus?: string | null;
+  readonly checkedInByID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -397,6 +398,7 @@ type LazyBooking = {
   readonly ticketID?: string | null;
   readonly qrCodeUrl?: string | null;
   readonly ticketStatus?: string | null;
+  readonly checkedInByID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

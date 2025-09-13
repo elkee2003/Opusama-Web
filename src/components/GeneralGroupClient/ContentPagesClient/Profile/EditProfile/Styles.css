@@ -270,6 +270,19 @@
   border-radius: 15px;
 }
 
+.emptyInputAuthTxt {
+  min-width: 400px;
+  white-space: pre-wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(179, 179, 179);
+  padding: 25px;
+  border-radius: 15px;
+  color: rgb(216, 7, 7);
+}
+
+
+
 .emptyBtnCon {
   background-color: #0c052e;
   min-width: 140px;
@@ -350,6 +363,7 @@
     width: 100vw;
     margin-left: 0;
     margin-right: 0;
+    margin-bottom: 5rem;
   }
 
   .profileInput {

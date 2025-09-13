@@ -10,6 +10,7 @@ const AcceptedDetailedAlert = () => {
   const [booking, setBooking] = useState(null);
   const [user, setUser] = useState(null);
   const [post, setPost] = useState(null);
+  const [checkedInByUser, setCheckedInByUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchBooking = async (alertId) => {
@@ -25,13 +26,18 @@ const AcceptedDetailedAlert = () => {
           const foundPost = foundBooking.PostID
             ? await DataStore.query(Post, foundBooking.PostID)
             : null;
+          const foundCheckedInBy = foundBooking.checkedInByID
+          ? await DataStore.query(User, foundBooking.checkedInByID)
+          : null;
 
           setBooking(foundBooking);
           setUser(foundUser);
           setPost(foundPost);
+          setCheckedInByUser(foundCheckedInBy);
         } else {
           setBooking(null);
           setPost(null);
+          setCheckedInByUser(null);
         }
       }
     } catch (e) {
@@ -93,7 +99,7 @@ const AcceptedDetailedAlert = () => {
         </div>
       ) : (
         <AcceptedDetailedAlertcom
-          notification={{ ...booking, user, post }}
+          notification={{ ...booking, user, post, checkedInByUser }}
           onStatusChange={updateBookingStatus}
         />
       )}
