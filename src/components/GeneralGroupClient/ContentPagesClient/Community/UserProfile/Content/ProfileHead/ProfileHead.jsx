@@ -9,6 +9,7 @@ const ProfileHead = ({post}) => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   // Fetch signed URL for profile picture
   const fetchImageUrl = async () => {
@@ -44,7 +45,12 @@ useEffect(() => {
         {loading || !profilePic ? (
           <img src={Placeholder} alt="Placeholder" className='img' />
         ) : (
-          <img src={profilePic} alt="Profile" className='img' />
+          <img 
+            src={profilePic} 
+            alt="Profile" 
+            className='img' 
+            onClick={() => setShowOverlay(true)}
+          />
         )}
       </div>
       <div className='pRow'>
@@ -60,6 +66,20 @@ useEffect(() => {
       <div>
         <p className='profileContentTitle'>POSTS</p>
       </div>
+
+      {/* Show full image overlay */}
+      {showOverlay && profilePic && (
+        <div
+          className="fullscreen-overlay"
+          onClick={() => setShowOverlay(false)}
+        >
+          <img
+            src={profilePic}
+            alt="Full screen view"
+            className='fullscreen-image'
+          />
+        </div>
+      )}
     </div>
   );
 };

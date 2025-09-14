@@ -25,18 +25,33 @@ function ContentTabsClient ({ unreadCount }){
                 <nav>
                     <ul>
                         <li>
+                            {/* Approved */}
                             <NavLink 
-                                to="/clientcontent/home"
+                                to="/admin/home"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
-                                <FaHome /> Home
+                                <FaHome /> Approved
                                 </div>
                             </NavLink>
                         </li>
+
+                        <li>
+                            {/* Unapproved */}
+                            <NavLink 
+                                to="/admin/unapproved"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                            >
+                                <div className='client-nav-container'>
+                                <FaHome /> Unapproved
+                                </div>
+                            </NavLink>
+                        </li>
+
+                        {/* Explore */}
                         <li>
                             <NavLink 
-                                to="/clientcontent/explore"
+                                to="/admin/explore"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
@@ -46,7 +61,7 @@ function ContentTabsClient ({ unreadCount }){
                         </li>
                         <li>
                             <NavLink 
-                                to="/clientcontent/community"
+                                to="/admin/community"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
@@ -57,7 +72,7 @@ function ContentTabsClient ({ unreadCount }){
 
                         <li>
                             <NavLink 
-                                to="/clientcontent/bookings"
+                                to="/admin/bookings"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
@@ -71,7 +86,7 @@ function ContentTabsClient ({ unreadCount }){
 
                         <li>
                             <NavLink 
-                                to="/clientcontent/profile"
+                                to="/admin/profile"
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
@@ -85,29 +100,39 @@ function ContentTabsClient ({ unreadCount }){
 
             {/* Bottom tab navigator for smaller screens */}
             <div className="client-bottom-nav">
+                {/* Approved */}
                 <NavLink 
-                    to="/clientcontent/home"
+                    to="/admin/home"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
-                    <FaHome /> Home
+                    <FaHome /> Approved
                 </NavLink>
 
+                {/* UnApproved */}
                 <NavLink 
-                    to="/clientcontent/explore"
+                    to="/admin/unapproved"
+                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                >
+                    <FaHome /> UnApproved
+                </NavLink>
+
+                {/* Explore */}
+                <NavLink 
+                    to="/admin/explore"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaSearch /> Explore
                 </NavLink>
 
                 <NavLink 
-                    to="/clientcontent/community"
+                    to="/admin/community"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaUsers /> Community
                 </NavLink>
 
                 <NavLink 
-                    to="/clientcontent/bookings"
+                    to="/admin/bookings"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <div className='clientBottomNavBellCon'>
@@ -119,7 +144,7 @@ function ContentTabsClient ({ unreadCount }){
                 </NavLink>
 
                 <NavLink Link 
-                    to="/clientcontent/profile"
+                    to="/admin/profile"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaUser /> Profile

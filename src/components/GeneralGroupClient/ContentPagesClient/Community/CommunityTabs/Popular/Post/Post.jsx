@@ -21,6 +21,7 @@ function Post({post, onDelete}) {
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
     const [mediaUris, setMediaUris] = useState([]);
+    const [selectedMedia, setSelectedMedia] = useState(null); 
     
     // Fetch all media URLs
     const fetchMediaUrls = async () => {
@@ -282,18 +283,26 @@ function Post({post, onDelete}) {
                     {mediaUris.map((media, index) => (
                     media.type === 'video' ? (
                         <video 
-                        key={index} 
-                        src={media.url} 
-                        controls 
-                        className="pCommunityMedia"
+                            key={index} 
+                            src={media.url} 
+                            controls 
+                            className="pCommunityMedia"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedMedia(media);
+                            }}
                         />
                     ) : (
                         <img
-                        key={index}
-                        src={media.url}
-                        alt={`Post media ${index}`}
-                        className="pCommunityImage"
-                        loading="lazy"
+                            key={index}
+                            src={media.url}
+                            alt={`Post media ${index}`}
+                            className="pCommunityImage"
+                            loading="lazy"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedMedia(media);
+                            }}
                         />
                     )
                     ))}
@@ -326,6 +335,23 @@ function Post({post, onDelete}) {
 
             {/* Border */}
             <div className='communBorder'/>
+
+            {/* ✅ Fullscreen Media Viewer */}
+            {selectedMedia && (
+                <div
+                className="fullscreen-overlay"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedMedia(null);
+                }}
+                >
+                {selectedMedia.type === "video" ? (
+                    <video src={selectedMedia.url} controls autoPlay className="fullscreen-media" />
+                ) : (
+                    <img src={selectedMedia.url} alt="fullscreen" className="fullscreen-media" />
+                )}
+                </div>
+            )}
         </div>
     </div>
   )

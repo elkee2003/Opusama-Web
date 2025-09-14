@@ -25,6 +25,7 @@ function PostList() {
         { label: 'Food, Fun & Nightlife', value: 'Food, Fun & Nightlife' },
         { label: 'Safety & Scam Alerts', value: 'Safety & Scam Alerts' },
         { label: 'City Life & Questions', value: 'City Life & Questions' },
+        { label: 'Announcement', value: 'Announcement' },
         // { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
         // { label: 'House Hunting Tips', value: 'House Hunting Tips' },
         // { label: 'Recreation & Nightlife', value : 'Recreation & Nightlife' },

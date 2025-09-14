@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthRoutes from './components/Routes/HomePageRoutes/AuthRoutes';
 import ClientRoutes from './components/Routes/ClientRoutes/ClientRoutes';
 import RealtorRoutes from './components/Routes/RealtorRoutes/RealtorRoutes';
+import AdminRoute from './components/Routes/AdminRoutes/AdminRoutes';
 // AuthProvider is for both user and realtor
 import AuthProvider from '../Providers/ClientProvider/AuthProvider';
 import UserProfileProvider from '../Providers/ClientProvider/ProfileProvider';
@@ -16,6 +17,7 @@ import GoogleMapsProvider from '../Providers/ClientProvider/GoogleMapsProvider';
 // Provider for Realtor
 import RealtorProfileProvider from '../Providers/RealtorProvider/ProfileProvider';
 import UploadContextProvider from '../Providers/RealtorProvider/UploadProvider';
+import AdminRoutes from './components/Routes/AdminRoutes/AdminRoutes';
 
 ReactGA.initialize(import.meta.env.VITE_MEASUREMENT_ID);
 
@@ -42,9 +44,14 @@ function App() {
                         <Routes>
                           <Route path="/*" element={<AuthRoutes />} />
 
+                          {/* Client Route */}
                           <Route path="/clientcontent/*" element={<ClientRoutes />} />
                                 
+                          {/* Realtor Route */}
                           <Route path="/realtorcontent/*" element={<RealtorRoutes />} />
+
+                          {/* Admin Route */}
+                          <Route path="/admin/*" element={<AdminRoutes />} />
                         </Routes>
                       </GoogleMapsProvider>
                     </UploadContextProvider>

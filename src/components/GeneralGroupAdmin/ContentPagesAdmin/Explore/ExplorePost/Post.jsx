@@ -64,7 +64,7 @@ function Post({post}) {
           return;
       }else if (!dbUser.username) {
           alert('Please fill in your username to proceed.');
-          navigate('/clientcontent/editprofile');
+          navigate('/admin/editprofile');
       }
   
       try {
@@ -109,7 +109,7 @@ function Post({post}) {
     // function to navigate
     const handleNavigate = (postId) => {
       // sessionStorage.setItem("scrollPosition", window.scrollY); 
-      navigate(`/clientcontent/exploredetailedpost/${postId}`);
+      navigate(`/admin/exploredetailedpost/${postId}`);
     }; 
 
   return (
@@ -135,7 +135,7 @@ function Post({post}) {
                   className="pVideoOverlay" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/clientcontent/exploredetailedpost/${post.id}`);
+                    navigate(`/admin/exploredetailedpost/${post.id}`);
                   }}
                 />
               </div>
@@ -179,7 +179,7 @@ function Post({post}) {
           {/* Username */}
           <div 
               className={'contact'}
-              onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
+              onClick={()=>navigate(`/admin/realtorprofile/${post.realtorID}`)}
           >
               <p className={'name'}>{post.firstName}</p>
           </div>

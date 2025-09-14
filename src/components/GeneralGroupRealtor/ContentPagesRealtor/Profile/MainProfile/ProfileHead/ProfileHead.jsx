@@ -22,6 +22,7 @@ const ProfileHead = () => {
     const [loading, setLoading] = useState(true);
     const [readMoreDescription, setReadMoreDescription] = useState(false);
     const [averageRealtorRating, setAverageRealtorRating] = useState(0);
+    const [showOverlay, setShowOverlay] = useState(false);
 
     const descriptionMaxLength = 80;
     const truncatedDescription =
@@ -157,15 +158,21 @@ const ProfileHead = () => {
             {/* Image */}
             <div
             className="mainProfilePicContainer"
-            onClick={() => navigate('/realtorcontent/editprofile')}
+            // onClick={() => navigate('/realtorcontent/editprofile')}
             >
             {loading ? (
-                <img src={placeholder} alt="Placeholder" className="img" />
+                <img 
+                    src={placeholder} 
+                    alt="Placeholder" 
+                    className="img" 
+                    onClick={() => navigate('/realtorcontent/editprofile')}
+                />
             ) : (
                 <img
                 src={profilePic}
                 alt="Profile"
                 className="img"
+                onClick={() => setShowOverlay(true)}
                 onError={() => setProfilePic(null)}
                 />
             )}
@@ -246,6 +253,20 @@ const ProfileHead = () => {
             <span className="subHeaderTxt">View Ratings</span>
             </button>
         </div>
+
+        {/* Show full image overlay */}
+        {showOverlay && profilePic && (
+            <div
+            className="fullscreen-overlay"
+            onClick={() => setShowOverlay(false)}
+            >
+            <img
+                src={profilePic}
+                alt="Full screen view"
+                className='fullscreen-image'
+            />
+            </div>
+        )}
     </div>
   );
 };

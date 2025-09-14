@@ -17,6 +17,7 @@ const ProfileHead = () => {
   const { firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
   const { dbUser } = useAuthContext();
   const [loading, setLoading] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   // Fetch signed URL for profile picture
   const fetchImageUrl = async () => {
@@ -61,11 +62,24 @@ const ProfileHead = () => {
       >
           <BsThreeDotsVertical className='clientDotIcon' />
       </button>
-      <div className='mainProfilePicContainer' onClick={() => navigate('/clientcontent/editprofile')}>
+      <div 
+        className='mainProfilePicContainer' 
+        // onClick={() => navigate('/clientcontent/editprofile')}
+      >
         {loading || !profilePic ? (
-          <img src={Placeholder} alt="Placeholder" className='img' />
+          <img 
+            src={Placeholder} 
+            alt="Placeholder" 
+            className='img' 
+            onClick={() => navigate('/clientcontent/editprofile')}
+          />
         ) : (
-          <img src={profilePic} alt="Profile" className='img' />
+          <img 
+            src={profilePic} 
+            alt="Profile" 
+            className='img' 
+            onClick={() => setShowOverlay(true)}
+          />
         )}
       </div>
       <div className='pRow'>
@@ -93,6 +107,20 @@ const ProfileHead = () => {
           View Info
         </button>
       </div>
+
+      {/* Show full image overlay */}
+      {showOverlay && profilePic && (
+          <div
+          className="fullscreen-overlay"
+          onClick={() => setShowOverlay(false)}
+          >
+          <img
+              src={profilePic}
+              alt="Full screen view"
+              className='fullscreen-image'
+          />
+          </div>
+      )}
     </div>
   );
 };

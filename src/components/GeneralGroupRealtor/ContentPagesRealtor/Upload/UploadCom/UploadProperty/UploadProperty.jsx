@@ -192,7 +192,7 @@ const UploadProperty = () => {
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
         let compressedBlob = fileBlob;
-        const fileExtension = file.name.split('.').pop(); 
+        let fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
 
         // Compress Image
         if (item.type.startsWith("image")) {

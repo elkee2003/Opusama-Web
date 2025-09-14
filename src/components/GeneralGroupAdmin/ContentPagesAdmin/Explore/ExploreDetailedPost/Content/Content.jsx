@@ -132,7 +132,7 @@ function Content({post, realtor,}) {
     // Navigate function
     const handleNavigate = () => {
       if(authUser){
-        navigate(`/clientcontent/clientdetails/${post.id}`);
+        navigate(`/admin/clientdetails/${post.id}`);
       }else{
         alert('Sign In to access')
         navigate('/?section=signin');
@@ -163,7 +163,7 @@ function Content({post, realtor,}) {
           return;
       }else if (!dbUser.username) {
           alert('Please fill in your username to proceed.');
-          navigate('/clientcontent/editprofile');
+          navigate('/admin/editprofile');
       }
   
       try {
@@ -233,7 +233,7 @@ function Content({post, realtor,}) {
       <div className='scrollContainer'>
         <div 
           className='imageContainer'
-          onClick={()=>navigate(`/clientcontent/gallery/${post.id}`)}
+          onClick={()=>navigate(`/admin/gallery/${post.id}`)}
         >
           {mediaUris.length > 0 ? (
 
@@ -265,7 +265,7 @@ function Content({post, realtor,}) {
                         className="pVideoOverlay" 
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/clientcontent/gallery/${post.id}`);
+                          navigate(`/admin/gallery/${post.id}`);
                         }}
                       />
                     </div>
@@ -308,7 +308,7 @@ function Content({post, realtor,}) {
 
           <div 
             className='commentContentRow'
-            onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
+            onClick={()=>navigate(`/admin/reviews_comments/${post.id}`)}
           >
             <FaRegCommentDots className='commentContentIcon'/>
             <p>{post?.totalFeedback}</p>
@@ -600,7 +600,7 @@ function Content({post, realtor,}) {
         <p className= 'lastRatingReviewTxt'>Ratings and Reviews:</p>
         <button 
           className='seeAllReviews'
-          onClick={()=>navigate(`/clientcontent/reviews_comments/${post.id}`)}
+          onClick={()=>navigate(`/admin/reviews_comments/${post.id}`)}
         >
           <LastReview post={post} dbUser={dbUser}/>
           <p className='seeAllReviewsTxt'>See all reviews</p>

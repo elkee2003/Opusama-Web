@@ -1,7 +1,7 @@
 // components/Layout.jsx
 import React, {useState, useEffect} from "react";
 import { Outlet } from "react-router-dom"; 
-import ContentTabsClient from "../ContentTabsClient";
+import ContentTabsAdmin from "../ContentTabsAdmin";
 import './ContentLayout.css';
 import {FaBell} from 'react-icons/fa';
 import { useAuthContext } from "../../../../Providers/ClientProvider/AuthProvider";
@@ -49,7 +49,7 @@ const Layout = () => {
   return (
     <div className="client-layoutCon">
       {/* Sidebar */}
-      <ContentTabsClient unreadCount={unreadCount}/>
+      <ContentTabsAdmin unreadCount={unreadCount}/>
       
       {/* Main Content */}
       <div className="client-main-content">

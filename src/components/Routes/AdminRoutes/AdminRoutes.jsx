@@ -3,16 +3,18 @@ import React from 'react';
 import {Routes, Route } from 'react-router-dom';
 import "./AdminRoutes.css"
 import AdminLayout from '../../GeneralGroupAdmin/ContentLayout'
-import HomeAdmin from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Home';
+import HomeAdmin from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/Home';
+import UnApproved from '../../GeneralGroupAdmin/ContentPagesAdmin/UnApproved/Home';
 import Explore from '../../GeneralGroupAdmin/ContentPagesAdmin/Explore/Explore';
 import Bookings from '../../GeneralGroupAdmin/ContentPagesAdmin/Alerts/Alerts';
 import AdminCommunity from '../../GeneralGroupAdmin/ContentPagesAdmin/Community/Community';
 import AdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/Profile';
 import EditProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/index';
 import ReviewAdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/ReviewProfile';
-import ReviewComment from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
-import DetailResponse from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
-import PostGallery from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HouseRentComponent/PostGallery/PostGallery';
+import ReviewComment from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
+import ProfileOptionsPage from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/MainProfile/ProfileOptionBtns/ProfileOptionsBtn';
+import DetailResponse from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
+import PostGallery from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HouseRentComponent/PostGallery/PostGallery';
 
 import BookingFullDetails from '../../GeneralGroupAdmin/ContentPagesAdmin/Alerts/Bookings/BookingFullDetails/DetailedBooking';
 import ReviewProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ReviewProfile/ReviewProfile';
@@ -25,42 +27,45 @@ import CommunityPostResponse from '../../GeneralGroupClient/ContentPagesClient/C
 import UserProfile from '../../GeneralGroupClient/ContentPagesClient/Community/UserProfile/UserProfile';
 
 // SearchPages
-import SearchPageHouse from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HouseRentComponent/Search/Search';
-import SearchPageHotel from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HotelComponent/Search/Search';
-import SearchPageCommercialSpaces from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/CommercialSpacesComponent/Search/Search';
-import SearchPageEvents from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/EventsComponent/Search/Search';
-import SearchPageExperience from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/ExperiencesComponent/Search/Search';
-import SearchPageFoodDrinks from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/FoodDrinksComponent/Search/Search';
-import SearchPageVenue from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/VenuesComponent/Search/Search';
-import SearchPageOfficeSpace from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/OfficeSpaceComponent/Search/Search';
-import SearchPagePropertySale from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/PropertySaleComponent/Search/Search';
+import SearchPageHouse from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HouseRentComponent/Search/Search';
+import SearchPageHotel from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HotelComponent/Search/Search';
+import SearchPageCommercialSpaces from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/CommercialSpacesComponent/Search/Search';
+import SearchPageEvents from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/EventsComponent/Search/Search';
+import SearchPageExperience from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/ExperiencesComponent/Search/Search';
+import SearchPageFoodDrinks from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/FoodDrinksComponent/Search/Search';
+import SearchPageVenue from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/VenuesComponent/Search/Search';
+import SearchPageOfficeSpace from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/OfficeSpaceComponent/Search/Search';
+import SearchPagePropertySale from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/PropertySaleComponent/Search/Search';
 
 // Other DetailedPost
-import DetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HouseRentComponent/DetailedPost/DetailedPost';
+import DetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HouseRentComponent/DetailedPost/DetailedPost';
 
 // Explore DetailedPost
 import ExploreDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Explore/ExploreDetailedPost/DetailedPost';
 
 // HotelDetailedPost
-import HotelDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/HotelComponent/DetailedPost/DetailedPost';
+import HotelDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/HotelComponent/DetailedPost/DetailedPost';
 
 // Experiences DetailedPost 
-import ExperiencesDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/ExperiencesComponent/DetailedPost/DetailedPost';
+import ExperiencesDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/ExperiencesComponent/DetailedPost/DetailedPost';
 
 // Events DetailedPost 
-import EventsDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/EventsComponent/DetailedPost/DetailedPost';
+import EventsDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/EventsComponent/DetailedPost/DetailedPost';
 
 // Food & Drinks DetailedPost 
-import FoodDrinksDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/FoodDrinksComponent/DetailedPost/DetailedPost';
+import FoodDrinksDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/FoodDrinksComponent/DetailedPost/DetailedPost';
 
 // Venue DetailedPost 
-import VenueDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/VenuesComponent/DetailedPost/DetailedPost';
+import VenueDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Approved/VenuesComponent/DetailedPost/DetailedPost';
 
 const AdminRoutes = () => (
     <Routes>
         <Route path="/" element={<AdminLayout />}>
-            {/* Home */}
-            <Route path="home" element={<HomeClient />} />
+            {/* Approved */}
+            <Route path="home" element={<HomeAdmin />} />
+
+            {/* Unapproved */}
+            <Route path="unapproved" element={<UnApproved />} />
 
             {/* Explore */}
             <Route path="explore" element={<Explore />} />
@@ -69,16 +74,19 @@ const AdminRoutes = () => (
             <Route path="bookings" element={<Bookings />} />
 
             {/* Community */}
-            <Route path="community" element={<ClientCommunity />} />
+            <Route path="community" element={<AdminCommunity />} />
 
             {/* Profile */}
-            <Route path="profile" element={<ClientProfile />} />
+            <Route path="profile" element={<AdminProfile />} />
 
             {/* Edit Profile */}
             <Route path="editprofile" element={<EditProfile />} />
 
             {/* Profile Options */}
             <Route path="profileoptions" element={<ProfileOptionsPage />} />
+
+            {/* Review Edit */}
+            <Route path="reviewedit" element={<ReviewAdminProfile />} />
 
             {/* Detailed Post */}
             <Route path="detailedpost/:postId" element={<DetailedPost />} />

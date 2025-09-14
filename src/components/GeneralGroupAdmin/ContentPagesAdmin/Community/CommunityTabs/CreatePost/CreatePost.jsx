@@ -22,6 +22,7 @@ const CreatePost = () => {
         { label: 'Food, Fun & Nightlife', value: 'Food, Fun & Nightlife' },
         { label: 'Safety & Scam Alerts', value: 'Safety & Scam Alerts' },
         { label: 'City Life & Questions', value: 'City Life & Questions' },
+        { label: 'Announcement', value: 'Announcement' },
     ];
 
     const handleSubmit = async () => {

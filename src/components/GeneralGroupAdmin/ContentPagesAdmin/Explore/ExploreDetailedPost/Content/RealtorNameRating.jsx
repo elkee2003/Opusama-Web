@@ -85,7 +85,7 @@ const RealtorNameRating = ({ realtor }) => {
         <div className="realtorNameRow">
           <button
             className="nameButton"
-            onClick={() => navigate(`/clientcontent/realtorprofile/${realtor?.id}`)}
+            onClick={() => navigate(`/admin/realtorprofile/${realtor?.id}`)}
           >
             <span className="name">{realtor.firstName}</span>
           </button>
