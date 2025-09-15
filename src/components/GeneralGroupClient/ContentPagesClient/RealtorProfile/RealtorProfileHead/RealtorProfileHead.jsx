@@ -14,6 +14,7 @@ const RealtorProfileHead = ({ realtor }) => {
     const [realtorProfilePic, setRealtorProfilePic] = useState(null);
     const [readMoreDescription, setReadMoreDescription] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
+    const [showOverlay, setShowOverlay] = useState(false);
 
   const descriptionMaxLength = 80;
   const truncatedDescription =
@@ -178,6 +179,20 @@ const RealtorProfileHead = ({ realtor }) => {
                 </p>
             </button>
       </div>
+
+      {/* Show full image overlay */}
+      {showOverlay && realtorProfilePic && (
+        <div
+          className="fullscreen-overlay"
+          onClick={() => setShowOverlay(false)}
+        >
+          <img
+            src={realtorProfilePic}
+            alt="Full screen view"
+            className='fullscreen-image'
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { remove, getUrl } from "aws-amplify/storage"; 
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User } from '../../../../../../../../models';
+import { CommunityDiscussion, CommunityReply, CommunityLike, Realtor, User, Notification } from '../../../../../../../../models';
 
 function UserPost() {
   const navigate = useNavigate();
@@ -36,6 +36,12 @@ function UserPost() {
           // Delete associated likes
           const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
           await Promise.all(likes.map(like => DataStore.delete(like)));
+
+          // Delete associated notifications
+          const relatedNotifications = await DataStore.query(Notification, (n) =>
+          n.entityID.eq(post.id)
+          );
+          await Promise.all(relatedNotifications.map(n => DataStore.delete(n)));
 
           // Delete media from S3
           if (post.media?.length) {

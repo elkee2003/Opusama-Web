@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MdVerified } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Placeholder from '/placeholder.png';
 import './ProfileHead.css';
@@ -60,6 +61,11 @@ useEffect(() => {
 
       <div className='userProUsernameCon'>
         <p className='userProUsername'>@{post?.instigatorUsername}</p>
+        
+        {/* Verified Icon */}
+        {post.isVerified && (
+            <MdVerified className='verifiedIcon' />
+        )}
       </div>
 
       {/* Profile Content Title */}

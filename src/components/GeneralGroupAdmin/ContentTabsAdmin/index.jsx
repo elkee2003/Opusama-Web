@@ -36,17 +36,6 @@ function ContentTabsClient ({ unreadCount }){
                             </NavLink>
                         </li>
 
-                        <li>
-                            {/* Unapproved */}
-                            <NavLink 
-                                to="/admin/unapproved"
-                                className={({ isActive }) => isActive ? 'active-link' : ''}
-                            >
-                                <div className='client-nav-container'>
-                                <FaHome /> Unapproved
-                                </div>
-                            </NavLink>
-                        </li>
 
                         {/* Explore */}
                         <li>
@@ -106,14 +95,6 @@ function ContentTabsClient ({ unreadCount }){
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
                     <FaHome /> Approved
-                </NavLink>
-
-                {/* UnApproved */}
-                <NavLink 
-                    to="/admin/unapproved"
-                    className={({ isActive }) => isActive ? 'active-link' : ''}
-                >
-                    <FaHome /> UnApproved
                 </NavLink>
 
                 {/* Explore */}

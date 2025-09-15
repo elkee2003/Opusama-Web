@@ -60,11 +60,18 @@
 .postUsernameCon{
     display:flex;
     gap:5px;
+    align-items: center;
+    justify-content: center;
 }
 
 .postUsername {
     font-weight: 600;
     font-size: 16px;
+}
+
+.verifiedIcon {
+    font-size: 1.2rem;
+    color:rgb(115, 145, 6);
 }
 
 .postTime {

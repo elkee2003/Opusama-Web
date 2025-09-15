@@ -43,7 +43,7 @@ function PostList() {
                 alert(
                     'Kindly fill in your data to access pages. Thank you.'
                 );
-                navigate('/clientcontent/profile')
+                navigate('/admin/profile')
             }
         };
         
@@ -112,6 +112,7 @@ function PostList() {
                         creatorOfPostID: instigator?.id,
                         instigatorName: instigator ? instigator.firstName : 'Unknown',
                         instigatorUsername: instigator?.username || "unknown",
+                        isVerified: instigator?.isVerified || false, 
                         numComments,
                         totalLikes,
                         likes: likesWithUsers,

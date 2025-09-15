@@ -129,12 +129,13 @@ type User @model @auth(rules: [{allow: public}]) {
   firstName: String!
   lastName: String
   username: String
+  isVerified: Boolean
   profilePic: String
-  phoneNumber: String
   PostReviews: [PostReview] @hasMany(indexName: "byUser", fields: ["id"])
   RealtorReviews: [RealtorReview] @hasMany(indexName: "byUser", fields: ["id"])
-  address: String
+  phoneNumber: String
   Bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+  address: String
   cardNumber: String
   cardExpiry: String
   cardCvv: String

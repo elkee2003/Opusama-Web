@@ -49,6 +49,7 @@ function UserProfile() {
                             instigatorName: instigator?.firstName || "Unknown",
                             instigatorUsername: instigator?.username || "unknown",
                             instigatorProfilePic: instigator?.profilePic || null,
+                            isVerified: instigator?.isVerified || false, 
                             numComments: comments.length,
                             totalLikes: likes.length,
                             formattedTime: post.createdAt
@@ -58,7 +59,12 @@ function UserProfile() {
                     })
                 );
 
-                setPosts(postsWithStats);
+                // ✅ Sort posts newest → oldest
+                const sortedPosts = postsWithStats.sort(
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                );
+
+                setPosts(sortedPosts);
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching user posts:", err);

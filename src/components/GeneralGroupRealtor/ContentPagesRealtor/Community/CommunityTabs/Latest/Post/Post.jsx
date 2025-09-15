@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../CommunityTabs.css';
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdVerified } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
@@ -217,6 +217,11 @@ function Post({post, onDelete}) {
                             : `${post.instigatorName.substring(0, 9)}...`}
                         </p>
                         <p>@{post.instigatorUsername}</p>
+
+                        {/* Verified Icon */}
+                        {post.isVerified && (
+                            <MdVerified className='verifiedIcon' />
+                        )}
                     </div>
                     <p className='postTime'>
                         {formattedTime}
@@ -328,9 +333,18 @@ function Post({post, onDelete}) {
                 }}
                 >
                 {selectedMedia.type === "video" ? (
-                    <video src={selectedMedia.url} controls autoPlay className="fullscreen-media" />
+                    <video 
+                        src={selectedMedia.url} 
+                        controls 
+                        autoPlay 
+                        className="fullscreen-image" 
+                    />
                 ) : (
-                    <img src={selectedMedia.url} alt="fullscreen" className="fullscreen-media" />
+                    <img 
+                        src={selectedMedia.url} 
+                        alt="fullscreen" 
+                        className="fullscreen-image"
+                    />
                 )}
                 </div>
             )}

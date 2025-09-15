@@ -116,16 +116,21 @@ function UserProfile({post}) {
         {/* ✅ Fullscreen Overlay for media */}
         {fullscreenMedia && (
             <div
-            className="fullscreen-overlay"
-            onClick={() => setFullscreenMedia(null)}
+                className="fullscreen-overlay"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setFullscreenMedia(null);
+                }}
             >
             {fullscreenMedia.endsWith('.mp4') ? (
-                <video src={fullscreenMedia} controls className="fullscreen-image" />
+                <video 
+                    src={fullscreenMedia}   controls    className="fullscreen-image" 
+                />
             ) : (
                 <img
-                src={fullscreenMedia}
-                alt="Full media view"
-                className="fullscreen-image"
+                    src={fullscreenMedia}
+                    alt="Full media view"
+                    className="fullscreen-image"
                 />
             )}
             </div>

@@ -3,7 +3,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdVerified } from "react-icons/md";
 import './Content.css'; 
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useNavigate} from "react-router-dom";
@@ -285,6 +285,11 @@ const Content = ({post, onDelete}) => {
             <div className="detPostUserNameCon">
               <p>{post.instigatorName}</p>
               <p>@{post.instigatorUsername}</p>
+
+              {/* Verified Icon */}
+              {post.isVerified && (
+                  <MdVerified className='verifiedIcon' />
+              )}
             </div>
             <p className='detPostTime'>
               {formattedTime}

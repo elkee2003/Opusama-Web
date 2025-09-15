@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../CommunityTabs.css';
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdVerified } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { formatDistanceStrict } from "date-fns";
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
+import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import { CommunityDiscussion, CommunityReply, CommunityLike, Notification, Realtor, User } from '../../../../../../../models';
 
@@ -19,6 +20,36 @@ function Post({post, onDelete}) {
     const [moreName, setMoreName] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.totalLikes || 0);
+    const [mediaUris, setMediaUris] = useState([]);
+    const [selectedMedia, setSelectedMedia] = useState(null); 
+    
+    // Fetch all media URLs
+    const fetchMediaUrls = async () => {
+        if (!post.media?.length) return;
+
+        try {
+            const urls = await Promise.all(
+            post.media.map(async (path) => {
+                const result = await getUrl({
+                path,
+                options: {
+                    validateObjectExistence: true,
+                    expiresIn: null,
+                },
+                });
+
+                return {
+                url: result.url.toString(),
+                type: path.endsWith('.mp4') ? 'video' : 'image',
+                };
+            })
+            );
+
+            setMediaUris(urls);
+        } catch (error) {
+            console.error("Error fetching media URLs:", error);
+        }
+    };
 
     // Time format
     const formattedTime = post.createdAt
@@ -55,6 +86,25 @@ function Post({post, onDelete}) {
             const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
             await Promise.all(likes.map(like => DataStore.delete(like)));
 
+            // Delete associated notifications
+            const relatedNotifications = await DataStore.query(Notification, (n) =>
+            n.entityID.eq(post.id)
+            );
+            await Promise.all(relatedNotifications.map(n => DataStore.delete(n)));
+
+            // ✅ Delete media from S3
+            if (post.media && post.media.length > 0) {
+                await Promise.all(
+                    post.media.map(async (path) => {
+                    try {
+                        await remove({ path });
+                    } catch (err) {
+                        console.error(`Failed to delete ${path} from S3:`, err);
+                    }
+                    })
+                );
+            }
+
             // Delete the post itself
             await DataStore.delete(CommunityDiscussion, post.id);
 
@@ -74,7 +124,7 @@ function Post({post, onDelete}) {
             return;
         }else if (!dbUser.username) {
             alert('Please fill in your username to proceed.');
-            navigate('/clientcontent/editprofile');
+            navigate('/admin/editprofile');
         }
     
         try {
@@ -156,11 +206,16 @@ function Post({post, onDelete}) {
         fetchUserLike();
     }, [dbUser, post.id]);
 
+    // useEffect for Images
+    useEffect(() => {
+        fetchMediaUrls();
+    }, [post.media]);
+
   return (
     <div>
         <div 
             key={post.id}
-            onClick={()=>navigate(`/clientcontent/community_post/${post.id}`)}
+            onClick={()=>navigate(`/admin/community_post/${post.id}`)}
         >
 
             {/* Category */}
@@ -175,7 +230,7 @@ function Post({post, onDelete}) {
                     className='postUserTimeCon'
                     onClick={(e)=>{
                         e.stopPropagation();
-                        navigate(`/clientcontent/userprofile/${post.creatorOfPostID}`)
+                        navigate(`/admin/userprofile/${post.creatorOfPostID}`)
                     }}
                 >
                     <div className='postUsernameCon'>
@@ -185,6 +240,11 @@ function Post({post, onDelete}) {
                             : `${post.instigatorName.substring(0, 9)}...`}
                         </p>
                         <p>@{post.instigatorUsername}</p>
+                        
+                        {/* Verified Icon */}
+                        {post.isVerified && (
+                            <MdVerified className='verifiedIcon' />
+                        )}
                     </div>
                     
                     <p className='postTime'>
@@ -228,6 +288,38 @@ function Post({post, onDelete}) {
                 )}
             </p>
 
+            {/* Display media */}
+            {mediaUris.length > 0 && (
+                <div className="display-media-community">
+                    {mediaUris.map((media, index) => (
+                    media.type === 'video' ? (
+                        <video 
+                            key={index} 
+                            src={media.url} 
+                            controls 
+                            className="pCommunityMedia"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedMedia(media);
+                            }}
+                        />
+                    ) : (
+                        <img
+                            key={index}
+                            src={media.url}
+                            alt={`Post media ${index}`}
+                            className="pCommunityImage"
+                            loading="lazy"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedMedia(media);
+                            }}
+                        />
+                    )
+                    ))}
+                </div>
+            )}
+
             {/* Post Engagment */}
             <div className='postEngagementCon'>
             <div className="engagementrow">
@@ -254,6 +346,32 @@ function Post({post, onDelete}) {
 
             {/* Border */}
             <div className='communBorder'/>
+
+            {/* ✅ Fullscreen Media Viewer */}
+            {selectedMedia && (
+                <div
+                className="fullscreen-overlay"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedMedia(null);
+                }}
+                >
+                {selectedMedia.type === "video" ? (
+                    <video 
+                        src={selectedMedia.url} 
+                        controls 
+                        autoPlay 
+                        className="fullscreen-image"
+                    />
+                ) : (
+                    <img 
+                        src={selectedMedia.url} 
+                        alt="fullscreen" 
+                        className="fullscreen-image"
+                    />
+                )}
+                </div>
+            )}
         </div>
     </div>
   )

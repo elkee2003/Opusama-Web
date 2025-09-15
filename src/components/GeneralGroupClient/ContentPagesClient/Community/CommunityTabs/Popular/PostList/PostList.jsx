@@ -112,6 +112,7 @@ function PostList() {
                         creatorOfPostID: instigator?.id,
                         instigatorName: instigator ? instigator.firstName : 'Unknown',
                         instigatorUsername: instigator?.username || "unknown",
+                        isVerified: instigator?.isVerified || false, 
                         numComments,
                         totalLikes,
                         likes: likesWithUsers,

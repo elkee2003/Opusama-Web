@@ -20,7 +20,7 @@ function Community() {
     // Navigate function
     const handleNavigate = () => {
       if(authUser){
-        navigate('/clientcontent/create_post');
+        navigate('/admin/create_post');
       }else{
         alert('Sign In to access')
         navigate('/?section=signin');

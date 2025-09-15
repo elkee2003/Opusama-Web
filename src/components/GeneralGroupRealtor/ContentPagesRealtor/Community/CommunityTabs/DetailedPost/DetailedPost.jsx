@@ -38,6 +38,11 @@ const DetailedPost = () => {
         // Fetch replies related to this post
         const replies = (await DataStore.query(CommunityReply, (r) => r.communitydiscussionID.eq(foundPost.id))) || [];
 
+        // Sort replies from oldest to newest
+        const sortedReplies = replies.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+
 
         // Count comments and likes
         const numComments = replies.filter(reply => reply.comment && reply.comment.trim() !== "").length;
@@ -46,7 +51,7 @@ const DetailedPost = () => {
 
         // Fetch commenter details for each reply
         const repliesWithCommenters = await Promise.all(
-          replies.map(async (reply) => {
+          sortedReplies.map(async (reply) => {
             const commenter = realtors.find((r) => r.id === reply.commenterID) || users.find((u) => u.id === reply.commenterID);
 
             return {
@@ -62,6 +67,7 @@ const DetailedPost = () => {
           creatorOfPostID: instigator?.id,
           instigatorName: instigator ? instigator.firstName : 'Unknown',
           instigatorUsername: instigator?.username || "unknown",
+          isVerified: instigator?.isVerified || false, 
           numComments,
           totalLikes,
           replies: repliesWithCommenters || []

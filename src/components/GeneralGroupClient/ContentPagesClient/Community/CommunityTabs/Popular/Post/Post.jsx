@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../CommunityTabs.css';
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdVerified } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
@@ -85,6 +85,12 @@ function Post({post, onDelete}) {
             // Delete associated likes
             const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
             await Promise.all(likes.map(like => DataStore.delete(like)));
+
+            // Delete associated notifications
+            const relatedNotifications = await DataStore.query(Notification, (n) =>
+            n.entityID.eq(post.id)
+            );
+            await Promise.all(relatedNotifications.map(n => DataStore.delete(n)));
 
             // ✅ Delete media from S3
             if (post.media && post.media.length > 0) {
@@ -234,6 +240,11 @@ function Post({post, onDelete}) {
                             : `${post.instigatorName.substring(0, 9)}...`}
                         </p>
                         <p>@{post.instigatorUsername}</p>
+                        
+                        {/* Verified Icon */}
+                        {post.isVerified && (
+                            <MdVerified className='verifiedIcon' />
+                        )}
                     </div>
                     
                     <p className='postTime'>
@@ -346,9 +357,18 @@ function Post({post, onDelete}) {
                 }}
                 >
                 {selectedMedia.type === "video" ? (
-                    <video src={selectedMedia.url} controls autoPlay className="fullscreen-media" />
+                    <video 
+                        src={selectedMedia.url} 
+                        controls 
+                        autoPlay 
+                        className="fullscreen-image"
+                    />
                 ) : (
-                    <img src={selectedMedia.url} alt="fullscreen" className="fullscreen-media" />
+                    <img 
+                        src={selectedMedia.url} 
+                        alt="fullscreen" 
+                        className="fullscreen-image"
+                    />
                 )}
                 </div>
             )}

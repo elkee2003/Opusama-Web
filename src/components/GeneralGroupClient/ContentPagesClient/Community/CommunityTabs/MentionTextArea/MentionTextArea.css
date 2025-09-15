@@ -1,0 +1,108 @@
+.mentionTextAreaCon {
+    position: relative;
+    display: flex;
+}
+
+/* Highlight layer */
+.mentionHighlighter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: transparent; 
+  pointer-events: none; 
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+/* Highlighted mentions */
+.mention-highlight {
+  color: #2563eb; /* nice blue */
+  font-weight: 600;
+}
+
+/* Textarea sits on top */
+.formCommunText {
+  position: relative;
+  background: transparent;
+  color: black;
+  padding: 10px;
+  max-width: 600px;
+  min-width: 600px;
+  height: 300px;
+  border: 1px solid #060c29;
+  border-radius: 20px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+/* .formCommunText {
+    padding: 10px;
+    max-width: 600px;
+    min-width: 600px;
+    height: 300px;
+    border-width: 1px;
+    border-color: #060c29;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+} */
+
+.mention-suggestions {
+  position: absolute;
+  /* top: 220px; */
+  left: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 200px;
+  z-index: 10;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.mention-suggestions li {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.mention-suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.no-suggestions {
+  padding: 6px 10px;
+  color: gray;
+}
+
+@media (max-width: 900px) {
+
+    .formCommunContent {
+        align-self: stretch;
+        min-width: 300px;
+    }
+
+
+}
+
+@media (max-width: 800px) {
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}
