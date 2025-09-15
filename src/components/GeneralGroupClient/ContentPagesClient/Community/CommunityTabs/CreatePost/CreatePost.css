@@ -33,36 +33,6 @@
 }
 
 
-/* .mention-suggestions {
-  position: absolute;
-  top: 220px;
-  left: 10px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  max-height: 150px;
-  overflow-y: auto;
-  width: 200px;
-  z-index: 10;
-  margin-top: 4px;
-  padding: 0;
-  list-style: none;
-}
-
-.mention-suggestions li {
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.mention-suggestions li:hover {
-  background: #f0f0f0;
-}
-
-.no-suggestions {
-  padding: 6px 10px;
-  color: gray;
-} */
-
 .addImgIcon {
     font-size: 2.5rem;
     margin-left: 10px;
@@ -152,11 +122,6 @@
     }
 
     .formCommunTitle {
-        align-self: stretch;
-        min-width: 300px;
-    }
-
-    .formCommunContent {
         align-self: stretch;
         min-width: 300px;
     }

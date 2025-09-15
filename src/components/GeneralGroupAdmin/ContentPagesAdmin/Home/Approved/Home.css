@@ -1,86 +1,68 @@
-.client-HomeMain-Con{
-  display: flex;
-  flex-direction: column;
+.homeApproved-Tabs-container {
+    position: fixed;
+    top:3.2rem;
+    z-index: 100;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto; 
+    white-space: nowrap; 
+    display: flex; 
+    width: 70vw;
+    box-sizing: border-box; 
+    scroll-snap-type: x mandatory; 
 }
 
-.logoTabCon {
-  position: fixed;
-  top:0;
-  z-index: 100;
-  background-color: white;
+.homeApproved-Tabs-container::-webkit-scrollbar {
+    display: none; 
 }
 
-.client-logoForSmallScreen {
-  margin-top: 10px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+.homeApproved-Tabs-container {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
 }
 
-.client-logoForSmallScreen img {
-  width: 200px;
-}
-
-
-.client-tabs-container {
-  overflow-x: auto; /* Allow horizontal scrolling */
-  white-space: nowrap; 
-  display: flex;
-  width: 80vw; 
-  box-sizing: border-box;
-  scroll-snap-type: x mandatory; /* Smooth scrolling */
-  padding-right: 16px;
-}
-
-/* Styles about the logo in smaller screen is in realtor folder */
-
-.client-tabs-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbars on WebKit browsers */
-}
-
-.client-tabs-container {
-    -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
-    scrollbar-width: none; /* Hide scrollbar on Firefox */
-}
-
-.client-tab-panel {
-  margin-top: 2.5rem;
-  width: 100%;
-  box-sizing: border-box;
+.homeApproved-Tab-panel {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 body {
-    margin: 0; /* Remove body margin to prevent extra space */
+    margin: 0; 
+    overflow-x: hidden;
+}
+
+@media (max-width: 1300px) {
 }
 
 @media (max-width: 900px) {
-  .client-logoForSmallScreen {
-    display: flex;
-  }
 
-  .client-tabs-container{
-    width:100vw;
-  }
+    .homeApproved-Tabs-container {
+        width: 100vw;
+        top:9.7rem;
+    }
 
-  .client-tab-panel {
-    margin-top: 7.5rem;
-  }
-}
-
-@media (max-width: 800px) {
+    .homeApproved-Tab-panel {
+      margin-top: 8rem;
+    }
 }
 
 @media (max-width: 700px) {
 }
-@media (max-width: 600px) {
-  .client-logoForSmallScreen img {
-    width: 150px;
-  }
 
+@media (max-width: 600px) {
 }
 
 @media (max-width: 500px) {
-}
+  .homeApproved-Tabs-container {
+        top:8rem;
+    }
 
-/* Styles for PostList for all the Top Tabs */
+    .homeApproved-Tab-panel {
+      margin-top: 6rem;
+    }
+}

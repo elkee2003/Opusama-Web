@@ -28,21 +28,21 @@ function HomeApproved() {
     };
   
   return (
-    <div>
-      <div className="homeApproved-Tabs-container">
-        <div >
+    <div className='adminTabCon'>
+      <div className='adminLogoTopTabCon'>
         {/* logo */}
-          <div 
-              className='client-logoForSmallScreen'
-          >
-              <img 
-                  src={'/opusama.png'}
-                  alt="logo" 
-                  onClick={() => navigate('/')}
-              />
-          </div>
+        <div
+          className='admin-logoForSmallScreen'
+          onClick={() => navigate('/')}
+        >
+            <img 
+                src={'/opusama.png'}
+                alt="logo" 
+            />
+        </div>
 
-          {/* Top Tabs */}
+        {/* Top Tabs */}
+        <div className="admin-home-Top-Tabs-container">
           <Tabs
             value={selectedTab}
             onChange={handleTabChange}
@@ -55,8 +55,9 @@ function HomeApproved() {
           </Tabs>
         </div>
       </div>
+
       
-      <div className="homeApproved-Tab-panel">
+      <div className="admin-home-Tab-panel">
         {selectedTab === 0 && <Approved />}
         {selectedTab === 1 && <UnApproved />}
       </div>

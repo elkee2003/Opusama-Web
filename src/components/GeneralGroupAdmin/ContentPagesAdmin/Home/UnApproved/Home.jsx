@@ -12,125 +12,103 @@ import PropertySale from './PropertySaleComponent';
 import OfficeSpace from './OfficeSpaceComponent';
 import './Home.css';
 
-function UnApproved() {
-  const navigate = useNavigate();
-  const [selectedTab, setSelectedTab] = useState(0);
+function Approved() {
+    const navigate = useNavigate();
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
-
+    const [selectedTab, setSelectedTab] = useState(0);
+  
+    const handleTabChange = (event, newValue) => {
+      setSelectedTab(newValue);
+    };
+  
   return (
-    <div className='client-HomeMain-Con'>
-      <div className='logoTabCon'>
-        {/* logo */}
-        <div 
-            className='client-logoForSmallScreen'
-        >
-            <img 
-                src={'/opusama.png'}
-                alt="logo" 
-                onClick={() => navigate('/')}
-            />
-        </div>
-
-        {/* Toptab */}
-        <div className="client-tabs-container">
+    <div>
+      <div className="homeApproved-Tabs-container">
+        <div >
+          {/* Top Tabs */}
           <Tabs
             value={selectedTab}
             onChange={handleTabChange}
             variant="scrollable"
             scrollButtons="auto"
             aria-label="navigation tabs"
-          >
+          >           
             <Tab label="House" />
             <Tab label="Hotel / Shortlet" />
             <Tab label="Experiences" />
-            <Tab label="Events" />
-            <Tab label="Venues" />
-            <Tab label="Commercial Spaces" />
-            <Tab label="Property Sale" />
-            <Tab label="Office Spaces" />
             <Tab label="Food & Drinks" />
+            <Tab label="Property Sale" />
+            <Tab label="Venues" />
+            <Tab label="Events" />
+            <Tab label="Commercial Spaces" />
+            <Tab label="Office Spaces" />
           </Tabs>
         </div>
       </div>
       
-      <div className="client-tab-panel">
+      <div className="homeApproved-Tab-panel">
         {selectedTab === 0 && <HouseRent />}
         {selectedTab === 1 && <Hotel />}
         {selectedTab === 2 && <Experiences />}
-        {selectedTab === 3 && <EventsTab />}
-        {selectedTab === 4 && <Venues />}
-        {selectedTab === 5 && <CommercialSpaces />}
-        {selectedTab === 6 && <PropertySale />}
-        {selectedTab === 7 && <OfficeSpace />}
-        {selectedTab === 8 && <FoodDrinks />}
-
+        {selectedTab === 3 && <FoodDrinks />}
+        {selectedTab === 4 && <PropertySale />}
+        {selectedTab === 5 && <Venues />}
+        {selectedTab === 6 && <EventsTab />}
+        {selectedTab === 7 && <CommercialSpaces />}
+        {selectedTab === 8 && <OfficeSpace />}
       </div>
+
     </div>
   )
 }
 
-export default UnApproved;
+export default Approved;
 
+// function Approved() {
+//   const navigate = useNavigate();
+//   const [selectedTab, setSelectedTab] = useState(0);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import './Home.css';
-// import HouseRent from './HouseRentComponent';
-// import Hotel from './HotelComponent';
-// import StudentAccommodation from './StudentAccommodationComponent';
-// import PropertySale from './PropertySaleComponent';
-// import OfficeSpace from './OfficeSpaceComponent';
-
-// function Tabs() {
-//   const [activeTab, setActiveTab] = useState('House (Rent)');
-
-//   const tabs = ['House (Rent)', 'Hotel / Shortlet', 'Property Sale', 'Student Accommodation', 'Office Space' ];
+//   const handleTabChange = (event, newValue) => {
+//     setSelectedTab(newValue);
+//   };
 
 //   return (
-//     <div>
-//       {/* Header with tabs */}
-//       <header className="navbar">
-//         {tabs.map((tab) => (
-//           <div
-//             key={tab}
-//             className={`tab ${activeTab === tab ? 'active' : ''}`}
-//             onClick={() => setActiveTab(tab)}
-//           >
-//             {tab}
-//           </div>
-//         ))}
-//       </header>
+//     <div className='admin-HomeMain-Con'>
 
-//       {/* Body */}
-//       <main className="content">
-//         {activeTab === "House (Rent)" && <HouseRent />}
-//         {activeTab === "Hotel / Shortlet" && <Hotel />}
-//         {activeTab === "Property Sale" && <PropertySale />}
-//         {activeTab === "Student Accommodation" && <StudentAccommodation />}
-//         {activeTab === "Office Space" && <OfficeSpace />}
-//       </main>
+//       {/* Toptab */}
+//       <div className="admin-tabs-container">
+//         <Tabs
+//           value={selectedTab}
+//           onChange={handleTabChange}
+//           variant="scrollable"
+//           scrollButtons="auto"
+//           aria-label="navigation tabs"
+//         >
+//           <Tab label="House" />
+//           <Tab label="Hotel / Shortlet" />
+//           <Tab label="Experiences" />
+//           <Tab label="Events" />
+//           <Tab label="Venues" />
+//           <Tab label="Commercial Spaces" />
+//           <Tab label="Property Sale" />
+//           <Tab label="Office Spaces" />
+//           <Tab label="Food & Drinks" />
+//         </Tabs>
+//       </div>
+      
+//       <div className="admin-tab-panel">
+//         {selectedTab === 0 && <HouseRent />}
+//         {selectedTab === 1 && <Hotel />}
+//         {selectedTab === 2 && <Experiences />}
+//         {selectedTab === 3 && <EventsTab />}
+//         {selectedTab === 4 && <Venues />}
+//         {selectedTab === 5 && <CommercialSpaces />}
+//         {selectedTab === 6 && <PropertySale />}
+//         {selectedTab === 7 && <OfficeSpace />}
+//         {selectedTab === 8 && <FoodDrinks />}
+//       </div>
 //     </div>
-//   );
+//   )
 // }
 
-// export default Tabs;
+// export default Approved;

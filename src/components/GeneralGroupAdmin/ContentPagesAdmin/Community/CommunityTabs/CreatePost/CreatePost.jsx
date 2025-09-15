@@ -7,9 +7,10 @@ import { CiImageOn } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import UploadMedia from './UploadMedia';
 import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
+import MentionTextarea from '../MentionTextArea/MentionTextArea';
 import { DataStore } from "aws-amplify/datastore";
 import { uploadData } from "aws-amplify/storage";
-import { CommunityDiscussion } from '../../../../../../models';
+import { CommunityDiscussion,Notification, User, Realtor } from '../../../../../../models';
 
 const CreatePost = () => {
     const [isFocus, setIsFocus] = useState(false);
@@ -22,6 +23,7 @@ const CreatePost = () => {
     const [content, setContent] = useState('');
     const [media, setMedia] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [mentions, setMentions] = useState([]);
 
     const categoryData = [
         { label: 'Experience & Review', value: 'Experience & Review' },
@@ -106,15 +108,40 @@ const CreatePost = () => {
             const mediaUrls = await Promise.all(uploadPromises);
 
              // 2. Save post with uploaded media URLs
-            await DataStore.save(
-            new CommunityDiscussion({
-                category,
-                title,
-                content,
-                media: mediaUrls, 
-                instigatorID: dbUser?.id,
-            })
+            const savedPost = await DataStore.save(
+                new CommunityDiscussion({
+                    category,
+                    title,
+                    content,
+                    media: mediaUrls, 
+                    instigatorID: dbUser?.id,
+                })
             );
+
+            // 3. Mention notifications
+            for (const username of new Set(mentions)) {
+                const mentionedUsers = await DataStore.query(User, u => u.username.eq(username.toLowerCase()));
+
+                const mentionedRealtors = await DataStore.query(Realtor, r => r.username.eq(username.toLowerCase()));
+
+                const mentionedAccounts = [...mentionedUsers, ...mentionedRealtors];
+
+                for (const acc of mentionedAccounts) {
+                    if (acc.id !== dbUser.id) { // don’t notify yourself
+                        await DataStore.save(
+                            new Notification({
+                            creatorID: dbUser.id,
+                            recipientID: acc.id,
+                            recipientType: "MENTION",
+                            type: "MENTION",
+                            entityID: savedPost.id,
+                            message: `${dbUser.username || "Someone"} mentioned you in a post`,
+                            read: false,
+                            })
+                        );
+                    }
+                }
+            }
 
             alert("Post created successfully!");
 
@@ -123,6 +150,7 @@ const CreatePost = () => {
             setTitle("");
             setContent("");
             setMedia([]);
+            setMentions([]);
             navigate(-1);
         } catch (e) {
             console.error("Error saving post:", e);
@@ -131,27 +159,6 @@ const CreatePost = () => {
             setUploading(false); 
         }
 
-        // try {
-        //     await DataStore.save(
-        //         new CommunityDiscussion({
-        //             category,
-        //             title,
-        //             content,
-        //             media,
-        //             instigatorID: dbUser?.id
-        //         })
-        //     );
-        //     alert('Post created successfully!');
-        //     // Clear form after submission
-        //     setCategory('');
-        //     setTitle('');
-        //     setContent('');
-        //     setMedia([]);
-        //     navigate(-1)
-        // } catch (e) {
-        //     console.error('Error saving post:', e);
-        //     alert('Failed to create post');
-        // }
     };
 
   return (
@@ -176,10 +183,10 @@ const CreatePost = () => {
         />
 
         {/* Content */}
-        <textarea
-            className="formCommunContent"
+        <MentionTextarea
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={setContent}
+            onMentionsChange={setMentions}
             placeholder="Share your thoughts, insights, or questions here..."
         />
 

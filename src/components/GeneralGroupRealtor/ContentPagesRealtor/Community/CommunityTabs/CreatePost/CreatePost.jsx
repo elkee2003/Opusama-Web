@@ -79,12 +79,12 @@ const CreatePost = () => {
         />
 
         {/* Content */}
-        <textarea
+        {/* <textarea
             className="formCommunContent"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Share your thoughts, insights, or questions here..."
-        />
+        /> */}
 
         {/* Post Button */}
         <div className="communityPostCon">

@@ -1,0 +1,12 @@
+.approvalToggleCon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    /* padding:20px */
+}
+
+.approvedTxt {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 8px;
+}

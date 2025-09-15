@@ -87,9 +87,9 @@
 
 @media (max-width: 900px) {
 
-    .formCommunContent {
+    .formCommunText {
         align-self: stretch;
-        min-width: 300px;
+        min-width: 600px;
     }
 
 
@@ -102,7 +102,19 @@
 }
 
 @media (max-width: 600px) {
+    .formCommunText {
+        min-width: 500px;
+    }
 }
 
 @media (max-width: 500px) {
+    .formCommunText {
+        min-width: 360px;
+    }
+}
+
+@media (max-width: 450px) {
+    .formCommunText {
+        min-width: 300px;
+    }
 }

@@ -1,11 +1,37 @@
-.logoTabCon {
-  position: fixed;
-  top:0;
-  z-index: 100;
-  background-color: white;
+.adminTabCon {
+    display: flex;
+    flex-direction: column;
 }
 
-.client-logoForSmallScreen {
+.adminLogoTopTabCon {
+    position: fixed;
+    top:0;
+    z-index: 100;
+    background-color: white;
+}
+
+
+.admin-home-Top-Tabs-container {
+  overflow-x: auto; 
+  white-space: nowrap; 
+  display: flex;
+  width: 70vw; 
+  justify-content: center;
+  box-sizing: border-box;
+  scroll-snap-type: x mandatory; 
+  /* padding-right: 16px; */
+}
+
+.admin-home-Top-Tabs-container::-webkit-scrollbar {
+    display: none; 
+}
+
+.admin-home-Top-Tabs-container {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.admin-logoForSmallScreen {
   margin-top: 10px;
   display: none;
   justify-content: center;
@@ -13,40 +39,15 @@
   cursor: pointer;
 }
 
-.client-logoForSmallScreen img {
+.admin-logoForSmallScreen img {
   width: 200px;
 }
 
-.homeApproved-Tabs-container {
-    position: fixed;
-    /* top:0; */
-    z-index: 100;
-    background-color: white;
-    border-bottom: 1px solid #e0e0e0;
-    overflow-x: auto; 
-    white-space: nowrap; 
-    display: flex; 
-    justify-content: center;
-    width: 70vw;
-    box-sizing: border-box; 
-    scroll-snap-type: x mandatory; 
-    padding-right: 26rem;
-}
-
-.homeApproved-Tabs-container::-webkit-scrollbar {
-    display: none; 
-}
-
-.homeApproved-Tabs-container {
-    -ms-overflow-style: none; 
-    scrollbar-width: none; 
-}
-
-.homeApproved-Tab-panel {
+.admin-home-Tab-panel {
     /* margin-top: 2.5rem; */
-    padding: 16px; 
+    /* padding: 16px;  */
     width: 100%; 
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 body {
@@ -58,11 +59,11 @@ body {
 }
 
 @media (max-width: 900px) {
-    .client-logoForSmallScreen {
+    .admin-logoForSmallScreen {
         display: flex;
     }
 
-    .homeApproved-Tabs-container {
+    .admin-home-Top-Tabs-container {
         padding-right: 0;
         width: 100vw;
     }
@@ -72,7 +73,7 @@ body {
 }
 
 @media (max-width: 600px) {
-    .client-logoForSmallScreen img {
+    .admin-logoForSmallScreen img {
         width: 150px;
     }
 }

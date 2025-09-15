@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import DefaultImage from "/defaultImage.png";
+import { Switch } from "@mui/material";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FaRegCommentDots } from "react-icons/fa6";
@@ -37,6 +38,7 @@ function Content({post, realtor,}) {
     const [averageRating, setAverageRating] = useState(0);
     const [mediaUris, setMediaUris] = useState([]);   
     const [liked, setLiked] = useState(false);
+    const [isApproved, setIsApproved] = useState(post?.isApproved ?? false);
 
     const bookingModeLabels = {
       manual: "Manual Acceptance",
@@ -214,7 +216,47 @@ function Content({post, realtor,}) {
       });
 
       return () => subscription.unsubscribe();
-    },[post.id])
+    },[post.id]);
+
+    // For Approval
+    // useEffect for Approval
+    useEffect(() => {
+      if (post?.isApproved !== undefined) {
+        setIsApproved(post.isApproved);
+      }
+    }, [post]);
+
+    // toggle function for approval
+    const toggleApproval = async (e) => {
+      e.stopPropagation();
+      try {
+        const latestPost = await DataStore.query(PostModel, post.id);
+        if (latestPost) {
+          await DataStore.save(
+            PostModel.copyOf(latestPost, (updated) => {
+              updated.isApproved = !latestPost.isApproved;
+            })
+          );
+        }
+      } catch (err) {
+        console.error("Error toggling isApproved:", err);
+      }
+    };
+
+    // observe real-time updates for approval
+    useEffect(() => {
+      if (!post?.id) return;
+
+      const subscription = DataStore.observe(PostModel, post.id).subscribe(
+        (msg) => {
+          if (msg.opType === "UPDATE") {
+            setIsApproved(msg.element.isApproved);
+          }
+        }
+      );
+
+      return () => subscription.unsubscribe();
+    }, [post?.id]);
 
   return (
     <div className='contentContainer'>
@@ -295,6 +337,16 @@ function Content({post, realtor,}) {
               <FaRegHeart className='heartIcon' color="white" />
             )}
           </div>
+        </div>
+
+        {/* Switch for Approval */}
+        <div className='approvalToggleCon'>
+          <span className='approvedTxt'>Approved:</span>
+          <Switch
+            checked={isApproved}
+            onChange={toggleApproval}
+            color="primary"
+          />
         </div>
 
         {/* Realtor Info */}
@@ -610,9 +662,9 @@ function Content({post, realtor,}) {
         </button>
 
         {/* Get In Touch Container */}
-        <button className='reserveCon' onClick={handleNavigate}>
+        {/* <button className='reserveCon' onClick={handleNavigate}>
             <p className='reserveTxt'>Contact</p>
-        </button>
+        </button> */}
       </div>
 
     </div>
