@@ -1,7 +1,7 @@
 .userProfileContentCon {
     display: flex;
     flex-direction: column;
-    width: 80vw;
+    width: 70vw;
 }
 
 @media (max-width: 1300px) {
