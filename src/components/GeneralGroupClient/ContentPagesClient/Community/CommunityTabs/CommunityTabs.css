@@ -95,6 +95,16 @@
     font-size: 16px;
 }
 
+.mentionHighlight {
+  color: #1d4ed8;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mentionHighlight:hover {
+  text-decoration: underline;
+}
+
 .readMoreBtnCommun {
     cursor: pointer;
     margin-left: 5px;

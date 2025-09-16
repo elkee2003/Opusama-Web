@@ -70,6 +70,56 @@ function Post({post, onDelete}) {
         .replace(" year", "y")
     : "Just now";
 
+    // Highlight for mentions in post content
+    const renderContentWithMentions = (text) => {
+        const parts = text.split(/(@\w+)/g); // split by mentions
+
+        return parts.map((part, index) => {
+            if (part.startsWith("@")) {
+                const username = part.substring(1);
+
+                return (
+                    <span 
+                        key={index} 
+                        className="mentionHighlight"
+                        onClick={async (e) => {
+                            e.stopPropagation();
+                            
+                            try {
+                                // First, check in User model
+                                const users = await DataStore.query(User, (u) =>
+                                    u.username.eq(username)
+                                );
+
+                                if (users.length > 0) {
+                                    navigate(`/admin/userprofile/${users[0].id}`);
+                                    return;
+                                }
+
+                                // Then, check in Realtor model
+                                const realtors = await DataStore.query(Realtor, (r) =>
+                                    r.username.eq(username)
+                                );
+
+                                if (realtors.length > 0) {
+                                    navigate(`/clientcontent/userprofile/${realtors[0].id}`);
+                                    return;
+                                }
+
+                                alert("User not found!");
+                            } catch (err) {
+                                console.error("Error navigating to mention:", err);
+                            }
+                        }}
+                    >
+                        {part}
+                    </span>
+                );
+            }
+            return part;
+        });
+    };
+
     // Delete Post Function
     const handleDelete = async (e) => {
         e.stopPropagation(); // Prevent navigating when clicking delete
@@ -273,8 +323,8 @@ function Post({post, onDelete}) {
             {/* Content */}
             <p className='postContent'>
                 {readMore || post.content.length <= 150
-                    ? post.content
-                    : `${post.content.substring(0, 150)}...`}
+                    ? renderContentWithMentions(post.content)
+                    : renderContentWithMentions(`${post.content.substring(0, 150)}...`)}
                 {post.content.length > 150 && (
                     <button
                     className={readMore ? 'readLessBtnCommun' : 'readMoreBtnCommun'}

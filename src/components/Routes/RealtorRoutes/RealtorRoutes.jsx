@@ -30,6 +30,7 @@ import AcceptedDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor
 import CreatePost from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/CreatePost/CreatePost';
 import CommunityDetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/DetailedPost/DetailedPost';
 import CommunityPostResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/CommunityTabs/DetailedPost/Content/Response/Response';
+import UserProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Community/UserProfile/UserProfile';
 import VendorScanGenerator from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/VendorScanGenerator/VendorScanGenerator';
 import ScannerPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/ScannerPage/ScannerPage';
 
@@ -96,6 +97,9 @@ const RealtorRoutes = () => (
             
             {/* Response Community Post */}
             <Route path="response_post/:postId" element={<CommunityPostResponse />} />
+
+            {/* Community UserProfile */}
+            <Route path="userprofile/:userId" element={<UserProfile />} />
 
             {/* Vendor Scan Generator */}
             <Route path="vendor_scanner_generator" element={<VendorScanGenerator />} />

@@ -274,7 +274,13 @@ const Content = ({post, onDelete}) => {
 
         {/* Post Username and Time */}
         <div className="detPostUserTimeDeltCon">
-          <div className="detPostUserTimeCon">
+          <div 
+            className="detPostUserTimeCon"
+            onClick={(e)=>{
+              e.stopPropagation();
+              navigate(`/clientcontent/userprofile/${post.creatorOfPostID}`)
+            }}
+          >
             <div className="detPostUserNameCon">
               <p>{post.instigatorName}</p>
               <span>@{post.instigatorUsername}</span>
