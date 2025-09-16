@@ -146,6 +146,20 @@ const Content = ({post, onDelete}) => {
           // Fetch all likes related to the post
           const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));
 
+          //  Delete notifications for replies ---
+          for (const reply of replies) {
+            const replyNotifs = await DataStore.query(Notification, (n) =>
+              n.entityID.eq(reply.id)
+            );
+            await Promise.all(replyNotifs.map((notif) => DataStore.delete(notif)));
+          }
+
+          // Delete notifications for likes tied to the post ---
+          const likeNotifs = await DataStore.query(Notification, (n) =>
+            n.entityID.eq(post.id)
+          );
+          await Promise.all(likeNotifs.map((notif) => DataStore.delete(notif)));
+
           // Delete all replies
           await Promise.all(replies.map(reply => DataStore.delete(CommunityReply, reply)));
 

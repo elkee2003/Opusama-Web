@@ -31,7 +31,16 @@ function UserPost() {
       try {
           // Delete associated replies
           const replies = await DataStore.query(CommunityReply, (r) => r.communitydiscussionID.eq(post.id));
-          await Promise.all(replies.map(reply => DataStore.delete(reply)));
+          await Promise.all(replies.map(async (reply) => {
+              // delete notifications linked to this reply
+              const replyNotifications = await DataStore.query(Notification, (n) => 
+                  n.entityID.eq(reply.id)
+              );
+              await Promise.all(replyNotifications.map(n => DataStore.delete(n)));
+
+              // delete the reply itself
+              await DataStore.delete(reply);
+          }));
 
           // Delete associated likes
           const likes = await DataStore.query(CommunityLike, (l) => l.communitydiscussionID.eq(post.id));

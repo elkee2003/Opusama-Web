@@ -76,7 +76,7 @@ const CreatePost = () => {
     });
 
     const handleSubmit = async () => {
-        if (!category || !title || !content) {
+        if (!category || !title || (!content && mentions.length === 0)) {
             alert('Please fill in all required fields');
             return;
         }

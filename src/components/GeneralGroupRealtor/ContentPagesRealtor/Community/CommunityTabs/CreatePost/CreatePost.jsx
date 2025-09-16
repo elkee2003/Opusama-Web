@@ -16,6 +16,7 @@ const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [media, setMedia] = useState([]);
+    const [mentions, setMentions] = useState([]);
 
     const categoryData = [
         { label: 'Neigbourhood Insights', value: 'Neigbourhood Insights' },
@@ -29,7 +30,7 @@ const CreatePost = () => {
     ];
 
     const handleSubmit = async () => {
-        if (!category || !title || !content) {
+        if (!category || !title || (!content && mentions.length === 0)) {
             alert('Please fill in all required fields');
             return;
         }

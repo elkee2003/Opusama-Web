@@ -34,7 +34,7 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
     }
 
     // ✅ Extract all mentions in full text
-    const mentionRegex = /@(\w+)/g;
+    const mentionRegex = /@([a-zA-Z0-9._-]+)(?=\s|$)/g;
     const mentions = [...newValue.matchAll(mentionRegex)].map(m => m[1]);
 
     if (onMentionsChange) onMentionsChange(mentions);
@@ -48,6 +48,11 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
 
     const newText = textUntilCursor.replace(/@\w*$/, `@${username} `) + textAfterCursor;
     onChange(newText);
+
+    // ✅ Extract mentions immediately after inserting
+    const mentionRegex = /@([a-zA-Z0-9._-]+)(?=\s|$)/g;
+    const mentions = [...newText.matchAll(mentionRegex)].map(m => m[1]);
+    if (onMentionsChange) onMentionsChange(mentions);
 
     setShowSuggestions(false);
     setMentionQuery("");
