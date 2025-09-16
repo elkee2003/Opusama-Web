@@ -76,7 +76,7 @@ function PostList() {
             // Step 2: Fetch all posts that are available and approved
             const posts = await DataStore.query(Post, (p) => p.and ((p) =>[
                 p.available.eq(true),
-                // p.isApproved.eq(true)
+                p.isApproved.eq(true)
             ]));
 
             // Step 3: For each post, fetch its booking options + map realtor

@@ -41,7 +41,7 @@ const Response = () => {
                     recipientID:creatorOfPostID,
                     recipientType: 'POST_CREATOR_COMMENT',
                     type: "COMMENT",
-                    entityID: savedReply.id,
+                    entityID: postId,
                     message: `${dbUser.username || "Someone"} commented on your post`,
                     read: false,
                 })
@@ -63,7 +63,7 @@ const Response = () => {
                             recipientID: acc.id,
                             recipientType: "MENTION",
                             type: "MENTION",
-                            entityID: postId,
+                            entityID: savedReply.id,
                             message: `${dbUser.username || "Someone"} mentioned you in a post`,
                             read: false,
                             })

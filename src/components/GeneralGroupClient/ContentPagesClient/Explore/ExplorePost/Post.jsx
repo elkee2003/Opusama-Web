@@ -175,11 +175,17 @@ function Post({post}) {
           </div>
         </div>
 
-        <div className='clientSummaryContainer'>
+        <div 
+          className='clientSummaryContainer'
+          onClick={()=>navigate(`/clientcontent/exploredetailedpost/${post.id}`)}
+        >
           {/* Username */}
           <div 
               className={'contact'}
-              onClick={()=>navigate(`/clientcontent/realtorprofile/${post.realtorID}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/clientcontent/realtorprofile/${post.realtorID}`);
+              }}
           >
               <p className={'name'}>{post.firstName}</p>
           </div>
