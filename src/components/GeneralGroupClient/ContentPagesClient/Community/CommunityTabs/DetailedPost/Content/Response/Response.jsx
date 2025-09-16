@@ -65,7 +65,7 @@ const Response = () => {
                             recipientID: acc.id,
                             recipientType: "MENTION",
                             type: "MENTION",
-                            entityID: savedReply.id,
+                            entityID: postId, 
                             message: `${dbUser.username || "Someone"} mentioned you in a post`,
                             read: false,
                             })

@@ -41,7 +41,7 @@ const Response = () => {
                     recipientID:creatorOfPostID,
                     recipientType: 'POST_CREATOR_COMMENT',
                     type: "COMMENT",
-                    entityID: savedReply.id,
+                    entityID: postId,
                     message: `${dbRealtor.username || "Someone"} commented on your post`,
                     read: false,
                 })
