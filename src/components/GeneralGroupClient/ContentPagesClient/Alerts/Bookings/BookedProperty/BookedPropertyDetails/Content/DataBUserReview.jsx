@@ -62,7 +62,7 @@ const ReviewSection = ({ post, dbUser }) => {
             recipientType: 'REALTOR',
             type: "REVIEW",
             entityID: post.id,
-            message: `Someone rated and reviewed your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
+            message: `${dbUser.username || "Someone"} rated and reviewed your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
             read: false,
         })
       );

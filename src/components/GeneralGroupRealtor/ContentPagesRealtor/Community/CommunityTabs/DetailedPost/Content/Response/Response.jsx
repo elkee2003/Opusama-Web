@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import MentionTextarea from '../../../MentionTextArea/MentionTextArea';
 import { IoIosArrowRoundBack } from "react-icons/io";
-import './Response.css'; 
 import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from "aws-amplify/datastore";
@@ -13,10 +13,8 @@ const Response = () => {
     const { postId } = useParams();
     const { dbRealtor } = useAuthContext(); 
     const [comment, setComment] = useState('');
+    const [mentions, setMentions] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [allUsernames, setAllUsernames] = useState([]);
-    const [suggestions, setSuggestions] = useState([]);
-    const [cursorPosition, setCursorPosition] = useState(null);
 
     const handleCommentSubmit = async () => {
         if (!comment.trim()) {
@@ -44,13 +42,40 @@ const Response = () => {
                     recipientType: 'POST_CREATOR_COMMENT',
                     type: "COMMENT",
                     entityID: savedReply.id,
-                    message: `Someone commented on your post`,
+                    message: `${dbRealtor.username || "Someone"} commented on your post`,
                     read: false,
                 })
             );
 
-            setComment('');
+            // 3. Mention notifications
+            for (const username of new Set(mentions)) {
+                const mentionedUsers = await DataStore.query(User, u => u.username.eq(username.toLowerCase()));
+
+                const mentionedRealtors = await DataStore.query(Realtor, r => r.username.eq(username.toLowerCase()));
+
+                const mentionedAccounts = [...mentionedUsers, ...mentionedRealtors];
+
+                for (const acc of mentionedAccounts) {
+                    if (acc.id !== dbRealtor.id) { // don’t notify yourself
+                        await DataStore.save(
+                            new Notification({
+                            creatorID: dbRealtor.id,
+                            recipientID: acc.id,
+                            recipientType: "MENTION",
+                            type: "MENTION",
+                            entityID: savedReply.id,
+                            message: `${dbRealtor.username || "Someone"} mentioned you in a post`,
+                            read: false,
+                            })
+                        );
+                    }
+                }
+            }
+
             alert("Comment added successfully!");
+            setComment('');
+            setMentions([]);
+
             navigate(-1); 
         } catch (error) {
             console.error("Error saving comment:", error);
@@ -78,10 +103,10 @@ const Response = () => {
         </div>
 
         <div className="commentCon">
-            <textarea
-                className="commentTxtBox"
+            <MentionTextarea
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={setComment}
+                onMentionsChange={setMentions}
                 placeholder="Write comment..."
             />
         </div>

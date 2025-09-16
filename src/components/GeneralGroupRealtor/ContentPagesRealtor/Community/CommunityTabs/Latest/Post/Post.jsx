@@ -204,7 +204,7 @@ function Post({post, onDelete}) {
                         recipientType: 'POST_CREATOR_LIKE',
                         type: "LIKE",
                         entityID: post.id,
-                        message: `Someone liked your post`,
+                        message: `${dbRealtor.username || "Someone"} liked your post`,
                         read: false,
                     })
                 );

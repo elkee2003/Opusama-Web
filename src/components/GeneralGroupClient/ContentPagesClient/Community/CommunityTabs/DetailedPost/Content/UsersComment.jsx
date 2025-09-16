@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { formatDistanceStrict } from "date-fns";
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityReply, Notification } from '../../../../../../../models';
+import { CommunityReply, Notification, User, Realtor } from '../../../../../../../models';
 
 const UsersComment = ({ replies: initialReplies }) => {
     const navigate = useNavigate();
@@ -16,6 +16,56 @@ const UsersComment = ({ replies: initialReplies }) => {
     useEffect(() => {
         setReplies(initialReplies);  // Update when initialReplies change
     }, [initialReplies]);
+
+    // Highlight for mentions in post content
+    const renderContentWithMentions = (text) => {
+        const parts = text.split(/(@\w+)/g); // split by mentions
+
+        return parts.map((part, index) => {
+            if (part.startsWith("@")) {
+                const username = part.substring(1);
+
+                return (
+                    <span 
+                        key={index} 
+                        className="mentionHighlight"
+                        onClick={async (e) => {
+                            e.stopPropagation();
+                            
+                            try {
+                                // First, check in User model
+                                const users = await DataStore.query(User, (u) =>
+                                    u.username.eq(username)
+                                );
+
+                                if (users.length > 0) {
+                                    navigate(`/clientcontent/userprofile/${users[0].id}`);
+                                    return;
+                                }
+
+                                // Then, check in Realtor model
+                                const realtors = await DataStore.query(Realtor, (r) =>
+                                    r.username.eq(username)
+                                );
+
+                                if (realtors.length > 0) {
+                                    navigate(`/clientcontent/userprofile/${realtors[0].id}`);
+                                    return;
+                                }
+
+                                alert("User not found!");
+                            } catch (err) {
+                                console.error("Error navigating to mention:", err);
+                            }
+                        }}
+                    >
+                        {part}
+                    </span>
+                );
+            }
+            return part;
+        });
+    };
 
     // Delete Reply Function
     const handleDelete = async (replyId) => {
@@ -88,11 +138,12 @@ const UsersComment = ({ replies: initialReplies }) => {
                 </div>
                 <div className='commentRow'>
                     <p className='detComment'>
-
                         {readMore || (reply?.comment ? reply.comment.length <= 250 : true)
-                        ? (reply.comment ? reply.comment : "No comment available")
-                        : `${reply.comment.substring(0, 250)}...`}
-
+                            ? (reply.comment 
+                                ? renderContentWithMentions(reply.comment) 
+                                : "No comment available")
+                            : renderContentWithMentions(`${reply.comment.substring(0, 250)}...`)
+                        }                        
                         
                         {reply.comment && reply?.comment.length > 250 && (
                             <button

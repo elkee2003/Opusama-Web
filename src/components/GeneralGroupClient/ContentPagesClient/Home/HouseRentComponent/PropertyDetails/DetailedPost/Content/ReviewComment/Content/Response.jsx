@@ -42,7 +42,7 @@ const Response = () => {
                     recipientType: 'COMMENT_REALTOR_POST',
                     type: "COMMENT",
                     entityID: postId,
-                    message: `Someone made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
+                    message: `${dbUser.username || "Someone"} made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
                     read: false,
                 })
             );

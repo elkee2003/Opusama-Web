@@ -4,14 +4,13 @@ import { GoHeartFill } from "react-icons/go";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete, MdVerified } from "react-icons/md";
-import './Content.css'; 
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useNavigate} from "react-router-dom";
 import { formatDistanceStrict } from "date-fns";
 import UsersComment from './UsersComment';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-import { CommunityDiscussion, CommunityReply, CommunityLike, Notification} from '../../../../../../../models';
+import { CommunityDiscussion, CommunityReply, CommunityLike, Notification, User, Realtor} from '../../../../../../../models';
 
 const Content = ({post, onDelete}) => {
     const navigate = useNavigate();
@@ -80,6 +79,56 @@ const Content = ({post, onDelete}) => {
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
+    };
+
+    // Highlight for mentions in post content
+    const renderContentWithMentions = (text) => {
+        const parts = text.split(/(@\w+)/g); // split by mentions
+
+        return parts.map((part, index) => {
+            if (part.startsWith("@")) {
+                const username = part.substring(1);
+
+                return (
+                    <span 
+                        key={index} 
+                        className="mentionHighlight"
+                        onClick={async (e) => {
+                            e.stopPropagation();
+                            
+                            try {
+                                // First, check in User model
+                                const users = await DataStore.query(User, (u) =>
+                                    u.username.eq(username)
+                                );
+
+                                if (users.length > 0) {
+                                    navigate(`/clientcontent/userprofile/${users[0].id}`);
+                                    return;
+                                }
+
+                                // Then, check in Realtor model
+                                const realtors = await DataStore.query(Realtor, (r) =>
+                                    r.username.eq(username)
+                                );
+
+                                if (realtors.length > 0) {
+                                    navigate(`/clientcontent/userprofile/${realtors[0].id}`);
+                                    return;
+                                }
+
+                                alert("User not found!");
+                            } catch (err) {
+                                console.error("Error navigating to mention:", err);
+                            }
+                        }}
+                    >
+                        {part}
+                    </span>
+                );
+            }
+            return part;
+        });
     };
 
     // Delete Post Function
@@ -313,8 +362,8 @@ const Content = ({post, onDelete}) => {
         {/* Post Content */}
         <p className='detPostContent'>
           {readMore || post.content.length <= 750
-            ? post.content
-            : `${post.content.substring(0, 750)}...`}
+            ? renderContentWithMentions(post.content)
+            : renderContentWithMentions(`${post.content.substring(0, 750)}...`)}
           {post.content.length > 750 && (
             <button
               className={readMore ? 'readLessBtnComment' : 'readMoreBtnComment'}
