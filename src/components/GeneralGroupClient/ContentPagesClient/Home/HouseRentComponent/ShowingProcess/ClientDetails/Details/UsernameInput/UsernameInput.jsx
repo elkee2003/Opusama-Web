@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import './MentionTextArea.css';
+import './UsernameInput.css';
 import { DataStore } from "aws-amplify/datastore";
-import { User, Realtor } from "../../../../../../models";
+import { User } from "../../../../../../../../../models";
 
-const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => {
+const UsernameInput = ({ value, onChange, placeholder }) => {
   const [allUsernames, setAllUsernames] = useState([]);
   const [mentionQuery, setMentionQuery] = useState("");
   const [filteredUsernames, setFilteredUsernames] = useState([]);
@@ -32,44 +32,21 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
     } else {
       setShowSuggestions(false);
     }
-
-    // ✅ Extract all mentions in full text
-    const mentionRegex = /@([a-zA-Z0-9._-]+)(?=\s|$)/g;
-    const mentions = [...newValue.matchAll(mentionRegex)].map(m => m[1]);
-
-    if (onMentionsChange) onMentionsChange(mentions);
   };
 
   // Handle selecting a username
   const handleSelectUsername = (username) => {
-    const cursorPos = textareaRef.current.selectionStart;
-    const textUntilCursor = value.slice(0, cursorPos);
-    const textAfterCursor = value.slice(cursorPos);
-
-    const newText = textUntilCursor.replace(/@\w*$/, `@${username} `) + textAfterCursor;
-    onChange(newText);
-
-    // ✅ Extract mentions immediately after inserting
-    const mentionRegex = /@([a-zA-Z0-9._-]+)(?=\s|$)/g;
-    const mentions = [...newText.matchAll(mentionRegex)].map(m => m[1]);
-    if (onMentionsChange) onMentionsChange(mentions);
-
+    onChange(username); // ✅ directly set username (not multiple mentions)
     setShowSuggestions(false);
     setMentionQuery("");
   };
 
-  // Fetch usernames once
+  // Fetch only user usernames once
   useEffect(() => {
     const fetchUsernames = async () => {
       try {
         const users = await DataStore.query(User);
-        const realtors = await DataStore.query(Realtor);
-
-        const usernames = [
-          ...users.map((u) => u.username).filter(Boolean),
-          ...realtors.map((r) => r.username).filter(Boolean),
-        ];
-
+        const usernames = users.map((u) => u.username).filter(Boolean);
         setAllUsernames(usernames);
       } catch (err) {
         console.error("Error fetching usernames:", err);
@@ -80,13 +57,12 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
   }, []);
 
   return (
-    <div className="mentionTextAreaCon">
-        {/* Mention Highlighter */}
+    <div className="userNameInputAreaCon">
 
         {/* Text Area */}
         <textarea
             ref={textareaRef}
-            className="formCommunText"
+            className="usernameInputText"
             value={value}
             onChange={handleChange}
             placeholder={placeholder}
@@ -94,7 +70,7 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
 
         {/* Suggestions */}
         {showSuggestions && (
-            <ul className="mention-suggestions">
+            <ul className="username-suggestions">
             {filteredUsernames.length > 0 ? (
                 filteredUsernames.map((name, i) => (
                 <li key={i} onClick={() => handleSelectUsername(name)}>
@@ -102,7 +78,7 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
                 </li>
                 ))
             ) : (
-                <li className="no-suggestions">No matches</li>
+                <li className="no-username-suggestions">No matches</li>
             )}
             </ul>
         )}
@@ -110,4 +86,4 @@ const MentionTextarea = ({ value, onChange, placeholder, onMentionsChange }) => 
   );
 };
 
-export default MentionTextarea;
+export default UsernameInput;

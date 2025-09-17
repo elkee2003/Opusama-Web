@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './ClientDetails.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import UsernameInput from './UsernameInput/UsernameInput';
 import { useBookingShowingContext } from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
+import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 const ClientDetails = ({ post }) => {
   const navigate = useNavigate();
+  const { dbUser } = useAuthContext();
   const {
+    opusingFor, 
+    setOpusingFor, 
+    otherUsername, 
+    setOtherUsername,
+    opusedBy, 
+    setOpusedBy,
     adults,
     setAdults,
     kids,
@@ -54,6 +63,31 @@ const ClientDetails = ({ post }) => {
   //     }
   //   }
   // };
+
+  // useEffect to empty input depending on what is choosen myself or another
+  useEffect(() => {
+    if (opusingFor === "another") {
+      setGuestFirstName("");
+      setGuestLastName("");
+      setGuestPhoneNumber("");
+    }
+  }, [opusingFor, setGuestFirstName, setGuestLastName, setGuestPhoneNumber]);
+
+  // useEffect for clearing otherusername
+  useEffect(() => {
+    if (opusingFor === "myself") {
+      setOtherUsername("");
+    }
+  }, [opusingFor, setOtherUsername]);
+
+  // useEffect for saving opused by with dbUser.id
+  useEffect(() => {
+    if (opusingFor === "another") {
+      setOpusedBy(dbUser?.id || "");
+    } else if (opusingFor === "myself") {
+      setOpusedBy("");
+    }
+  }, [opusingFor, dbUser, setOpusedBy]);
 
   // Validator Function
   const getValidator = () => {
@@ -167,6 +201,29 @@ const ClientDetails = ({ post }) => {
         />
       </button>
 
+      <div className="card">
+        <label className="txtInputHeader">Opusing for:</label>
+
+        <div className="row">
+          <label>
+            <input 
+              type="radio" 
+              value="myself" 
+              checked={opusingFor === "myself"} 
+              onChange={() => setOpusingFor("myself")} 
+            /> Myself
+          </label>
+          <label style={{ marginLeft: "1rem" }}>
+            <input 
+              type="radio" 
+              value="another" 
+              checked={opusingFor === "another"} 
+              onChange={() => setOpusingFor("another")} 
+            /> Another
+          </label>
+        </div>
+      </div>
+
       <div className='scrollContainer'>
         {post?.propertyType === 'Hotel / Shortlet' && (
           <div className='card'>
@@ -275,30 +332,43 @@ const ClientDetails = ({ post }) => {
         )}
 
         <div className='cardBottom'>
-          <label className='txtInputHeader'>First Name:</label>
-          <input
-            className='txtInput'
-            value={guestFirstName}
-            onChange={(e) => setGuestFirstName(e.target.value)}
-            placeholder="First name of guest(s)"
-          />
+          {opusingFor === 'myself' ? (
+            <>
+              <label className='txtInputHeader'>First Name:</label>
+              <input
+                className='txtInput'
+                value={guestFirstName}
+                onChange={(e) => setGuestFirstName(e.target.value)}
+                placeholder="First name of guest(s)"
+              />
 
-          <label className='txtInputHeader'>Last Name:</label>
-          <input
-            className='txtInput'
-            value={guestLastName}
-            onChange={(e) => setGuestLastName(e.target.value)}
-            placeholder="Last name of guest(s)"
-          />
+              <label className='txtInputHeader'>Last Name:</label>
+              <input
+                className='txtInput'
+                value={guestLastName}
+                onChange={(e) => setGuestLastName(e.target.value)}
+                placeholder="Last name of guest(s)"
+              />
 
-          <label className='txtInputHeader'>Phone Number:</label>
-          <input
-            className='txtInput'
-            value={guestPhoneNumber}
-            onChange={(e) => setGuestPhoneNumber(e.target.value)}
-            placeholder="Phone number"
-            type="tel"
-          />
+              <label className='txtInputHeader'>Phone Number:</label>
+              <input
+                className='txtInput'
+                value={guestPhoneNumber}
+                onChange={(e) => setGuestPhoneNumber(e.target.value)}
+                placeholder="Phone number"
+                type="tel"
+              />
+            </>
+          ) : (
+            <>
+              <label className='txtInputHeader'>Username:</label>
+              <UsernameInput
+                value={otherUsername}
+                onChange={setOtherUsername}
+                placeholder="Enter username"
+              />
+            </>
+          )}
 
           <label className='txtInputHeader'>
             {post?.propertyType === 'Hotel / Shortlet' ? 'Purpose of Stay' : 'Short Note'}

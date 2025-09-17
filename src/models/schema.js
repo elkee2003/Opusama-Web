@@ -777,6 +777,27 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "opusingFor": {
+                    "name": "opusingFor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "otherUsername": {
+                    "name": "otherUsername",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "opusedBy": {
+                    "name": "opusedBy",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "adults": {
                     "name": "adults",
                     "isArray": false,
@@ -2202,5 +2223,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "35fb66e196981dc9b45185e92ce80a82"
+    "version": "0d328baf34001c7b326655aa340544ca"
 };

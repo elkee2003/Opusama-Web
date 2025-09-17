@@ -1,23 +1,15 @@
-.mentionTextAreaCon {
+.userNameInputAreaCon {
     position: relative;
     display: flex;
 }
 
 
-/* Textarea sits on top */
-.formCommunText {
-  position: relative;
-  background: transparent;
-  color: black;
-  padding: 10px;
-  max-width: 600px;
-  min-width: 600px;
-  height: 300px;
-  border: 1px solid #060c29;
-  border-radius: 20px;
+.usernameInputText {
+  width: 100%;
   font-size: 16px;
-  margin-bottom: 10px;
-  resize: none;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px;   
 }
 
 /* .formCommunText {
@@ -32,9 +24,9 @@
     margin-bottom: 10px;
 } */
 
-.mention-suggestions {
+.username-suggestions {
   position: absolute;
-  /* top: 220px; */
+  top: 50px;
   left: 10px;
   background: white;
   border: 1px solid #ddd;
@@ -48,27 +40,21 @@
   list-style: none;
 }
 
-.mention-suggestions li {
+.username-suggestions li {
   padding: 6px 10px;
   cursor: pointer;
 }
 
-.mention-suggestions li:hover {
+.username-suggestions li:hover {
   background: #f0f0f0;
 }
 
-.no-suggestions {
+.no-username-suggestions {
   padding: 6px 10px;
   color: gray;
 }
 
 @media (max-width: 900px) {
-
-    .formCommunText {
-        align-self: stretch;
-        min-width: 600px;
-    }
-
 
 }
 
@@ -79,19 +65,13 @@
 }
 
 @media (max-width: 600px) {
-    .formCommunText {
-        min-width: 500px;
-    }
+
 }
 
 @media (max-width: 500px) {
-    .formCommunText {
-        min-width: 360px;
-    }
+
 }
 
 @media (max-width: 450px) {
-    .formCommunText {
-        min-width: 300px;
-    }
+
 }

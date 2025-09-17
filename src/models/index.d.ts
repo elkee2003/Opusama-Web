@@ -325,6 +325,9 @@ type EagerBooking = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly opusingFor?: string | null;
+  readonly otherUsername?: string | null;
+  readonly opusedBy?: string | null;
   readonly adults?: number | null;
   readonly kids?: number | null;
   readonly infants?: number | null;
@@ -367,6 +370,9 @@ type LazyBooking = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly opusingFor?: string | null;
+  readonly otherUsername?: string | null;
+  readonly opusedBy?: string | null;
   readonly adults?: number | null;
   readonly kids?: number | null;
   readonly infants?: number | null;

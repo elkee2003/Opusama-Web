@@ -7,6 +7,7 @@ import { Booking, Notification } from "../../../../../../../../models";
 import "./ReviewShowing.css"; 
 import { useAuthContext } from "../../../../../../../../../Providers/ClientProvider/AuthProvider";
 import { useBookingShowingContext } from "../../../../../../../../../Providers/ClientProvider/BookingShowingProvider";
+import { User } from "../../../../../../../../models";
 
 const ReviewClientDetails = () => {
   const navigate = useNavigate();
@@ -15,6 +16,12 @@ const ReviewClientDetails = () => {
     selectedOption, 
     setSelectedOption,
     setBookings,
+    opusingFor, 
+    setOpusingFor, 
+    otherUsername,
+    setOtherUsername,
+    opusedBy, 
+    setOpusedBy,
     adults,
     setAdults,
     kids,
@@ -103,30 +110,61 @@ const ReviewClientDetails = () => {
 
   const handleBooking = async () => {
     if (loading) return;
-    // if (!postTotalPrice) {
-    //   alert("Error: Incompelete details. Booking cannot proceed.");
-    //   return; 
-    // }
-
     setLoading(true);
 
     try {
+      let clientFirstName = guestFirstName;
+      let clientLastName = guestLastName;
+      let clientPhoneNumber = guestPhoneNumber;
+      let bookingUserID = dbUser.id;
+      let notificationCreatorID = dbUser.id;
+      let notificationCreatorUsername = dbUser.username || "A client";
+      let targetUser = null;
+
+      // If booking for another person
+      if (opusingFor === "another" && otherUsername?.trim()) {
+        const foundUsers = await DataStore.query(User, (u) =>
+          u.username.eq(otherUsername.trim())
+        );
+
+        if (foundUsers.length === 0) {
+          alert("No user found with that username");
+          setLoading(false);
+          return;
+        }
+
+        targetUser = foundUsers[0];
+
+        clientFirstName = targetUser.firstName || "";
+        clientLastName = targetUser.lastName || "";
+        clientPhoneNumber = targetUser.phoneNumber || "";
+        bookingUserID = targetUser.id; 
+
+        // Realtor notification should look like it came from the target user
+        notificationCreatorID = targetUser.id;
+        notificationCreatorUsername = targetUser.username || "A client";
+      }
+
+
       const booking = await DataStore.save(
         new Booking({ 
+          opusingFor,
+          otherUsername,
+          opusedBy,
           adults,
           kids,
           infants,
           numberOfPeople,
           numberOfItems,
-          clientFirstName: guestFirstName,
-          clientLastName: guestLastName,
-          clientPhoneNumber: guestPhoneNumber,
+          clientFirstName,
+          clientLastName,
+          clientPhoneNumber,
           purpose: note,
           selectedOption,
           duration: String(duration),
           checkInDate: String(checkInDate),
           checkOutDate: String(checkOutDate),
-          bookedSessionDuration: bookedSessionDuration.label,
+          bookedSessionDuration: bookedSessionDuration?.label || "",
           subscription,
           propertyType,
           nameOfType,
@@ -135,30 +173,49 @@ const ReviewClientDetails = () => {
           bookingLng,
           totalPrice: parseFloat(overAllPrice),
           realtorPrice: parseFloat(realtorPrice),
-          userID: dbUser.id,
+          userID: bookingUserID,
           realtorID: realtorContext.id,
           PostID,
           status: propertyType === "Recreation" ? "ACCEPTED" : "PENDING",
         })
       );
 
+      // Notify realtor
       await DataStore.save(
         new Notification({
-          creatorID: dbUser?.id,
+          creatorID: notificationCreatorID,
           recipientID:realtorContext.id,
           recipientType: 'BOOKING_REALTOR',
-          type: ["Hotel / Shortlet", "Nightlife", "Recreation"].includes(propertyType) ? "BOOKING" : "SHOWING",
+          type: ["Hotel / Shortlet", "Nightlife", "Recreation", 'Event', 'Food & Drinks'].includes(propertyType) ? "BOOKING" : "SHOWING",
           entityID: booking.id,
-          message: `A client made a booking for your ${propertyType} (${accommodationType})`,
+          message: `${notificationCreatorUsername} made a booking for your ${propertyType} (${accommodationType})`,
           read: false,
         })
       );
+
+      // If booking was for another user → also notify them
+      if (targetUser) {
+        await DataStore.save(
+          new Notification({
+            creatorID: dbUser.id, 
+            recipientID: targetUser.id,
+            recipientType: "BOOKING_USER",
+            type: "BOOKING",
+            entityID: booking.id,
+            message: `${dbUser.username || "Someone"} opused you ${propertyType} (${accommodationType})`,
+            read: false,
+          })
+        );
+      }
       
       setBookings(booking);
       alert("Booking was a success");
 
       // Reset state
       setSelectedOption(null);
+      setOpusingFor('myself');
+      setOtherUsername("");
+      setOpusedBy("");
       setAdults(0);
       setKids(0);
       setInfants(0);
@@ -249,14 +306,37 @@ const ReviewClientDetails = () => {
           )}
 
         </div>
-        <h4>First Name(s):</h4>
-        <p className="txtInputReview">{guestFirstName?.trim()}</p>
+        
+        <h4>Opusing For:</h4>
+        <p className="txtInputReview">{opusingFor}</p>
 
-        <h4>Last Name(s):</h4>
-        <p className="txtInputReview">{guestLastName?.trim()}</p>
+        {otherUsername && (
+          <>
+          <h4>Username:</h4>
+          <p className="txtInputReview">@{otherUsername}</p>
+          </>
+        )}
 
-        <h4>Phone Number(s):</h4>
-        <p className="txtInputReview">{guestPhoneNumber}</p>
+        {guestFirstName && (
+          <>
+            <h4>First Name(s):</h4>
+            <p className="txtInputReview">{guestFirstName?.trim()}</p>
+          </>
+        )}
+
+        {guestLastName && (
+          <>
+            <h4>Last Name(s):</h4>
+            <p className="txtInputReview">{guestLastName?.trim()}</p>
+          </>
+        )}
+
+        {guestPhoneNumber && (
+          <>
+            <h4>Phone Number(s):</h4>
+            <p className="txtInputReview">{guestPhoneNumber}</p>
+          </>
+        )}
 
         <h4>Purpose of stay:</h4>
         <p className="txtInputReview">{note?.trim()}</p>

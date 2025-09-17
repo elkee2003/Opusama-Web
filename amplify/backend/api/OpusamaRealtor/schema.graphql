@@ -89,6 +89,9 @@ type PostReview @model @auth(rules: [{allow: public}]) {
 
 type Booking @model @auth(rules: [{allow: public}]) {
   id: ID!
+  opusingFor: String
+  otherUsername: String
+  opusedBy: String
   adults: Int
   kids: Int
   infants: Int

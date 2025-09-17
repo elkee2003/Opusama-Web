@@ -13,6 +13,9 @@ const BookingShowingContextProvider = ({children}) => {
     const [cardExpiry, setCardExpiry] = useState(null);
     const [cardCvv, setCardCvv] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [opusingFor, setOpusingFor] = useState("myself");
+    const [otherUsername, setOtherUsername] = useState("");
+    const [opusedBy, setOpusedBy] = useState("");
     const [adults, setAdults] = useState(0);
     const [kids, setKids] = useState(0);
     const [infants, setInfants] = useState(0);
@@ -98,19 +101,28 @@ const BookingShowingContextProvider = ({children}) => {
             return false;
         }
     
-        if (!guestFirstName) {
-            setErrorMessage('First Name is Required');
-            return false;
+        if (opusingFor === "myself") {
+            if (!guestFirstName) {
+                setErrorMessage('First Name is Required');
+                return false;
+            }
+
+            if (!guestLastName) {
+                setErrorMessage('Last Name is Required');
+                return false;
+            }
+
+            if (guestPhoneNumber.length < 10) {
+                setErrorMessage('Phone Number must be at least 10 digits');
+                return false;
+            }
         }
-    
-        if (!guestLastName) {
-            setErrorMessage('Last Name is Required');
-            return false;
-        }
-    
-        if (guestPhoneNumber.length < 10) {
-            setErrorMessage('Phone Number must be at least 10 digits');
-            return false;
+
+        if (opusingFor === "another") {
+            if (!otherUsername) {
+                setErrorMessage('Username is Required');
+                return false;
+            }
         }
     
         return true;
@@ -133,19 +145,28 @@ const BookingShowingContextProvider = ({children}) => {
             return false;
         }
     
-        if (!guestFirstName) {
-            setErrorMessage('First Name is Required');
-            return false;
+        if (opusingFor === "myself") {
+            if (!guestFirstName) {
+                setErrorMessage('First Name is Required');
+                return false;
+            }
+
+            if (!guestLastName) {
+                setErrorMessage('Last Name is Required');
+                return false;
+            }
+
+            if (guestPhoneNumber.length < 10) {
+                setErrorMessage('Phone Number must be at least 10 digits');
+                return false;
+            }
         }
-    
-        if (!guestLastName) {
-            setErrorMessage('Last Name is Required');
-            return false;
-        }
-    
-        if (guestPhoneNumber.length < 10) {
-            setErrorMessage('Phone Number must be at least 10 digits');
-            return false;
+
+        if (opusingFor === "another") {
+            if (!otherUsername) {
+                setErrorMessage('Username is Required');
+                return false;
+            }
         }
     
         return true;
@@ -161,34 +182,43 @@ const BookingShowingContextProvider = ({children}) => {
 
     // Food & Drinks Validation
     const validateFoodInput = () => {
-    setErrorMessage('');
+        setErrorMessage('');
 
-    if (numberOfItems === 0) {
-        setErrorMessage('Please add the number of items');
-        return false;
-    }
+        if (numberOfItems === 0) {
+            setErrorMessage('Please add the number of items');
+            return false;
+        }
 
-    if (!selectedOption) {
-        setErrorMessage('Please select a menu option');
-        return false;
-    }
+        if (!selectedOption) {
+            setErrorMessage('Please select a menu option');
+            return false;
+        }
 
-    if (!guestFirstName) {
-        setErrorMessage('First Name is Required');
-        return false;
-    }
+        if (opusingFor === "myself") {
+            if (!guestFirstName) {
+                setErrorMessage('First Name is Required');
+                return false;
+            }
 
-    if (!guestLastName) {
-        setErrorMessage('Last Name is Required');
-        return false;
-    }
+            if (!guestLastName) {
+                setErrorMessage('Last Name is Required');
+                return false;
+            }
 
-    if (guestPhoneNumber.length < 10) {
-        setErrorMessage('Phone Number must be at least 10 digits');
-        return false;
-    }
+            if (guestPhoneNumber.length < 10) {
+                setErrorMessage('Phone Number must be at least 10 digits');
+                return false;
+            }
+        }
 
-    return true;
+        if (opusingFor === "another") {
+            if (!otherUsername) {
+                setErrorMessage('Username is Required');
+                return false;
+            }
+        }
+
+        return true;
     };
 
     const onValidateFoodInput = () => {
@@ -203,19 +233,28 @@ const BookingShowingContextProvider = ({children}) => {
     const validatePropertyInput = () => {
         setErrorMessage(''); 
     
-        if (!guestFirstName) {
-            setErrorMessage('First Name is Required');
-            return false;
+        if (opusingFor === "myself") {
+            if (!guestFirstName) {
+                setErrorMessage('First Name is Required');
+                return false;
+            }
+
+            if (!guestLastName) {
+                setErrorMessage('Last Name is Required');
+                return false;
+            }
+
+            if (guestPhoneNumber.length < 10) {
+                setErrorMessage('Phone Number must be at least 10 digits');
+                return false;
+            }
         }
-    
-        if (!guestLastName) {
-            setErrorMessage('Last Name is Required');
-            return false;
-        }
-    
-        if (guestPhoneNumber.length < 10) {
-            setErrorMessage('Phone Number must be at least 10 digits');
-            return false;
+
+        if (opusingFor === "another") {
+            if (!otherUsername) {
+                setErrorMessage('Username is Required');
+                return false;
+            }
         }
     
         return true;
@@ -239,7 +278,7 @@ const BookingShowingContextProvider = ({children}) => {
 
 
   return (
-    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, selectedOption, setSelectedOption, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople, numberOfItems, 
+    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, selectedOption, setSelectedOption, opusingFor, setOpusingFor, otherUsername, setOtherUsername, opusedBy, setOpusedBy, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople, numberOfItems, 
     setNumberOfItems, setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidateFoodInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, bookedSessionDuration, setBookedSessionDuration, duration, setDuration, subscription, setSubscription, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, overAllPrice, setOverAllPrice, realtorPrice, setRealtorPrice, transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
         {children}
     </BookingShowingContext.Provider>
