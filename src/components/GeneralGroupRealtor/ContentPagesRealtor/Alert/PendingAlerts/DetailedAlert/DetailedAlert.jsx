@@ -48,37 +48,46 @@ const PendingDetailedAlert = () => {
         );
         setBooking(updatedBooking); // Update local state with new status
 
-        // 2️⃣ Determine who gets the notification
-        // Example: realtor updates -> send to client
-        const recipientID = user.id; 
-        const recipientType = 'BOOKING_CLIENT';
-
-        // 3️⃣ Build a message based on status
+        // 2️⃣ Build message
         const statusMessages = {
-          ACCEPTED: `Your booking for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) has been accepted.`,
-          OCCUPIED: `Unfortunately, your booking for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) is unavailable. Please try another.`,
-          DENIED: `Your booking request for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) has been denied.`,
-          
-          VIEWING: `Your booking ${updatedBooking.accommodationType} status has been updated to Viewing.`,
-          VIEWED: `Your booking ${updatedBooking.accommodationType} has been marked as Viewed.`,
+          ACCEPTED: `Your opusing for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) has been accepted.`,
+          OCCUPIED: `Unfortunately, your opusing for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) is unavailable. Please try another.`,
+          DENIED: `Your opusing request for ${updatedBooking.propertyType} (${updatedBooking.accommodationType}) has been denied.`,
+          VIEWING: `Your opusing ${updatedBooking.accommodationType} status has been updated to Viewing.`,
+          VIEWED: `Your opusing ${updatedBooking.accommodationType} has been marked as Viewed.`,
           SOLD: `The property ${updatedBooking.accommodationType} has been sold.`,
-          PAID: `Your booking ${updatedBooking.accommodationType} has been marked as Paid.`,
+          PAID: `Your opusing ${updatedBooking.accommodationType} has been marked as Paid.`,
         };
 
-        const message = statusMessages[newStatus] || `Booking status updated to ${newStatus}.`;
-        
-         // 4️⃣ Save the notification
+        const message = statusMessages[newStatus] || `Opusing status updated to ${newStatus}.`;
+
+        // 3️⃣ Notify the actual booking owner
         await DataStore.save(
           new Notification({
-            creatorID: booking.realtorID, 
-            recipientID: recipientID,
-            recipientType: recipientType,
-            type: 'BOOKING_STATUS_UPDATE',
+            creatorID: booking.realtorID,
+            recipientID: booking.userID, // The person for whom the booking was made
+            recipientType: "BOOKING_CLIENT",
+            type: "BOOKING_STATUS_UPDATE",
             entityID: booking.id,
-            message: message,
+            message,
             read: false,
           })
         );
+        // 4️⃣ If someone else booked it (opused on their behalf), notify them too
+        if (booking.opusedBy && booking.opusedBy !== booking.userID) {
+          await DataStore.save(
+            new Notification({
+              creatorID: booking.realtorID,
+              recipientID: booking.opusedBy, // The dbUser who made the booking
+              recipientType: "BOOKING_CLIENT",
+              type: "BOOKING_STATUS_UPDATE",
+              entityID: booking.id,
+              message: `Your opus for another: ${message}`,
+              read: false,
+            })
+          );
+        }
+            
       } catch (error) {
         console.error("Error updating booking status", error);
         alert("Unable to update booking status");

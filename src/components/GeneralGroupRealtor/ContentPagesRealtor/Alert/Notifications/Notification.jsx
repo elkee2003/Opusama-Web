@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Notification.css';
 import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
-import {Notification} from '../../../../../models';
+import {Notification, Booking} from '../../../../../models';
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
-import { Booking } from '../../../../../models';
 
 const NotificationCom = () => {
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { dbUser, dbRealtor } = useAuthContext();
   const navigate = useNavigate();
 
@@ -15,96 +15,105 @@ const NotificationCom = () => {
     if (!dbRealtor?.id) return;
 
     const fetchNotifications = async () => {
-      const all = await DataStore.query(Notification, n =>
-        n.recipientID.eq(dbRealtor.id)
-      );
-      setNotifications(all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+      try {
+        const all = await DataStore.query(Notification, n =>
+          n.recipientID.eq(dbRealtor.id)
+        );
+        setNotifications(
+          all.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+        );
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchNotifications();
 
-    const subscription = DataStore.observe(Notification).subscribe(async (msg) => {
-      const { element, opType } = msg;
-
-      // Only react to notifications meant for this realtor
+    const subscription = DataStore.observe(Notification).subscribe(async ({ element, opType }) => {
+      // only react to notifications meant for this realtor
       if (element.recipientID !== dbRealtor.id) return;
 
-      // Refetch the full notification list on any change
-      await fetchNotifications();
+      if (["INSERT", "UPDATE", "DELETE"].includes(opType)) {
+        // ✅ safest: just refetch full list to stay consistent
+        await fetchNotifications();
+      }
     });
 
     return () => subscription.unsubscribe();
   }, [dbRealtor]);
 
-  const handleNotificationClick = async (notification) => {
-    
-    // Optional: Mark as read
-    await DataStore.save(
-      Notification.copyOf(notification, updated => {
-        updated.read = true;
-      })
-    );
+  // Navigation map for Realtor only
+  const navigationMap = {
+    BOOKING_REALTOR: async (id) => {
+      if (!id) return null;
 
-    const recipientID = notification.recipientID;
-    const entityID = notification.entityID;
-    const recipientType = notification.recipientType;
-
-    const isUser = dbUser && dbUser.id === recipientID;
-    const isRealtor = dbRealtor && dbRealtor.id === recipientID;
-
-    if (!recipientType || (!isUser && !isRealtor)) {
-        console.warn('No matching recipient or unknown recipient type');
-        return;
-    }
-
-    if (recipientType === 'BOOKING_REALTOR' && isRealtor && entityID) {
-      // ✅ Check booking status before navigating
-      const booking = await DataStore.query(Booking, entityID);
-
+      const booking = await DataStore.query(Booking, id);
       if (!booking) {
         console.warn('Booking not found');
-        return;
+        return null;
       }
-      if (booking.status === 'PENDING') {
-        navigate(`/realtorcontent/pending_details/${entityID}`);
-      } else if (booking.status === 'ACCEPTED' || booking.status === 'PAID' || booking.status === 'CHECKED_IN' || booking.status === 'VIEWING' || booking.status === 'VISITING' || booking.status === 'CHECKED_OUT' || booking.status === 'VIEWED' || booking.status === 'VISITED' || booking.status === 'SOLD') {
-        navigate(`/realtorcontent/accepted_details/${entityID}`);
-      } else if (booking.status === 'DENIED') {
-        // Maybe show a toast instead of navigating
+      if (booking.status === 'DENIED') {
         alert('This booking request has already been denied.');
+        return null;
       }
-    } else if (
-        (recipientType === 'REVIEW_REALTOR_POST' || recipientType === 'COMMENT_REALTOR_POST') &&
-        isRealtor &&
-        entityID
-    ) {
-        navigate(`/realtorcontent/reviews_comments/${entityID}`);
-    } else if (recipientType === 'REVIEW_REALTOR' && isRealtor) {
-        navigate('/realtorcontent/realtorrating');
-    } else if (
-        (recipientType === 'POST_CREATOR_LIKE' || recipientType === 'POST_CREATOR_COMMENT') &&
-        entityID
-    ) {
-        if (isUser) {
-        navigate(`/clientcontent/community_post/${entityID}`);
-        } else if (isRealtor) {
-        navigate(`/realtorcontent/community_post/${entityID}`);
-        }
-    } else if (recipientType === 'REVIEW_CLIENT' && isUser) {
-        navigate('/clientcontent/userrating');
-    } else if (recipientType === 'COMMENT_CLIENT_POST' && isUser && entityID) {
-        navigate(`/clientcontent/reviews_comments/${entityID}`);
-    } else {
-        console.warn('Unhandled recipientType:', recipientType);
+
+      // ✅ Realtor still sees notification if DENIED or TRY_ANOTHER
+      const bookingRouteMap = {
+        PENDING: `/realtorcontent/pending_details/${id}`,
+        ACCEPTED: `/realtorcontent/accepted_details/${id}`,
+        PAID: `/realtorcontent/accepted_details/${id}`,
+        CHECKED_IN: `/realtorcontent/accepted_details/${id}`,
+        VIEWING: `/realtorcontent/accepted_details/${id}`,
+        VISITING: `/realtorcontent/accepted_details/${id}`,
+        CHECKED_OUT: `/realtorcontent/accepted_details/${id}`,
+        VIEWED: `/realtorcontent/accepted_details/${id}`,
+        VISITED: `/realtorcontent/accepted_details/${id}`,
+        SOLD: `/realtorcontent/accepted_details/${id}`,
+      };
+
+      return bookingRouteMap[booking.status] || null;
+    },
+    REVIEW_REALTOR_POST: id => id ? `/realtorcontent/reviews_comments/${id}` : null,
+    COMMENT_REALTOR_POST: id => id ? `/realtorcontent/reviews_comments/${id}` : null,
+    REVIEW_REALTOR: () => '/realtorcontent/realtorrating',
+    POST_CREATOR_LIKE: id => id ? `/realtorcontent/community_post/${id}` : null,
+    POST_CREATOR_COMMENT: id => id ? `/realtorcontent/community_post/${id}` : null,
+  };
+
+  const handleNotificationClick = async (notification) => {
+    // Optimistic mark as read
+    setNotifications(prev =>
+      prev.map(n => (n.id === notification.id ? { ...n, read: true } : n))
+    );
+
+    try {
+      await DataStore.save(
+        Notification.copyOf(notification, updated => {
+          updated.read = true;
+        })
+      );
+    } catch (err) {
+      console.error('Failed to mark as read:', err);
+      setNotifications(prev =>
+        prev.map(n => (n.id === notification.id ? { ...n, read: false } : n))
+      );
     }
 
-    // // Navigate based on notification (example assumes you have a postID stored)
-    // if (notification.postID) {
-    //   navigate(`/clientcontent/post/${notification.postID}`);
-    // } else {
-    //   // fallback or update-type navigation
-    //   console.log('No post ID found for this notification');
-    // }
+    const { recipientType, entityID } = notification;
+    let path = null;
+
+    if (navigationMap[recipientType]) {
+      const handler = navigationMap[recipientType];
+      path = typeof handler === "function" ? await handler(entityID) : handler;
+    }
+
+    if (path) {
+      navigate(path);
+    } else {
+      console.warn('Unhandled notification:', notification);
+    }
   };
     
   return (
@@ -113,28 +122,32 @@ const NotificationCom = () => {
         <p className='realtorNotificationHeaderTxt'>Notification</p>
       </div>
 
-        {notifications.length === 0 ? (
-          <div className='realtorNoNotificationCon'>
-            <p className='realtorNoNotificationTxt'>No notifications yet.</p>
-          </div>
-        ) : (
-          <ul className="notificationList">
-            {notifications.map((notification) => (
-              <li
-                key={notification.id}
-                className="notificationItem"
-                onClick={() => handleNotificationClick(notification)}
-              >
-                <div className="notificationContent">
-                  {!notification.read && <div className="redDot" />}
-                  <span className={notification.read ? 'readText' : 'unreadText'}>
-                    {notification.message}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+      {loading ? (
+        <div className="realtorNoNotificationCon">
+          <p className="realtorNoNotificationTxt">Loading notifications...</p>
+        </div>
+      ) : notifications.length === 0 ? (
+        <div className="realtorNoNotificationCon">
+          <p className="realtorNoNotificationTxt">No notifications yet.</p>
+        </div>
+      ) : (
+        <ul className="notificationList">
+          {notifications.map((notification) => (
+            <li
+              key={notification.id}
+              className="notificationItem"
+              onClick={() => handleNotificationClick(notification)}
+            >
+              <div className="notificationContent">
+                {!notification.read && <div className="redDot" />}
+                <span className={notification.read ? 'readText' : 'unreadText'}>
+                  {notification.message}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

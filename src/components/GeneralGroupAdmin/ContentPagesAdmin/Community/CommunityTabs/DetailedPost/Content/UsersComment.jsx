@@ -76,21 +76,33 @@ const UsersComment = ({ replies: initialReplies }) => {
             const replyToDelete = await DataStore.query(CommunityReply, replyId);
             if (!replyToDelete) throw new Error("Reply not found");
         
-            // Query the all notifications from DataStore
-            const allNotifications = await DataStore.query(Notification);
-            const relatedNotifications = allNotifications.filter(n => n.entityID === replyId);
-        
+            // 1. Delete mention notifications (entityID = replyId)
+            const mentionNotifs = await DataStore.query(Notification, n =>
+            n.entityID.eq(replyId)
+            );
+
+            // 2. Delete the "comment on your post" notification
+            const commentNotifs = await DataStore.query(Notification, n =>
+            n.entityID.eq(replyToDelete.communitydiscussionID) // postId
+            );
+
+            const relatedCommentNotifs = commentNotifs.filter(n =>
+            n.type === "COMMENT" && n.creatorID === replyToDelete.commenterID
+            );
+
+            // Merge all notifications to delete
+            const relatedNotifications = [...mentionNotifs, ...relatedCommentNotifs];
+
             if (relatedNotifications.length > 0) {
-                await Promise.all(
-                    relatedNotifications.map(n => DataStore.delete(n))
-                );
+            await Promise.all(relatedNotifications.map(n => DataStore.delete(n)));
             }
-        
-            // Delete the reply itself
+
+            // 3. Delete the reply itself
             await DataStore.delete(replyToDelete);
 
-            // Remove the deleted reply from state
+            // 4. Update state
             setReplies(prev => prev.filter(r => r.id !== replyId));
+            
         } catch (error) {
             console.error("Error during deletion:", error);
         } finally {

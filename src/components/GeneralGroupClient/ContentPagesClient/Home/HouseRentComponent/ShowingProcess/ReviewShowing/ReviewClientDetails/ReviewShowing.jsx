@@ -207,6 +207,21 @@ const ReviewClientDetails = () => {
           })
         );
       }
+
+      // Notify client about their own booking
+      await DataStore.save(
+        new Notification({
+          creatorID: realtorContext.id, 
+          recipientID: dbUser.id,
+          recipientType: "BOOKING_CLIENT",
+          type: "BOOKING_STATUS_UPDATE",
+          entityID: booking.id,
+          message: targetUser
+            ? `You opused ${propertyType} (${accommodationType}) for ${targetUser.username}.`
+            : `You opused ${propertyType} (${accommodationType}).`,
+          read: false,
+        })
+      );
       
       setBookings(booking);
       alert("Booking was a success");
