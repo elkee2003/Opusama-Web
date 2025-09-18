@@ -38,8 +38,8 @@ function Approved() {
             <Tab label="Experiences" />
             <Tab label="Food & Drinks" />
             <Tab label="Property Sale" />
-            <Tab label="Venues" />
             <Tab label="Events" />
+            <Tab label="Venues" />
             <Tab label="Commercial Spaces" />
             <Tab label="Office Spaces" />
           </Tabs>
@@ -52,8 +52,8 @@ function Approved() {
         {selectedTab === 2 && <Experiences />}
         {selectedTab === 3 && <FoodDrinks />}
         {selectedTab === 4 && <PropertySale />}
-        {selectedTab === 5 && <Venues />}
-        {selectedTab === 6 && <EventsTab />}
+        {selectedTab === 5 && <EventsTab />}
+        {selectedTab === 6 && <Venues />}
         {selectedTab === 7 && <CommercialSpaces />}
         {selectedTab === 8 && <OfficeSpace />}
       </div>

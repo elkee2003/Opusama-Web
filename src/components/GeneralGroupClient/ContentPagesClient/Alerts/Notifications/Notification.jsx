@@ -68,26 +68,28 @@ const NotificationCom = () => {
     COMMENT_CLIENT_POST: id => `/clientcontent/reviews_comments/${id}`,
     POST_CREATOR_LIKE: id => `/clientcontent/community_post/${id}`,
     POST_CREATOR_COMMENT: id => `/clientcontent/community_post/${id}`,
+    MENTION: id => `/clientcontent/community_post/${id}`,
   };
 
   const handleNotificationClick = async (notification) => {
-    // Optimistic UI update mark as read
-    setNotifications(prev =>
-      prev.map(n => (n.id === notification.id ? { ...n, read: true } : n))
-    );
-
     try {
+      // Mark as read in DataStore directly
       await DataStore.save(
         Notification.copyOf(notification, updated => {
           updated.read = true;
         })
       );
+
+      // Re-fetch models so state has real instances
+      const all = await DataStore.query(Notification, n =>
+        n.recipientID.eq(dbUser.id)
+      );
+
+      setNotifications(
+        all.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+      );
     } catch (err) {
       console.error('Failed to mark as read:', err);
-      // Rollback optimistic update if save fails
-      setNotifications(prev =>
-        prev.map(n => (n.id === notification.id ? { ...n, read: false } : n))
-      );
     }
 
     const { recipientType, entityID } = notification;
@@ -95,7 +97,7 @@ const NotificationCom = () => {
     let path = null;
 
     if (navigationMap[recipientType]) {
-      path = navigationMap[recipientType](entityID);
+      path = await navigationMap[recipientType](entityID);
     }
 
     if (path) {

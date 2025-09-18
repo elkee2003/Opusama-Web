@@ -80,25 +80,28 @@ const NotificationCom = () => {
     REVIEW_REALTOR: () => '/realtorcontent/realtorrating',
     POST_CREATOR_LIKE: id => id ? `/realtorcontent/community_post/${id}` : null,
     POST_CREATOR_COMMENT: id => id ? `/realtorcontent/community_post/${id}` : null,
+    MENTION: id => `/realtorcontent/community_post/${id}`,
   };
 
   const handleNotificationClick = async (notification) => {
-    // Optimistic mark as read
-    setNotifications(prev =>
-      prev.map(n => (n.id === notification.id ? { ...n, read: true } : n))
-    );
-
     try {
+      // Mark as read in DataStore directly
       await DataStore.save(
         Notification.copyOf(notification, updated => {
           updated.read = true;
         })
       );
+
+      // Optional: force re-fetch (not needed if subscription works fine)
+      const all = await DataStore.query(Notification, n =>
+        n.recipientID.eq(dbRealtor.id)
+      );
+      setNotifications(
+        all.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+      );
+
     } catch (err) {
       console.error('Failed to mark as read:', err);
-      setNotifications(prev =>
-        prev.map(n => (n.id === notification.id ? { ...n, read: false } : n))
-      );
     }
 
     const { recipientType, entityID } = notification;

@@ -79,6 +79,13 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           <h3 className="subHeading">Realtor:</h3>
           <p className="detail">{booking?.realtor?.firstName}</p>
 
+          {booking?.otherUsername && (
+            <>
+              <h3 className="subHeading">Opused For:</h3>
+              <p className="detail">{booking?.otherUsername}</p>
+            </>
+          )}
+
           {/* Property Details */}
           <div onClick={(e) => {
             e.stopPropagation(); // Prevent the event from propagating to the parent div

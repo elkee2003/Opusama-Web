@@ -4,12 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import './DetailedBooking.css'; 
 import { DataStore } from "aws-amplify/datastore";
-import { Booking, Realtor, Post, BookingPostOptions  } from '../../../../../../models';
+import { Booking, Realtor, User, Post, BookingPostOptions  } from '../../../../../../models';
 
 const DetailedBooking = () => {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [realtor, setRealtor] = useState(null);
+  const [opusedby, setOpusedBy] = useState('');
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,9 +27,17 @@ const DetailedBooking = () => {
           // Fetch associated post
           const foundPost = await DataStore.query(Post, foundBooking.PostID);
 
+           // Fetch user linked by opusedBy (if exists)
+          let foundOpusedByUser = null;
+          if (foundBooking.opusedBy) {
+            foundOpusedByUser = await DataStore.query(User, foundBooking.opusedBy);
+          }
+          
+
           setBooking(foundBooking);
           setRealtor(foundRealtor);
           setPost(foundPost);
+          setOpusedBy(foundOpusedByUser);
         } else {
           setBooking(null);
         }
@@ -89,6 +98,7 @@ const DetailedBooking = () => {
         booking={booking}   
         realtor={realtor}
         post={post}
+        opusedBy={opusedby}
         onStatusUpdateChange={updateBookingStatus} 
       />
     </div>

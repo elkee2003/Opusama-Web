@@ -6,7 +6,7 @@ import TicketQRCode from '../QRCode/TicketQRCode';
 import { useProfileContext } from '../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { useBookingShowingContext } from '../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 
-const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
+const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange }) => {
   const navigate = useNavigate();
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
   const {setCurrentBooking, transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
@@ -339,7 +339,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
         )}
 
         {/* Phone Number */}
-        {booking?.clientPhoneNumber && (
+        {!booking?.opusedBy && booking?.clientPhoneNumber && (
           <div>
             <h3 className="bkSubHeader">Phone Number:</h3>
             <p className="bkDetails">{booking?.clientPhoneNumber}</p>
@@ -438,6 +438,13 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
             accommodationType={booking.accommodationType}
             propertyType={booking.propertyType}
           />
+        </div>
+      )}
+
+      {/* Opused By */}
+      {opusedBy && (
+        <div className='opusedByCon'>
+          <p>Opused by: {opusedBy.username}</p>
         </div>
       )}
 

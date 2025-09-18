@@ -654,7 +654,7 @@ function Content({post, realtor,}) {
 
         {/* Amenities */}
         <div>
-          <h4 className='luxPolHeadTxt'>Living Luxuries</h4>
+          <h4 className='luxPolHeadTxt'>Luxuries</h4>
           <p className='luxPolTxt'>
             {readMoreLux ||post.amenities.length <= 150 ? post.amenities : `${post.amenities.substring(0, 100)}...`}
 
@@ -674,7 +674,7 @@ function Content({post, realtor,}) {
 
         {/* Policies */}
         <div>
-          <h4 className='luxPolHeadTxt'>Stay Policies</h4>
+          <h4 className='luxPolHeadTxt'>Policies</h4>
           <p className='luxPolTxt'>
             {readMorePol || post.policies.length <= 100 ? post.policies : `${post.policies.substring(0,100)}...`}
 

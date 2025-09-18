@@ -31,9 +31,12 @@ const BookingList = () => {
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      // Fetch bookings for the current user
+      // Fetch bookings where either userID = dbUser.id OR opusedBy = dbUser.id
       const userBookings = await DataStore.query(Booking, (booking) =>
-        booking.userID.eq(dbUser.id)
+        booking.or((b) => [
+          b.userID.eq(dbUser.id),
+          b.opusedBy.eq(dbUser.id)
+        ])
       );
 
       // Filter out bookings with the "REMOVED" status

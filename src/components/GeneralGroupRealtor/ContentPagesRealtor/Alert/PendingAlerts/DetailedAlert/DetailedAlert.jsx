@@ -75,6 +75,16 @@ const PendingDetailedAlert = () => {
         );
         // 4️⃣ If someone else booked it (opused on their behalf), notify them too
         if (booking.opusedBy && booking.opusedBy !== booking.userID) {
+
+          const altMessages = {
+            ACCEPTED: `Your opus for another was accepted (${updatedBooking.accommodationType}).`,
+            OCCUPIED: `Your opus for another is unavailable (${updatedBooking.accommodationType}).`,
+            DENIED: `Your opus for another was denied (${updatedBooking.accommodationType}).`,
+            VIEWING: `Your opus for another is set to Viewing (${updatedBooking.accommodationType}).`,
+            VIEWED: `Your opus for another was Viewed (${updatedBooking.accommodationType}).`,
+            SOLD: `The property you opused for another was sold (${updatedBooking.accommodationType}).`,
+            PAID: `Your opus for another was marked as Paid (${updatedBooking.accommodationType}).`,
+          };
           await DataStore.save(
             new Notification({
               creatorID: booking.realtorID,
@@ -82,7 +92,7 @@ const PendingDetailedAlert = () => {
               recipientType: "BOOKING_CLIENT",
               type: "BOOKING_STATUS_UPDATE",
               entityID: booking.id,
-              message: `Your opus for another: ${message}`,
+              message: altMessages[newStatus] || `Booking you made for another updated to ${newStatus}.`,
               read: false,
             })
           );
