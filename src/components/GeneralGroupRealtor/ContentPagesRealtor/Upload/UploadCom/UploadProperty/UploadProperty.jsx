@@ -27,6 +27,8 @@ const UploadProperty = () => {
     setAvailableDocs,
     capacity,
     setCapacity,
+    eventName, 
+    setEventName,
     eventDateTime, 
     setEventDateTime,
     eventEndDateTime, 
@@ -136,6 +138,7 @@ const UploadProperty = () => {
     setCautionFee("");
     setTimeFrame("");
     setCapacity("");
+    setEventName("");
     setEventDateTime("");
     setEventEndDateTime("");
     setRecurrence("");
@@ -260,6 +263,7 @@ const UploadProperty = () => {
           description,
           available: true,
           capacity,
+          eventName,
           eventDateTime,
           eventEndDateTime,
           recurrence,

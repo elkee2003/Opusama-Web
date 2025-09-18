@@ -99,6 +99,13 @@ function Post({post}) {
           </div>}
         </div>
 
+        {/* Event Name */}
+        {post?.eventName && (
+          <p className='eventName'>
+            {post?.eventName}
+          </p>
+        )}
+
         {/* Username */}
         {/* <div 
             className={'contact'}

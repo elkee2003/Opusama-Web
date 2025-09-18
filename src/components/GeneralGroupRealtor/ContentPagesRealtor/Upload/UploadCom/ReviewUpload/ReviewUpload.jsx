@@ -10,6 +10,7 @@ const ReviewUpload = () => {
     nameOfType,
     availableDocs,
     capacity,
+    eventName, 
     eventDateTime,
     eventEndDateTime,
     recurrence,
@@ -97,6 +98,14 @@ const ReviewUpload = () => {
           <p className='displayLabel'>Property Sub Type:</p>
           <p className='uploadPropDetails'>{type}</p>
         </div>
+
+        {/* Event Name */}
+        {eventName && (
+          <div className='uploadPropRow'>
+            <p className='displayLabel'>Event Name:</p>
+            <p className='uploadPropDetails'>{eventName}</p>
+          </div>
+        )}
 
         {/* Package Type Name */}
         {packageType && (

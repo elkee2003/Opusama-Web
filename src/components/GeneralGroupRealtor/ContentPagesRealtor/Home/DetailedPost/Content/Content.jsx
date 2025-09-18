@@ -226,17 +226,24 @@ function Content({post, realtor,}) {
           )) : (
             <img src={'/defaultImage.png'} alt="Default" className="image" />
           )}
-
-          {/* Subcription Label */}
-          {post.isSubscription && <div className='subscribeLabel'>
-            <p>Subscription</p>
-          </div>}
-
-          {/* Unavailable Label */}
-          {!post.available && <div className='unavailableLabel'>
-            <p>Unavailable</p>
-          </div>}
         </div>
+
+        {/* Event Name */}
+        {post?.eventName && (
+          <p className='eventName'>
+            {post?.eventName}
+          </p>
+        )}
+
+        {/* Subcription Label */}
+        {post.isSubscription && <div className='subscribeLabel'>
+          <p>Subscription</p>
+        </div>}
+
+        {/* Unavailable Label */}
+        {!post?.available && <div className='unavailableLabel'>
+          <p>Unavailable</p>
+        </div>}
 
         <div className='toggleCon'>
           <span className='availableTxt'>Available:</span>

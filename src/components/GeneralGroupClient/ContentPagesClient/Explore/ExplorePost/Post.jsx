@@ -179,6 +179,14 @@ function Post({post}) {
           className='clientSummaryContainer'
           onClick={()=>navigate(`/clientcontent/exploredetailedpost/${post.id}`)}
         >
+          {/* Event Name */}
+          {post?.eventName && (
+            <p className='eventName'>
+              {post?.eventName}
+            </p>
+          )}
+            
+
           {/* Username */}
           <div 
               className={'contact'}
@@ -187,7 +195,7 @@ function Post({post}) {
                 navigate(`/clientcontent/realtorprofile/${post.realtorID}`);
               }}
           >
-              <p className={'name'}>{post.firstName}</p>
+              <p className={post.propertyType === "Event" ? "eventOrganiser" : "name"}>{post.firstName}</p>
           </div>
 
           {post.type && (

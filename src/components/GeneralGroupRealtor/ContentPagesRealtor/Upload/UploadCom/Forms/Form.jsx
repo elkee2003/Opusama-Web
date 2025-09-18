@@ -248,7 +248,7 @@ const Forms = () => {
                     checked={bookingMode === "auto_event"}
                     onChange={() => setBookingMode("auto_event")}
                   />
-                  Booking doesn't require date nor time (book instantly)
+                  Booking doesn't require date nor time (book instantly e.g. event)
                 </label>
 
                 {/* Capacity Options */}
@@ -361,7 +361,7 @@ const Forms = () => {
           {/* Opening & Closing Time */}
           {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && !(propertyType === 'Event' && eventFrequency !== 'recurring')  && (
             <div className='openingClosingTimeCon'>
-              <label className="formLabel">Opening Hour:</label>
+              <label className="formLabel">Opening Hour (Opt):</label>
               <input
                 className='moneyInput'
                 type="time"
@@ -369,7 +369,7 @@ const Forms = () => {
                 onChange={(e) => setOpeningHour(e.target.value)}
               />
 
-              <label className="formLabel">Closing Hour:</label>
+              <label className="formLabel">Closing Hour(Opt):</label>
               <input
                 className='moneyInput'
                 type="time"
@@ -422,6 +422,30 @@ const Forms = () => {
                     You'll earn <span className='displayedValue'>₦{priceEarnings.toFixed(2)}</span>.
                 </p>
               )}
+            </div>
+          )}
+
+          {/* Rate */}
+          {['House Rent', 'Hotel / Shortlet', 'Student Accommodation', 'Office Space', 'Commercial Space', 'Recreation']
+          .includes(propertyType) && (
+            <div className='timeCon'>
+              <label className="formLabel">Charge Per {propertyType === 'Recreation' && <span>(opt)</span>} :</label>
+              <select
+                className="timeDropdown"
+                value={timeFrame}
+                onChange={(e) => setTimeFrame(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              >
+                <option value="">
+                  Select Price interval time
+                </option>
+                {timeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
 
@@ -584,28 +608,6 @@ const Forms = () => {
                   You'll earn <span className='displayedValue'>₦{otherFeesEarnings2.toFixed(2)}</span>.
               </p>
             )}
-          </div>
-        )}
-
-        {(propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Nightlife') && (
-          <div className='timeCon'>
-            <label className="formLabel">Time Frame:</label>
-            <select
-              className="timeDropdown"
-              value={timeFrame}
-              onChange={(e) => setTimeFrame(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            >
-              <option value="">
-                Select Time Frame
-              </option>
-              {timeOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
           </div>
         )}
 

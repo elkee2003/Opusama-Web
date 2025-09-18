@@ -87,7 +87,7 @@ const RealtorNameRating = ({ realtor }) => {
             className="nameButton"
             onClick={() => navigate(`/clientcontent/realtorprofile/${realtor?.id}`)}
           >
-            <span className="name">{realtor.firstName}</span>
+            <span className="eventOrganiser">{realtor.firstName}</span>
           </button>
 
           {/* Medium of Review Star */}

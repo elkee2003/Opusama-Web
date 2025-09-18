@@ -98,7 +98,7 @@ const WriteDescription = () => {
             {propertyType === 'Event' &&
                 renderFields('Event', 'Describe event.', 
                 'Reason why event is interesting', 
-                'Criteria to attend event')
+                'Criteria to attend event or things not to do at event')
             }
 
             {propertyType === 'Commercial Space' &&

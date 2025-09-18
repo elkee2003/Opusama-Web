@@ -5,7 +5,7 @@ import { PostReview, RealtorReview } from '../../../../../../../models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const RealtorNameRating = ({ realtor }) => {
+const RealtorNameRating = ({ post, realtor }) => {
   const [averageRealtorRating, setAverageRealtorRating] = useState(0);
   const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ const RealtorNameRating = ({ realtor }) => {
             className="nameButton"
             onClick={() => navigate(`/clientcontent/realtorprofile/${realtor?.id}`)}
           >
-            <span className="name">{realtor.firstName}</span>
+            <span  className={post?.propertyType === "Event" ? "eventOrganiser" : "name"}>{realtor.firstName}</span>
           </button>
 
           {/* Medium of Review Star */}

@@ -1776,6 +1776,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "eventName": {
+                    "name": "eventName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "eventDateTime": {
                     "name": "eventDateTime",
                     "isArray": false,
@@ -1839,13 +1846,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "generalLocation": {
-                    "name": "generalLocation",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "PostReviews": {
                     "name": "PostReviews",
                     "isArray": true,
@@ -1861,6 +1861,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "generalLocation": {
+                    "name": "generalLocation",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "lat": {
                     "name": "lat",
@@ -1939,13 +1946,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "vendorCommissionBreakdown": {
-                    "name": "vendorCommissionBreakdown",
-                    "isArray": false,
-                    "type": "AWSJSON",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "PostComments": {
                     "name": "PostComments",
                     "isArray": true,
@@ -1961,6 +1961,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "vendorCommissionBreakdown": {
+                    "name": "vendorCommissionBreakdown",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "clientServiceFee": {
                     "name": "clientServiceFee",
@@ -1997,13 +2004,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "policies": {
-                    "name": "policies",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "PostLikes": {
                     "name": "PostLikes",
                     "isArray": true,
@@ -2019,6 +2019,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "policies": {
+                    "name": "policies",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "country": {
                     "name": "country",
@@ -2098,13 +2105,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "openingHour": {
-                    "name": "openingHour",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "BookingPostOptions": {
                     "name": "BookingPostOptions",
                     "isArray": true,
@@ -2120,6 +2120,13 @@ export const schema = {
                             "postID"
                         ]
                     }
+                },
+                "openingHour": {
+                    "name": "openingHour",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "closingHour": {
                     "name": "closingHour",
@@ -2230,5 +2237,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "a30528b065e98a151ae26f9fd62bacec"
+    "version": "9bb1d04b997d25a2de00291e1fbf9fa6"
 };

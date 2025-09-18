@@ -9,6 +9,7 @@ const EventType = () => {
         type, setType,
         packageType, setPackageType,
         servicingDay, setServicingDay,
+        eventName, setEventName,
         eventDateTime, setEventDateTime,
         eventEndDateTime, setEventEndDateTime,
         recurrence, setRecurrence,    
@@ -88,6 +89,17 @@ const EventType = () => {
           )}
 
           <div className='accommoDiv'>
+            <label className="formLabel">Event Name:</label>
+            <textarea
+              className="formInput"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              placeholder="Name of event"
+            />
+          </div>
+
+          {/* Package */}
+          <div className='accommoDiv'>
             <label className="formLabel">Package:</label>
             <textarea
               className="formInput"
@@ -106,7 +118,7 @@ const EventType = () => {
                 className="formInput"
                 value={dressCode}
                 onChange={(e) => setDressCode(e.target.value)}
-                placeholder="e.g. All-white, Traditional, Formal, No slippers allowed (optional)"
+                placeholder="e.g. All-white, Traditional, Formal, No slippers allowed (opt)"
             />
           </div>
 

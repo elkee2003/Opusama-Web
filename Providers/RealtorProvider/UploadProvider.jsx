@@ -9,6 +9,7 @@ const UploadContextProvider = ({children}) => {
     const [nameOfType, setNameOfType] = useState('');
     const [packageType, setPackageType] = useState('');
     const [capacity, setCapacity] = useState(''); //Event hall capacity to hold event
+    const [eventName, setEventName] = useState("");
     const [eventDateTime, setEventDateTime] = useState('');
     const [eventEndDateTime, setEventEndDateTime] = useState('');
     const [ recurrence, setRecurrence ] = useState('');
@@ -146,7 +147,7 @@ const UploadContextProvider = ({children}) => {
             return false;
           }
           if(!timeFrame){
-            setErrors('Time frame is required');
+            setErrors('Charge Per is required');
             return false;
           }
         } else if (propertyType === 'Hotel / Shortlet') {
@@ -159,7 +160,7 @@ const UploadContextProvider = ({children}) => {
             return false;
           }
           if(!timeFrame){
-            setErrors('Time frame is required');
+            setErrors('Charge Per is required');
             return false;
           }
         } else if (propertyType === 'House Sale') {
@@ -182,12 +183,12 @@ const UploadContextProvider = ({children}) => {
             return false;
           }
           if(!timeFrame){
-            setErrors('Time frame is required');
+            setErrors('Charge Per is required');
             return false;
           }
         } else if (propertyType === 'Office Space') {
           if(!timeFrame){
-            setErrors('Time frame is required');
+            setErrors('Charge Per is required');
             return false;
           }
         } else if (propertyType === 'Venue') {
@@ -196,6 +197,10 @@ const UploadContextProvider = ({children}) => {
             return false;
           }
         }else if (propertyType === 'Event') {
+          if(!eventName){
+            setErrors('Event Name is required');
+            return false;
+          }
           if(!eventFrequency){
             setErrors('Event Frequency is required');
             return false;
@@ -339,6 +344,7 @@ const UploadContextProvider = ({children}) => {
         nameOfType, setNameOfType,
         packageType, setPackageType,
         capacity, setCapacity,
+        eventName, setEventName,
         eventDateTime, setEventDateTime,
         eventEndDateTime, setEventEndDateTime,
         recurrence, setRecurrence,

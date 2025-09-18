@@ -177,7 +177,7 @@ function Post({post}) {
 
         <div 
           className='clientSummaryContainer'
-          onClick={()=>navigate(`/clientcontent/detailedpost/${post.id}`)}
+          onClick={()=>navigate(`/clientcontent/experience_detailedpost/${post.id}`)}
         >
           {/* Username */}
           <div 

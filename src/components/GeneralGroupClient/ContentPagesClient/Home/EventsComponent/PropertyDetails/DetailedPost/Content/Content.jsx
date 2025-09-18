@@ -298,6 +298,13 @@ function Content({post, realtor,}) {
           </div>
         </div>
 
+        {/* Event Name */}
+        {post?.eventName && (
+          <p className='eventName'>
+            {post?.eventName}
+          </p>
+        )}
+
         {/* Realtor Info */}
         <RealtorNameRating realtor={realtor}/>
 
