@@ -4,9 +4,11 @@ import './BookingSingle.css'; // Replace styles with a CSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { useAuthContext } from '../../../../../../../Providers/ClientProvider/AuthProvider';
 
 const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
   const navigate = useNavigate();
+  const {dbUser} = useAuthContext();
 
   const handleViewingClick = () => {
     onUpdateStatus(booking.id, 'VIEWING');
@@ -79,7 +81,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           <h3 className="subHeading">Realtor:</h3>
           <p className="detail">{booking?.realtor?.firstName}</p>
 
-          {booking?.otherUsername && (
+          {booking?.otherUsername && dbUser?.id !== booking.userID && (
             <>
               <h3 className="subHeading">Opused For:</h3>
               <p className="detail">{booking?.otherUsername}</p>

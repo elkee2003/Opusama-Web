@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './UserReview.css';
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
 import { PostReview, User } from '../../../../../../../../models';
 import { useParams} from "react-router-dom";
@@ -6,6 +9,7 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 // import '../../../../../TabStyles/ReviewsComments.css';
 
 const UserReviews = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const [usersReviews, setUsersReviews] = useState([]);
   const [users, setUsers] = useState([]);
@@ -72,6 +76,15 @@ const UserReviews = () => {
 
   return (
     <div className="reviewsContainer">
+      {/* Back button */}
+      <button 
+        className='backRealtorPostDetailBtnCon'
+        onClick={() => navigate(`/realtorcontent/postdetails/${postId}`)}
+    >
+      <IoMdArrowRoundBack 
+        className='realtorPostDetailBtnIcon'
+      />
+    </button>
       {/* User Reviews */}
       {usersReviews.length > 0 ? (
         <>

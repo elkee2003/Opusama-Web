@@ -45,6 +45,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "commentID": {
+                    "name": "commentID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "message": {
                     "name": "message",
                     "isArray": false,
@@ -2223,5 +2230,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "0d328baf34001c7b326655aa340544ca"
+    "version": "a30528b065e98a151ae26f9fd62bacec"
 };

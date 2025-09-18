@@ -27,6 +27,7 @@ export declare type NotificationCreateFormInputValues = {
     recipientType?: string;
     type?: string;
     entityID?: string;
+    commentID?: string;
     message?: string;
     read?: boolean;
 };
@@ -36,6 +37,7 @@ export declare type NotificationCreateFormValidationValues = {
     recipientType?: ValidationFunction<string>;
     type?: ValidationFunction<string>;
     entityID?: ValidationFunction<string>;
+    commentID?: ValidationFunction<string>;
     message?: ValidationFunction<string>;
     read?: ValidationFunction<boolean>;
 };
@@ -47,6 +49,7 @@ export declare type NotificationCreateFormOverridesProps = {
     recipientType?: PrimitiveOverrideProps<TextFieldProps>;
     type?: PrimitiveOverrideProps<TextFieldProps>;
     entityID?: PrimitiveOverrideProps<TextFieldProps>;
+    commentID?: PrimitiveOverrideProps<TextFieldProps>;
     message?: PrimitiveOverrideProps<TextFieldProps>;
     read?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;

@@ -5,6 +5,7 @@ type Notification @model @auth(rules: [{allow: public}]) {
   recipientType: String
   type: String
   entityID: String
+  commentID: String
   message: String
   read: Boolean
 }

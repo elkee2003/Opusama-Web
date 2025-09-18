@@ -34,6 +34,7 @@ export default function NotificationUpdateForm(props) {
     recipientType: "",
     type: "",
     entityID: "",
+    commentID: "",
     message: "",
     read: false,
   };
@@ -46,6 +47,7 @@ export default function NotificationUpdateForm(props) {
   );
   const [type, setType] = React.useState(initialValues.type);
   const [entityID, setEntityID] = React.useState(initialValues.entityID);
+  const [commentID, setCommentID] = React.useState(initialValues.commentID);
   const [message, setMessage] = React.useState(initialValues.message);
   const [read, setRead] = React.useState(initialValues.read);
   const [errors, setErrors] = React.useState({});
@@ -58,6 +60,7 @@ export default function NotificationUpdateForm(props) {
     setRecipientType(cleanValues.recipientType);
     setType(cleanValues.type);
     setEntityID(cleanValues.entityID);
+    setCommentID(cleanValues.commentID);
     setMessage(cleanValues.message);
     setRead(cleanValues.read);
     setErrors({});
@@ -81,6 +84,7 @@ export default function NotificationUpdateForm(props) {
     recipientType: [],
     type: [],
     entityID: [],
+    commentID: [],
     message: [],
     read: [],
   };
@@ -115,6 +119,7 @@ export default function NotificationUpdateForm(props) {
           recipientType,
           type,
           entityID,
+          commentID,
           message,
           read,
         };
@@ -177,6 +182,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type,
               entityID,
+              commentID,
               message,
               read,
             };
@@ -207,6 +213,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type,
               entityID,
+              commentID,
               message,
               read,
             };
@@ -237,6 +244,7 @@ export default function NotificationUpdateForm(props) {
               recipientType: value,
               type,
               entityID,
+              commentID,
               message,
               read,
             };
@@ -267,6 +275,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type: value,
               entityID,
+              commentID,
               message,
               read,
             };
@@ -297,6 +306,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type,
               entityID: value,
+              commentID,
               message,
               read,
             };
@@ -314,6 +324,37 @@ export default function NotificationUpdateForm(props) {
         {...getOverrideProps(overrides, "entityID")}
       ></TextField>
       <TextField
+        label="Comment id"
+        isRequired={false}
+        isReadOnly={false}
+        value={commentID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              creatorID,
+              recipientID,
+              recipientType,
+              type,
+              entityID,
+              commentID: value,
+              message,
+              read,
+            };
+            const result = onChange(modelFields);
+            value = result?.commentID ?? value;
+          }
+          if (errors.commentID?.hasError) {
+            runValidationTasks("commentID", value);
+          }
+          setCommentID(value);
+        }}
+        onBlur={() => runValidationTasks("commentID", commentID)}
+        errorMessage={errors.commentID?.errorMessage}
+        hasError={errors.commentID?.hasError}
+        {...getOverrideProps(overrides, "commentID")}
+      ></TextField>
+      <TextField
         label="Message"
         isRequired={false}
         isReadOnly={false}
@@ -327,6 +368,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type,
               entityID,
+              commentID,
               message: value,
               read,
             };
@@ -357,6 +399,7 @@ export default function NotificationUpdateForm(props) {
               recipientType,
               type,
               entityID,
+              commentID,
               message,
               read: value,
             };

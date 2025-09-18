@@ -52,9 +52,12 @@ const UsersComments = () => {
       // 1. Query the comment from DataStore
       const commentToDelete = await DataStore.query(PostComment, commentId);
 
-       // 2. Find associated notifications
-      const allNotifications = await DataStore.query(Notification);
-      const relatedNotifications = allNotifications.filter(n => n.entityID === commentId);
+      if (!commentToDelete) return;
+
+      // 2. Find notifications tied to this comment (entityID === commentId)
+      const relatedNotifications = await DataStore.query(Notification, n =>
+        n.commentID.eq(commentId)
+      );
 
       // 3. Delete related notifications
       if (relatedNotifications.length > 0) {
@@ -68,7 +71,9 @@ const UsersComments = () => {
         await DataStore.delete(commentToDelete);
 
         // Remove the deleted comment from state
-        setUsersComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+        setUsersComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== commentId)
+        );
       }
     } catch (error) {
       console.error("Error deleting comment:", error);

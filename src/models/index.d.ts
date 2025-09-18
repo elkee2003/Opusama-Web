@@ -48,6 +48,7 @@ type EagerNotification = {
   readonly recipientType?: string | null;
   readonly type?: string | null;
   readonly entityID?: string | null;
+  readonly commentID?: string | null;
   readonly message?: string | null;
   readonly read?: boolean | null;
   readonly createdAt?: string | null;
@@ -65,6 +66,7 @@ type LazyNotification = {
   readonly recipientType?: string | null;
   readonly type?: string | null;
   readonly entityID?: string | null;
+  readonly commentID?: string | null;
   readonly message?: string | null;
   readonly read?: boolean | null;
   readonly createdAt?: string | null;

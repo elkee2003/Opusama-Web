@@ -42,6 +42,7 @@ const Response = () => {
                     recipientType: 'COMMENT_REALTOR_POST',
                     type: "COMMENT",
                     entityID: postId,
+                    commentID: postComment.id, //commentID used only here because I need to delete comment when like click on the bin icon, so I have added it to notification model
                     message: `${dbUser.username || "Someone"} made a comment on your listing (${propertyDetails?.propertyType} - ${propertyDetails?.type})`,
                     read: false,
                 })
