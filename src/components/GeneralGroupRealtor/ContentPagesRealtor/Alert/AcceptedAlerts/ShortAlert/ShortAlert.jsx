@@ -98,6 +98,13 @@ const ShortAlert = ({ notification, onUpdateStatus }) => {
           navigate(`/realtorcontent/accepted_details/${notification.id}`)
         }
       >
+        {/* Subscription */}
+        {notification?.subscription && (
+          <p className="alertDetails">
+            <span className="alertDetailsSub">Booking Type:</span> Subscription
+          </p>
+        )}
+
         {/* First Name */}
         {notification.clientFirstName && (
           <p className="alertDetails">

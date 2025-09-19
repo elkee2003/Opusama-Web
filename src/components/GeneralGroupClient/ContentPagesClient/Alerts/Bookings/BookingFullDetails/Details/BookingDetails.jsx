@@ -320,7 +320,31 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
               <p className="bkUnitTxt">{booking.infants}</p>
             </div>
           )}
+
+          {/* Number Of People */}
+          {booking?.numberOfPeople && (
+            <div>
+              <h3 className="bkSubHeader">Number Of People:</h3>
+              <p className="bkUnitTxt">{booking.numberOfPeople}</p>
+            </div>
+          )}
+
+          {/* Number Of Items */}
+          {booking?.items && (
+            <div>
+              <h3 className="bkSubHeader">Number tickets/Vouchers:</h3>
+              <p className="bkUnitTxt">{booking.items}</p>
+            </div>
+          )}
         </div>
+
+        {/* Subscription */}
+        {booking?.subscription && (
+          <div>
+            <h3 className="bkSubHeader">Booking Type:</h3>
+            <p className="bkDetails">Subscription</p>
+          </div>
+        )}
 
         {/* FirstName */}
         {booking?.clientFirstName && (
@@ -354,6 +378,30 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
           </div>
         )}
 
+        {/* Selected Options Type */}
+        {booking?.selectedOption?.bookingPostOptionType && (
+          <div>
+            <h3 className="bkSubHeader">Selected Type:</h3>
+            <p className="bkDetails">{booking?.selectedOption.bookingPostOptionType}</p>
+          </div>
+        )}
+
+        {/* Selected Options Name */}
+        {booking?.selectedOption?.bookingName && (
+          <div>
+            <h3 className="bkSubHeader">Selected Name:</h3>
+            <p className="bkDetails">{booking?.selectedOption.bookingName}</p>
+          </div>
+        )}
+
+        {/* Selected Options Price */}
+        {booking?.selectedOption?.optionPrice && (
+          <div>
+            <h3 className="bkSubHeader">Selected Price:</h3>
+            <p className="bkDetails">{booking?.selectedOption.optionPrice}</p>
+          </div>
+        )}
+
         {/* Duration */}
         {booking?.duration && (
           <div>
@@ -375,6 +423,14 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
           <div>
             <h3 className="bkSubHeader">Check-out:</h3>
             <p className="bkDetails">{booking?.checkOutDate}</p>
+          </div>
+        )}
+
+        {/* Session Duration */}
+        {booking?.bookedSessionDuration && (
+          <div>
+            <h3 className="bkSubHeader">Session Duration:</h3>
+            <p className="bkDetails">{booking?.bookedSessionDuration}</p>
           </div>
         )}
 

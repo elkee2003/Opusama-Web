@@ -108,6 +108,8 @@ const ReviewClientDetails = () => {
     }
   }, [propertyDetails, overAllPrice]);
 
+  console.log("Property Booking mode:", propertyDetails.bookingMode, propertyDetails?.isSubscription);
+
   const handleBooking = async () => {
     if (loading) return;
     setLoading(true);
@@ -176,7 +178,7 @@ const ReviewClientDetails = () => {
           userID: bookingUserID,
           realtorID: realtorContext.id,
           PostID,
-          status: propertyType === "Recreation" ? "ACCEPTED" : "PENDING",
+          status: propertyDetails?.bookingMode === "manual" ? "PENDING" : "ACCEPTED",
         })
       );
 

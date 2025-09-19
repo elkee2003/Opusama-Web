@@ -36,55 +36,68 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
       {/* Details */}
       <div className="scrollableContent">
         {/* Guest Units */}
-        {notification?.propertyType === 'Hotel / Shortlet' && (
-          <div className="dAlatGuestUnit">
-            {notification?.adults && (
-              <div>
-                <h3 className="dAlatSubHeader">Adults:</h3>
-                <p className="dAlatUnitTxt">{notification.adults}</p>
-              </div>
-            )}
-            {notification?.kids && (
-              <div>
-                <h3 className="dAlatSubHeader">Children:</h3>
-                <p className="dAlatUnitTxt">{notification.kids}</p>
-              </div>
-            )}
-            {notification?.infants && (
-              <div>
-                <h3 className="dAlatSubHeader">Infants:</h3>
-                <p className="dAlatUnitTxt">{notification.infants}</p>
-              </div>
-            )}
-          </div>
-        )}
+        <div className="dAlatGuestUnit">
+          {notification?.adults && (
+            <div>
+              <h3 className="dAlatSubHeader">Adults:</h3>
+              <p className="dAlatUnitTxt">{notification.adults}</p>
+            </div>
+          )}
+          {notification?.kids && (
+            <div>
+              <h3 className="dAlatSubHeader">Children:</h3>
+              <p className="dAlatUnitTxt">{notification.kids}</p>
+            </div>
+          )}
+          {notification?.infants && (
+            <div>
+              <h3 className="dAlatSubHeader">Infants:</h3>
+              <p className="dAlatUnitTxt">{notification.infants}</p>
+            </div>
+          )}
 
+          {/* Number Of People */}
+          {notification?.numberOfPeople && (
+            <div>
+              <h3 className="dAlatSubHeader">Number Of People:</h3>
+              <p className="dAlatUnitTxt">{notification.numberOfPeople}</p>
+            </div>
+          )}
 
-        {/* For Recreation & Nightlife */}
-        {notification?.propertyType === 'Recreation' && (
-          <div className="dAlatGuestUnit">
-            {notification?.numberOfPeople && (
-              <div>
-                <h3 className="dAlatSubHeader">Number Of People:</h3>
-                <p className="dAlatUnitTxt">{notification?.numberOfPeople}</p>
-              </div>
-            )}
-          </div>
-        )}
+          {/* Number Of Items */}
+          {notification?.items && (
+            <div>
+              <h3 className="dAlatSubHeader">Number tickets/Vouchers:</h3>
+              <p className="dAlatUnitTxt">{notification.items}</p>
+            </div>
+          )}
+        </div>
 
         {/* Client Details */}
+
+        {/* Subscription */}
+        {notification?.subscription && (
+          <div>
+            <h3 className="dAlatSubHeader">Booking Type:</h3>
+            <p className="dAlatDetails">Subscription</p>
+          </div>
+        )}
+
+        {/* Client First Name */}
         {notification?.clientFirstName && (
           <>
             <h3 className="dAlatSubHeader">Name(s):</h3>
             <p className="dAlatDetails">{notification.clientFirstName}</p>
           </>
         )}
+
         {notification?.clientLastName && (
           <>
             <h3 className="dAlatSubHeader">Last Name(s):</h3>
             <p className="dAlatDetails">{notification.clientLastName}</p>
           </>
         )}
+
         {notification?.clientPhoneNumber && (
           <>
             <h3 className="dAlatSubHeader">Phone Number:</h3>
@@ -93,30 +106,67 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             </p>
           </>
         )}
+
         {notification?.purpose && (
           <>
             <h3 className="dAlatSubHeader">Purpose:</h3>
             <p className="dAlatDetails">{notification.purpose}</p>
           </>
         )}
+
+        {/* Selected Options Type */}
+        {notification?.selectedOption?.bookingPostOptionType && (
+          <div>
+            <h3 className="dAlatSubHeader">Selected Type:</h3>
+            <p className="dAlatDetails">{notification?.selectedOption.bookingPostOptionType}</p>
+          </div>
+        )}
+
+        {/* Selected Options Name */}
+        {notification?.selectedOption?.bookingName && (
+          <div>
+            <h3 className="dAlatSubHeader">Selected Name:</h3>
+            <p className="dAlatDetails">{notification?.selectedOption.bookingName}</p>
+          </div>
+        )}
+
+        {/* Selected Options Price */}
+        {notification?.selectedOption?.optionPrice && (
+          <div>
+            <h3 className="dAlatSubHeader">Selected Price:</h3>
+            <p className="dAlatDetails">{notification?.selectedOption.optionPrice}</p>
+          </div>
+        )}
+
         {notification?.duration && (
           <>
             <h3 className="dAlatSubHeader">Duration:</h3>
             <p className="dAlatDetails">{notification.duration}</p>
           </>
         )}
+
         {notification?.checkInDate && (
           <>
             <h3 className="dAlatSubHeader">Check-in:</h3>
             <p className="dAlatDetails">{notification.checkInDate}</p>
           </>
         )}
+
         {notification?.checkOutDate && (
           <>
             <h3 className="dAlatSubHeader">Check-out:</h3>
             <p className="dAlatDetails">{notification.checkOutDate}</p>
           </>
         )}
+
+        {/* Session Duration */}
+        {notification?.bookedSessionDuration && (
+          <div>
+            <h3 className="dAlatSubHeader">Session Duration:</h3>
+            <p className="dAlatDetails">{notification?.bookedSessionDuration}</p>
+          </div>
+        )}
+
         {notification?.propertyType && (
           <div
             onClick={() =>{ 
@@ -157,9 +207,6 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             </p>
           </>
         )}
-
-        {/* Booked By */}
-        <p className="bookedBy">by: {notification?.user?.firstName}</p>
       </div>
 
       {/* Status */}

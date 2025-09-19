@@ -81,6 +81,14 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           <h3 className="subHeading">Realtor:</h3>
           <p className="detail">{booking?.realtor?.firstName}</p>
 
+          {/* Subscription */}
+          {booking?.subscription && (
+            <div>
+              <h3 className="subHeading">Booking Type:</h3>
+              <p className="details">Subscription</p>
+            </div>
+          )}
+
           {booking?.otherUsername && dbUser?.id !== booking.userID && (
             <>
               <h3 className="subHeading">Opused For:</h3>
@@ -91,7 +99,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
           {/* Property Details */}
           <div onClick={(e) => {
             e.stopPropagation(); // Prevent the event from propagating to the parent div
-            navigate(`/clientcontent/exploredetailedpost/${booking.PostID}`);
+            navigate(`/clientcontent/booked_property_post/${booking.PostID}`)
             }}>
             <h4
               className="subHeadingClick"

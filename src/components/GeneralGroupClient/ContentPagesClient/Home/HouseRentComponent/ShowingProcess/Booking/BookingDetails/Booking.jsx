@@ -34,8 +34,10 @@ const Booking = () => {
   const handleDateChange = (dates) => {
     if (propertyDetails.bookingMode === "auto_date" || propertyDetails.bookingMode === "manual") {
       const [start, end] = dates;
+
       setRange({ startDate: start, endDate: end });
-    } else if (propertyDetails.bookingMode === "auto_datetime") {
+    } else if (propertyDetails.bookingMode === "auto_datetime" ||
+    propertyDetails.isSubscription) {
       // only check-in (single date selection)
       setRange({ startDate: dates, endDate: null });
     }
@@ -202,8 +204,14 @@ const Booking = () => {
             selected={range.startDate}
             onChange={handleDateChange}
             startDate={range.startDate}
-            endDate={propertyDetails.propertyType === "Hotel / Shortlet" ? range.endDate : null}
-            selectsRange={propertyDetails.bookingMode !== "auto_datetime" && propertyDetails.propertyType === "Hotel / Shortlet"}
+            endDate={
+              propertyDetails.propertyType === "Hotel / Shortlet" || propertyDetails.isSubscription 
+                ? range.endDate 
+                : null
+            }
+            selectsRange={
+              (propertyDetails.bookingMode !== "auto_datetime" && propertyDetails.propertyType === "Hotel / Shortlet") || propertyDetails.isSubscription          
+            }
             minDate={new Date()}
             inline
             calendarClassName="custom-calendar" 

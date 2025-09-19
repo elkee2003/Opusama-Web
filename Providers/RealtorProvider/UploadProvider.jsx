@@ -126,6 +126,11 @@ const UploadContextProvider = ({children}) => {
           return false;
         }
 
+        if (bookingMode === "auto_datetime" && !sessionDuration) {
+          setErrors("Session Duration is required if booking requires date & time");
+          return false;
+        }
+
         // Session-based validation
         if (sessionDuration) {
           if (!openingHour || !closingHour) {

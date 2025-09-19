@@ -21,6 +21,8 @@ const Forms = () => {
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
+  // Booking Modes are "manual", "auto_date", "auto_datetime", "auto_event"
+
   const {
     propertyType,
     setServicingDay,
@@ -201,7 +203,7 @@ const Forms = () => {
                   onChange={() => setBookingMode("manual")}
                 />
                 Manually accept
-              </label>
+              </label>             
 
               {/* Auto Acceptance */}
               <label className="radioOption">
