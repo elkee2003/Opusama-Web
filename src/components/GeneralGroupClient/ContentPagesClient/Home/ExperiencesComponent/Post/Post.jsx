@@ -13,6 +13,8 @@ function Post({post}) {
     const [mediaUris, setMediaUris] = useState([]);
     const [liked, setLiked] = useState(false);
     const formattedPrice = Number(post.price)?.toLocaleString();
+    
+    console.log('Post options:', post?.bookingOptions)
 
     // Fetch ONLY the first media item
     const fetchFirstMediaUrl = async () => {
@@ -222,14 +224,15 @@ function Post({post}) {
           </p>
 
           {/* Old Price & New Price */}
-          {/* Rent */}
-          <div className={'priceRow'}>
-            <p className={'price'}> 
-              {Number(post.price) === 0
-              ? 'Free'
-              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
-            </p>
-          </div>
+          {(!post?.bookingOptions || post.bookingOptions.length === 0) && (
+            Number(post.price) > 0 && (
+              <div className={'priceRow'}>
+                <p className={'price'}>
+                  ₦{formattedPrice} {post.timeFrame ? `/ ${post.timeFrame}` : ''}
+                </p>
+              </div>
+            )
+          )}
         </div>
     </div>
   )

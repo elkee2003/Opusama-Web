@@ -645,14 +645,15 @@ function Content({post, realtor,}) {
           </div>
           ) : ''
         }
-
         {/* Total Price */}
-        <div className="priceRowTotal">
-          <p className='sub'>Total Price:</p>
-          <p className='totalPrice'>
-            {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
-          </p>
-        </div>
+        {post?.bookingOptions?.length > 0 ? null : (
+          <div className="priceRowTotal">
+            <p className='sub'>Total Price:</p>
+            <p className='totalPrice'>
+              {Number(post.totalPrice) === 0 ? 'Free' : `₦${formattedTotalPrice}`}
+            </p>
+          </div>
+        )}
 
         {/* Inspection Fee */}
           {post?.inspectionFee ? (
