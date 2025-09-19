@@ -48,7 +48,7 @@ const BookingPostOption = () => {
   return (
     <div>
         {/* Booking Name */}
-        <h3>Booking Options</h3>
+        <h3>Booking Options (opt)</h3>
 
         {options.map((option, index) => (
             <div key={index} className="optionCard">
@@ -78,7 +78,7 @@ const BookingPostOption = () => {
                     option.bookingPostOptionType === "RESERVATION"
                     ? "e.g. Standard Table, VIP Table, Table of 5"
                     : option.bookingPostOptionType === "VOUCHER"
-                    ? "e.g. Entry Ticket"
+                    ? "e.g. Entry Ticket, Regular, VIP, Table of 5"
                     : option.bookingPostOptionType === "PICKUP"
                     ? "e.g. Cocktail Pack"
                     : "Option Name"

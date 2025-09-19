@@ -336,7 +336,7 @@ const Forms = () => {
                     }
                   }}
                 >
-                  <option value={0}>-- No gap (not recommended) --</option>
+                  <option value={0}>-- No gap --</option>
                   <option value={15}>15 minutes</option>
                   <option value={30}>30 minutes</option>
                   <option value={45}>45 minutes</option>
@@ -361,7 +361,7 @@ const Forms = () => {
           {/* Opening & Closing Time */}
           {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && !(propertyType === 'Event' && eventFrequency !== 'recurring')  && (
             <div className='openingClosingTimeCon'>
-              <label className="formLabel">Opening Hour (Opt):</label>
+              <label className="formLabel">Opening Hour {!sessionDuration && " (Opt)"}:</label>
               <input
                 className='moneyInput'
                 type="time"
@@ -369,7 +369,7 @@ const Forms = () => {
                 onChange={(e) => setOpeningHour(e.target.value)}
               />
 
-              <label className="formLabel">Closing Hour(Opt):</label>
+              <label className="formLabel">Closing Hour {!sessionDuration && " (Opt)"}:</label>
               <input
                 className='moneyInput'
                 type="time"
@@ -380,7 +380,7 @@ const Forms = () => {
           )}
 
           {/* Price */}
-          {propertyType !== "Food & Drinks" && (
+          {propertyType !== "Food & Drinks" && options.length === 0 && (
             <div className='moneyCon'>
               <label className="formLabel">Price:</label>
               <input

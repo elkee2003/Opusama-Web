@@ -60,12 +60,12 @@ const NightLife = () => {
           )}
 
           <div className='accommoDiv'>
-            <label className="formLabel">Package:</label>
+            <label className="formLabel">Package (opt):</label>
             <textarea
               className="formInput"
               value={packageType}
               onChange={(e) => setPackageType(e.target.value)}
-              placeholder="Exculsive, Premium, Standard, VIP, VVIP, etc... (type of package) (optional)"
+              placeholder="Exculsive, Standard, VIP or use Booking Options for multiple packages and price"
             />
           </div>
         </>
