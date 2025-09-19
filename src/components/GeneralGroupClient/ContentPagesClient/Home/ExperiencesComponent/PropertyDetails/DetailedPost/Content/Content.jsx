@@ -29,7 +29,7 @@ function Content({post, realtor,}) {
     const navigate = useNavigate();
     const {dbUser, authUser} = useAuthContext();
 
-    const {setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice} = useBookingShowingContext();
+    const {selectedOption, setSelectedOption, setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice} = useBookingShowingContext();
 
     const {setRealtorID} = useProfileContext();
     const [readMore, setReadMore] = useState(false);
@@ -130,15 +130,13 @@ function Content({post, realtor,}) {
       setPostOtherFeesPrice2(post?.otherFeesPrice2);
     }, [formattedTotalPrice, realtor.id]);
 
-    // Navigate function
-    const handleNavigate = () => {
-      if(authUser){
-        navigate(`/clientcontent/clientdetails/${post.id}`);
-      }else{
-        alert('Sign In to access');
-        navigate('/?section=signin');
-      }
+    // Function to select bookingOption
+    const handleSelectOption = (opt) => {
+      setSelectedOption(opt); 
+      setPostPrice(opt.optionPrice); 
+      setPostTotalPrice(opt.optionPrice);
     };
+
 
     // Check if post is already liked on mount
     useEffect(() => {
@@ -200,6 +198,24 @@ function Content({post, realtor,}) {
       } catch (error) {
           console.error("Error toggling like:", error);
       }
+    };
+
+    // Navigate function
+    const handleNavigate = () => {
+      if (!authUser) {
+        alert("Sign In to access");
+        navigate('/?section=signin');
+        return;
+      }
+
+      // If bookingOptions exist, force user to select one
+      if (post?.bookingOptions?.length > 0 && !selectedOption) {
+        alert("Please select an option before continuing");
+        return;
+      }
+
+      // Safe to navigate
+      navigate(`/clientcontent/clientdetails/${post.id}`);
     };
 
     // useEffect for realtime update
@@ -514,15 +530,35 @@ function Content({post, realtor,}) {
           </>
         ): ''}
 
-        {/* Pricing */}
-        <div className='priceRoww'>
-          <p className='sub'>Price:</p>
-          <p className='price'>
-            {Number(post.price) === 0
-              ? 'Free'
-              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
-          </p>
-        </div>
+        {/* Show Price only if no bookingOptions */}
+        {post?.bookingOptions?.length > 0 ? (
+          <div className="optionsContainer">
+            <p className='optionSubTitle'>Select Option:</p>
+            {post.bookingOptions.map((opt, idx) => {
+              const isSelected = selectedOption?.bookingName === opt.bookingName;
+              return (
+                <div 
+                  key={idx} 
+                   className={`clientBookingOptionCard ${isSelected ? "selected" : ""}`}
+                  onClick={() => handleSelectOption(opt)}
+                >
+                  <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
+                  <p><strong>Name:</strong> {opt.bookingName}</p>
+                  <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className='priceRoww'>
+            <p className='sub'>Price:</p>
+            <p className='price'>
+              {Number(post.price) === 0
+                ? 'Free'
+                : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
+            </p>
+          </div>
+        )}
 
         {/* Caution Fee */}
         {post?.cautionFee ? (

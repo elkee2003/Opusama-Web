@@ -168,7 +168,11 @@ const Forms = () => {
         <div className="general-row">
 
           {/* Booking Post Options */}
-          <BookingPostOption/>
+          {!['House Rent', 'House Sale','Land Sale', 'Hotel / Shortlet', 'Student Accommodation', 'Commercial Space',]
+          .includes(propertyType) &&(
+            <BookingPostOption/>
+          )}
+          
 
           {/* Subscription Toggle */}
           {(propertyType === 'Recreation' || propertyType === 'Food & Drinks' ) && (

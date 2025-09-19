@@ -80,7 +80,7 @@ const Recreation = () => {
               className="formInput"
               value={packageType}
               onChange={(e) => setPackageType(e.target.value)}
-              placeholder="Exculsive, Standard, VIP or use Booking Options for multiple packages and price"
+              placeholder="Exculsive, Standard, VIP or use Booking Options for multiple packages and prices"
             />
           </div>
         </>

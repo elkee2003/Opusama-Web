@@ -105,20 +105,20 @@ const EventType = () => {
               className="formInput"
               value={packageType}
               onChange={(e) => setPackageType(e.target.value)}
-              placeholder="Exculsive, Standard, VIP or use Booking Options below for multiple packages and price"
+              placeholder="Exculsive, Standard, VIP or use Booking Options below for multiple packages and prices"
             />
           </div>
 
           {/* Dress Code */}
           <div className='accommoDiv'>
             <label className="formLabel">
-                Dress Code:
+                Dress Code (opt):
             </label>
             <input
                 className="formInput"
                 value={dressCode}
                 onChange={(e) => setDressCode(e.target.value)}
-                placeholder="e.g. All-white, Traditional, Formal, No slippers allowed (opt)"
+                placeholder="e.g. All-white, Traditional, Formal, No slippers allowed"
             />
           </div>
 

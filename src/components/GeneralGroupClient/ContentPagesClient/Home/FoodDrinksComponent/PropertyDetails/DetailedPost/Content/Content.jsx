@@ -525,26 +525,6 @@ function Content({post, realtor,}) {
           </>
         ): ''}
 
-        {/* {post?.bookingOptions?.map((opt, idx) => (
-          <div 
-            key={idx} 
-            className="clientBookingOptionCard"
-          >
-            <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
-            <p><strong>Name:</strong> {opt.bookingName}</p>
-            <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
-          </div>
-        ))}
-
-        <div className='priceRoww'>
-          <p className='sub'>Price:</p>
-          <p className='price'>
-            {Number(post.price) === 0
-              ? 'Free'
-              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
-          </p>
-        </div> */}
-
         {/* Show Price only if no bookingOptions */}
         {post?.bookingOptions?.length > 0 ? (
           <div className="optionsContainer">

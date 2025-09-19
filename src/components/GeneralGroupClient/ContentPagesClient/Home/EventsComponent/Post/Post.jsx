@@ -114,65 +114,71 @@ function Post({post}) {
 
   return (
     <div className='singlePostContainer'>
-        {/* Image Container */}
-        <div 
-            className={'imageContainer'}
-            onClick={() => handleNavigate(post.id)}
-        >
-          {mediaUris.length > 0 ? (
-            mediaUris[0].type === 'video' ? (
-              <div className='pVideoWrapper'>
-                <video
-                  className="pMedia"
-                  controls
-                  controlsList="nodownload"
-                  onContextMenu={(e) => e.preventDefault()}
-                >
-                  <source src={mediaUris[0].url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <div 
-                  className="pVideoOverlay" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/clientcontent/events_detailedpost/${post.id}`);
-                  }}
-                />
-              </div>
-            ) : (
-              <img 
-                src={mediaUris[0].url} 
-                alt="Post"  className='pImage' 
-                loading="lazy"
+      {/* Image Container */}
+      <div 
+          className={'imageContainer'}
+          onClick={() => handleNavigate(post.id)}
+      >
+        {mediaUris.length > 0 ? (
+          mediaUris[0].type === 'video' ? (
+            <div className='pVideoWrapper'>
+              <video
+                className="pMedia"
+                controls
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                <source src={mediaUris[0].url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div 
+                className="pVideoOverlay" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/clientcontent/events_detailedpost/${post.id}`);
+                }}
               />
-            )
-          ) : (
-            <div className="pImageLoading">
-              {/* Default Image */}
-              <img src={'/defaultImage.png'} alt="Default" className='pImage' />
-
-              {/* Spinner */}
-              <div className="spinnerOverlay" />
             </div>
-          )}
+          ) : (
+            <img 
+              src={mediaUris[0].url} 
+              alt="Post"  className='pImage' 
+              loading="lazy"
+            />
+          )
+        ) : (
+          <div className="pImageLoading">
+            {/* Default Image */}
+            <img src={'/defaultImage.png'} alt="Default" className='pImage' />
 
-          {/* Subcription label */}
-          {post.isSubscription && <div className='subscribeLabel'>
-            <p>Subscribe</p>
-          </div>}
-
-          {/* Like Button */}
-          <div
-            onClick={toggleLike}
-            className='postLike'
-          >
-            {liked ? (
-              <GoHeartFill className='heartIcon' color="red" />
-            ) : (
-              <FaRegHeart className='heartIcon' color="white" />
-            )}
+            {/* Spinner */}
+            <div className="spinnerOverlay" />
           </div>
+        )}
+
+        {/* Subcription label */}
+        {post.isSubscription && <div className='subscribeLabel'>
+          <p>Subscribe</p>
+        </div>}
+
+        {/* Like Button */}
+        <div
+          onClick={toggleLike}
+          className='postLike'
+        >
+          {liked ? (
+            <GoHeartFill className='heartIcon' color="red" />
+          ) : (
+            <FaRegHeart className='heartIcon' color="white" />
+          )}
         </div>
+      </div>
+
+      
+      <div 
+        className='clientSummaryContainer'
+        onClick={()=>navigate(`/clientcontent/events_detailedpost/${post.id}`)}
+      >
 
         {/* Event Name */}
         {post?.eventName && (
@@ -181,58 +187,54 @@ function Post({post}) {
           </p>
         )}
         
+        {/* Username */}
         <div 
-          className='clientSummaryContainer'
-          onClick={()=>navigate(`/clientcontent/events_detailedpost/${post.id}`)}
+            className={'contact'}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/clientcontent/realtorprofile/${post.realtorID}`);
+            }}
         >
-          {/* Username */}
-          <div 
-              className={'contact'}
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/clientcontent/realtorprofile/${post.realtorID}`);
-              }}
-          >
-              <p className={'eventOrganiser'}>{post.firstName}</p>
-          </div>
-
-          {post.type && (
-              <p className={'bedroom'}>{post.type}</p>
-          )}
-
-          {/* Bed & Bedrooms */}
-          {post.bed && (
-              <p className={'bedroom'}>Beds: {post.bed} </p>
-          )}
-
-          {post.bedrooms && (
-            <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
-          )}
-
-          {/* Location */}
-          {post.generalLocation && (
-            <p className={'location'}>
-              {post.generalLocation}
-            </p>
-          )}
-
-          {/* Type & Description */}
-          <p 
-              className={'description'}
-          >
-              {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
-          </p>
-
-          {/* Old Price & New Price */}
-          {/* Rent */}
-          <div className={'priceRow'}>
-            <p className={'price'}> 
-              {Number(post.price) === 0
-              ? 'Free'
-              : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
-            </p>
-          </div>
+            <p className={'eventOrganiser'}>{post.firstName}</p>
         </div>
+
+        {post.type && (
+            <p className={'bedroom'}>{post.type}</p>
+        )}
+
+        {/* Bed & Bedrooms */}
+        {post.bed && (
+            <p className={'bedroom'}>Beds: {post.bed} </p>
+        )}
+
+        {post.bedrooms && (
+          <p className={'bedroom'}>Bedroom(s):{post.bedrooms} </p>
+        )}
+
+        {/* Location */}
+        {post.generalLocation && (
+          <p className={'location'}>
+            {post.generalLocation}
+          </p>
+        )}
+
+        {/* Type & Description */}
+        <p 
+            className={'description'}
+        >
+            {post.description.length <= 150 ? post.description : `${post.description.substring(0, 150)}...`}
+        </p>
+
+        {/* Old Price & New Price */}
+        {/* Rent */}
+        <div className={'priceRow'}>
+          <p className={'price'}> 
+            {Number(post.price) === 0
+            ? 'Free'
+            : `₦${formattedPrice} ${post.timeFrame ? `/ ${post.timeFrame}` : ''}`}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

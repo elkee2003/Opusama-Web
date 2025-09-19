@@ -135,10 +135,10 @@ const UploadContextProvider = ({children}) => {
         }
 
         // Subscription validation
-        if (isSubscription && !timeFrame) {
-          setErrors('Time frame is required');
-          return false;
-        }
+        // if (isSubscription && !timeFrame) {
+        //   setErrors('Charge Per is required');
+        //   return false;
+        // }
 
         // Specific validations for each property type
         if (propertyType === 'House Rent') {
