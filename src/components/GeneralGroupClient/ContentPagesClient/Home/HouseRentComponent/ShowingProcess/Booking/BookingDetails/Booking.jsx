@@ -21,7 +21,8 @@ const Booking = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const { propertyDetails, postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice, calculatedTotalPrice, setCalculatedTotalPrice,  
-  overAllPrice, setOverAllPrice, serviceCharge, setServiceCharge, checkInDate, setCheckInDate, setCheckOutDate, checkOutDate, setBookedSessionDuration } = useBookingShowingContext();
+  overAllPrice, setOverAllPrice, serviceCharge, setServiceCharge, checkInDate, setCheckInDate, setCheckOutDate, checkOutDate, 
+  setDuration, setBookedSessionDuration } = useBookingShowingContext();
 
   // console.log('Property Details:', propertyDetails.propertyType)
 

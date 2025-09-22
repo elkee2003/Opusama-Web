@@ -92,13 +92,13 @@ const ReviewClientDetails = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const getPriceLabel = () => {
-    if (propertyDetails?.propertyType === "Hotel / Shortlet" || propertyDetails?.propertyType === "Recreation") {
-      return "Sub Total:";
-    } else {
-      return "Price:";
-    }
-  };
+  // const getPriceLabel = () => {
+  //   if (propertyDetails?.propertyType === "Hotel / Shortlet" || propertyDetails?.propertyType === "Recreation") {
+  //     return "Sub Total:";
+  //   } else {
+  //     return "Price:";
+  //   }
+  // };
 
   useEffect(() => {
     if (propertyDetails) {
@@ -108,9 +108,11 @@ const ReviewClientDetails = () => {
       setNameOfType(propertyDetails.nameOfType);
       setBookingLat(propertyDetails.lat);
       setBookingLng(propertyDetails.lng);
-      setRealtorPrice(overAllPrice);
+
+      // realtorPrice = 90% of calculatedTotalPrice
+      setRealtorPrice(calculatedTotalPrice * 0.9);
     }
-  }, [propertyDetails, overAllPrice]);
+  }, [propertyDetails, calculatedTotalPrice]);
 
   console.log("Property Booking mode:", propertyDetails.bookingMode, propertyDetails?.isSubscription);
 
@@ -453,7 +455,8 @@ const ReviewClientDetails = () => {
         {postTotalPrice && (
           <>
             <h4>
-              {getPriceLabel()}
+              {/* {getPriceLabel()} */}
+              Sub Total:
             </h4>
             <p className="txtInputReview">₦{postTotalPrice?.toLocaleString()}</p>
           </>
