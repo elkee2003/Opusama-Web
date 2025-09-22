@@ -72,7 +72,7 @@ const UserReviews = ({ realtor }) => {
             recipientType: 'REVIEW_REALTOR',
             type: "REVIEW",
             entityID: realtor.id,
-            message: 'Someone rated and reviewed you.',
+            message: `${dbUser.username || "Someone"} rated and reviewed you.`,
             read: false,
         })
       );

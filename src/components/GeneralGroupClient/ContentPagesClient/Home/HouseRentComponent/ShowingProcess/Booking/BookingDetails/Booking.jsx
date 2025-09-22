@@ -20,7 +20,8 @@ const Booking = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
 
   const [totalPrice, setTotalPrice] = useState(0);
-  const { propertyDetails, postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice, setOverAllPrice, setDuration, checkInDate, setCheckInDate, setCheckOutDate, checkOutDate, setBookedSessionDuration } = useBookingShowingContext();
+  const { propertyDetails, postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice, calculatedTotalPrice, setCalculatedTotalPrice,  
+  overAllPrice, setOverAllPrice, serviceCharge, setServiceCharge, checkInDate, setCheckInDate, setCheckOutDate, checkOutDate, setBookedSessionDuration } = useBookingShowingContext();
 
   // console.log('Property Details:', propertyDetails.propertyType)
 
@@ -105,18 +106,26 @@ const Booking = () => {
           (postOtherFeesPrice || 0) +
           (postOtherFeesPrice2 || 0);
 
-        let calculatedTotalPrice = daysDifference * postPrice + additionalFees;
-        setTotalPrice(calculatedTotalPrice);
+        let localTotalPrice = daysDifference * postPrice + additionalFees;
+        setTotalPrice(localTotalPrice);
       }
     }
   }, [ range, postPrice, postCautionFee, postOtherFeesPrice, postOtherFeesPrice2, postTotalPrice, propertyDetails.propertyType, propertyDetails.bookingMode, ]);
 
-  // 🔹 Set overall price only if Hotel / Shortlet
+  // 🔹 Set calculated price, service charge, and overall price
   useEffect(() => {
     if (totalPrice && propertyDetails.propertyType === "Hotel / Shortlet") {
-      setOverAllPrice(totalPrice);
+      // Save calculated base price (without service charge)
+      setCalculatedTotalPrice(totalPrice);
+
+      // Calculate service charge (7%)
+      const charge = Math.round(totalPrice * 0.07);
+      setServiceCharge(charge);
+
+      // Save final overall price (base + charge)
+      setOverAllPrice(totalPrice + charge);
     }
-  }, [totalPrice, propertyDetails.propertyType, setOverAllPrice]);
+  }, [totalPrice, propertyDetails.propertyType, setCalculatedTotalPrice, setServiceCharge, setOverAllPrice]);
 
   // 🔹 Generate available slots if auto_datetime
   useEffect(() => {
@@ -175,23 +184,6 @@ const Booking = () => {
       <h1 className="bookingHeader">Booking</h1>
 
       <div className="bookingContent">
-        {/* Selected Dates */}
-        {/* <div className="selecteDates">
-          {range.startDate ? (
-            <p className="range">
-              <strong>From:</strong> {dayjs(range.startDate).format('DD MMMM, YYYY')}
-            </p>
-          ) : (
-            <p className="selectCheck">Select Check-in date</p>
-          )}
-          {range.endDate ? (
-            <p className="range">
-              <strong>To:</strong> {dayjs(range.endDate).format('DD MMMM, YYYY')}
-            </p>
-          ) : (
-            <p className="selectCheck">Select Check-out date</p>
-          )}
-        </div> */}
 
         <div>
           {checkInDate && <p>Selected date: {checkInDate}</p>}

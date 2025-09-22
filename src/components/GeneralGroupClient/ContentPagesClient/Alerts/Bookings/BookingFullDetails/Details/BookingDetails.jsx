@@ -139,9 +139,8 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
 
             {/* Info Icon */}
             <button
-              className="infoIconCon"
-              onClick={() => alert('Click on "Paid" When you have transferred the money to account.')}
-              // onClick={() => alert('Click on "Make Payment" to pay for your booked accommodation.')}
+              className="infoIconCon" 
+              onClick={() => alert('Click on "Make Payment" to pay for your booked accommodation.')}
             >
               <FaInfoCircle className="infoIcon" />
             </button>
@@ -254,7 +253,7 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
     if(post?.inspectionFee){
       setPaymentPrice(post?.inspectionFee)
     }else{
-      setPaymentPrice(booking?.totalPrice)
+      setPaymentPrice(booking?.overAllPrice)
     }
   }, [booking])
 

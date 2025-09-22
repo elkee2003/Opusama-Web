@@ -27,7 +27,7 @@ function PostList() {
             const posts = await DataStore.query(Post, (p) => p.and((p)=>[
                 p.realtorID.eq(realtor.id),
                 p.available.eq(true),
-                p.isApproved.eq(true)
+                // p.isApproved.eq(true)
             ]));
             const filteredPosts = posts.filter((post) => post.propertyType === 'Recreation' || post.propertyType === 'Nightlife');
 

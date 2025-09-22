@@ -27,8 +27,12 @@ const ClientDetails = ({ post }) => {
     setNumberOfPeople,
     numberOfItems, 
     setNumberOfItems,
-    postTotalPrice, 
-    setOverAllPrice, 
+    postTotalPrice,
+    calculatedTotalPrice, setCalculatedTotalPrice,  
+    overAllPrice,
+    setOverAllPrice,
+    serviceCharge, 
+    setServiceCharge, 
     guestFirstName,
     setGuestFirstName,
     guestLastName,
@@ -47,22 +51,6 @@ const ClientDetails = ({ post }) => {
 
   // For PropertyType of Recreation
   const [temporaryPrice, setTemporaryPrice] = useState(postTotalPrice);
-
-  // const handleProceedToBooking = () => {
-  //   if (post?.propertyType === 'Hotel / Shortlet') {
-  //     if (onValidateHotelInput()) {
-  //       navigate(`/clientcontent/bookingdetails`);
-  //     }
-  //   } else if(post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife') {
-  //     if(onValidateRecreationInput()){
-  //       navigate(`/clientcontent/reviewinfo`);
-  //     }
-  //   } else {
-  //     if (onValidatePropertyInput()) {
-  //       navigate(`/clientcontent/reviewinfo`);
-  //     }
-  //   }
-  // };
 
   // useEffect to empty input depending on what is choosen myself or another
   useEffect(() => {
@@ -170,18 +158,26 @@ const ClientDetails = ({ post }) => {
   };
 
   useEffect(()=>{
+    let newTotalPrice = 0;
     if (post?.propertyType === 'Recreation' || post?.propertyType === 'Nightlife'|| post?.propertyType === 'Event') {
-      const newTotalPrice = postTotalPrice * numberOfPeople;
-      setTemporaryPrice(newTotalPrice);
-      setOverAllPrice(newTotalPrice); // Save for global access
+      newTotalPrice = postTotalPrice * numberOfPeople;
     }
 
     if (post?.propertyType === 'Food & Drinks') {
-      const newTotalPrice = postTotalPrice * numberOfItems;
-      setTemporaryPrice(newTotalPrice);
-      setOverAllPrice(newTotalPrice);
+      newTotalPrice = postTotalPrice * numberOfItems;
     }
-  },[numberOfPeople, numberOfItems, postTotalPrice, setOverAllPrice, post?.propertyType])
+
+    // Save preOverallPrice
+    setTemporaryPrice(newTotalPrice);
+    setCalculatedTotalPrice(newTotalPrice);
+
+    // Calculate 7% service charge
+    const newServiceCharge = Math.round(newTotalPrice * 0.07);
+    setServiceCharge(newServiceCharge);
+
+    // Final overall price (base + service charge)
+    setOverAllPrice(newTotalPrice + newServiceCharge);
+  },[numberOfPeople, numberOfItems, postTotalPrice, post?.propertyType, setCalculatedTotalPrice, setServiceCharge, setOverAllPrice])
 
   return (
     <div className='clientContainer'>

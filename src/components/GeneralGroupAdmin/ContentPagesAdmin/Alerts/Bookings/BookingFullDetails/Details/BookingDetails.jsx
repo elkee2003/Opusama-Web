@@ -254,7 +254,7 @@ const BookingDetails = ({ booking, realtor, post, onStatusUpdateChange }) => {
     if(post?.inspectionFee){
       setPaymentPrice(post?.inspectionFee)
     }else{
-      setPaymentPrice(booking?.totalPrice)
+      setPaymentPrice(booking?.overAllPrice)
     }
   }, [booking])
 

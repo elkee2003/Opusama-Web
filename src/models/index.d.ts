@@ -350,6 +350,8 @@ type EagerBooking = {
   readonly nameOfType?: string | null;
   readonly totalPrice?: number | null;
   readonly realtorPrice?: number | null;
+  readonly serviceCharge?: number | null;
+  readonly overAllPrice?: number | null;
   readonly bookingLat?: number | null;
   readonly bookingLng?: number | null;
   readonly status?: BookingStatus | keyof typeof BookingStatus | null;
@@ -395,6 +397,8 @@ type LazyBooking = {
   readonly nameOfType?: string | null;
   readonly totalPrice?: number | null;
   readonly realtorPrice?: number | null;
+  readonly serviceCharge?: number | null;
+  readonly overAllPrice?: number | null;
   readonly bookingLat?: number | null;
   readonly bookingLng?: number | null;
   readonly status?: BookingStatus | keyof typeof BookingStatus | null;

@@ -113,6 +113,8 @@ type Booking @model @auth(rules: [{allow: public}]) {
   nameOfType: String
   totalPrice: Float
   realtorPrice: Float
+  serviceCharge: Float
+  overAllPrice: Float
   bookingLat: Float
   bookingLng: Float
   status: BookingStatus

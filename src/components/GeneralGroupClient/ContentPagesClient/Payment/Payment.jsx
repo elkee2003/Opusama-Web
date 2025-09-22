@@ -27,8 +27,6 @@ const PaymentComponent = () => {
 
     const { userMail } = useAuthContext();
 
-    console.log('current booking:', currentBooking)
-
     // Verify payment
     const verifyPayment = async (reference) => {
         try {

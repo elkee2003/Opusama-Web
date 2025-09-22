@@ -80,10 +80,14 @@ const ReviewClientDetails = () => {
     setPostOtherFeesPrice2,
     postTotalPrice,
     setPostTotalPrice,
+    calculatedTotalPrice,
+    setCalculatedTotalPrice,
     overAllPrice,
     setOverAllPrice,
     realtorPrice,
     setRealtorPrice,
+    serviceCharge, 
+    setServiceCharge,
   } = useBookingShowingContext();
 
   const [loading, setLoading] = useState(false);
@@ -173,7 +177,9 @@ const ReviewClientDetails = () => {
           accommodationType,
           bookingLat,
           bookingLng,
-          totalPrice: parseFloat(overAllPrice),
+          serviceCharge: parseFloat(serviceCharge),
+          totalPrice: parseFloat(calculatedTotalPrice),
+          overAllPrice: parseFloat(overAllPrice),
           realtorPrice: parseFloat(realtorPrice),
           userID: bookingUserID,
           realtorID: realtorContext.id,
@@ -248,13 +254,15 @@ const ReviewClientDetails = () => {
       setBookedSessionDuration("");
       setSubscription(false);
       setPostOtherFeesName("");
-      setPostOtherFeesPrice("");
+      setPostOtherFeesPrice(0);
       setPostOtherFeesName2("");
-      setPostOtherFeesPrice2("");
-      setPostTotalPrice("");
-      setPostCautionFee("");
-      setOverAllPrice("");
-      setRealtorPrice("");
+      setPostOtherFeesPrice2(0);
+      setPostTotalPrice(0);
+      setPostCautionFee(0);
+      setCalculatedTotalPrice(0);
+      setServiceCharge(0);
+      setOverAllPrice(0);
+      setRealtorPrice(0);
       setPostID("");
       setPropertyDetails("");
       setPropertyType("");
@@ -264,6 +272,20 @@ const ReviewClientDetails = () => {
       setBookingLng("");
       setRealtorContext("");
       navigate("/clientcontent/home");
+      // Navigation logic
+      // if (propertyDetails?.bookingMode === "manual") {
+      //   navigate("/clientcontent/home");
+      // } else {
+      //   const needsPayment =
+      //     (parseFloat(postPrice) > 0) ||
+      //     (selectedOption?.optionPrice && parseFloat(selectedOption.optionPrice) > 0);
+
+      //   if (needsPayment) {
+      //     navigate("/clientcontent/payment", { state: { bookingId: booking.id } });
+      //   } else {
+      //     navigate("/clientcontent/home");
+      //   }
+      // }
     } catch (e) {
       alert(`Error: ${e.message}`);
     } finally {
@@ -435,6 +457,13 @@ const ReviewClientDetails = () => {
             </h4>
             <p className="txtInputReview">₦{postTotalPrice?.toLocaleString()}</p>
           </>
+        )}
+
+        {serviceCharge && (
+          <div className="lastReviewInputClient">
+            <h4>Service Charge:</h4>
+            <p className="txtInputReview">₦{serviceCharge?.toLocaleString()}</p>
+          </div>
         )}
 
         {overAllPrice && (

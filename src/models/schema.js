@@ -945,6 +945,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "serviceCharge": {
+                    "name": "serviceCharge",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "overAllPrice": {
+                    "name": "overAllPrice",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "bookingLat": {
                     "name": "bookingLat",
                     "isArray": false,
@@ -2237,5 +2251,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "9bb1d04b997d25a2de00291e1fbf9fa6"
+    "version": "44549e2d0b1ea953f814de5f1f83aea2"
 };
