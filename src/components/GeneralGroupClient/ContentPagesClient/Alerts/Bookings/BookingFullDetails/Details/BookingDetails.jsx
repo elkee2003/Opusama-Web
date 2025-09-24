@@ -11,6 +11,17 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
   const { isPaymentSuccessful, setIsPaymentSuccessful, setPaymentPrice } = useProfileContext();
   const {setCurrentBooking, transactionReference, transactionStatus, onStatusChange}= useBookingShowingContext();
 
+  // 1. Properties with inspection fee
+  const inspectionProperties = [
+    'House Rent',
+    'Student Accommodation',
+    'House Sale',
+    'Land Sale',
+    'Office Space',
+    'Commercial Space',
+    'Venue',
+  ];
+
   useEffect(() => {
     if (booking?.id) {
       setCurrentBooking(booking);
@@ -68,12 +79,6 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
     onStatusUpdateChange('VISITED');
   };
 
-  // Handle Paid button click
-  const handlePaidClick = () => {
-    // fallback if triggered manually, without payment
-    onStatusUpdateChange('PAID');
-  };
-
   // Handle Payment
   const handlePayment = () => {
    navigate('/clientcontent/payment');
@@ -87,11 +92,8 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
   
   const renderButton = () => {
     if (booking?.status === 'ACCEPTED') {
-      if (
-        ['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(
-          booking.propertyType
-        )
-      ) {
+      
+      if (inspectionProperties.includes(booking?.propertyType)) {
         return (
           <div className="viewConInfoRow">
             {post?.inspectionFee ? (
@@ -107,6 +109,7 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
                 </p>
               </button>
             )}
+
             <button
               className="infoIconCon"
               onClick={() =>
@@ -121,43 +124,67 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
             </button>
           </div>
         );
-      } else if (booking?.propertyType === 'Hotel / Shortlet') {
+      }
+      
+      
+      // 2. All other property types (hotel, event, recreation, etc.)
+      if (booking?.overAllPrice > 0) {
         return (
           <div className="viewConInfoRow">
-            {/* <button className="view" onClick={handlePaidClick}>
-              <p className='bkBtnTxt'>
-                Paid
-              </p>
-            </button> */}
-
-            {/* When I fix flutter wave, I will uncomment */}
             <button className="view" onClick={handlePayment}>
-              <p className='bkBtnTxt'>
-                Make Payment
-              </p>
+              <p className="bkBtnTxt">Make Payment</p>
             </button>
-
-            {/* Info Icon */}
             <button
-              className="infoIconCon" 
-              onClick={() => alert('Click on "Make Payment" to pay for your booked accommodation.')}
+              className="infoIconCon"
+              onClick={() => alert('Click "Make Payment" to complete your booking.')}
             >
               <FaInfoCircle className="infoIcon" />
             </button>
           </div>
         );
-      }else {
+      } else {
         return (
           <div className="viewConInfoRow">
-            {/* Button */}
             <button className="view" onClick={handleVisitingClick}>
               <p className="bkBtnTxt">Visiting</p>
             </button>
-
-            {/* Info Icon */}
-            <button 
+            <button
               className="infoIconCon"
-              onClick={() => alert('Click on "Visiting" once you are on the property.')}
+              onClick={() => alert('Click "Visiting" once you are at the property.')}
+            >
+              <FaInfoCircle className="infoIcon" />
+            </button>
+          </div>
+        );
+      }
+  
+    }
+
+    // After Payment made
+    if (booking?.status === 'PAID') {
+      if (['Hotel / Shortlet', 'Event'].includes(booking?.propertyType)) {
+        return (
+          <div className="viewConInfoRow">
+            <button className="view" onClick={handleCheckedInClick}>
+              <p className="bkBtnTxt">Checked In</p>
+            </button>
+            <button
+              className="infoIconCon"
+              onClick={() => alert('Click "Checked In" once you are checked in.')}
+            >
+              <FaInfoCircle className="infoIcon" />
+            </button>
+          </div>
+        );
+      } else {
+        return (
+          <div className="viewConInfoRow">
+            <button className="view" onClick={handleVisitingClick}>
+              <p className="bkBtnTxt">Visiting</p>
+            </button>
+            <button
+              className="infoIconCon"
+              onClick={() => alert('Click "Visiting" once you are at the property.')}
             >
               <FaInfoCircle className="infoIcon" />
             </button>
@@ -166,8 +193,47 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
       }
     }
 
+    // When already Checked In
+    if (booking?.status === 'CHECKED_IN') {
+      if (['Hotel / Shortlet', 'Event'].includes(booking?.propertyType)) {
+        return (
+          <div className="viewConInfoRow">
+            <button className="view" onClick={handleCheckedOutClick}>
+              <p className="bkBtnTxt">Checked Out</p>
+            </button>
+            <button
+              className="infoIconCon"
+              onClick={() => alert('Click "Checked Out" once you leave.')}
+            >
+              <FaInfoCircle className="infoIcon" />
+            </button>
+          </div>
+        );
+      } 
+    }
+
+    // Statement for Visiting
+    if(booking?.status === 'VISITING') {
+      return (
+        <div className="viewConInfoRow">
+          <button className="view" onClick={handleVisitedClick}>
+            <p className="bkBtnTxt">Visited</p>
+          </button>
+          <button
+            className="infoIconCon"
+            onClick={() => alert('Click "Visited" once you are done.')}
+          >
+            <FaInfoCircle className="infoIcon" />
+          </button>
+        </div>
+      );
+    }
+
+
+
+    // If statement for Viewing
     if (booking?.status === 'VIEWING') {
-      if (['House Rent', 'Student Accommodation', 'House Sale', 'Land Sale', 'Office Space'].includes(booking?.propertyType)){
+      if (inspectionProperties.includes(booking?.propertyType)){
         return (
           <div className="viewConInfoRow">
             <button className="view" onClick={handleViewedClick}>
@@ -180,64 +246,6 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
             <button
               className="infoIconCon"
               onClick={() => alert('Click on "Viewed" once you are done viewing the property.')}
-            >
-              <FaInfoCircle className="infoIcon" />
-            </button>
-          </div>
-        );
-      }
-    }
-
-    if (booking?.status === 'PAID' && booking?.propertyType === 'Hotel / Shortlet') {
-      return (
-        <div className="viewConInfoRow">
-          <button className="view" onClick={handleCheckedInClick}>
-            <p className='bkBtnTxt'>
-              Checked In
-            </p>
-          </button>
-
-          {/* Info Icon */}
-          <button
-            className="infoIconCon"
-            onClick={() => alert('Click on "Checked In" once you are checked into the hotel/shortlet.')}
-          >
-            <FaInfoCircle className="infoIcon" />
-          </button>
-        </div>
-      );
-    }
-
-    if (booking?.status === 'CHECKED_IN') {
-      if (booking?.propertyType === 'Hotel / Shortlet') {
-        return (
-          <div className="viewConInfoRow">
-            {/* Button */}
-            <button className='view' onClick={handleCheckedOutClick}>
-              <p className="bkBtnTxt">Checked Out</p>
-            </button>
-
-            {/* Info Icon */}
-            <button 
-              className="infoIconCon"
-              onClick={() => alert('Click on "Checked Out" once you are out of the hotel/shortlet.')}
-            >
-              <FaInfoCircle className="infoIcon" />
-            </button>
-          </div>
-        );
-      } else {
-        return (
-          <div className="viewConInfoRow">
-            {/* Button */}
-            <button className="view" onClick={handleVisitedClick}>
-              <p className="bkBtnTxt">Visited</p>
-            </button>
-
-            {/* Info Icon */}
-            <button 
-              className="infoIconCon"
-              onClick={() => alert('Click on "Visited" once you are off the property.')}
             >
               <FaInfoCircle className="infoIcon" />
             </button>
@@ -471,7 +479,7 @@ const BookingDetails = ({ booking, realtor, post, opusedBy, onStatusUpdateChange
         {booking?.realtorPrice && (
           <div>
             <h3 className="bkSubHeader">Price:</h3>
-            <p className="bkDetails">₦{Number(booking.totalPrice)?.toLocaleString()}</p>
+            <p className="bkDetails">₦{Number(booking?.overAllPrice)?.toLocaleString()}</p>
           </div>
         )}
 

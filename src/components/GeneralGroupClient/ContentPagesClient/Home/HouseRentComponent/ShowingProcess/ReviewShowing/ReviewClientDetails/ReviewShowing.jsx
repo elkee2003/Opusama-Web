@@ -116,6 +116,8 @@ const ReviewClientDetails = () => {
 
   console.log("Property Booking mode:", propertyDetails.bookingMode, propertyDetails?.isSubscription);
 
+  console.log('post price:',postPrice, 'post total price:', postTotalPrice)
+
   const handleBooking = async () => {
     if (loading) return;
     setLoading(true);

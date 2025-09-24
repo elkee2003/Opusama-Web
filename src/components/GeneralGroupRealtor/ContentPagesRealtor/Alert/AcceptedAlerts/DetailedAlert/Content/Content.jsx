@@ -244,7 +244,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
         </>
       )}
 
-      {notification.propertyType === 'Hotel / Shortlet' && notification.status === 'PAID' && (
+      {(notification.propertyType === 'Hotel / Shortlet' || notification.propertyType === 'Event' || notification.propertyType === 'Recreation') && notification.status === 'PAID' && (
         <div className="viewConInfoRow">
           <button
             className="view"

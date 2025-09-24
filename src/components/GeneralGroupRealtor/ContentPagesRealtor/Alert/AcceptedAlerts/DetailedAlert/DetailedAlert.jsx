@@ -53,6 +53,15 @@ const AcceptedDetailedAlert = () => {
         const updatedBooking = await DataStore.save(
           Booking.copyOf(booking, (updated) => {
             updated.status = newStatus;
+
+             // also update ticketStatus if status requires it
+            if (
+              newStatus === "CHECKED_IN" ||
+              newStatus === "VIEWING" ||
+              newStatus === "VISITING"
+            ) {
+              updated.ticketStatus = "used";
+            }
           })
         );
         setBooking(updatedBooking); // Update local state with new status

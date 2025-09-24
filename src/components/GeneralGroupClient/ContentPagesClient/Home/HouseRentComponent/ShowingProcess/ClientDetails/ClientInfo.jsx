@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClientDetails from './Details/ClientDetails';
 import { useParams } from 'react-router-dom';
 import { DataStore } from "aws-amplify/datastore";
-import { Post } from '../../../../../../../models';
+import { Post, BookingPostOptions } from '../../../../../../../models';
 
 const ClientInfo = () => {
   const { postId } = useParams();
@@ -12,10 +12,26 @@ const ClientInfo = () => {
   const fetchPost = async () => {
     setIsLoading(true);
     try {
-      if (postId) {
-        const foundPost = await DataStore.query(Post, postId);
-        setPost(foundPost);
+      if (!postId) return;
+
+      // Fetch the post itself
+      const foundPost = await DataStore.query(Post, postId);
+      if (!foundPost) {
+        console.error("Post not found");
+        return;
       }
+
+      // Fetch booking options for this post
+      const bookingOptions = await DataStore.query(
+        BookingPostOptions,
+        (o) => o.postID.eq(postId)
+      );
+
+      // Merge into a single object
+      setPost({
+        ...foundPost,
+        bookingOptions,
+      });
     } catch (error) {
       console.error('Error fetching post', error);
     } finally {

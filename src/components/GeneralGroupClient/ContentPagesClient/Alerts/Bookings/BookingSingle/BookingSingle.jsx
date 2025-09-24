@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './BookingSingle.css'; // Replace styles with a CSS file
+import './BookingSingle.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -59,6 +59,7 @@ const BookingSingle = ({ booking, onDelete, onUpdateStatus }) => {
     'House Sale',
     'Land Sale',
     'Office Space',
+    'Commercial Space'
   ];
 
   return (

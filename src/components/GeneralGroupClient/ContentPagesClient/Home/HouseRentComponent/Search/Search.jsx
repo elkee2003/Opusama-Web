@@ -48,7 +48,7 @@ const HouseSearch = () => {
         ])
       );
 
-      const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent');
+      const filteredPosts = posts.filter((post) => post.propertyType === 'House Rent' || post.propertyType === 'Student Accommodation');
 
       const housePostData = filteredPosts.map((post) => {
         const realtor = realtors.find((r) => r.id === post.realtorID);

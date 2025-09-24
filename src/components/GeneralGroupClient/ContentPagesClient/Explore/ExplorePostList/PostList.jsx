@@ -21,6 +21,13 @@ function PostList() {
     const [propPosts, setPropPosts] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
+    // helper: add one day
+    const nextDay = (dateString) => {
+    const d = new Date(dateString);
+    d.setDate(d.getDate() + 1);
+    return d;
+    };
+
 
     const handleSearch = () => {
         if (!propPosts || propPosts.length === 0) {
@@ -82,6 +89,38 @@ function PostList() {
             // Step 3: For each post, fetch its booking options + map realtor
             const allPosts = await Promise.all(
                 posts.map(async (post) => {
+                    const now = new Date();
+                    let isExpired = false;
+
+                    if (post.propertyType === "Event") {
+                        let expiryDate = null;
+
+                        if (post.eventFrequency === "one-time" && post.eventDateTime) {
+                            expiryDate = nextDay(post.eventDateTime);
+                        } else if (
+                            post.eventFrequency === "multi-day" &&
+                            post.eventEndDateTime
+                        ) {
+                            expiryDate = nextDay(post.eventEndDateTime);
+                        } else if (post.eventFrequency === "recurring") {
+                            expiryDate = null; // recurring never auto-expire
+                        }
+
+                        if (expiryDate && now > expiryDate) {
+                            isExpired = true;
+
+                            // make available false in DB
+                            await DataStore.save(
+                              Post.copyOf(post, (updated) => {
+                                updated.available = false;
+                              })
+                            );
+                        }
+                    }
+
+                    if (isExpired) return null;
+
+                    // attach realtor 
                     const realtor = realtors.find((r) => r.id === post.realtorID);
 
                     // fetch booking options for this post
@@ -104,8 +143,14 @@ function PostList() {
                 })
             );
 
+            // filter out nulls (expired)
+            const validPosts = allPosts.filter(Boolean);
+
             // Sort posts by createdAt or updatedAt
-            const sortedPosts = allPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            const sortedPosts = validPosts.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+
 
             setRealtorPosts(sortedPosts);
             setPropPosts(sortedPosts);

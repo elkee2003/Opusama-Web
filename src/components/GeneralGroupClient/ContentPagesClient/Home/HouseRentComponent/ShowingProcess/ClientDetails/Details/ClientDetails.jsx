@@ -49,6 +49,17 @@ const ClientDetails = ({ post }) => {
     onValidateFoodInput,
   } = useBookingShowingContext();
 
+  const excludedTypes = [
+    'House Rent',
+    'Hotel / Shortlet',
+    'Student Accommodation',
+    'House Sale',
+    'Land Sale',
+    'Office Space',
+    'Commercial Space',
+    'Venue'
+  ];
+
   // For PropertyType of Recreation
   const [temporaryPrice, setTemporaryPrice] = useState(postTotalPrice);
 
@@ -87,6 +98,21 @@ const ClientDetails = ({ post }) => {
 
   const handleProceedToBooking = () => {
     const validate = getValidator();
+
+    // ✅ Guard check for price before navigation
+    const isExcludedType = excludedTypes.includes(post?.propertyType);
+    
+    if (!isExcludedType) {
+      if (
+        (
+          (post?.price && post?.price > 0) || 
+          (post?.bookingOptions?.some(opt => opt?.optionPrice > 0))
+        ) && temporaryPrice <= 0
+      ) {
+        alert("Price cannot be 0. Please go back and rebook or pick an option before proceeding.");
+        return;
+      }
+    }
 
     // Subscription booking
     if (post?.isSubscription){

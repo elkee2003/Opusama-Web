@@ -82,7 +82,7 @@ const BookingShowingContextProvider = ({children}) => {
             setTransactionReference(reference);
             setTransactionStatus(status);
 
-            console.log("Payment status saved:", status, reference, message);
+            console.log("Payment status saved:", status, reference);
 
             // ✅ Clear current booking if payment was successful
             if (status === "PAID" || transactionStatus === "Successful") {
