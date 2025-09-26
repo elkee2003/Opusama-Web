@@ -52,7 +52,7 @@ const HotelSearch = () => {
       const posts = await DataStore.query(Post, (p) =>
         p.and((p) => [
           p.available.eq(true),
-          // p.isApproved.eq(true),
+          p.isApproved.eq(true),
         ])
       );
 

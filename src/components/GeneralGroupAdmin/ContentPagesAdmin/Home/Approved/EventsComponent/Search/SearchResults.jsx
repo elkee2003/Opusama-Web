@@ -74,6 +74,12 @@ const SearchResultCom = ({ post }) => {
           <img src={'/defaultImage.png'} alt="Default" className='searchImage' />
         )}
       </div>
+      {/* Event Name */}
+      {post?.eventName && (
+        <p className='searchEventName'>
+          {post?.eventName}
+        </p>
+      )}
 
       {/* Username */}
       <div
@@ -81,7 +87,7 @@ const SearchResultCom = ({ post }) => {
         onClick={() =>
           navigate(`/admin/realtorprofile/${post.realtorID}`)}
       >
-        <p className='searchName'>{post.realtorFirstName}</p>
+        <p className={post.propertyType === "Event" ? "eventOrganiser" : "name"}>{post.realtorFirstName}</p>
       </div>
 
       {post.type && <p className='searchBedroom'>{post.type}</p>}

@@ -88,6 +88,13 @@
   flex-direction: row;
 }
 
+.searchEventName {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+  color: #141414;
+}
+
 .searchName {
   font-size: 2rem;
   font-weight: bold;

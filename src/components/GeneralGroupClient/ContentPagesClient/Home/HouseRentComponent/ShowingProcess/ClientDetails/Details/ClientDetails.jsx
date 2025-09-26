@@ -197,8 +197,12 @@ const ClientDetails = ({ post }) => {
     setTemporaryPrice(newTotalPrice);
     setCalculatedTotalPrice(newTotalPrice);
 
-    // Calculate 7% service charge
-    const newServiceCharge = Math.round(newTotalPrice * 0.07);
+     // ✅ Only add service charge if NOT Event
+    let newServiceCharge = 0;
+    if (post?.propertyType !== 'Event') {
+      // Calculate 5% service charge
+      newServiceCharge = Math.round(newTotalPrice * 0.05);
+    }
     setServiceCharge(newServiceCharge);
 
     // Final overall price (base + service charge)

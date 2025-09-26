@@ -119,8 +119,8 @@ const Booking = () => {
       // Save calculated base price (without service charge)
       setCalculatedTotalPrice(totalPrice);
 
-      // Calculate service charge (7%)
-      const charge = Math.round(totalPrice * 0.07);
+      // Calculate service charge (5%)
+      const charge = Math.round(totalPrice * 0.05);
       setServiceCharge(charge);
 
       // Save final overall price (base + charge)

@@ -25,6 +25,7 @@ const EventsSearch = () => {
       const matchesQuery =
         item?.realtorFirstName?.toLowerCase().includes(lowercasedQuery) ||
         item?.userName?.toLowerCase().includes(lowercasedQuery) ||
+        item?.eventName?.toLowerCase().includes(lowercasedQuery) ||
         item?.type?.toLowerCase().includes(lowercasedQuery) ||
         item?.generalLocation?.toLowerCase().includes(lowercasedQuery) ||
         item?.city?.toLowerCase().includes(lowercasedQuery) ||
