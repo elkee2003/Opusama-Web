@@ -338,6 +338,7 @@ type EagerBooking = {
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;
+  readonly guestEmail?: string | null;
   readonly purpose?: string | null;
   readonly selectedOption?: string | null;
   readonly duration?: string | null;
@@ -385,6 +386,7 @@ type LazyBooking = {
   readonly clientFirstName?: string | null;
   readonly clientLastName?: string | null;
   readonly clientPhoneNumber?: string | null;
+  readonly guestEmail?: string | null;
   readonly purpose?: string | null;
   readonly selectedOption?: string | null;
   readonly duration?: string | null;

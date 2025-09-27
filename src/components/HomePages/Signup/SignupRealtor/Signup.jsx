@@ -98,7 +98,7 @@ const Signup = () => {
             <Header/>
 
             {/* Signup section */}
-            <h1 className="primaryText signup-title">Create Account (Realtor)</h1>
+            <h1 className="primaryText signup-title">Create Account (Vendor)</h1>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="signup-form">

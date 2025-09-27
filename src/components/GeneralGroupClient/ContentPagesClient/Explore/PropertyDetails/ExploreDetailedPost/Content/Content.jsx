@@ -29,7 +29,7 @@ function Content({post, realtor,}) {
     const navigate = useNavigate();
     const {dbUser, authUser} = useAuthContext();
 
-    const {selectedOption, setSelectedOption, postPrice, setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice} = useBookingShowingContext();
+    const {selectedOption, setSelectedOption, postPrice, setPostPrice, setPostCautionFee, setPostOtherFeesName, setPostOtherFeesPrice, setPostOtherFeesName2, setPostOtherFeesPrice2, setPostTotalPrice, setGuestEventName,} = useBookingShowingContext();
 
     const {setRealtorID} = useProfileContext();
     const [readMore, setReadMore] = useState(false);
@@ -128,6 +128,7 @@ function Content({post, realtor,}) {
       setPostOtherFeesPrice(post?.otherFeesPrice);
       setPostOtherFeesName2(post?.otherFeesName2);
       setPostOtherFeesPrice2(post?.otherFeesPrice2);
+      setGuestEventName(post?.eventName);
     }, [formattedTotalPrice, realtor.id]);
 
     // Function to select bookingOption
@@ -139,6 +140,12 @@ function Content({post, realtor,}) {
 
     // Navigate function
     const handleNavigate = () => {
+      // ✅ If Event propertyType, skip all checks
+      if (post?.propertyType === "Event") {
+        navigate(`/clientcontent/clientdetails/${post.id}`);
+        return;
+      }
+
       if (!authUser) {
         alert("Sign In to access");
         navigate('/?section=signin');

@@ -203,7 +203,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
           <>
             <h3 className="dAlatSubHeader">Checked In By:</h3>
             <p className="dAlatDetails">
-              {notification?.checkedInByUser}
+               {notification.checkedInByUser.firstName}
             </p>
           </>
         )}

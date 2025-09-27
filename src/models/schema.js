@@ -861,6 +861,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "guestEmail": {
+                    "name": "guestEmail",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "purpose": {
                     "name": "purpose",
                     "isArray": false,
@@ -2251,5 +2258,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "44549e2d0b1ea953f814de5f1f83aea2"
+    "version": "efbdd1ac6c198f0f1d3aa5e575331c0e"
 };

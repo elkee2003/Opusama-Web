@@ -39,6 +39,8 @@ const ClientDetails = ({ post }) => {
     setGuestLastName,
     guestPhoneNumber,
     setGuestPhoneNumber,
+    guestEmail,
+    setGuestEmail,
     note,
     setNote,
     setSubscription,
@@ -384,6 +386,20 @@ const ClientDetails = ({ post }) => {
                 placeholder="Phone number"
                 type="tel"
               />
+
+              {/* If no dbuser show email */}
+              {!dbUser && (
+                <>
+                  <label className='txtInputHeader'>Email:</label>
+                  <input
+                    className='txtInput'
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                    placeholder="email address"
+                    type="email"
+                  />
+                </>
+              )}
             </>
           ) : (
             <>

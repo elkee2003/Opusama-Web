@@ -38,6 +38,10 @@ const ReviewClientDetails = () => {
     setGuestLastName,
     guestPhoneNumber,
     setGuestPhoneNumber,
+    guestEmail,
+    setGuestEmail,
+    guestEventName, 
+    setGuestEventName,
     note,
     setNote,
     propertyDetails,
@@ -104,10 +108,10 @@ const ReviewClientDetails = () => {
     if (propertyDetails) {
       setPropertyType(propertyDetails.propertyType);
       setPostID(propertyDetails.id);
-      setAccommodationType(propertyDetails.type);
+      setAccommodationType(propertyDetails?.type);
       setNameOfType(propertyDetails.nameOfType);
-      setBookingLat(propertyDetails.lat);
-      setBookingLng(propertyDetails.lng);
+      setBookingLat(propertyDetails?.lat);
+      setBookingLng(propertyDetails?.lng);
 
       // realtorPrice = 90% of calculatedTotalPrice
       setRealtorPrice(calculatedTotalPrice * 0.9);
@@ -123,12 +127,19 @@ const ReviewClientDetails = () => {
     setLoading(true);
 
     try {
+       // ✅ Require guests to enter name & phone
+      if (!dbUser && (!guestFirstName || !guestLastName || !guestPhoneNumber || !guestEmail)) {
+        alert("Please provide your name and phone number to continue.");
+        setLoading(false);
+        return;
+      }
+
       let clientFirstName = guestFirstName;
       let clientLastName = guestLastName;
       let clientPhoneNumber = guestPhoneNumber;
-      let bookingUserID = dbUser.id;
-      let notificationCreatorID = dbUser.id;
-      let notificationCreatorUsername = dbUser.username || "A client";
+      let bookingUserID = dbUser?.id || "GUEST";
+      let notificationCreatorID = dbUser?.id || "GUEST";
+      let notificationCreatorUsername = dbUser?.username || guestFirstName || "Guest User";
       let targetUser = null;
 
       // If booking for another person
@@ -169,6 +180,7 @@ const ReviewClientDetails = () => {
           clientFirstName,
           clientLastName,
           clientPhoneNumber,
+          guestEmail,
           purpose: note,
           selectedOption,
           duration: String(duration),
@@ -186,7 +198,7 @@ const ReviewClientDetails = () => {
           overAllPrice: parseFloat(overAllPrice),
           realtorPrice: parseFloat(realtorPrice),
           userID: bookingUserID,
-          realtorID: realtorContext.id,
+          realtorID: realtorContext?.id,
           PostID,
           status: propertyDetails?.bookingMode === "manual" ? "PENDING" : "ACCEPTED",
         })
@@ -195,7 +207,7 @@ const ReviewClientDetails = () => {
       // Notify realtor
       await DataStore.save(
         new Notification({
-          creatorID: notificationCreatorID,
+          creatorID: notificationCreatorID || "A GUEST",
           recipientID:realtorContext.id,
           recipientType: 'BOOKING_REALTOR',
           type: ["Hotel / Shortlet", "Nightlife", "Recreation", 'Event', 'Food & Drinks'].includes(propertyType) ? "BOOKING" : "SHOWING",
@@ -209,87 +221,99 @@ const ReviewClientDetails = () => {
       if (targetUser) {
         await DataStore.save(
           new Notification({
-            creatorID: dbUser.id, 
-            recipientID: targetUser.id,
+            creatorID: dbUser?.id, 
+            recipientID: targetUser?.id,
             recipientType: "BOOKING_USER",
             type: "BOOKING",
-            entityID: booking.id,
-            message: `${dbUser.username || "Someone"} opused you ${propertyType} (${accommodationType})`,
+            entityID: booking?.id,
+            message: `${dbUser?.username || "Someone"} opused you ${propertyType} (${accommodationType})`,
             read: false,
           })
         );
       }
 
-      // Notify client about their own booking
-      await DataStore.save(
-        new Notification({
-          creatorID: realtorContext.id, 
-          recipientID: dbUser.id,
-          recipientType: "BOOKING_CLIENT",
-          type: "BOOKING_STATUS_UPDATE",
-          entityID: booking.id,
-          message: targetUser
-            ? `You opused ${propertyType} (${accommodationType}) for ${targetUser.username}.`
-            : `You opused ${propertyType} (${accommodationType}).`,
-          read: false,
-        })
-      );
+      // Only send client-side notifications if user is logged in
+      if (dbUser) {
+        // Notify client about their own booking
+        await DataStore.save(
+          new Notification({
+            creatorID: realtorContext.id, 
+            recipientID: dbUser?.id,
+            recipientType: "BOOKING_CLIENT",
+            type: "BOOKING_STATUS_UPDATE",
+            entityID: booking?.id,
+            message: targetUser
+              ? `You opused ${propertyType} (${accommodationType}) for ${targetUser.username}.`
+              : `You opused ${propertyType} (${accommodationType}).`,
+            read: false,
+          })
+        );
+      }
       
       setBookings(booking);
-      alert("Booking was a success");
+      if (dbUser){
+        alert("Booking was a success");
+      }
 
-      // Reset state
-      setSelectedOption(null);
-      setOpusingFor('myself');
-      setOtherUsername("");
-      setOpusedBy("");
-      setAdults(0);
-      setKids(0);
-      setInfants(0);
-      setNumberOfPeople(0);
-      setNumberOfItems(0)
-      setGuestFirstName(dbUser?.firstName);
-      setGuestLastName(dbUser?.lastName);
-      setGuestPhoneNumber(dbUser?.phoneNumber);
-      setNote("");
-      setDuration("");
-      setCheckInDate("");
-      setCheckOutDate("");
-      setBookedSessionDuration("");
-      setSubscription(false);
-      setPostOtherFeesName("");
-      setPostOtherFeesPrice(0);
-      setPostOtherFeesName2("");
-      setPostOtherFeesPrice2(0);
-      setPostTotalPrice(0);
-      setPostCautionFee(0);
-      setCalculatedTotalPrice(0);
-      setServiceCharge(0);
-      setOverAllPrice(0);
-      setRealtorPrice(0);
-      setPostID("");
-      setPropertyDetails("");
-      setPropertyType("");
-      setNameOfType("");
-      setAccommodationType("");
-      setBookingLat("");
-      setBookingLng("");
-      setRealtorContext("");
-      navigate("/clientcontent/home");
-      // Navigation logic
-      // if (propertyDetails?.bookingMode === "manual") {
-      //   navigate("/clientcontent/home");
-      // } else {
-      //   const needsPayment =
-      //     (parseFloat(postPrice) > 0) ||
-      //     (selectedOption?.optionPrice && parseFloat(selectedOption.optionPrice) > 0);
+      if (!dbUser) {
+        navigate('/clientcontent/payment');
+      } else {
+        // Reset state
+        setSelectedOption(null);
+        setOpusingFor('myself');
+        setOtherUsername("");
+        setOpusedBy("");
+        setAdults(0);
+        setKids(0);
+        setInfants(0);
+        setNumberOfPeople(0);
+        setNumberOfItems(0)
+        setGuestFirstName(dbUser?.firstName);
+        setGuestLastName(dbUser?.lastName);
+        setGuestPhoneNumber(dbUser?.phoneNumber);
+        setGuestEmail("");
+        setGuestEventName("");
+        setNote("");
+        setDuration("");
+        setCheckInDate("");
+        setCheckOutDate("");
+        setBookedSessionDuration("");
+        setSubscription(false);
+        setPostOtherFeesName("");
+        setPostOtherFeesPrice(0);
+        setPostOtherFeesName2("");
+        setPostOtherFeesPrice2(0);
+        setPostTotalPrice(0);
+        setPostCautionFee(0);
+        setCalculatedTotalPrice(0);
+        setServiceCharge(0);
+        setOverAllPrice(0);
+        setRealtorPrice(0);
+        setPostID("");
+        setPropertyDetails("");
+        setPropertyType("");
+        setNameOfType("");
+        setAccommodationType("");
+        setBookingLat("");
+        setBookingLng("");
+        setRealtorContext("");
 
-      //   if (needsPayment) {
-      //     navigate("/clientcontent/payment", { state: { bookingId: booking.id } });
-      //   } else {
-      //     navigate("/clientcontent/home");
-      //   }
-      // }
+        navigate("/clientcontent/home");
+        // Navigation logic
+        // if (propertyDetails?.bookingMode === "manual") {
+        //   navigate("/clientcontent/home");
+        // } else {
+        //   const needsPayment =
+        //     (parseFloat(postPrice) > 0) ||
+        //     (selectedOption?.optionPrice && parseFloat(selectedOption.optionPrice) > 0);
+
+        //   if (needsPayment) {
+        //     navigate("/clientcontent/payment", { state: { bookingId: booking.id } });
+        //   } else {
+        //     navigate("/clientcontent/home");
+        //   }
+        // }
+      }
     } catch (e) {
       alert(`Error: ${e.message}`);
     } finally {
@@ -378,6 +402,13 @@ const ReviewClientDetails = () => {
           <>
             <h4>Phone Number(s):</h4>
             <p className="txtInputReview">{guestPhoneNumber}</p>
+          </>
+        )}
+
+        {guestEmail && (
+          <>
+            <h4>Email:</h4>
+            <p className="txtInputReview">{guestEmail}</p>
           </>
         )}
 

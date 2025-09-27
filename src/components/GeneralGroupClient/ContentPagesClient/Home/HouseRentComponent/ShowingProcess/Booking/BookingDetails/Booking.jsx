@@ -33,15 +33,22 @@ const Booking = () => {
   const navigate = useNavigate();
 
   // 🔹 Handle date changes
-  const handleDateChange = (dates) => {
-    if (propertyDetails.bookingMode === "auto_date" || propertyDetails.bookingMode === "manual") {
-      const [start, end] = dates;
-
-      setRange({ startDate: start, endDate: end });
-    } else if (propertyDetails.bookingMode === "auto_datetime" ||
-    propertyDetails.isSubscription) {
-      // only check-in (single date selection)
-      setRange({ startDate: dates, endDate: null });
+  const handleDateChange = (dateOrDates) => {
+    // For Hotel / Shortlet → keep range
+    if (propertyDetails.propertyType === "Hotel / Shortlet") {
+      if (Array.isArray(dateOrDates)) {
+        const [start, end] = dateOrDates;
+        setRange({ startDate: start, endDate: end });
+      }
+    } 
+    // For auto_date / auto_datetime / manual → single date only
+    else if (
+      propertyDetails.bookingMode === "auto_date" ||
+      propertyDetails.bookingMode === "auto_datetime" ||
+      propertyDetails.bookingMode === "manual" ||
+      propertyDetails.isSubscription
+    ) {
+      setRange({ startDate: dateOrDates, endDate: null });
     }
   };
 
@@ -203,7 +210,7 @@ const Booking = () => {
                 : null
             }
             selectsRange={
-              (propertyDetails.bookingMode !== "auto_datetime" && propertyDetails.propertyType === "Hotel / Shortlet") || propertyDetails.isSubscription          
+              propertyDetails.propertyType === "Hotel / Shortlet"        
             }
             minDate={new Date()}
             inline

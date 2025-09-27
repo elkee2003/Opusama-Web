@@ -128,7 +128,7 @@ const Signin = () => {
                 className={`user-type-button ${activeUserType === 'realtor' ? 'active' : ''}`}
                 onClick={() => setActiveUserType('realtor')}
             >
-                <p>Are you a realtor?</p>
+                <p>Are you a vendor?</p>
                 <p>Click here</p>
             </button>
         </div>
@@ -209,7 +209,7 @@ const Signin = () => {
             {activeUserType === 'realtor' && (
             <div className="accordion-content">
                 <form onSubmit={handleSubmit} className="signin-form">
-                    <h2 className="signin-title">Realtor Sign In</h2>
+                    <h2 className="signin-title">Vendor Sign In</h2>
                     {/* Email */}
                     <label htmlFor="email" className="signin-label">Email</label>
                     <input

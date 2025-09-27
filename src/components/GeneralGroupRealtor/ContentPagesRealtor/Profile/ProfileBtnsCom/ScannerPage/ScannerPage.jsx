@@ -126,7 +126,9 @@ function ScannerPage() {
                 })
             );
         alert(
-            `Check-in successful for ${booking.clientFirstName || "User"}`
+            `Check-in successful for ${booking.clientFirstName || "User"}\n` +
+            (booking.numberOfPeople ? `👥 People: ${booking.numberOfPeople}\n` : "") +
+            (booking.numberOfItems ? `📦 Items: ${booking.numberOfItems}` : "")
         );
             // navigate(`/realtorcontent/accepted_details/${booking.id}`);
         } catch (err) {
@@ -161,6 +163,14 @@ function ScannerPage() {
             } else {
             await checkInBooking(match);
             }
+
+            // setScannedData({
+            //     ticketId: match.ticketID,
+            //     accommodationType: match.accommodationType,
+            //     propertyType: match.propertyType,
+            //     numberOfPeople: match.numberOfPeople,
+            //     numberOfItems: match.numberOfItems,
+            // });
         } catch (err) {
             console.error("Error verifying booking:", err);
             alert("Something went wrong while verifying ticket.");
@@ -234,6 +244,9 @@ function ScannerPage() {
                 <p>Ticket ID: {scannedData.ticketId}</p>
                 <p>Accommodation: {scannedData.accommodationType}</p>
                 <p>Property Type: {scannedData.propertyType}</p>
+
+                {/* {scannedData?.numberOfPeople && <p>👥 People: {scannedData.numberOfPeople}</p>}
+                {scannedData?.numberOfItems && <p>📦 Items: {scannedData.numberOfItems}</p>} */}
             </div>
         )}
     </div>

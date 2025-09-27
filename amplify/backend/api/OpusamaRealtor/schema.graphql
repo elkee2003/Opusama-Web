@@ -101,6 +101,7 @@ type Booking @model @auth(rules: [{allow: public}]) {
   clientFirstName: String
   clientLastName: String
   clientPhoneNumber: String
+  guestEmail: String
   purpose: String
   selectedOption: AWSJSON
   duration: String

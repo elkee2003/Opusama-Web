@@ -97,13 +97,17 @@ const ShortAlertList = () => {
         try {
             const bookingToUpdate = await DataStore.query(Booking, bookingId);
             if (bookingToUpdate) {
-            await DataStore.save(
-                Booking.copyOf(bookingToUpdate, updated => {
-                updated.status = "CHECKED_IN";
-                updated.ticketStatus = "Used";
-                })
-            );
-            alert(`Check-in successful for ${bookingToUpdate.clientFirstName || "User"}`);
+                await DataStore.save(
+                    Booking.copyOf(bookingToUpdate, updated => {
+                    updated.status = "CHECKED_IN";
+                    updated.ticketStatus = "Used";
+                    })
+                );
+                alert(
+                    `Check-in successful for ${bookingToUpdate.clientFirstName || "User"}\n` +
+                    (bookingToUpdate.numberOfPeople ? `👥 People: ${bookingToUpdate.numberOfPeople}\n` : "") +
+                    (bookingToUpdate.numberOfItems ? `📦 Items: ${bookingToUpdate.numberOfItems}` : "")
+                );
             }
         } catch (e) {
             console.error("Error checking in booking:", e);

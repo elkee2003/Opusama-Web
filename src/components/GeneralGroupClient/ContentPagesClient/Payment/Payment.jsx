@@ -22,10 +22,20 @@ const PaymentComponent = () => {
 
     const {transactionReference,
         setTransactionReference, setTransactionStatus,
-        onStatusChange, currentBooking
+        onStatusChange, currentBooking,
+        // For guest users
+        overAllPrice,
+        guestFirstName,
+        setGuestFirstName,
+        guestLastName,
+        setGuestLastName,
+        guestPhoneNumber,
+        setGuestPhoneNumber,
+        guestEmail,
+        setGuestEmail,
     } = useBookingShowingContext();
 
-    const { userMail } = useAuthContext();
+    const { userMail, dbUser } = useAuthContext();
 
     // Verify payment
     const verifyPayment = async (reference) => {
@@ -66,22 +76,32 @@ const PaymentComponent = () => {
     const payWithPaystack = () => {
         const paystack = new PaystackPop();
 
+         // ✅ Fallback to guest info if no dbUser
+        const email = dbUser ? userMail : guestEmail;
+        const name = dbUser ? firstName : guestFirstName;
+        const phone = dbUser ? phoneNumber : guestPhoneNumber;
+
+        if (!email || !phone) {
+            alert('Please provide your email and phone number before continuing.');
+            return;
+        }
+
         paystack.newTransaction({
             // Test key
             // key: 'pk_test_64145fd844453c5288c6c45bb26a3cbdf439575a',
 
             // Live Key
             key: 'pk_live_41dc1952adece7d813efac252ad7d86ad8a6bd54',
-            email: userMail,
-            amount: paymentPrice * 100, // Naira to Kobo
+            email,
+            amount: (dbUser ? paymentPrice : overAllPrice) * 100, // Naira to Kobo
             currency: 'NGN',
             ref: 'ps_' + Date.now(),
             metadata: {
                 custom_fields: [
                     {
-                        display_name: firstName,
+                        display_name: name || 'Guest',
                         variable_name: 'phone',
-                        value: phoneNumber,
+                        value: phone,
                     },
                 ],
             },
@@ -118,8 +138,8 @@ const PaymentComponent = () => {
                 <input
                     type="text"
                     className="payInput"
-                    placeholder={`Amount: ₦${paymentPrice}`}
-                    value={paymentPrice}
+                    placeholder={`Amount: ₦${dbUser ? paymentPrice : overAllPrice}`}
+                    value={dbUser ? paymentPrice : overAllPrice}
                     readOnly
                 />
 
