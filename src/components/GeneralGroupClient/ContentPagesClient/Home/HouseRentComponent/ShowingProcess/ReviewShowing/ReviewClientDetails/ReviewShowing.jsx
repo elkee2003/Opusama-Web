@@ -92,7 +92,6 @@ const ReviewClientDetails = () => {
     setRealtorPrice,
     serviceCharge, 
     setServiceCharge,
-    setCurrentBookingForGuest //for guest to update qrcode in particular booking
   } = useBookingShowingContext();
 
   const [loading, setLoading] = useState(false);
@@ -204,9 +203,6 @@ const ReviewClientDetails = () => {
           status: propertyDetails?.bookingMode === "manual" ? "PENDING" : "ACCEPTED",
         })
       );
-
-      // ✅ Save booking so verifyPayment can access it
-      setCurrentBookingForGuest(booking); 
 
       // Notify realtor
       await DataStore.save(

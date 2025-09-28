@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const QRCode = require("qrcode");
 
 // Configure SES
 const ses = new AWS.SES({ region: "eu-north-1" }); 
@@ -27,24 +28,28 @@ exports.handler = async (event) => {
       payload = event;
     }
 
-    const { guestEmail, guestName, eventName, numberOfPeople, ticketId, qrUrl } = payload;
+    const { guestEmail, guestName, eventName, numberOfPeople, ticketId } = payload;
 
-    if (!guestEmail || !ticketId || !qrUrl) {
+    if (!guestEmail || !ticketId) {
       return {
         statusCode: 400,
         headers: CORS_HEADERS, 
-        body: JSON.stringify({ message: "Missing guestEmail, ticketId or qrUrl" }),
+        body: JSON.stringify({ message: "Missing guestEmail or ticketId" }),
       };
     }
 
-    // 1 Build Email HTML
+    // 1️⃣ Generate QR Code as base64 PNG
+    const qrData = JSON.stringify({ ticketId, eventName, numberOfPeople });
+    const qrImage = await QRCode.toDataURL(qrData);
+
+    // 2️⃣ Build Email HTML
     const htmlBody = `
       <h2>Hello ${guestName || "Guest"},</h2>
       <p>Thank you for booking <b>${eventName}</b>.</p>
       <p><b>Ticket ID:</b> ${ticketId}</p>
       <p><b>Number of People:</b> ${numberOfPeople}</p>
       <p>Show this QR code at entry:</p>
-      <img src="${qrUrl}" alt="Ticket QR Code" style="width:200px;height:200px"/>
+      <img src="${qrUrl}" alt="Ticket QR Code"/>
       <p>Enjoy your event!</p>
       <p>Signup now to join opusama and enjoy more services</p>
     `;
