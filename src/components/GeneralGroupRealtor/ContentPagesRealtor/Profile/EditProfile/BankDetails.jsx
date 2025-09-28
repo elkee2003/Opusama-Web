@@ -105,7 +105,7 @@ const BankDetails = () => {
               setBankName("");
             }
           }}
-          placeholder="Select or search bank"
+          placeholder="Select or search receiving bank"
           className="realtorProfileInputBank"
         />
       </div>
@@ -122,7 +122,7 @@ const BankDetails = () => {
               setAccountNumber(value);
             }
           }}
-          placeholder="Account number"
+          placeholder="Receiving account number"
           className="realtorProfileInputBank"
         />
       </div>

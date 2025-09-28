@@ -1,0 +1,13 @@
+[
+  {
+    "Action": [
+      "ses:SendEmail",
+      "ses:SendRawEmail",
+      "ses:SendTemplatedEmail"
+    ],
+    "Resource": [
+      "arn:aws:ses:eu-north-1:533267162650:identity/info@opusama.com",
+      "arn:aws:ses:eu-north-1:533267162650:identity/opusama.com"
+    ]
+  }
+]

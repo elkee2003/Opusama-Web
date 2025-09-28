@@ -20,6 +20,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "sendGuestTicketApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sendGuestTicket"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -49,6 +63,32 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "sendGuestTicket": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_sendGuestTicket_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sendGuestTicket"
+        }
+      ]
+    },
+    "AMPLIFY_function_sendGuestTicket_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sendGuestTicket"
+        }
+      ]
     }
   },
   "storage": {

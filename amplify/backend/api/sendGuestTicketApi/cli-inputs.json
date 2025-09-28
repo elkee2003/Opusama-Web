@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/sendGuestTicket": {
+      "name": "/sendGuestTicket",
+      "lambdaFunction": "sendGuestTicket",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

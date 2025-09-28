@@ -17,6 +17,16 @@
       },
       "storage": {
         "s3opusamastoragef8b382aa": {}
+      },
+      "function": {
+        "sendGuestTicket": {
+          "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
+          "s3Key": "amplify-builds/sendGuestTicket-556c666539324e324c4d-build.zip"
+        }
+      },
+      "api": {
+        "OpusamaRealtor": {},
+        "sendGuestTicketApi": {}
       }
     }
   }

@@ -4,6 +4,13 @@
   "aws_appsync_region": "eu-north-1",
   "aws_appsync_authenticationType": "API_KEY",
   "aws_appsync_apiKey": "da2-fcpqxbom4ral5nvg7tlvzy3neu",
+  "aws_cloud_logic_custom": [
+    {
+      "name": "sendGuestTicketApi",
+      "endpoint": "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging",
+      "region": "eu-north-1"
+    }
+  ],
   "aws_cognito_identity_pool_id": "eu-north-1:0ce8032c-e2df-41a1-a91a-e53fcadd2585",
   "aws_cognito_region": "eu-north-1",
   "aws_user_pools_id": "eu-north-1_B3oOi9duo",
