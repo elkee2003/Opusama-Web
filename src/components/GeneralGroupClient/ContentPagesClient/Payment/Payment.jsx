@@ -8,7 +8,10 @@ import Logo from '/opusamaSolo.png';
 import { useProfileContext } from '../../../../../Providers/ClientProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 import { useBookingShowingContext } from '../../../../../Providers/ClientProvider/BookingShowingProvider';
+import QRCode from "qrcode";
 import { Booking } from '../../../../models';
+import { uploadData } from "aws-amplify/storage";
+import { DataStore } from "aws-amplify/datastore";
 
 const PaymentComponent = () => {
     const navigate = useNavigate();
@@ -38,7 +41,12 @@ const PaymentComponent = () => {
         numberOfPeople,
         accommodationType,
         propertyType,
+        currentBookingForGuest
     } = useBookingShowingContext();
+
+    console.log('current full:',currentBookingForGuest, 'just id:', currentBookingForGuest?.id)
+
+    console.log('current dbuser:', currentBooking, 'currentdbuserID:', currentBooking?.id)
 
     const { userMail, dbUser } = useAuthContext();
 
@@ -60,18 +68,35 @@ const PaymentComponent = () => {
                 const ticketId = `TICKET-${uuidv4()}`;
                 const ticketStatus = "unused";
 
-                await onStatusChange("PAID", reference, "Successful", ticketId, ticketStatus);
-
                 setIsPaymentSuccessful(true);
 
-                // ✅ Generate QR data
+                // ✅ 1. Generate QR data
                 const qrData = JSON.stringify({
                     ticketId,
                     accommodationType: accommodationType || "",
                     propertyType: propertyType || "",
                 });
 
-                // ✅ Call Lambda to send ticket email
+                // Use DataURL + convert to Blob
+                const qrDataUrl = await QRCode.toDataURL(qrData);
+                const qrBlob = await fetch(qrDataUrl).then(res => res.blob());
+
+                // ✅ 2. Upload QR to S3
+                const fileKey = `public/qrCodes/${ticketId}.png`;
+                const uploadResult = await uploadData({
+                    path: fileKey,
+                    data: qrBlob,
+                    options: { contentType: "image/png" },
+                }).result;
+
+                const qrUrl = uploadResult.path;
+
+                // ✅ 3. Save to Booking in DataStore
+                await onStatusChange("PAID", reference, "Successful", ticketId, ticketStatus, qrUrl);
+
+                setIsPaymentSuccessful(true);
+
+                // ✅ 4. Call Lambda to send ticket email
                 try {
                     const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket";
 
@@ -81,7 +106,7 @@ const PaymentComponent = () => {
                         eventName: guestEventName,
                         numberOfPeople: numberOfPeople || 1,
                         ticketId,
-                        qrData,
+                        qrUrl,
                     };
 
                     await fetch(lambdaUrl, {
@@ -96,7 +121,11 @@ const PaymentComponent = () => {
                 }
 
                 setTimeout(() => {
-                    navigate(-1);
+                    if (!dbUser) {
+                        navigate("/clientcontent/home"); 
+                    } else {
+                        navigate(-1);
+                    }
                 }, 1000);
             } else {
                     console.warn("Verification failed:", result);

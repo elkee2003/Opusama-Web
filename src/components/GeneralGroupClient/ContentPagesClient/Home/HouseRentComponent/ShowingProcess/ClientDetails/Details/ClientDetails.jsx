@@ -412,15 +412,19 @@ const ClientDetails = ({ post }) => {
             </>
           )}
 
-          <label className='txtInputHeader'>
-            {post?.propertyType === 'Hotel / Shortlet' ? 'Purpose of Stay' : 'Short Note'}
-          </label>
-          <textarea
-            className='txtInput'
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            placeholder="Purpose of stay (Optional)"
-          />
+          {dbUser && (
+            <>
+              <label className='txtInputHeader'>
+                {post?.propertyType === 'Hotel / Shortlet' ? 'Purpose of Stay' : 'Short Note'}
+              </label>
+              <textarea
+                className='txtInput'
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder={post?.propertyType === 'Hotel / Shortlet' ? 'Purpose of Stay (Opt)' : 'Short Note (Opt)'}
+              />
+            </>
+          )}
         </div>
       </div>
       <p className='error'>

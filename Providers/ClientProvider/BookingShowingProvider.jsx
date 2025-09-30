@@ -9,6 +9,7 @@ const BookingShowingContextProvider = ({children}) => {
 
     const [bookings, setBookings] = useState('');
     const [currentBooking, setCurrentBooking] = useState(null);
+    const [currentBookingForGuest, setCurrentBookingForGuest] = useState(null);
     const [cardNumber, setCardNumber] = useState(null);
     const [cardExpiry, setCardExpiry] = useState(null);
     const [cardCvv, setCardCvv] = useState(null);
@@ -59,29 +60,43 @@ const BookingShowingContextProvider = ({children}) => {
     const {dbUser} = useAuthContext();
 
     // Function to change status of payment
-    const onStatusChange = async (status, reference, transactionStatus, ticketId, ticketStatus) => {
+    const onStatusChange = async (status, reference, transactionStatus, ticketId, ticketStatus, qrUrl) => {
         
-        if (!currentBooking) {
-            console.error("No booking set in context.");
+        const bookingToUpdate = dbUser ? currentBooking : currentBookingForGuest;
+
+        if (!bookingToUpdate) {
+            console.log("No booking found to update.");
             return;
         }
-        console.log("Updating booking:", currentBooking);
 
         try {
+            // Get latest booking from DataStore
+            const bookingRecord = await DataStore.query(Booking, bookingToUpdate.id);
+            if (!bookingRecord) {
+            console.log("Booking not found in DataStore");
+            return;
+            }
              // Save to DataStore using the booking from context
             const updatedBooking = await DataStore.save(
-                Booking.copyOf(currentBooking, updated => {
+                Booking.copyOf(bookingRecord, updated => {
                     updated.status = status;
                     updated.transactionReference = reference;
                     updated.transactionStatus = transactionStatus;
                     updated.ticketID = ticketId;
                     updated.ticketStatus = ticketStatus;
+                    if (qrUrl) {
+                        updated.qrCodeUrl = qrUrl;
+                    }
                 })
             );
 
 
             // Keep context in sync
+            if (dbUser) {
             setCurrentBooking(updatedBooking);
+            } else {
+            setCurrentBookingForGuest(updatedBooking);
+            }
             setTransactionReference(reference);
             setTransactionStatus(status);
 
@@ -89,7 +104,11 @@ const BookingShowingContextProvider = ({children}) => {
 
             // ✅ Clear current booking if payment was successful
             if (status === "PAID" || transactionStatus === "Successful") {
-                setCurrentBooking(null);
+                if (dbUser) {
+                    setCurrentBooking(null);
+                } else {
+                    setCurrentBookingForGuest(null);
+                }
             }
 
         } catch (error) {
@@ -289,7 +308,7 @@ const BookingShowingContextProvider = ({children}) => {
 
 
   return (
-    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, selectedOption, setSelectedOption, opusingFor, setOpusingFor, otherUsername, setOtherUsername, opusedBy, setOpusedBy, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople, numberOfItems, 
+    <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, currentBookingForGuest, setCurrentBookingForGuest,  selectedOption, setSelectedOption, opusingFor, setOpusingFor, otherUsername, setOtherUsername, opusedBy, setOpusedBy, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople, numberOfItems, 
     setNumberOfItems, setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, guestEmail, guestEventName, setGuestEventName, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, setGuestEmail, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidateFoodInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, bookedSessionDuration, setBookedSessionDuration, duration, setDuration, subscription, setSubscription, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, calculatedTotalPrice, setCalculatedTotalPrice, overAllPrice, setOverAllPrice, 
     realtorPrice, setRealtorPrice, serviceCharge, setServiceCharge,transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
         {children}

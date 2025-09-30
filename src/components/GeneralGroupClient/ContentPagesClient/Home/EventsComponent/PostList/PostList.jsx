@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
+// 5399 2390 2931 1380
+
 function PostList() {
     const navigate = useNavigate();
     const [realtorPosts, setRealtorPosts] = useState([]);
