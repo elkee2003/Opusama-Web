@@ -54,7 +54,7 @@ exports.handler = async (event) => {
         <a href="${ticketPageUrl}" target="_blank" style="color:#007bff;">click here to view your ticket</a>.
       </p>
 
-      <p>Enjoy your event!</p>
+      <p>Thank you for booking through Opusama</p>
       <div style="margin-top:20px;padding:10px;background:#f9f9f9;color:#333;font-size:14px;text-align:center;">
         Signup now to join <b>opusama</b> and enjoy more services
       </div>
