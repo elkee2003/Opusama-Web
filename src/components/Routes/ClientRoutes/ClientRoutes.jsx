@@ -33,6 +33,7 @@ import CommunityDetailedPost from '../../GeneralGroupClient/ContentPagesClient/C
 import CommunityPostResponse from '../../GeneralGroupClient/ContentPagesClient/Community/CommunityTabs/DetailedPost/Content/Response/Response';
 import UserProfile from '../../GeneralGroupClient/ContentPagesClient/Community/UserProfile/UserProfile';
 import PaymentPage from '../../GeneralGroupClient/ContentPagesClient/Payment/Payment';
+import GuestTicketPage from '../../GeneralGroupClient/ContentPagesClient/Alerts/Bookings/BookingFullDetails/QRCode/GuestTicktPage';
 
 // SearchPages
 import SearchPageHouse from '../../GeneralGroupClient/ContentPagesClient/Home/HouseRentComponent/Search/Search';
@@ -147,6 +148,9 @@ const ClientRoutes = () => (
 
                 {/* Payment */}
                 <Route path="payment" element={<PaymentPage />} />
+
+                {/* Guest Ticket Page */}
+                <Route path="/tickets/:ticketId" element={<GuestTicketPage />} />
 
                 {/* Booked Propert Details */}
                 <Route path="booked_property_post/:postId" element={<BookedProperty />} />

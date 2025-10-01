@@ -37,16 +37,27 @@ exports.handler = async (event) => {
       };
     }
 
+    // ✅ Build ticket link *after* we have ticketId
+    const ticketPageUrl = `https://opusama.com/clientcontent/tickets/${ticketId}`;
+
     // 1 Build Email HTML
     const htmlBody = `
       <h2>Hello ${guestName || "Guest"},</h2>
-      <p>Thank you for booking <b>${eventName}</b>.</p>
+      <p>Thank you for booking <b>${eventName} on Opusama</b>.</p>
       <p><b>Ticket ID:</b> ${ticketId}</p>
       <p><b>Number of People:</b> ${numberOfPeople}</p>
+
       <p>Show this QR code at entry:</p>
       <img src="${qrUrl}" alt="Ticket QR Code" style="width:200px;height:200px"/>
+
+      <p>If you cannot see the QR code above, 
+        <a href="${ticketPageUrl}" target="_blank" style="color:#007bff;">click here to view your ticket</a>.
+      </p>
+
       <p>Enjoy your event!</p>
-      <p>Signup now to join opusama and enjoy more services</p>
+      <div style="margin-top:20px;padding:10px;background:#f9f9f9;color:#333;font-size:14px;text-align:center;">
+        Signup now to join <b>opusama</b> and enjoy more services
+      </div>
     `;
 
     // 3️⃣ Send email via SES

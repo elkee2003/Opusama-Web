@@ -11,7 +11,7 @@ import { User } from "../../../../../../../../models";
 
 const ReviewClientDetails = () => {
   const navigate = useNavigate();
-  const { dbUser } = useAuthContext();
+  const { dbUser, userMail } = useAuthContext();
   const {
     selectedOption, 
     setSelectedOption,
@@ -141,6 +141,10 @@ const ReviewClientDetails = () => {
       let bookingUserID = dbUser?.id || "GUEST";
       let notificationCreatorID = dbUser?.id || "GUEST";
       let notificationCreatorUsername = dbUser?.username || guestFirstName || "Guest User";
+
+      // Email that will be used for confirmation
+      let recipientEmail = guestEmail;
+
       let targetUser = null;
 
       // If booking for another person
@@ -165,6 +169,14 @@ const ReviewClientDetails = () => {
         // Realtor notification should look like it came from the target user
         notificationCreatorID = targetUser.id;
         notificationCreatorUsername = targetUser.username || "A client";
+
+        // ✅ Use targetUser’s email for confirmation
+        recipientEmail = targetUser?.email;
+      }
+
+      // ✅ If dbUser is booking for themselves (not guest, not another)
+      else if (dbUser && opusingFor !== "another") {
+        recipientEmail = userMail; // from Auth
       }
 
 
@@ -181,7 +193,7 @@ const ReviewClientDetails = () => {
           clientFirstName,
           clientLastName,
           clientPhoneNumber,
-          guestEmail,
+          guestEmail:recipientEmail,
           purpose: note,
           selectedOption,
           duration: String(duration),
