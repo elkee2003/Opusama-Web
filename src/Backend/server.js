@@ -1,116 +1,20 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const qrcode = require('qrcode');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const prerender = require("prerender-node");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/[&<>"']/g, (m) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  })[m]);
-}
+app.use(
+  prerender
+    .set("prerenderToken", "YOUR_PRERENDER_TOKEN") // from prerender.io dashboard
+);
 
-async function createTransporter() {
-  // If SMTP creds are provided, use them. Otherwise auto-create a test account (dev).
-  if (process.env.SMTP_USER && process.env.SMTP_PASS && process.env.SMTP_HOST) {
-    return nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_SECURE === 'true', // true for 465
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
-    });
-  } else {
-    // Dev/test: Ethereal account
-    const testAccount = await nodemailer.createTestAccount();
-    return nodemailer.createTransport({
-      host: testAccount.smtp.host,
-      port: testAccount.smtp.port,
-      secure: testAccount.smtp.secure,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
-      }
-    });
-  }
-}
+app.use(express.static("build")); // or "dist" for Vite
 
-app.post('/send-ticket-email', async (req, res) => {
-  try {
-    const {
-      email,
-      name,
-      ticketId,
-      accommodationType,
-      propertyType,
-      eventName,
-      numberOfPeople,
-      amount,
-      reference,
-      bookingId
-    } = req.body;
-
-    if (!email || !ticketId) return res.status(400).json({ success: false, error: 'Missing email or ticketId' });
-
-    const transporter = await createTransporter();
-
-    // Create QR PNG buffer
-    const qrData = JSON.stringify({ ticketId, accommodationType, propertyType });
-    const qrBuffer = await qrcode.toBuffer(qrData, { type: 'png', width: 400 });
-
-    // HTML email (embed with cid)
-    const html = `
-      <p>Hi ${escapeHtml(name) || 'Guest'},</p>
-      <p>Thanks for your payment of ₦${escapeHtml(String(amount || '0'))} ${reference ? `(ref: ${escapeHtml(reference)})` : ''}.</p>
-      <p><strong>Event / Accommodation:</strong> ${escapeHtml(eventName || accommodationType || propertyType || '—')}</p>
-      <p><strong>Number of people:</strong> ${escapeHtml(String(numberOfPeople || '1'))}</p>
-      <p><strong>Ticket ID:</strong> ${escapeHtml(ticketId)}</p>
-      <p>Please show this QR code at entry:</p>
-      <img src="cid:ticketQR" alt="ticket qr" style="max-width:100%;height:auto"/>
-      <p>If you have questions reply to this email.</p>
-      <p>— Opusama</p>
-    `;
-
-    const mailOptions = {
-      from: `"Opusama" <${process.env.FROM_EMAIL || 'opusingi@opusama.com'}>`,
-      to: email,
-      subject: 'Your Opusama Ticket',
-      html,
-      attachments: [
-        { filename: 'ticket-qrcode.png', content: qrBuffer, cid: 'ticketQR' }
-      ]
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-
-    const result = { success: true, messageId: info.messageId };
-    // If using nodemailer test account, return preview URL for dev testing
-    if (nodemailer.getTestMessageUrl) {
-      const preview = nodemailer.getTestMessageUrl(info);
-      if (preview) result.previewUrl = preview;
-    }
-
-    return res.json(result);
-  } catch (err) {
-    console.error('send-ticket-email error', err);
-    return res.status(500).json({ success: false, error: err.message });
-  }
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`send-ticket-email server listening on ${PORT}`));
-
+app.listen(3000, () => console.log("Server running on port 3000"));
 
 
 

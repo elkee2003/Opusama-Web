@@ -6,12 +6,15 @@ import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 Amplify.configure(amplifyconfig);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
-    <ToastContainer position="top-right" autoClose={4000} />
+    <HelmetProvider>
+      <App />
+      <ToastContainer position="top-right" autoClose={4000} />
+    </HelmetProvider>
   </StrictMode>,
 )

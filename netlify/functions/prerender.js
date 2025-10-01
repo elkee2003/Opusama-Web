@@ -1,56 +1,37 @@
-import fetch from "node-fetch";
-import fs from "fs";
-import path from "path";
+export async function handler(event, context) {
+  const userAgent = event.headers['user-agent'] || '';
+  const botRegex = /(googlebot|bingbot|yahoo|baiduspider|facebookexternalhit|twitterbot|slackbot|linkedinbot)/i;
 
-const BOT_REGEX =
-  /(googlebot|bingbot|yahoo|baiduspider|yandex|facebookexternalhit|twitterbot|linkedinbot|slackbot|whatsapp|discord)/i;
+  console.log("UA:", userAgent);
 
-export async function handler(event) {
-  const userAgent = event.headers["user-agent"] || "";
-  const isBot = BOT_REGEX.test(userAgent);
+  if (botRegex.test(userAgent)) {
+    const prerenderUrl = `https://service.prerender.io/${event.rawUrl}`;
+    console.log("Fetching from Prerender:", prerenderUrl);
 
-  // Extract the path after /prerender
-  const rawPath = event.path.replace("/.netlify/functions/prerender", "") || "/";
-  const requestUrl = `https://www.opusama.com${rawPath}`;
+    const resp = await fetch(prerenderUrl, {
+      headers: {
+        'X-Prerender-Token': 'RsYVN1D3ptOI6hVVJ6tx'
+      }
+    });
 
-  try {
-    if (isBot) {
-      // 🔹 Forward to Prerender.io
-      const prerenderRes = await fetch(
-        `https://service.prerender.io/${requestUrl}`,
-        {
-          headers: {
-            "User-Agent": userAgent,
-            "X-Prerender-Token": process.env.PRERENDER_TOKEN,
-          },
-        }
-      );
+    console.log("Prerender status:", resp.status);
 
-      const body = await prerenderRes.text();
-
-      return {
-        statusCode: prerenderRes.status,
-        headers: {
-          "Content-Type": "text/html",
-          "Cache-Control": "public, max-age=600",
-        },
-        body,
-      };
-    } else {
-      // 🔹 Serve SPA for humans
-      const filePath = path.join(process.cwd(), "dist", "index.html");
-      const html = fs.readFileSync(filePath, "utf8");
-
-      return {
-        statusCode: 200,
-        headers: { "Content-Type": "text/html" },
-        body: html,
-      };
-    }
-  } catch (error) {
+    const body = await resp.text();
     return {
-      statusCode: 500,
-      body: "Prerender proxy error: " + error.message,
+      statusCode: resp.status,
+      headers: { "Content-Type": "text/html" },
+      body,
     };
   }
+
+  // Normal SPA
+  const resp = await fetch(`${process.env.URL || 'https://opusama.com'}/index.html`);
+  const body = await resp.text();
+  return {
+    statusCode: 200,
+    headers: { "Content-Type": "text/html" },
+    body,
+  };
 }
+
+// this file is not in use
