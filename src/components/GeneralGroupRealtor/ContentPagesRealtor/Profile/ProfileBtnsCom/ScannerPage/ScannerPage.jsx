@@ -6,6 +6,7 @@ import { useAuthContext } from '../../../../../../../Providers/ClientProvider/Au
 import AuthenticatorPage from './AuthenticatorPage';
 import { VendorScanner, Booking, User, Post, Realtor } from '../../../../../../models';
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import { FaExclamationCircle } from "react-icons/fa";
 
 function ScannerPage() {
     const { authUser, dbUser } = useAuthContext();
@@ -13,6 +14,7 @@ function ScannerPage() {
     const [scanner, setScanner] = useState(null);
     const [vendorName, setVendorName] = useState("");
     const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [scannedData, setScannedData] = useState(null);
     const [isScannerActive, setIsScannerActive] = useState(false);
 
@@ -148,20 +150,20 @@ function ScannerPage() {
             );
 
             if (!match) {
-            alert("No booking found for this ticket.");
-            return;
+                setErrorMessage("No booking found for this ticket.");
+                return;
             }
 
             // 🔒 Check authorization
             if (match.realtorID !== scanner.vendorID) {
-            alert("You are not authorized to check in this booking.");
-            return;
+                setErrorMessage("You are not authorized to check in this booking.");
+                return;
             }
 
             if (match.ticketStatus === "Used") {
-            alert("This ticket has already been used.");
+                setErrorMessage("This ticket has already been used.");
             } else {
-            await checkInBooking(match);
+                await checkInBooking(match);
             }
 
             // setScannedData({
@@ -209,6 +211,17 @@ function ScannerPage() {
         };
     }, [isScannerActive]);
 
+    // Auto-clear errorMessage after 3 seconds
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+            setErrorMessage(null);
+            }, 2000); // 2 seconds
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
+
     if (loading) return <p>Loading scanner...</p>;
     if (!scanner) return <p>No valid scanner found.</p>;
 
@@ -221,6 +234,14 @@ function ScannerPage() {
 
         {scanner.expiresAt && (
             <p>Expires: {new Date(scanner.expiresAt).toLocaleString()}</p>
+        )}
+
+        {/* ✅ Error Message with Icon */}
+        {errorMessage && (
+            <div className="ticket-alert-con">
+                <FaExclamationCircle className='ticket-alert-icon'/>
+                {errorMessage}
+            </div>
         )}
 
         {/* ✅ Toggle Scanner Button */}

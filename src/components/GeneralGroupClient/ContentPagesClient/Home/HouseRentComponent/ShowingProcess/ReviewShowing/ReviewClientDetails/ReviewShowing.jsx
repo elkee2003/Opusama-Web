@@ -92,6 +92,7 @@ const ReviewClientDetails = () => {
     setRealtorPrice,
     serviceCharge, 
     setServiceCharge,
+    resetBookingState,
     setCurrentBookingForGuest //for guest to update qrcode in particular booking
   } = useBookingShowingContext();
 
@@ -267,53 +268,12 @@ const ReviewClientDetails = () => {
       }
       
       setBookings(booking);
-      if (dbUser){
-        alert("Booking was a success");
-      }
 
       if (!dbUser) {
         navigate('/clientcontent/payment');
       } else {
-        // Reset state
-        setSelectedOption(null);
-        setOpusingFor('myself');
-        setOtherUsername("");
-        setOpusedBy("");
-        setAdults(0);
-        setKids(0);
-        setInfants(0);
-        setNumberOfPeople(0);
-        setNumberOfItems(0)
-        setGuestFirstName(dbUser?.firstName);
-        setGuestLastName(dbUser?.lastName);
-        setGuestPhoneNumber(dbUser?.phoneNumber);
-        setGuestEmail("");
-        setGuestEventName("");
-        setNote("");
-        setDuration("");
-        setCheckInDate("");
-        setCheckOutDate("");
-        setBookedSessionDuration("");
-        setSubscription(false);
-        setPostOtherFeesName("");
-        setPostOtherFeesPrice(0);
-        setPostOtherFeesName2("");
-        setPostOtherFeesPrice2(0);
-        setPostTotalPrice(0);
-        setPostCautionFee(0);
-        setCalculatedTotalPrice(0);
-        setServiceCharge(0);
-        setOverAllPrice(0);
-        setRealtorPrice(0);
-        setPostID("");
-        setPropertyDetails("");
-        setPropertyType("");
-        setNameOfType("");
-        setAccommodationType("");
-        setBookingLat("");
-        setBookingLng("");
-        setRealtorContext("");
-
+        alert("Booking was a success");
+        resetBookingState();
         navigate("/clientcontent/home");
         // Navigation logic
         // if (propertyDetails?.bookingMode === "manual") {

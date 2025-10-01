@@ -7,7 +7,7 @@ const BookingShowingContext = createContext({})
 
 const BookingShowingContextProvider = ({children}) => {
 
-    const [bookings, setBookings] = useState('');
+    const [bookings, setBookings] = useState(null);
     const [currentBooking, setCurrentBooking] = useState(null);
     const [currentBookingForGuest, setCurrentBookingForGuest] = useState(null);
     const [cardNumber, setCardNumber] = useState(null);
@@ -298,6 +298,50 @@ const BookingShowingContextProvider = ({children}) => {
         }
     }
 
+    // reset the states after booking
+    const resetBookingState = () => {
+        setSelectedOption(null);
+        setOpusingFor("myself");
+        setOtherUsername("");
+        setOpusedBy("");
+        setAdults(0);
+        setKids(0);
+        setInfants(0);
+        setNumberOfPeople(0);
+        setNumberOfItems(0);
+        setGuestFirstName("");
+        setGuestLastName("");
+        setGuestPhoneNumber("");
+        setGuestEmail("");
+        setGuestEventName("");
+        setNote("");
+        setDuration("");
+        setCheckInDate("");
+        setCheckOutDate("");
+        setBookedSessionDuration("");
+        setSubscription(false);
+        setPostOtherFeesName("");
+        setPostOtherFeesPrice(0);
+        setPostOtherFeesName2("");
+        setPostOtherFeesPrice2(0);
+        setPostTotalPrice(0);
+        setPostCautionFee(0);
+        setCalculatedTotalPrice(0);
+        setServiceCharge(0);
+        setOverAllPrice(0);
+        setRealtorPrice(0);
+        setPostID("");
+        setPropertyDetails("");
+        setPropertyType("");
+        setNameOfType("");
+        setAccommodationType("");
+        setBookingLat("");
+        setBookingLng("");
+        setRealtorContext("");
+        setCurrentBookingForGuest(null);
+        setBookings(null);
+    };
+
     useEffect(() => {
         if (dbUser?.firstName) {
             setGuestFirstName(dbUser.firstName);
@@ -310,7 +354,7 @@ const BookingShowingContextProvider = ({children}) => {
   return (
     <BookingShowingContext.Provider value={{bookings, setBookings,currentBooking, setCurrentBooking, currentBookingForGuest, setCurrentBookingForGuest,  selectedOption, setSelectedOption, opusingFor, setOpusingFor, otherUsername, setOtherUsername, opusedBy, setOpusedBy, adults, setAdults, kids, setKids, infants, numberOfPeople, setNumberOfPeople, numberOfItems, 
     setNumberOfItems, setInfants, guestFirstName, setGuestFirstName, guestLastName, setGuestLastName, PostID, setPostID, guestPhoneNumber, guestEmail, guestEventName, setGuestEventName, propertyDetails, setPropertyDetails, propertyType, setPropertyType, nameOfType, setNameOfType, accommodationType, setAccommodationType, setGuestPhoneNumber, setGuestEmail, note, setNote, bookingLat, setBookingLat, bookingLng, setBookingLng, errorMessage, setErrorMessage, onValidateHotelInput, onValidateRecreationInput, onValidateFoodInput, onValidatePropertyInput, realtorContext, setRealtorContext, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate, bookedSessionDuration, setBookedSessionDuration, duration, setDuration, subscription, setSubscription, postPrice, setPostPrice, postCautionFee, setPostCautionFee, postOtherFeesName, setPostOtherFeesName, postOtherFeesName2, setPostOtherFeesName2, postOtherFeesPrice, setPostOtherFeesPrice, postOtherFeesPrice2, setPostOtherFeesPrice2, postTotalPrice, setPostTotalPrice, calculatedTotalPrice, setCalculatedTotalPrice, overAllPrice, setOverAllPrice, 
-    realtorPrice, setRealtorPrice, serviceCharge, setServiceCharge,transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange,}}>
+    realtorPrice, setRealtorPrice, serviceCharge, setServiceCharge,transactionReference, setTransactionReference, transactionStatus, setTransactionStatus, onStatusChange, resetBookingState }}>
         {children}
     </BookingShowingContext.Provider>
   )

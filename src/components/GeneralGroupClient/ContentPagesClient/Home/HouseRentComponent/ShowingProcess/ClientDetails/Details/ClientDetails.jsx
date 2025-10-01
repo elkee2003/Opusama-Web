@@ -111,7 +111,7 @@ const ClientDetails = ({ post }) => {
           (post?.bookingOptions?.some(opt => opt?.optionPrice > 0))
         ) && temporaryPrice <= 0
       ) {
-        alert("Price cannot be 0. Please go back and rebook or pick an option before proceeding.");
+        alert("Price cannot be 0. Kindly increase the number of peope or go back and rebook or pick an option before proceeding.");
         return;
       }
     }

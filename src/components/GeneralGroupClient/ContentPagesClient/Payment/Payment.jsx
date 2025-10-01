@@ -41,7 +41,8 @@ const PaymentComponent = () => {
         numberOfPeople,
         accommodationType,
         propertyType,
-        currentBookingForGuest
+        currentBookingForGuest,
+        resetBookingState
     } = useBookingShowingContext();
 
     console.log('current full:',currentBookingForGuest, 'just id:', currentBookingForGuest?.id)
@@ -121,6 +122,8 @@ const PaymentComponent = () => {
                 }
 
                 setTimeout(() => {
+                    resetBookingState();
+                    
                     if (!dbUser) {
                         navigate("/clientcontent/home"); 
                     } else {
