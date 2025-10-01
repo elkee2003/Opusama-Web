@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore'
 import {Realtor, Post} from '../../../../../../models'
 
-// 5399 2390 2931 1380
 
 function PostList() {
     const navigate = useNavigate();
@@ -37,7 +36,7 @@ function PostList() {
                 const posts = await DataStore.query(Post, (p) => p.and((p)=>[
                     p.realtorID.eq(realtor.id),
                     p.available.eq(true),
-                    // p.isApproved.eq(true)
+                    p.isApproved.eq(true)
                 ]));
                 // filter + auto-expire logic
                 const filteredPosts = await Promise.all(
