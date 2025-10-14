@@ -1,7 +1,8 @@
 .communPostListCon {
     display:flex;
     flex-direction: column;
-    width: 70vw;
+    width: 65vw;
+    margin-left: 2rem;
 }
 
 .communityCategorySelect {
@@ -222,6 +223,7 @@
 @media (max-width: 900px) {
     .communPostListCon { 
         width: 90vw;
+        margin-left: 0;
     }
 
     .communityCon{

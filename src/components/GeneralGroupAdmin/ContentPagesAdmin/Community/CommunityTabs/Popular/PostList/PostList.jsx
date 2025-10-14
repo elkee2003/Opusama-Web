@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../CommunityTabs.css';
 import { useAuthContext } from '../../../../../../../../Providers/ClientProvider/AuthProvider'; 
 import Post from '../Post/Post';
 import Select from 'react-select';

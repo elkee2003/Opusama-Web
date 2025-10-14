@@ -48,7 +48,7 @@ const BookingPostOption = () => {
   return (
     <div>
         {/* Booking Name */}
-        <h3>Booking Options (opt)</h3>
+        <h3>Booking Price Options (opt)</h3>
 
         {options.map((option, index) => (
             <div key={index} className="optionCard">

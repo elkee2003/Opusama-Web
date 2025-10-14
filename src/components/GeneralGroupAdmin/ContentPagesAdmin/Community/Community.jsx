@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './Community.css'
 import { Tabs, Tab, Box } from '@mui/material';
 import { IoMdAdd } from "react-icons/io";
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';

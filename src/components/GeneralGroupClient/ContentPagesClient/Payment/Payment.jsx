@@ -13,6 +13,8 @@ import { Booking } from '../../../../models';
 import { uploadData } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 
+import { VendorBalance, VendorTransaction, Booking, Realtor } from '../../../../models';
+
 const PaymentComponent = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -24,7 +26,8 @@ const PaymentComponent = () => {
         paymentPrice,
     } = useProfileContext();
 
-    const {transactionReference,
+    const {
+        transactionReference,
         setTransactionReference, setTransactionStatus,
         onStatusChange, currentBooking,
         // For guest users

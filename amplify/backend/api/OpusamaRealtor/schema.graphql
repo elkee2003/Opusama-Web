@@ -1,3 +1,44 @@
+enum VendorTransactionType {
+  CREDIT    # Money credited to vendor balance (after booking completion)
+  PAYOUT    # Money sent to vendor’s bank account
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+type VendorBalance @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  realtorID: ID! @index(name: "byRealtor")
+  totalEarned: Float!         # All money credited from completed bookings
+  totalPaid: Float!           # How much has been transferred out to the realtor
+  pendingBalance: Float!      # totalEarned - totalPaid
+  lastPayoutDate: AWSDateTime # Last time a payout was made
+
+  Realtor: Realtor @belongsTo(fields: ["realtorID"])
+  VendorTransactions: [VendorTransaction] @hasMany(indexName: "byVendorBalance", fields: ["id"])
+}
+
+# 💰 Transaction log for each booking or payout event
+type VendorTransaction @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  vendorBalanceID: ID! @index(name: "byVendorBalance")
+  realtorID: ID! @index(name: "byRealtor")
+  bookingID: ID! @index(name: "byBooking")
+  type: VendorTransactionType!
+  amount: Float!
+  status: TransactionStatus!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+
+  # Relationships
+  VendorBalance: VendorBalance @belongsTo(fields: ["vendorBalanceID"])
+  Realtor: Realtor @belongsTo(fields: ["realtorID"])
+  Booking: Booking @belongsTo(fields: ["bookingID"])
+}
+
 type Notification @model @auth(rules: [{allow: public}]) {
   id: ID!
   creatorID: String
@@ -123,11 +164,15 @@ type Booking @model @auth(rules: [{allow: public}]) {
   transactionReference: String
   transactionStatus: String
   realtorID: ID! @index(name: "byRealtor")
+  paymentRecordID: ID @index(name: "byPaymentRecord")
   PostID: String
   ticketID: String
   qrCodeUrl: String
   ticketStatus: String
   checkedInByID: String
+
+  # 🆕 Link to VendorTransaction
+  VendorTransactions: [VendorTransaction] @hasMany(indexName: "byBooking", fields: ["id"])
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -170,10 +215,7 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   address: String
   phoneNumber: String
   bankName: String
-  Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
   bankCode: String
-  Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
-  RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
   accountName: String
   accountNumber: String
   directPayment: Boolean
@@ -183,6 +225,15 @@ type Realtor @model @auth(rules: [{allow: public}]) {
   isPremium: Boolean
   isElite: Boolean
   isTrusted: Boolean
+
+  Post: [Post] @hasMany(indexName: "byRealtor", fields: ["id"])
+  Bookings: [Booking] @hasMany(indexName: "byRealtor", fields: ["id"])
+  RealtorReview: [RealtorReview] @hasMany(indexName: "byRealtor", fields: ["id"])
+  
+
+   # 🆕 New relationships for payments
+  VendorBalance: VendorBalance @hasOne(fields: ["id"])
+  VendorTransactions: [VendorTransaction] @hasMany(indexName: "byRealtor", fields: ["id"])
 }
 
 enum PickUpStatus {

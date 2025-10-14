@@ -11,7 +11,7 @@
     width: 70vw;
     box-sizing: border-box; 
     scroll-snap-type: x mandatory; 
-    padding-right: 26rem;
+    /* padding-right: 26rem; */
 }
 
 .communityTabs-container::-webkit-scrollbar {
