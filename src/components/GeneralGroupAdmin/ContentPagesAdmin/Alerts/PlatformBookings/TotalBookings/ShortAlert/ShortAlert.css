@@ -1,0 +1,76 @@
+.alertContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.alertCard {
+    display: flex;
+    width: 60vw;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 25px;
+    background-color: #e2e2e2;
+    border-radius: 20px;
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.5);
+}
+
+.alertDetails {
+  font-size: 16px;
+}
+
+.alertDetailsSubClick {
+  font-weight: bold;
+  cursor: pointer;
+}
+.alertDetailsSub {
+  font-weight: bold;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.greenIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #03eb03;
+}
+
+.redIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #eb1e03;
+}
+
+.accOwner {
+  color: #464545;
+  font-style: italic;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+  .alertCard {
+    width:100%;
+  }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+
+}
+
+@media (max-width: 500px) {
+
+}

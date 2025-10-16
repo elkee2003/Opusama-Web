@@ -2,6 +2,17 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const VendorTransactionType = {
+  "CREDIT": "CREDIT",
+  "PAYOUT": "PAYOUT"
+};
+
+const TransactionStatus = {
+  "PENDING": "PENDING",
+  "COMPLETED": "COMPLETED",
+  "FAILED": "FAILED"
+};
+
 const BookingStatus = {
   "PENDING": "PENDING",
   "ACCEPTED": "ACCEPTED",
@@ -35,9 +46,11 @@ const BookingPostOptionType = {
   "PICKUP": "PICKUP"
 };
 
-const { Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, VendorScanner, Realtor, BookingPostOptions, Post } = initSchema(schema);
+const { VendorBalance, VendorTransaction, Notification, CommunityLike, CommunityReply, CommunityDiscussion, PostComment, PostLike, RealtorReview, PostReview, Booking, User, VendorScanner, Realtor, BookingPostOptions, Post } = initSchema(schema);
 
 export {
+  VendorBalance,
+  VendorTransaction,
   Notification,
   CommunityLike,
   CommunityReply,
@@ -52,6 +65,8 @@ export {
   Realtor,
   BookingPostOptions,
   Post,
+  VendorTransactionType,
+  TransactionStatus,
   BookingStatus,
   PickUpStatus,
   BookingPostOptionType

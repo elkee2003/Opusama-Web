@@ -1,0 +1,189 @@
+.dAlatContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
+  padding-right: 15rem;
+}
+
+.dAlatHeader {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dAlatSubHeader {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.dAlatDetails {
+  color: white;
+  min-width:460px;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 17px;
+  margin-bottom: 15px;
+  background-color: #0b0b29;
+}
+
+.uploadPropInputReview {
+  min-width:460px;
+  padding: 8px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: white;
+  background-color: rgba(4, 8, 43, 0.8);
+  border-radius: 20px;
+}
+
+.dAlatGuestUnit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dAlatUnitTxt {
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: #0b0b29;
+}
+
+.statusRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.status {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.greenIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #03eb03;
+}
+
+.redIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #eb1e03;
+}
+
+.bookedBy {
+  font-size: 17px;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+.acceptTryAnotherRow {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.accept {
+  padding: 10px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0ac00a;
+  border-radius: 20px;
+}
+
+.occupied {
+  padding: 10px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9b3224;
+  border-radius: 20px;
+}
+
+.denyCon {
+  align-self: center;
+  margin-bottom: 25px;
+}
+
+.deny {
+  padding: 10px;
+  width: 150px;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #df2007;
+  border-radius: 20px;
+}
+
+.dAlaBtnTxt {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .dAlatContainer {
+      width: 100vw;
+      margin-right: 0;
+      margin-bottom: 5rem;
+      padding:10px
+    }
+
+    .dAlatDetails {
+      min-width: 360px;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+  .dAlatContainer{
+    width: 100vw;
+    align-items: stretch; /* Reset to default */
+  }
+}
+
+@media (max-width: 500px) {
+  /* .dAlatContainer {
+      margin-left: -0.7rem;
+  } */
+  .dAlatDetails {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .accept {
+    width: 130px;
+  }
+
+  .occupied{
+    width: 130px;
+  }
+
+  .deny {
+    width: 130px;
+  }
+
+  .dAlaBtnTxt {
+    font-size: 18px;
+  }
+}

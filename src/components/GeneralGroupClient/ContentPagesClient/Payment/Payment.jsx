@@ -9,11 +9,9 @@ import { useProfileContext } from '../../../../../Providers/ClientProvider/Profi
 import { useAuthContext } from '../../../../../Providers/ClientProvider/AuthProvider';
 import { useBookingShowingContext } from '../../../../../Providers/ClientProvider/BookingShowingProvider';
 import QRCode from "qrcode";
-import { Booking } from '../../../../models';
+import { VendorBalance, VendorTransaction, Booking, Realtor } from '../../../../models';
 import { uploadData } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-
-import { VendorBalance, VendorTransaction, Booking, Realtor } from '../../../../models';
 
 const PaymentComponent = () => {
     const navigate = useNavigate();
@@ -61,10 +59,15 @@ const PaymentComponent = () => {
 
             const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-            // const response = await fetch(`${apiUrl}/api/verify-payment`);
             const response = await fetch(`${apiUrl}/verify-payment?reference=${reference}`);
             
             const result = await response.json();
+
+            if (!result.success || !result.data) {
+                alert("Verification failed, please contact support.");
+                setLoading(false);
+                return;
+            }
 
             if (result.success && result.data.status === "success") {
                 console.log("Verified payment:", result.data);
@@ -124,6 +127,125 @@ const PaymentComponent = () => {
                     console.error("Error sending ticket email:", err);
                 }
 
+                // ✅ 5. Handle Vendor Payout Logic
+                try {
+                    const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
+                    if (!bookingId) throw new Error("No booking found for payout processing");
+
+                    // 🔹 Fetch booking and realtor
+                    const booking = await DataStore.query(Booking, bookingId);
+                    if (!booking) throw new Error(`Booking with ID ${bookingId} not found`);
+
+                    const realtor = await DataStore.query(Realtor, booking.realtorID);
+                    if (!realtor) throw new Error("Realtor not found");
+
+                    const amount = booking.realtorPrice;
+                    const narration = `Payout for booking ${booking.id}`;
+
+                    // 🔹 1️⃣ Update or create VendorBalance
+                    let vendorBalance = (await DataStore.query(VendorBalance))
+                        .find(vb => vb.realtorID === realtor.id);
+
+                    if (!vendorBalance) {
+                        vendorBalance = await DataStore.save(new VendorBalance({
+                        realtorID: realtor.id,
+                        totalEarned: amount,
+                        totalPaid: 0,
+                        pendingBalance: amount,
+                        lastPayoutDate: null,
+                        }));
+                    } else {
+                        vendorBalance = await DataStore.save(VendorBalance.copyOf(vendorBalance, updated => {
+                        updated.totalEarned += amount;
+                        updated.pendingBalance = updated.totalEarned - updated.totalPaid;
+                        }));
+                    }
+
+                    // 🔹 2️⃣ Always create CREDIT transaction when booking completes
+                    await DataStore.save(new VendorTransaction({
+                        vendorBalanceID: vendorBalance.id,
+                        realtorID: realtor.id,
+                        bookingID: booking.id,
+                        type: "CREDIT",
+                        amount,
+                        status: "COMPLETED",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                    }));
+
+                    console.log("Vendor CREDIT logged");
+
+                    // 🔹 3️⃣ If realtor uses direct payment, trigger payout
+                    if (realtor.directPayment && realtor.accountNumber && realtor.bankCode) {
+                        console.log("Direct payment → sending Paystack payout");
+
+                        const payoutPayload = {
+                            account_number: realtor.accountNumber,
+                            bank_code: realtor.bankCode,
+                            amount,
+                            narration,
+                        };
+
+                        const payoutRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/send-payout`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payoutPayload),
+                        });
+
+                        const payoutResult = await payoutRes.json();
+                        console.log("Payout result:", payoutResult);
+
+                        if (payoutResult.success) {
+                        // 🔹 Update VendorBalance after successful payout
+                        vendorBalance = await DataStore.save(VendorBalance.copyOf(vendorBalance, updated => {
+                            updated.totalPaid += amount;
+                            updated.pendingBalance = updated.totalEarned - updated.totalPaid;
+                            updated.lastPayoutDate = new Date().toISOString();
+                        }));
+
+                        // 🔹 Log PAYOUT transaction
+                        await DataStore.save(new VendorTransaction({
+                            vendorBalanceID: vendorBalance.id,
+                            realtorID: realtor.id,
+                            bookingID: booking.id,
+                            type: "PAYOUT",
+                            amount,
+                            status: "COMPLETED",
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                        }));
+
+                        console.log("Vendor PAYOUT logged successfully");
+                        } else {
+                        console.warn("Payout failed:", payoutResult.error);
+                        await DataStore.save(new VendorTransaction({
+                            vendorBalanceID: vendorBalance.id,
+                            realtorID: realtor.id,
+                            bookingID: booking.id,
+                            type: "PAYOUT",
+                            amount,
+                            status: "FAILED",
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                        }));
+                        }
+                    } else {
+                        console.log("Funds retained (directPayment = false)");
+                    }
+
+                    // 🔹 Optional: Notify Realtor
+                    await DataStore.save(new Notification({
+                      recipientID: realtor.id,
+                      recipientType: "REALTOR",
+                      type: "PAYOUT",
+                      message: `₦${amount.toLocaleString()} credited to your account.`,
+                      read: false,
+                    }));
+
+                } catch (err) {
+                    console.error("Error handling vendor payout:", err);
+                }
+
                 setTimeout(() => {
                     resetBookingState();
                     
@@ -145,6 +267,9 @@ const PaymentComponent = () => {
 
     
     const payWithPaystack = () => {
+        if (loading) return; 
+        setLoading(true); 
+
         const paystack = new PaystackPop();
 
          // ✅ Fallback to guest info if no dbUser
@@ -154,6 +279,7 @@ const PaymentComponent = () => {
 
         if (!email || !phone) {
             alert('Please provide your email and phone number before continuing.');
+            setLoading(false);
             return;
         }
 
@@ -186,11 +312,14 @@ const PaymentComponent = () => {
                 setTransactionStatus('Processing');
 
                 verifyPayment(response.reference);
+
+                setLoading(false);
             },
             onClose: function () {
                 setTransactionStatus('Failed');
                 setTransactionReference(null);
                 alert('Transaction was not completed.');
+                setLoading(false);
             },
         });
     };
@@ -214,8 +343,14 @@ const PaymentComponent = () => {
                     readOnly
                 />
 
-                <button className="payBtnContainer" onClick={payWithPaystack}>
-                    <p className="payBtnTxt">Pay Now</p>
+                <button 
+                    className="payBtnContainer" 
+                    onClick={payWithPaystack}
+                    disabled={loading}
+                >
+                    <p className="payBtnTxt">
+                        {loading ? "Processing..." : "Pay Now"}
+                    </p>
                 </button>
             </div>
         </div>

@@ -470,6 +470,31 @@ button {
     font-weight: bold;
 }
 
+/* Delete Button For Admin */
+.deleteAdminDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.deleteAdminCon {
+    display: flex;
+    background: red;
+    max-width: 300px;
+    min-width: 300px;
+    padding:10px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px  ;
+    margin-bottom: 3rem;
+}
+
+.deleteAdminTxt {
+    color:white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 @media (max-width: 1300px) {
     .bookContainer {
         left: 480px;
@@ -551,6 +576,15 @@ button {
         font-size: 25px;
     }
 
+    .bookContainer {
+        right: 70px;
+        left: 70px;
+        padding: 10px 15px;
+    }
+    .bookTxt {
+        font-size: 25px;
+    }
+
     .reserveCon {
         margin:0 5rem;
     }
@@ -560,14 +594,6 @@ button {
     }
 }
 @media (max-width: 400px) {
-    .bookContainer {
-        right: 100px;
-        left: 100px;
-        padding: 10px 15px;
-    }
-    .bookTxt {
-        font-size: 25px;
-    }
 
     .getinTouchContainer {
         right: 70px;

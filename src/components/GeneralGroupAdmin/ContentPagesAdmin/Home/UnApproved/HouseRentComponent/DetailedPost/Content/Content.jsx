@@ -22,7 +22,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import {useAuthContext} from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import {useBookingShowingContext} from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useProfileContext } from '../../../../../../../../../Providers/ClientProvider/ProfileProvider';
-import { getUrl } from "aws-amplify/storage";
+import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import {PostReview, Post as PostModel, PostLike, User} from '../../../../../../../../models';
 
@@ -40,6 +40,7 @@ function Content({post, realtor,}) {
     const [mediaUris, setMediaUris] = useState([]);  
     const [liked, setLiked] = useState(false); 
     const [isApproved, setIsApproved] = useState(post?.isApproved ?? false);
+    const [loading, setLoading] = useState(false);
 
     const bookingModeLabels = {
       manual: "Manual Acceptance",
@@ -157,6 +158,41 @@ function Content({post, realtor,}) {
       };
       checkLikeStatus();
     }, [dbUser, post.id]);
+
+    // Function to delete Post
+    const handleDeletePost = async () => {
+      if (window.confirm("Are you sure you want to delete this post?")) {
+        setLoading(true);
+        try {
+          // Delete all media from S3
+          if (post.media && post.media.length > 0) {
+            await Promise.all(
+              post.media.map(async (path) => {
+                try {
+                  await remove({ path });
+                } catch (error) {
+                  console.error(`Failed to delete ${path} from S3:`, error);
+                }
+              })
+            );
+          }
+
+          // Delete post from DataStore
+          const postToDelete = await DataStore.query(PostModel, post.id);
+          if (postToDelete) {
+            await DataStore.delete(postToDelete);
+            alert("Post deleted successfully.");
+            navigate(-1); // Go back to previous page
+          } else {
+            alert("Post not found.");
+          }
+        } catch (e) {
+          alert(`Failed to delete post: ${e.message}`);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
 
     // Toggle like
     const toggleLike = async (e) => {
@@ -665,9 +701,21 @@ function Content({post, realtor,}) {
         </button>
 
         {/* Get In Touch Container */}
-        {/* <button className='getinTouchContainer' onClick={handleNavigate}>
+        <button className='getinTouchContainer' onClick={handleNavigate}>
             <p className='getInTouchTxt'>Get in Touch!</p>
-        </button> */}
+        </button>
+
+        {/* Delete Btn */}
+        <div className="deleteAdminDiv">
+          <button 
+            className="deleteAdminCon"
+            onClick={handleDeletePost}
+            disabled={loading}
+          >
+            <p className="deleteAdminTxt">{loading ? "Deleting..." : "Delete"}</p>
+          </button>
+        </div>
+        
       </div>
 
     </div>

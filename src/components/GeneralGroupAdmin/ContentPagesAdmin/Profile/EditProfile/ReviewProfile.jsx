@@ -152,15 +152,15 @@ const ReviewDetails = () => {
   const handleSave = async () => {
     if (dbUser) {
       await updateUser();
-      navigate("/clientcontent/profile"); 
+      navigate("/admin/profile"); 
       setTimeout(() => {
-        navigate('/clientcontent/home');
+        navigate('/admin/home');
       }, 1000);
     } else {
       await createUser();
-      navigate("/clientcontent/profile");
+      navigate("/admin/profile");
       setTimeout(() => {
-        navigate('/clientcontent/home');
+        navigate('/admin/home');
       }, 1000);
     }
   };

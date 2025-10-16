@@ -1,6 +1,6 @@
 enum VendorTransactionType {
   CREDIT    # Money credited to vendor balance (after booking completion)
-  PAYOUT    # Money sent to vendor’s bank account
+  PAYOUT    # Money sent to vendor's bank account
 }
 
 enum TransactionStatus {
@@ -155,6 +155,7 @@ type Booking @model @auth(rules: [{allow: public}]) {
   nameOfType: String
   totalPrice: Float
   realtorPrice: Float
+  opusamaCommission: Float
   serviceCharge: Float
   overAllPrice: Float
   bookingLat: Float

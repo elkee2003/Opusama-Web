@@ -1,0 +1,52 @@
+.platformBookingsTabs-container{
+    z-index: 100;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping of tabs */
+    display: flex; /* Align tabs in a row */
+    justify-content: center;
+    width: 100vw; /* Full viewport width */
+    box-sizing: border-box; /* Include padding and borders in width */
+    scroll-snap-type: x mandatory; /* Smooth scrolling */
+    padding-right: 26rem;
+}
+
+.platformBookingsTabs-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbars on WebKit browsers */
+}
+
+.platformBookingsTabs-container {
+    -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+}
+
+.platformBookingsTabs-panel {
+    margin-top: 2.5rem;
+    padding: 16px; /* Padding for tab content */
+    width: 100%; /* Make tab content fit screen */
+    box-sizing: border-box; /* Include padding and borders in width */
+}
+
+body {
+    margin: 0; /* Remove body margin to prevent extra space */
+    overflow-x: hidden; /* Prevent horizontal overflow on the entire page */
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .platformBookingsTabs-container {
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 700px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+}

@@ -175,12 +175,22 @@ function Post({post}) {
         </div>
         
         <div className='clientSummaryContainer'>
+          {/* Event Name */}
+          {post?.eventName && (
+            <p className='eventName'>
+              {post?.eventName}
+            </p>
+          )}
+          
           {/* Username */}
           <div 
               className={'contact'}
-              onClick={()=>navigate(`/admin/realtorprofile/${post.realtorID}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/admin/realtorprofile/${post.realtorID}`);
+              }}
           >
-              <p className={'name'}>{post.firstName}</p>
+              <p className={'eventOrganiser'}>{post.firstName}</p>
           </div>
 
           {post.type && (

@@ -1,0 +1,12 @@
+.directPaymentToggleCon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    /* padding:20px */
+}
+
+.directPaymentTxt {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 8px;
+}

@@ -90,6 +90,8 @@ const ReviewClientDetails = () => {
     setOverAllPrice,
     realtorPrice,
     setRealtorPrice,
+    opusamaCommission,
+    setOpusamaCommission,
     serviceCharge, 
     setServiceCharge,
     resetBookingState,
@@ -117,12 +119,17 @@ const ReviewClientDetails = () => {
 
       // realtorPrice = 90% of calculatedTotalPrice
       setRealtorPrice(calculatedTotalPrice * 0.9);
+
+      // opusamaCommission = 10% of calculatedTotalPrice
+      setOpusamaCommission(calculatedTotalPrice * 0.1);
     }
   }, [propertyDetails, calculatedTotalPrice]);
 
   console.log("Property Booking mode:", propertyDetails.bookingMode, propertyDetails?.isSubscription);
 
   console.log('post price:',postPrice, 'post total price:', postTotalPrice)
+
+  console.log('commision:', opusamaCommission)
 
   const handleBooking = async () => {
     if (loading) return;
@@ -210,6 +217,7 @@ const ReviewClientDetails = () => {
           serviceCharge: parseFloat(serviceCharge),
           totalPrice: parseFloat(calculatedTotalPrice),
           overAllPrice: parseFloat(overAllPrice),
+          opusamaCommission: parseFloat(opusamaCommission),
           realtorPrice: parseFloat(realtorPrice),
           userID: bookingUserID,
           realtorID: realtorContext?.id,

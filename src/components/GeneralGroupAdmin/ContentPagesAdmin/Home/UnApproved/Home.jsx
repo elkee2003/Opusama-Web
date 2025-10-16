@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Tabs, Tab, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import HouseRent from './HouseRentComponent';
@@ -10,20 +10,49 @@ import FoodDrinks from './FoodDrinksComponent'
 import CommercialSpaces from './CommercialSpacesComponent';
 import PropertySale from './PropertySaleComponent';
 import OfficeSpace from './OfficeSpaceComponent';
+import { DataStore } from 'aws-amplify/datastore';
+import {Post} from '../../../../../models';
 import './Home.css';
 
 function Approved() {
     const navigate = useNavigate();
 
     const [selectedTab, setSelectedTab] = useState(0);
+    const [unapprovedCount, setUnApprovedCount] = useState(0);
   
     const handleTabChange = (event, newValue) => {
       setSelectedTab(newValue);
     };
+
+    // 🟢 Fetch only unapproved posts
+    const fetchUnApprovedPosts = async () => {
+      try {
+        const unapprovedPosts = await DataStore.query(Post, (p) => p.isApproved.eq(false));
+        setUnApprovedCount(unapprovedPosts.length);
+      } catch (error) {
+        console.log('Error fetching unapproved posts:', error);
+      }
+    };
+
+    // 🟡 Fetch once on mount + subscribe to real-time updates
+    useEffect(() => {
+      fetchUnApprovedPosts();
+
+      const subscription = DataStore.observe(Post).subscribe(({ opType, element }) => {
+        if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+          fetchUnApprovedPosts();
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    }, []);
   
   return (
     <div>
       <div className="homeApproved-Tabs-container">
+        {/* listing number */}
+        <p className='listingNumberTxt'>{unapprovedCount}</p>
+        
         <div >
           {/* Top Tabs */}
           <Tabs

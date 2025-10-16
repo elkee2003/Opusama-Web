@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import Notification from './Notifications/Notification';
-import BookingList from './Bookings/BookingList/BookingList';
+import AdminBookingList from './Bookings/BookingList/BookingList';
+import PlatformBookings from './PlatformBookings/PlatformBookings';
 import './Alerts.css'
 
 function Alerts() {
@@ -21,13 +22,15 @@ function Alerts() {
           aria-label="navigation tabs"
         >
           <Tab label="Notification" />
-          <Tab label="Bookings" />
+          <Tab label="Admin Bookings" />
+          <Tab label="Opusama Bookings" />
         </Tabs>
       </div>
 
       <div className='clientAlertTabs-panel'>
         {selectedTab === 0 && <Notification />}
-        {selectedTab === 1 && <BookingList/>}
+        {selectedTab === 1 && <AdminBookingList/>}
+        {selectedTab === 2 && <PlatformBookings/>}
       </div>
       
     </div>

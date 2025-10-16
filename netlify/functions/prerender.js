@@ -1,3 +1,5 @@
+// just to note that this file is not needed. I want it to use to show images of post when shared on social media
+
 export async function handler(event, context) {
   const userAgent = event.headers['user-agent'] || '';
   const botRegex = /(googlebot|bingbot|yahoo|baiduspider|facebookexternalhit|twitterbot|slackbot|linkedinbot)/i;

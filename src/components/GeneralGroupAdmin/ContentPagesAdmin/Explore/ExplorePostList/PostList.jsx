@@ -20,6 +20,7 @@ function PostList() {
     const [maxPrice, setMaxPrice] = useState('');
     const [propPosts, setPropPosts] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const [approvedCount, setApprovedCount] = useState(0);
 
 
     const handleSearch = () => {
@@ -126,6 +127,29 @@ function PostList() {
         return () => subscription.unsubscribe();
     },[])
 
+    // 🟢 Fetch only approved posts
+    const fetchApprovedPosts = async () => {
+      try {
+        const approvedPosts = await DataStore.query(Post, (p) => p.isApproved.eq(true));
+        setApprovedCount(approvedPosts.length);
+      } catch (error) {
+        console.log('Error fetching approved posts:', error);
+      }
+    };
+
+    // 🟡 Fetch once on mount + subscribe to real-time updates
+    useEffect(() => {
+      fetchApprovedPosts();
+
+      const subscription = DataStore.observe(Post).subscribe(({ opType, element }) => {
+        if (opType === 'INSERT' || opType === 'UPDATE' || opType === 'DELETE') {
+          fetchApprovedPosts();
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    }, []);
+
     // Function to Restore Scroll Position When Returning
     // useEffect(() => {
     //     const scrollPosition = sessionStorage.getItem("scrollPosition");
@@ -181,6 +205,11 @@ function PostList() {
             type="number"
             onChange={(e) => setMaxPrice(e.target.value)}
             />
+        </div>
+
+        {/* Number of Listings */}
+        <div className='listingNumberDiv'>
+            <p className='listingNumberTxt'>{approvedCount}</p>
         </div>
 
         {(searchQuery || minPrice || maxPrice) ? (

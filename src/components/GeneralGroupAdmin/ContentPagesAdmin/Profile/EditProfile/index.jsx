@@ -55,7 +55,7 @@ const EditProfile = () => {
     }
 
     if (onValidateInput()) {
-      navigate("/clientcontent/reviewedit"); 
+      navigate("/admin/reviewedit"); 
     }
   };
 

@@ -10,12 +10,17 @@ import AdminCommunity from '../../GeneralGroupAdmin/ContentPagesAdmin/Community/
 import AdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/Profile';
 import EditProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/index';
 import ReviewAdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/ReviewProfile';
+import ManualPayouts from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/Payouts/ManualPayouts';
 import ReviewComment from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
 import ProfileOptionsPage from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/MainProfile/ProfileOptionBtns/ProfileOptionsBtn';
 import DetailResponse from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
 import PostGallery from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/HouseRentComponent/PostGallery/PostGallery';
 
 import BookingFullDetails from '../../GeneralGroupAdmin/ContentPagesAdmin/Alerts/Bookings/BookingFullDetails/DetailedBooking';
+
+import TotalBookingsDetailedAlert from '../../GeneralGroupAdmin/ContentPagesAdmin/Alerts/PlatformBookings/TotalBookings/DetailedAlert/DetailedAlert';
+import PaidBookingsDetailedAlert from '../../GeneralGroupAdmin/ContentPagesAdmin/Alerts/PlatformBookings/PaidBookings/DetailedAlert/DetailedAlert';
+
 import ReviewProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ReviewProfile/ReviewProfile';
 
 import RealtorProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/RealtorProfile/RealtorProfile';
@@ -86,6 +91,9 @@ const AdminRoutes = () => (
             {/* Review Edit */}
             <Route path="reviewedit" element={<ReviewAdminProfile />} />
 
+            {/* Payouts */}
+            <Route path="payout" element={<ManualPayouts />} />
+
             {/* Detailed Post */}
             <Route path="detailedpost/:postId" element={<DetailedPost />} />
 
@@ -100,6 +108,12 @@ const AdminRoutes = () => (
 
             {/* Booking Full Details */}
             <Route path="bookingdetails/:bookingId" element={<BookingFullDetails/>} />
+
+            {/* Total Bookings */}
+            <Route path="total_bookings_details/:alertId" element={<TotalBookingsDetailedAlert/>} />
+
+            {/* Paid Bookings */}
+            <Route path="paid_bookings_details/:alertId" element={<PaidBookingsDetailedAlert/>} />
 
             {/* Review User Profile */}
             <Route path="reviewprofile" element={<ReviewProfile/>} />

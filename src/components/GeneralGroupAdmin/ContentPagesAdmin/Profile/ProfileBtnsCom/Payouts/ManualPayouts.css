@@ -1,0 +1,112 @@
+.manual-payouts-container {
+  padding: 24px;
+  background-color: #f8f9fb;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.manual-payout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.manual-payout-header h2 {
+  color: #222;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.payout-btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.payout-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: #0069d9;
+  transform: translateY(-1px);
+}
+
+.auto-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.auto-btn:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.balances-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.balances-table th,
+.balances-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.balances-table th {
+  background: #f3f4f6;
+  color: #333;
+  font-weight: 600;
+}
+
+.balances-table tr:hover td {
+  background: #fafafa;
+}
+
+.payout-amount {
+  color: #1e7e34;
+  font-weight: 600;
+}
+
+.pay-btn {
+  background: #ff9800;
+  color: white;
+  padding: 8px 14px;
+}
+
+.pay-btn:hover:not(:disabled) {
+  background: #e68900;
+  transform: translateY(-1px);
+}
+
+.status-msg {
+  color: #555;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1rem;
+}

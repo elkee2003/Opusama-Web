@@ -57,11 +57,11 @@ const ProfileHead = () => {
 
       <button
         className="clientDotCon"
-        onClick={() => navigate('/clientcontent/profileoptions')}
+        onClick={() => navigate('/admin/profileoptions')}
       >
           <BsThreeDotsVertical className='clientDotIcon' />
       </button>
-      <div className='mainProfilePicContainer' onClick={() => navigate('/clientcontent/editprofile')}>
+      <div className='mainProfilePicContainer' onClick={() => navigate('/admin/editprofile')}>
         {loading || !profilePic ? (
           <img src={Placeholder} alt="Placeholder" className='img' />
         ) : (
@@ -86,10 +86,15 @@ const ProfileHead = () => {
         <p className='pTxt'>{address}</p>
       </div>
       <div className='profileSubrow'>
-        <button onClick={() => navigate('/clientcontent/editprofile')} className='mainSubHeader'>
+        <button onClick={() => navigate('/admin/editprofile')} className='mainSubHeader'>
           Edit Profile
         </button>
-        <button onClick={() => navigate('/clientcontent/reviewprofile')} className='mainSubHeader'>
+        
+        <button onClick={() => navigate('/admin/payout')} className='mainSubHeader-payout'>
+          Payout
+        </button>
+
+        <button onClick={() => navigate('/admin/reviewprofile')} className='mainSubHeader'>
           View Info
         </button>
       </div>

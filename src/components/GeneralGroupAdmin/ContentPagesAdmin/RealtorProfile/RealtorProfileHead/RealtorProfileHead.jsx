@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RealtorProfileHead.css'; 
+import './AdminRealtorProfileHead.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Placeholder from '/placeholder.png'; 
+import { Switch } from "@mui/material";
 import { getUrl } from 'aws-amplify/storage';
 import { DataStore } from 'aws-amplify/datastore';
-import { RealtorReview, PostReview } from '../../../../../models';
+import { Realtor, RealtorReview, PostReview } from '../../../../../models';
 
 const RealtorProfileHead = ({ realtor }) => {
     const navigate = useNavigate(); 
@@ -14,6 +15,7 @@ const RealtorProfileHead = ({ realtor }) => {
     const [realtorProfilePic, setRealtorProfilePic] = useState(null);
     const [readMoreDescription, setReadMoreDescription] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
+    const [directPayment, setDirectPayment] = useState(realtor?.directPayment ?? false);
 
   const descriptionMaxLength = 80;
   const truncatedDescription =
@@ -119,6 +121,34 @@ const RealtorProfileHead = ({ realtor }) => {
     }
   }, [realtor.profilePic]);
 
+  // Direct Payment Toggle
+  const toggleDirectPayment = async () => {
+    try {
+      const latestRealtor = await DataStore.query(Realtor, realtor.id);
+      if (latestRealtor) {
+        await DataStore.save(
+          Realtor.copyOf(latestRealtor, (updated) => {
+            updated.directPayment = !latestRealtor.directPayment;
+          })
+        );
+      }
+    } catch (err) {
+      console.error("Error toggling directPayment:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (!realtor?.id) return;
+
+    const subscription = DataStore.observe(Realtor, realtor.id).subscribe((msg) => {
+      if (msg.opType === "UPDATE") {
+        setDirectPayment(msg.element.directPayment);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [realtor?.id]);
+
   return (
     <div className="realtorHeadContainer">
       {/* Profile Picture */}
@@ -167,6 +197,16 @@ const RealtorProfileHead = ({ realtor }) => {
             )}
           </p>
         </div>
+      </div>
+
+      {/* Toggle for Direct Payment */}
+      <div className="directPaymentToggleCon">
+        <span className="directPaymentTxt">Direct Payment:</span>
+        <Switch
+          checked={directPayment}
+          onChange={toggleDirectPayment}
+          color="primary"
+        />
       </div>
 
       {/* Contact & Rating & Review */}

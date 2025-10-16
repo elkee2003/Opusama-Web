@@ -23,30 +23,41 @@ function ProfileOptionsBtn() {
     };
   return (
     <div className='clientProBtnOptionsCon'>
+        <button onClick={() => navigate('/admin/payout')} className='btnCard'>
+            <p className='proBtnTxt'>
+            Payout
+            </p>
+            <MdNavigateNext size={24} />
+        </button>
+
         <button onClick={() => window.open('https://sites.google.com/view/opusama-termsofservice/home', '_blank')} className='btnCard'>
             <p className='proBtnTxt'>
             Terms and Conditions
             </p>
             <MdNavigateNext size={24} />
         </button>
+
         <button onClick={() => window.open('https://sites.google.com/view/opusama/home', '_blank')} className='btnCard'>
             <p className='proBtnTxt'>
             Privacy Policy
             </p>
             <MdNavigateNext size={24} />
         </button>
+
         <button onClick={() => navigate('/clientcontent/support')} className='btnCard'>
             <p className='proBtnTxt'>
             Support
             </p>
             <MdNavigateNext size={24} />
         </button>
+
         <button onClick={onSignout} className='btnCard'>
             <p className='proBtnTxt'>
             Sign Out
             </p>
             <MdNavigateNext size={24} />
         </button>
+
         <button onClick={() => navigate('/clientcontent/deleteaccount')} className='btnCard'>
             <p className='proBtnTxt'>
             Delete Account

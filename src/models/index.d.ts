@@ -1,6 +1,17 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+
+export enum VendorTransactionType {
+  CREDIT = "CREDIT",
+  PAYOUT = "PAYOUT"
+}
+
+export enum TransactionStatus {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED"
+}
 
 export enum BookingStatus {
   PENDING = "PENDING",
@@ -36,6 +47,88 @@ export enum BookingPostOptionType {
 }
 
 
+
+type EagerVendorBalance = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorBalance, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly realtorID: string;
+  readonly totalEarned: number;
+  readonly totalPaid: number;
+  readonly pendingBalance: number;
+  readonly lastPayoutDate?: string | null;
+  readonly Realtor?: Realtor | null;
+  readonly VendorTransactions?: (VendorTransaction | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyVendorBalance = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorBalance, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly realtorID: string;
+  readonly totalEarned: number;
+  readonly totalPaid: number;
+  readonly pendingBalance: number;
+  readonly lastPayoutDate?: string | null;
+  readonly Realtor: AsyncItem<Realtor | undefined>;
+  readonly VendorTransactions: AsyncCollection<VendorTransaction>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type VendorBalance = LazyLoading extends LazyLoadingDisabled ? EagerVendorBalance : LazyVendorBalance
+
+export declare const VendorBalance: (new (init: ModelInit<VendorBalance>) => VendorBalance) & {
+  copyOf(source: VendorBalance, mutator: (draft: MutableModel<VendorBalance>) => MutableModel<VendorBalance> | void): VendorBalance;
+}
+
+type EagerVendorTransaction = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorTransaction, 'id'>;
+  };
+  readonly id: string;
+  readonly vendorBalanceID: string;
+  readonly realtorID: string;
+  readonly bookingID: string;
+  readonly type: VendorTransactionType | keyof typeof VendorTransactionType;
+  readonly amount: number;
+  readonly status: TransactionStatus | keyof typeof TransactionStatus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly VendorBalance?: VendorBalance | null;
+  readonly Realtor?: Realtor | null;
+  readonly Booking?: Booking | null;
+}
+
+type LazyVendorTransaction = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VendorTransaction, 'id'>;
+  };
+  readonly id: string;
+  readonly vendorBalanceID: string;
+  readonly realtorID: string;
+  readonly bookingID: string;
+  readonly type: VendorTransactionType | keyof typeof VendorTransactionType;
+  readonly amount: number;
+  readonly status: TransactionStatus | keyof typeof TransactionStatus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly VendorBalance: AsyncItem<VendorBalance | undefined>;
+  readonly Realtor: AsyncItem<Realtor | undefined>;
+  readonly Booking: AsyncItem<Booking | undefined>;
+}
+
+export declare type VendorTransaction = LazyLoading extends LazyLoadingDisabled ? EagerVendorTransaction : LazyVendorTransaction
+
+export declare const VendorTransaction: (new (init: ModelInit<VendorTransaction>) => VendorTransaction) & {
+  copyOf(source: VendorTransaction, mutator: (draft: MutableModel<VendorTransaction>) => MutableModel<VendorTransaction> | void): VendorTransaction;
+}
 
 type EagerNotification = {
   readonly [__modelMeta__]: {
@@ -351,6 +444,7 @@ type EagerBooking = {
   readonly nameOfType?: string | null;
   readonly totalPrice?: number | null;
   readonly realtorPrice?: number | null;
+  readonly opusamaCommission?: number | null;
   readonly serviceCharge?: number | null;
   readonly overAllPrice?: number | null;
   readonly bookingLat?: number | null;
@@ -360,11 +454,13 @@ type EagerBooking = {
   readonly transactionReference?: string | null;
   readonly transactionStatus?: string | null;
   readonly realtorID: string;
+  readonly paymentRecordID?: string | null;
   readonly PostID?: string | null;
   readonly ticketID?: string | null;
   readonly qrCodeUrl?: string | null;
   readonly ticketStatus?: string | null;
   readonly checkedInByID?: string | null;
+  readonly VendorTransactions?: (VendorTransaction | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -399,6 +495,7 @@ type LazyBooking = {
   readonly nameOfType?: string | null;
   readonly totalPrice?: number | null;
   readonly realtorPrice?: number | null;
+  readonly opusamaCommission?: number | null;
   readonly serviceCharge?: number | null;
   readonly overAllPrice?: number | null;
   readonly bookingLat?: number | null;
@@ -408,11 +505,13 @@ type LazyBooking = {
   readonly transactionReference?: string | null;
   readonly transactionStatus?: string | null;
   readonly realtorID: string;
+  readonly paymentRecordID?: string | null;
   readonly PostID?: string | null;
   readonly ticketID?: string | null;
   readonly qrCodeUrl?: string | null;
   readonly ticketStatus?: string | null;
   readonly checkedInByID?: string | null;
+  readonly VendorTransactions: AsyncCollection<VendorTransaction>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -531,10 +630,7 @@ type EagerRealtor = {
   readonly address?: string | null;
   readonly phoneNumber?: string | null;
   readonly bankName?: string | null;
-  readonly Post?: (Post | null)[] | null;
   readonly bankCode?: string | null;
-  readonly Bookings?: (Booking | null)[] | null;
-  readonly RealtorReview?: (RealtorReview | null)[] | null;
   readonly accountName?: string | null;
   readonly accountNumber?: string | null;
   readonly directPayment?: boolean | null;
@@ -544,6 +640,11 @@ type EagerRealtor = {
   readonly isPremium?: boolean | null;
   readonly isElite?: boolean | null;
   readonly isTrusted?: boolean | null;
+  readonly Post?: (Post | null)[] | null;
+  readonly Bookings?: (Booking | null)[] | null;
+  readonly RealtorReview?: (RealtorReview | null)[] | null;
+  readonly VendorBalance?: VendorBalance | null;
+  readonly VendorTransactions?: (VendorTransaction | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -564,10 +665,7 @@ type LazyRealtor = {
   readonly address?: string | null;
   readonly phoneNumber?: string | null;
   readonly bankName?: string | null;
-  readonly Post: AsyncCollection<Post>;
   readonly bankCode?: string | null;
-  readonly Bookings: AsyncCollection<Booking>;
-  readonly RealtorReview: AsyncCollection<RealtorReview>;
   readonly accountName?: string | null;
   readonly accountNumber?: string | null;
   readonly directPayment?: boolean | null;
@@ -577,6 +675,11 @@ type LazyRealtor = {
   readonly isPremium?: boolean | null;
   readonly isElite?: boolean | null;
   readonly isTrusted?: boolean | null;
+  readonly Post: AsyncCollection<Post>;
+  readonly Bookings: AsyncCollection<Booking>;
+  readonly RealtorReview: AsyncCollection<RealtorReview>;
+  readonly VendorBalance: AsyncItem<VendorBalance | undefined>;
+  readonly VendorTransactions: AsyncCollection<VendorTransaction>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

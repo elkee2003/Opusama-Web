@@ -31,7 +31,7 @@ function ContentTabsClient ({ unreadCount }){
                                 className={({ isActive }) => isActive ? 'active-link' : ''}
                             >
                                 <div className='client-nav-container'>
-                                <FaHome /> Approved
+                                    <FaHome /> Home
                                 </div>
                             </NavLink>
                         </li>
@@ -94,7 +94,7 @@ function ContentTabsClient ({ unreadCount }){
                     to="/admin/home"
                     className={({ isActive }) => isActive ? 'active-link' : ''}
                 >
-                    <FaHome /> Approved
+                    <FaHome /> Home
                 </NavLink>
 
                 {/* Explore */}

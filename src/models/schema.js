@@ -1,5 +1,300 @@
 export const schema = {
     "models": {
+        "VendorBalance": {
+            "name": "VendorBalance",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "realtorID": {
+                    "name": "realtorID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "totalEarned": {
+                    "name": "totalEarned",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "totalPaid": {
+                    "name": "totalPaid",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "pendingBalance": {
+                    "name": "pendingBalance",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "lastPayoutDate": {
+                    "name": "lastPayoutDate",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Realtor": {
+                    "name": "Realtor",
+                    "isArray": false,
+                    "type": {
+                        "model": "Realtor"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                "VendorTransactions": {
+                    "name": "VendorTransactions",
+                    "isArray": true,
+                    "type": {
+                        "model": "VendorTransaction"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "VendorBalance"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "VendorBalances",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRealtor",
+                        "fields": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "VendorTransaction": {
+            "name": "VendorTransaction",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "vendorBalanceID": {
+                    "name": "vendorBalanceID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "realtorID": {
+                    "name": "realtorID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "bookingID": {
+                    "name": "bookingID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "VendorTransactionType"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "amount": {
+                    "name": "amount",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TransactionStatus"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "VendorBalance": {
+                    "name": "VendorBalance",
+                    "isArray": false,
+                    "type": {
+                        "model": "VendorBalance"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "vendorBalanceID"
+                        ]
+                    }
+                },
+                "Realtor": {
+                    "name": "Realtor",
+                    "isArray": false,
+                    "type": {
+                        "model": "Realtor"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                "Booking": {
+                    "name": "Booking",
+                    "isArray": false,
+                    "type": {
+                        "model": "Booking"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "bookingID"
+                        ]
+                    }
+                }
+            },
+            "syncable": true,
+            "pluralName": "VendorTransactions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byVendorBalance",
+                        "fields": [
+                            "vendorBalanceID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRealtor",
+                        "fields": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byBooking",
+                        "fields": [
+                            "bookingID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Notification": {
             "name": "Notification",
             "fields": {
@@ -952,6 +1247,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "opusamaCommission": {
+                    "name": "opusamaCommission",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "serviceCharge": {
                     "name": "serviceCharge",
                     "isArray": false,
@@ -1017,6 +1319,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "paymentRecordID": {
+                    "name": "paymentRecordID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "PostID": {
                     "name": "PostID",
                     "isArray": false,
@@ -1051,6 +1360,22 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "VendorTransactions": {
+                    "name": "VendorTransactions",
+                    "isArray": true,
+                    "type": {
+                        "model": "VendorTransaction"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "Booking"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1091,6 +1416,15 @@ export const schema = {
                         "name": "byRealtor",
                         "fields": [
                             "realtorID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPaymentRecord",
+                        "fields": [
+                            "paymentRecordID"
                         ]
                     }
                 },
@@ -1463,60 +1797,12 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Post": {
-                    "name": "Post",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
-                },
                 "bankCode": {
                     "name": "bankCode",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
-                },
-                "Bookings": {
-                    "name": "Bookings",
-                    "isArray": true,
-                    "type": {
-                        "model": "Booking"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
-                },
-                "RealtorReview": {
-                    "name": "RealtorReview",
-                    "isArray": true,
-                    "type": {
-                        "model": "RealtorReview"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "realtorID"
-                        ]
-                    }
                 },
                 "accountName": {
                     "name": "accountName",
@@ -1580,6 +1866,88 @@ export const schema = {
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
+                },
+                "Post": {
+                    "name": "Post",
+                    "isArray": true,
+                    "type": {
+                        "model": "Post"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                "Bookings": {
+                    "name": "Bookings",
+                    "isArray": true,
+                    "type": {
+                        "model": "Booking"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                "RealtorReview": {
+                    "name": "RealtorReview",
+                    "isArray": true,
+                    "type": {
+                        "model": "RealtorReview"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "realtorID"
+                        ]
+                    }
+                },
+                "VendorBalance": {
+                    "name": "VendorBalance",
+                    "isArray": false,
+                    "type": {
+                        "model": "VendorBalance"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "id"
+                        ]
+                    }
+                },
+                "VendorTransactions": {
+                    "name": "VendorTransactions",
+                    "isArray": true,
+                    "type": {
+                        "model": "VendorTransaction"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "Realtor"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -2216,6 +2584,21 @@ export const schema = {
         }
     },
     "enums": {
+        "VendorTransactionType": {
+            "name": "VendorTransactionType",
+            "values": [
+                "CREDIT",
+                "PAYOUT"
+            ]
+        },
+        "TransactionStatus": {
+            "name": "TransactionStatus",
+            "values": [
+                "PENDING",
+                "COMPLETED",
+                "FAILED"
+            ]
+        },
         "BookingStatus": {
             "name": "BookingStatus",
             "values": [
@@ -2258,5 +2641,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "efbdd1ac6c198f0f1d3aa5e575331c0e"
+    "version": "27888b0d1680c2be06c92b6665313681"
 };

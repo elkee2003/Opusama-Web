@@ -62,7 +62,7 @@ const MediaGrid = ({ posts }) => {
         return (
           <button
             key={post.id}
-            onClick={() => navigate(`/clientcontent/detailedpost/${post.id}`)}
+            onClick={() => navigate(`/admin/exploredetailedpost/${post.id}`)}
             className="gridItem"
           >
             <div className="mediaImageContainer">
