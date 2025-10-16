@@ -1,48 +1,20 @@
-.noListings {
-    text-align: center;
-    font-weight: bold;
-    color: #afadad;
-    font-size: 30px;
-    position: relative;
-    top: 50%;
-    margin-right: 8rem;
-}
 
-.alertInputSearch {
-    display: flex;
-    justify-self: center;
-    max-width: 500px;
-    min-width: 500px;
-    margin-right: 8rem;
-    margin-bottom: 15px;
-    padding:10px;
-    border-radius: 40px;
-    border: 2px solid rgb(9, 9, 65);
-    font-size: 1.5rem;
-}
-
-.alertrefreshMidCon {
+.bookingCountContainer{
     display: flex;
     justify-content: center;
-    margin-right: 10rem;
+    align-items: center;
 }
+
+.bookingCountText{
+    color: rgb(110, 110, 110);
+}
+
 
 @media (max-width: 1300px) {
 }
 
 @media (max-width: 900px) {
-   .noListings {
-    margin-right: 0;
-   } 
-
-   .alertInputSearch {
-    margin-right: 0rem;
-    font-size: 1.3rem;
-   }
-
-   .alertrefreshMidCon {
-    margin-right: 3.5rem;
-   }
+   
 }
 @media (max-width: 700px) {
 
@@ -52,12 +24,5 @@
 }
 
 @media (max-width: 500px) {
-    .alertInputSearch {
-        min-width: 300px;
-        max-width: 300px;
-        font-size: 1.2rem;
-    }
-    .alertrefreshMidCon {
-        margin-right: 0;
-    }
+
 }

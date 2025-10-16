@@ -218,7 +218,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
       </div>
 
       {/* Buttons */}
-      <div className="acceptTryAnotherRow">
+      {/* <div className="acceptTryAnotherRow">
         {notification?.status !== 'DELAYED_PAYMENT' && (
           <>
             <button
@@ -246,10 +246,10 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             </button>
           </>
         )}
-      </div>
+      </div> */}
 
       {/* Deny */}
-      {notification?.status !== 'DELAYED_PAYMENT' && (
+      {/* {notification?.status !== 'DELAYED_PAYMENT' && (
         <div className="denyCon">
           <button
             className="deny"
@@ -280,7 +280,7 @@ const DetailedAlert = ({ notification, onStatusChange }) => {
             </p>
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

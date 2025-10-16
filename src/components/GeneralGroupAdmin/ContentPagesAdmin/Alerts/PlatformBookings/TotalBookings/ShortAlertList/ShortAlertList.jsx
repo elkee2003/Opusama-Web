@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './ShortAlertList.css';
 import { useNavigate } from 'react-router-dom';
 import ShortAlert from '../ShortAlert/ShortAlert';
 import { DataStore } from 'aws-amplify/datastore';
@@ -14,6 +15,7 @@ const ShortAlertList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [bookingCount, setBookingCount] = useState(0);
 
     useEffect(()=>{
         if(authUser){
@@ -30,6 +32,7 @@ const ShortAlertList = () => {
           
     },[dbUser])
 
+    // ✅ Fetch all bookings and count
     const fetchBookings = async () => {
         setLoading(true);
         try {
@@ -64,13 +67,14 @@ const ShortAlertList = () => {
 
             setAlerts(validBookings);
             setFilteredAlerts(validBookings);
+            setBookingCount(validBookings.length); 
         } catch (e) {
             console.error('Error fetching bookings:', e);
         } finally {
             setLoading(false);
             setRefreshing(false);
         }
-        };
+    };
 
     useEffect(() => {
         fetchBookings();
@@ -111,6 +115,15 @@ const ShortAlertList = () => {
 
   return (
     <div className="shortAlertListContainer">
+
+        {/* Total bookings */}
+        <div 
+            className="bookingCountContainer"
+        >
+            <h3 className="bookingCountText">
+            Total Bookings: <span>{bookingCount}</span>
+            </h3>
+        </div>
 
         {/* Search Bar */}
         <input
