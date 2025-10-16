@@ -30,6 +30,13 @@ function ProfileOptionsBtn() {
             <MdNavigateNext size={24} />
         </button>
 
+        <button onClick={() => navigate('/admin/users_dashboard')} className='btnCard'>
+            <p className='proBtnTxt'>
+                Users Dashboard
+            </p>
+            <MdNavigateNext size={24} />
+        </button>
+
         <button onClick={() => window.open('https://sites.google.com/view/opusama-termsofservice/home', '_blank')} className='btnCard'>
             <p className='proBtnTxt'>
             Terms and Conditions

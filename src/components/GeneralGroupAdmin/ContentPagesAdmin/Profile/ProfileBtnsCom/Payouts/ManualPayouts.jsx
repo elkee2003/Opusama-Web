@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataStore } from "aws-amplify/datastore";
 import './ManualPayouts.css'
 import { VendorBalance, VendorTransaction, Booking, Realtor, Notification, } from "../../../../../../models";
+
 const ManualPayouts = () => {
   const [balances, setBalances] = useState([]);
   const [loading, setLoading] = useState(false);

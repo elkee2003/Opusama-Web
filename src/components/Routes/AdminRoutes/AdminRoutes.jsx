@@ -11,6 +11,9 @@ import AdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/Prof
 import EditProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/index';
 import ReviewAdminProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/EditProfile/ReviewProfile';
 import ManualPayouts from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/Payouts/ManualPayouts';
+import UserDashboard from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/UsersDashboard/UsersDashboard';
+import UserDashboardPage from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/UsersDashboard/User/UserDashboard';
+import VendorDashboardPage from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/UsersDashboard/Realtor/RealtorDashboard';
 import ReviewComment from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/TopTab';
 import ProfileOptionsPage from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/MainProfile/ProfileOptionBtns/ProfileOptionsBtn';
 import DetailResponse from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/HouseRentComponent/DetailedPost/Content/ReviewComment/Content/Response';
@@ -93,6 +96,15 @@ const AdminRoutes = () => (
 
             {/* Payouts */}
             <Route path="payout" element={<ManualPayouts />} />
+
+            {/* UsersDashboard */}
+            <Route path="users_dashboard" element={<UserDashboard />} />
+
+            {/* User Dashboard Page */}
+            <Route path="user_dashboard" element={<UserDashboardPage />} />
+
+            {/* Realtor Dashboard Page */}
+            <Route path="vendor_dashboard" element={<VendorDashboardPage />} />
 
             {/* Detailed Post */}
             <Route path="detailedpost/:postId" element={<DetailedPost />} />

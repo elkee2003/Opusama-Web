@@ -3,11 +3,11 @@ import { useAuthContext } from '../../../../../../../Providers/ClientProvider/Au
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from 'aws-amplify/auth';
 import { DataStore } from 'aws-amplify/datastore';
-import { User } from '../../../../../../models';
+import { Realtor } from '../../../../../../models';
 import { list, remove } from 'aws-amplify/storage';
 
 const DeleteAccount = () => {
-  const { dbUser, sub } = useAuthContext();
+  const { dbRealtor, sub } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -48,8 +48,8 @@ const DeleteAccount = () => {
     setLoading(true);
     try {
       // 1. Delete associated user data from DataStore
-      if (dbUser) {
-        await DataStore.delete(User, (user) => user.id.eq(dbUser.id));
+      if (dbRealtor) {
+        await DataStore.delete(Realtor, (realtor) => realtor.id.eq(dbRealtor.id));
       }
 
       // 2. Delete user's profile photos from S3
