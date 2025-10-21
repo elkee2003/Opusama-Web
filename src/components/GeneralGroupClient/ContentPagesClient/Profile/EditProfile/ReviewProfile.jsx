@@ -14,7 +14,7 @@ const ReviewDetails = () => {
 
   const { firstName, lastName, username, profilePic, setProfilePic, address, phoneNumber } = useProfileContext();
 
-  const { dbUser, setDbUser, sub } = useAuthContext();
+  const { dbUser, setDbUser, sub, userMail } = useAuthContext();
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -113,6 +113,7 @@ const ReviewDetails = () => {
           profilePic: uploadedImagePath,
           firstName,
           lastName,
+          email: userMail,
           username,
           address,
           phoneNumber,

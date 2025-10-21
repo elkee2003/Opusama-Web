@@ -65,6 +65,7 @@ const BookingPostOption = () => {
                     <option value="">Select</option>
                     <option value="RESERVATION">Reservation</option>
                     <option value="VOUCHER">Voucher</option>
+                    <option value="TICKET">Ticket</option>
                     <option value="PICKUP">Pickup</option>
                 </select>
 

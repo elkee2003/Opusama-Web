@@ -182,6 +182,7 @@ type User @model @auth(rules: [{allow: public}]) {
   firstName: String!
   lastName: String
   username: String
+  email: String
   isVerified: Boolean
   profilePic: String
   PostReviews: [PostReview] @hasMany(indexName: "byUser", fields: ["id"])

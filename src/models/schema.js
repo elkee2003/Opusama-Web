@@ -1484,6 +1484,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "isVerified": {
                     "name": "isVerified",
                     "isArray": false,
@@ -2641,5 +2648,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "27888b0d1680c2be06c92b6665313681"
+    "version": "658b5103d44dc569f553d83e97aaf8dd"
 };

@@ -26,6 +26,7 @@ export declare type UserCreateFormInputValues = {
     firstName?: string;
     lastName?: string;
     username?: string;
+    email?: string;
     isVerified?: boolean;
     profilePic?: string;
     phoneNumber?: string;
@@ -40,6 +41,7 @@ export declare type UserCreateFormValidationValues = {
     firstName?: ValidationFunction<string>;
     lastName?: ValidationFunction<string>;
     username?: ValidationFunction<string>;
+    email?: ValidationFunction<string>;
     isVerified?: ValidationFunction<boolean>;
     profilePic?: ValidationFunction<string>;
     phoneNumber?: ValidationFunction<string>;
@@ -56,6 +58,7 @@ export declare type UserCreateFormOverridesProps = {
     firstName?: PrimitiveOverrideProps<TextFieldProps>;
     lastName?: PrimitiveOverrideProps<TextFieldProps>;
     username?: PrimitiveOverrideProps<TextFieldProps>;
+    email?: PrimitiveOverrideProps<TextFieldProps>;
     isVerified?: PrimitiveOverrideProps<SwitchFieldProps>;
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     phoneNumber?: PrimitiveOverrideProps<TextFieldProps>;

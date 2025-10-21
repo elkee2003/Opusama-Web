@@ -13,7 +13,7 @@ const ReviewDetails = () => {
 
   const {firstName, lastName, username, myDescription, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
 
-  const { dbRealtor, setDbRealtor, sub } = useAuthContext();
+  const { dbRealtor, setDbRealtor, sub, realtorMail, userMail } = useAuthContext();
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -112,7 +112,9 @@ const ReviewDetails = () => {
         new Realtor({
           profilePic: uploadedImagePath,
           directPayment: false,
-          firstName, lastName, username, myDescription, address, phoneNumber, bankName, accountName, accountNumber,
+          firstName, lastName, username,
+          email: userMail,
+          myDescription, address, phoneNumber, bankName, accountName, accountNumber,
           sub
         })
       );

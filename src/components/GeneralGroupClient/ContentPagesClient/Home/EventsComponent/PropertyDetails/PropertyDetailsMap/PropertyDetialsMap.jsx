@@ -93,7 +93,8 @@ function PropertyDetailsMap() {
         onUnmount={() => setMap(null)}
       >
         {/* Marker or Circle */}
-        {Number(post.totalPrice) > 0 ? (
+        {/* post?.bookingOptions?.length will not work because, I have to import BookingOptions from the model in the parent component */}
+        {Number(post.totalPrice) > 0 || post?.bookingOptions?.length > 0 ? (
           <Circle
             center={displayCoords}
             radius={700} // ~700m blur

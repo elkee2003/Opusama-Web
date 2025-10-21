@@ -532,6 +532,7 @@ type EagerUser = {
   readonly firstName: string;
   readonly lastName?: string | null;
   readonly username?: string | null;
+  readonly email?: string | null;
   readonly isVerified?: boolean | null;
   readonly profilePic?: string | null;
   readonly PostReviews?: (PostReview | null)[] | null;
@@ -557,6 +558,7 @@ type LazyUser = {
   readonly firstName: string;
   readonly lastName?: string | null;
   readonly username?: string | null;
+  readonly email?: string | null;
   readonly isVerified?: boolean | null;
   readonly profilePic?: string | null;
   readonly PostReviews: AsyncCollection<PostReview>;

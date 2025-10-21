@@ -33,6 +33,7 @@ export default function UserUpdateForm(props) {
     firstName: "",
     lastName: "",
     username: "",
+    email: "",
     isVerified: false,
     profilePic: "",
     phoneNumber: "",
@@ -46,6 +47,7 @@ export default function UserUpdateForm(props) {
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
   const [username, setUsername] = React.useState(initialValues.username);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [isVerified, setIsVerified] = React.useState(initialValues.isVerified);
   const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
   const [phoneNumber, setPhoneNumber] = React.useState(
@@ -65,6 +67,7 @@ export default function UserUpdateForm(props) {
     setFirstName(cleanValues.firstName);
     setLastName(cleanValues.lastName);
     setUsername(cleanValues.username);
+    setEmail(cleanValues.email);
     setIsVerified(cleanValues.isVerified);
     setProfilePic(cleanValues.profilePic);
     setPhoneNumber(cleanValues.phoneNumber);
@@ -91,6 +94,7 @@ export default function UserUpdateForm(props) {
     firstName: [{ type: "Required" }],
     lastName: [],
     username: [],
+    email: [],
     isVerified: [],
     profilePic: [],
     phoneNumber: [],
@@ -130,6 +134,7 @@ export default function UserUpdateForm(props) {
           firstName,
           lastName,
           username,
+          email,
           isVerified,
           profilePic,
           phoneNumber,
@@ -197,6 +202,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -232,6 +238,7 @@ export default function UserUpdateForm(props) {
               firstName: value,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -267,6 +274,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName: value,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -302,6 +310,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username: value,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -324,6 +333,42 @@ export default function UserUpdateForm(props) {
         hasError={errors.username?.hasError}
         {...getOverrideProps(overrides, "username")}
       ></TextField>
+      <TextField
+        label="Email"
+        isRequired={false}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              username,
+              email: value,
+              isVerified,
+              profilePic,
+              phoneNumber,
+              address,
+              cardNumber,
+              cardExpiry,
+              cardCvv,
+              push_token,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
+      ></TextField>
       <SwitchField
         label="Is verified"
         defaultChecked={false}
@@ -337,6 +382,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified: value,
               profilePic,
               phoneNumber,
@@ -372,6 +418,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic: value,
               phoneNumber,
@@ -407,6 +454,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber: value,
@@ -442,6 +490,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -477,6 +526,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -512,6 +562,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -547,6 +598,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
@@ -582,6 +634,7 @@ export default function UserUpdateForm(props) {
               firstName,
               lastName,
               username,
+              email,
               isVerified,
               profilePic,
               phoneNumber,
