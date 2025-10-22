@@ -15,6 +15,8 @@ const ReviewDetails = () => {
 
   const { dbRealtor, setDbRealtor, sub, realtorMail, userMail } = useAuthContext();
 
+  console.log('realtor Email:', userMail)
+
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -51,16 +53,20 @@ const ReviewDetails = () => {
   // Function to upload image
   async function uploadImage() {
     try {
+      if (!profilePic) return null;
+
       if (dbRealtor?.profilePic) {
-        await remove({ path: dbRealtor.profilePic });
+        await remove({ path: dbRealtor?.profilePic });
       }
 
-      const manipulatedBlob = await manipulateImage(profilePic);
+      const response = await fetch(profilePic);
+      const blob = await response.blob();
+
       const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
 
       const result = await uploadData({
         path: fileKey,
-        data: manipulatedBlob,
+        data: blob,
         options: {
           contentType: "image/jpeg",
           onProgress: ({ transferredBytes, totalBytes }) => {
@@ -135,6 +141,7 @@ const ReviewDetails = () => {
           updated.firstName = firstName;
           updated.lastName = lastName;
           updated.username = username;
+          updated.email = userMail;
           updated.myDescription = myDescription;
           updated.profilePic = uploadedImagePath;
           updated.address = address;

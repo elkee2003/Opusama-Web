@@ -23,6 +23,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "notifyVendorBooking": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "sendGuestTicket": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

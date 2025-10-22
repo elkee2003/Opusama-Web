@@ -28,6 +28,7 @@ const PaymentComponent = () => {
         transactionReference,
         setTransactionReference, setTransactionStatus,
         onStatusChange, currentBooking,
+        realtorPrice,
         // For guest users
         overAllPrice,
         guestFirstName,
@@ -51,6 +52,7 @@ const PaymentComponent = () => {
     console.log('current dbuser:', currentBooking, 'currentdbuserID:', currentBooking?.id)
 
     const { userMail, dbUser } = useAuthContext();
+    
 
     // Verify payment
     const verifyPayment = async (reference) => {
@@ -107,14 +109,21 @@ const PaymentComponent = () => {
                 try {
                     const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket";
 
+                    // Safe check using propertyType from context
+                    const isEvent = (propertyType || currentBooking?.propertyType || currentBookingForGuest?.propertyType)?.toLowerCase() === "event";
+
                     const payload = {
                         guestEmail: dbUser ? userMail : guestEmail,
                         guestName: dbUser ? firstName : `${guestFirstName} ${guestLastName}`,
-                        eventName: guestEventName,
                         numberOfPeople: numberOfPeople || 1,
                         ticketId,
                         qrUrl,
                     };
+
+                    // ✅ Only include eventName if property type is "Event"
+                    if (isEvent && guestEventName) {
+                        payload.eventName = guestEventName;
+                    }
 
                     await fetch(lambdaUrl, {
                         method: "POST",
@@ -127,7 +136,54 @@ const PaymentComponent = () => {
                     console.error("Error sending ticket email:", err);
                 }
 
-                // ✅ 5. Handle Vendor Payout Logic
+                // ✅ 5. Send vendor an email of booking
+                try {
+                    // 🔹 Fetch the booking and realtor data
+                    const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
+                    
+                    const booking = await DataStore.query(Booking, bookingId);
+                    const realtor = await DataStore.query(Realtor, booking.realtorID);
+
+                    if (realtor && realtor.email) {
+                        const notifyLambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/notifyVendorBooking";
+
+
+                        // Determine if propertyType is "Event"
+                        const isEvent = (booking?.propertyType || propertyType)?.toLowerCase() === "event";
+
+                        const vendorPayload = {
+                        realtorEmail: realtor.email,
+                        realtorName: realtor.name,
+                        guestName: dbUser
+                            ? firstName
+                            : `${guestFirstName} ${guestLastName}`,
+                        propertyName:
+                            booking?.propertyType ||
+                            accommodationType ||
+                            "Accommodation",
+                        totalAmount: realtorPrice || "₦0",
+                        };
+
+                        // Only include eventName if property type is "Event"
+                        if (isEvent && guestEventName) {
+                            vendorPayload.eventName = guestEventName;
+                        }
+
+                        await fetch(notifyLambdaUrl, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(vendorPayload),
+                        });
+
+                        console.log("Realtor notification email sent successfully!");
+                    } else {
+                        console.warn("No realtor email found for this booking");
+                    }
+                } catch (err) {
+                    console.error("Error sending realtor notification email:", err);
+                }
+
+                // ✅ 6. Handle Vendor Payout Logic
                 try {
                     const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
                     if (!bookingId) throw new Error("No booking found for payout processing");

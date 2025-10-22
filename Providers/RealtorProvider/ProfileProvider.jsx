@@ -11,6 +11,7 @@ const ProfileContextProvider = ({children}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [myDescription, setMyDescription] = useState("")
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber]= useState("");
@@ -89,7 +90,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput, name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, email, setEmail, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput, name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt}}>
         {children}
     </ProfileContext.Provider>
   )

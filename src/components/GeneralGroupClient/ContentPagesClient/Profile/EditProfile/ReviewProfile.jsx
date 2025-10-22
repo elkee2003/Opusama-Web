@@ -137,6 +137,7 @@ const ReviewDetails = () => {
           updated.firstName = firstName;
           updated.lastName = lastName;
           updated.username = username;
+          updated.email = userMail;
           updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
