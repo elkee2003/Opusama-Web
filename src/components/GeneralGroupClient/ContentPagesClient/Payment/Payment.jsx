@@ -52,7 +52,6 @@ const PaymentComponent = () => {
     console.log('current dbuser:', currentBooking, 'currentdbuserID:', currentBooking?.id)
 
     const { userMail, dbUser } = useAuthContext();
-    
 
     // Verify payment
     const verifyPayment = async (reference) => {
@@ -107,7 +106,7 @@ const PaymentComponent = () => {
 
                 // ✅ 4. Call Lambda to send ticket email
                 try {
-                    const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket";
+                    const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket-staging";
 
                     // Safe check using propertyType from context
                     const isEvent = (propertyType || currentBooking?.propertyType || currentBookingForGuest?.propertyType)?.toLowerCase() === "event";
@@ -125,11 +124,13 @@ const PaymentComponent = () => {
                         payload.eventName = guestEventName;
                     }
 
-                    await fetch(lambdaUrl, {
+                     const response = await fetch(lambdaUrl, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(payload),
                     });
+
+                    console.log("Lambda response status:", response.status);
 
                     console.log("Ticket email sent successfully!");
                 } catch (err) {
@@ -145,7 +146,7 @@ const PaymentComponent = () => {
                     const realtor = await DataStore.query(Realtor, booking.realtorID);
 
                     if (realtor && realtor.email) {
-                        const notifyLambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/notifyVendorBooking";
+                        const notifyLambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/notifyVendorBooking-staging";
 
 
                         // Determine if propertyType is "Event"
@@ -153,7 +154,7 @@ const PaymentComponent = () => {
 
                         const vendorPayload = {
                         realtorEmail: realtor.email,
-                        realtorName: realtor.name,
+                        realtorName: realtor.firstName,
                         guestName: dbUser
                             ? firstName
                             : `${guestFirstName} ${guestLastName}`,

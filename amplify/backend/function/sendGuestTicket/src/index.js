@@ -56,7 +56,11 @@ exports.handler = async (event) => {
       <h2>Hello ${guestName || "Guest"},</h2>
       <p>Thank you for booking <b>${displayLabel}</b> on Opusama.</p>
       <p><b>Ticket ID:</b> ${ticketId}</p>
-      ${numberOfPeople ? `<p><b>Number of People:</b> ${numberOfPeople}</p>` : ""}
+      ${
+        numberOfPeople
+          ? `<p><b>Number of People:</b> ${numberOfPeople}</p>`
+          : ""
+      }
       <p>Show this QR code at entry:</p>
       <img src="${qrUrl}" alt="Ticket QR Code" style="width:200px;height:200px"/>
       <p>If you cannot see the QR code above,
@@ -79,7 +83,15 @@ exports.handler = async (event) => {
       },
     };
 
-    await ses.send(new SendEmailCommand(params));
+    // ✅ Added detailed SES logging
+    try {
+      console.log("Attempting to send email via SES...");
+      const response = await ses.send(new SendEmailCommand(params));
+      console.log("SES Response:", JSON.stringify(response));
+    } catch (sesError) {
+      console.error("SES send error:", sesError);
+      throw sesError; // rethrow so it appears in CloudWatch
+    }
 
     return {
       statusCode: 200,

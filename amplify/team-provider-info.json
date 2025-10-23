@@ -21,11 +21,11 @@
       "function": {
         "sendGuestTicket": {
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
-          "s3Key": "amplify-builds/sendGuestTicket-6d394667706a5369666a-build.zip"
+          "s3Key": "amplify-builds/sendGuestTicket-6e774e413462656c4b6c-build.zip"
         },
         "notifyVendorBooking": {
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
-          "s3Key": "amplify-builds/notifyVendorBooking-75757747687a42463332-build.zip"
+          "s3Key": "amplify-builds/notifyVendorBooking-58516a63477748445957-build.zip"
         }
       },
       "api": {

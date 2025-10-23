@@ -75,7 +75,7 @@ const Gallery = ({ media }) => {
                   <video
                     className="galleryVideo"
                     controls
-                    controlsList="nodownload"
+                    // controlsList="nodownload"
                     onContextMenu={(e) => e.preventDefault()}
                   >
                     <source src={url.url} type="video/mp4" />
