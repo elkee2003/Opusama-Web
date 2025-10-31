@@ -6,15 +6,16 @@ import './Content.css'
 import { FaRegCommentDots } from "react-icons/fa6";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { MdDelete } from "react-icons/md";
 import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
 import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-import {Post, PostReview} from '../../../../../../models';
+import {Post, PostReview, BookingPostOptions} from '../../../../../../models';
 
-function Content({post, realtor,}) {
+function Content({post, setPost, realtor,}) {
     const navigate = useNavigate();
     const {dbUser, authUser} = useAuthContext();
 
@@ -88,6 +89,26 @@ function Content({post, realtor,}) {
         } finally {
           setLoading(false);
         }
+      }
+    };
+
+    // Function to delete Post Options
+    const handleDeleteOption = async (optionId) => {
+      if (!window.confirm("Are you sure you want to delete this option?")) return;
+      
+      try {
+        const toDelete = await DataStore.query(BookingPostOptions, optionId);
+        if (toDelete) {
+          await DataStore.delete(toDelete);
+
+          // Update UI immediately
+          setPost((prevPost) => ({
+            ...prevPost,
+            bookingOptions: prevPost.bookingOptions.filter(opt => opt.id !== optionId),
+          }));
+        }
+      } catch (error) {
+        console.error("Error deleting option:", error);
       }
     };
 
@@ -203,6 +224,11 @@ function Content({post, realtor,}) {
           className='imageContainer'
           onClick={()=>navigate(`/realtorcontent/postgallery/${post.id}`)}
         >
+          {/* Subcription Label */}
+          {post.isSubscription && <div className='subscribeLabel'>
+            <p>Subscription</p>
+          </div>}
+
           {mediaUris.length > 0 ? (
           mediaUris[0].type === 'video' ? (
             <div className='postDetailVideoWrapper'>
@@ -235,10 +261,7 @@ function Content({post, realtor,}) {
           </p>
         )}
 
-        {/* Subcription Label */}
-        {post.isSubscription && <div className='subscribeLabel'>
-          <p>Subscription</p>
-        </div>}
+        
 
         {/* Unavailable Label */}
         {!post?.available && <div className='unavailableLabel'>
@@ -530,15 +553,26 @@ function Content({post, realtor,}) {
           // Show booking options (no price)
           <div className="optionsContainer">
             <p className="optionSubTitle">Available Options:</p>
+
             {post.bookingOptions.map((opt, idx) => (
               <div 
                 key={idx} 
                 className="realtorBookingOptionCard"
               >
-                <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
-                <p><strong>Name:</strong> {opt.bookingName}</p>
-                <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+                <div className="optionDetails">
+                  <p><strong>Type:</strong> {opt.bookingPostOptionType}</p>
+                  <p><strong>Name:</strong> {opt.bookingName}</p>
+                  <p><strong>Price:</strong> ₦{opt.optionPrice?.toLocaleString()}</p>
+                </div>
+
+                {/* Delete Icon */}
+                <MdDelete
+                  onClick={() => handleDeleteOption(opt.id)}
+                  className="deleteOptionIcon"
+                  title="Delete this option"
+                />
               </div>
+              
             ))}
           </div>
         ) : (

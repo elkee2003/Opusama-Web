@@ -91,7 +91,7 @@ function DetailedPost() {
     
   return (
     <div>
-        <Content  post={post} realtor={realtor}/>
+        <Content  post={post} realtor={realtor} setPost={setPost}/>
     </div>
   )
 }

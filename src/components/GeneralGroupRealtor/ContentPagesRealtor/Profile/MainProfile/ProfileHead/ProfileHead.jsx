@@ -17,7 +17,7 @@ import { getUrl } from 'aws-amplify/storage';
 const ProfileHead = () => {
     const navigate = useNavigate(); 
     const { firstName, lastName, username, address, phoneNumber, profilePic, setProfilePic, myDescription } = useProfileContext();
-    const { dbRealtor } = useAuthContext();
+    const { dbRealtor, userMail } = useAuthContext();
 
     const [loading, setLoading] = useState(true);
     const [readMoreDescription, setReadMoreDescription] = useState(false);
@@ -35,6 +35,30 @@ const ProfileHead = () => {
 
     const truncatedText =
         address.length > maxLength ? `${locationText.substring(0, maxLength)}...` : locationText;
+
+    // ✅ Automatically save realtor email if missing
+    useEffect(() => {
+        const saveEmailIfMissing = async () => {
+        try {
+            // Only run if dbRealtor exists and has no email yet
+            if (dbRealtor && !dbRealtor.email && userMail) {
+            console.log("Saving missing user email:", userMail);
+
+            await DataStore.save(
+                User.copyOf(dbRealtor, (updated) => {
+                updated.email = userMail;
+                })
+            );
+
+            console.log("✅ Email successfully saved to DataStore:", userMail);
+            }
+        } catch (error) {
+            console.error("❌ Error saving user email:", error);
+        }
+        };
+
+        saveEmailIfMissing();
+    }, [dbRealtor, userMail]);
 
 
     // Fetch signed URL for profile picture
