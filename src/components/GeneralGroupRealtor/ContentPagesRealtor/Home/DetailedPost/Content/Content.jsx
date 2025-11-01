@@ -11,6 +11,7 @@ import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
 import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
+import VendorSlotManager from './VendorSlotManager/VendorSlotManager';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import {Post, PostReview, BookingPostOptions} from '../../../../../../models';
@@ -483,7 +484,7 @@ function Content({post, setPost, realtor,}) {
         {/* Subcription Enabled or not */}
         {post?.isSubscription ? (
           <>
-            <p>
+            <p className='subheader'>
               Post Type:
             </p>
             <p className='bedroom'>
@@ -495,7 +496,7 @@ function Content({post, setPost, realtor,}) {
         {/* Booking Mode */}
         {post?.bookingMode ? (
           <>
-            <p>Booking Mode:</p>
+            <p className='subheader'>Booking Mode:</p>
             <p>{bookingModeLabels[post.bookingMode] || "N/A"}</p>
           </>
         ): ''}
@@ -503,7 +504,7 @@ function Content({post, setPost, realtor,}) {
         {/* Multiple booking */}
         {post?.allowMultiple ? (
           <>
-            <p>Multiple Booking:</p>
+            <p className='subheader'>Multiple Booking:</p>
             <p>Enabled</p>
           </>
         ): ''}
@@ -511,7 +512,7 @@ function Content({post, setPost, realtor,}) {
         {/* Maximum Capacity */}
         {post?.maxCapacity ? (
           <>
-            <p>Maximum Booking Capacity:</p>
+            <p className='subheader'>Maximum Booking Capacity:</p>
             <p>{post.maxCapacity}</p>
           </>
         ): ''}
@@ -519,15 +520,23 @@ function Content({post, setPost, realtor,}) {
         {/* Session Duration */}
         {post?.sessionDuration ? (
           <>
-            <p>Session Duration:</p>
+            <p className='subheader'>Session Duration:</p>
             <p>{formatDuration(post.sessionDuration)}</p>
+          </>
+        ) : ''}
+
+        {/* Session Gap */}
+        {post?.sessionGap ? (
+          <>
+            <p className='subheader'>Session Gap:</p>
+            <p>{formatDuration(post.sessionGap)}</p>
           </>
         ) : ''}
 
         {/* Service Days */}
         {post?.servicingDay?.length > 0 ? (
           <>
-            <p>Days of Service:</p>
+            <p className='subheader'>Days of Service:</p>
             <p>{post.servicingDay.join(", ")}</p>
           </>
         ): ''}
@@ -535,7 +544,7 @@ function Content({post, setPost, realtor,}) {
         {/* Opening Hour */}
         {post?.openingHour ? (
           <>
-            <p>Opening Hour:</p>
+            <p className='subheader'>Opening Hour:</p>
             <p>{post.openingHour}</p>
           </>
         ): ''}
@@ -543,10 +552,18 @@ function Content({post, setPost, realtor,}) {
         {/* Closing Hour */}
         {post?.closingHour ? (
           <>
-            <p>Closing Hour:</p>
+            <p className='subheader'>Closing Hour:</p>
             <p>{post.closingHour}</p>
           </>
         ): ''}
+
+        {/* Manage Booking Slots */}
+        {post?.bookingMode === "auto_datetime" && (
+          <>
+            <div className="topBorderLine" />
+            <VendorSlotManager post={post} />
+          </>
+        )}
 
         {/* Price */}
         {post?.bookingOptions?.length > 0 ? (

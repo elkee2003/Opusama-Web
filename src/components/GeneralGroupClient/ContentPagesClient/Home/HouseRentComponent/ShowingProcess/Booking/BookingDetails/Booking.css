@@ -73,6 +73,35 @@
   gap: 12px;
 }
 
+/* For Vendor */
+.vendorMangeSlotHeader{
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--heading-color);
+}
+.slotsGridVendor {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.headerWithArrow {
+  display: flex;
+  align-items: center;
+  gap:2rem;
+  cursor: pointer;
+}
+
+.arrowBtn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Continuation */
 .slotBtn {
   padding: 10px 14px;
   border: 1px solid #ddd;
@@ -97,10 +126,21 @@
 }
 
 .slotBtn:disabled {
-  background: #f0f0f0;
-  color: #aaa;
-  cursor: not-allowed;
+    background: #ffcccc; 
+    border-color: #ff9999;
+    color: #800000;
+    cursor: not-allowed;
+    opacity: 0.8;
 }
+
+/* .slotBtn:disabled {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #888;
+  text-decoration: line-through;
+  cursor: not-allowed;
+} */
+
 
 .priceLabel {
   font-weight: bold;
@@ -153,6 +193,9 @@
   .slotsGrid {
     margin-bottom: 12rem;
   }
+  .slotsGridVendor {
+    margin-bottom: 2rem;
+  }
   
   .bookingNxtBtn {
       position: fixed;
@@ -174,6 +217,10 @@
 
 @media (max-width: 700px) {
   .slotsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .slotsGridVendor {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 }

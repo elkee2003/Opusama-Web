@@ -149,6 +149,7 @@ type Booking @model @auth(rules: [{allow: public}]) {
   checkInDate: String
   checkOutDate: String
   bookedSessionDuration: String
+  isOfflineBooking: Boolean 
   subscription: Boolean
   propertyType: String
   accommodationType: String

@@ -438,6 +438,7 @@ type EagerBooking = {
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;
   readonly bookedSessionDuration?: string | null;
+  readonly isOfflineBooking?: boolean | null;
   readonly subscription?: boolean | null;
   readonly propertyType?: string | null;
   readonly accommodationType?: string | null;
@@ -489,6 +490,7 @@ type LazyBooking = {
   readonly checkInDate?: string | null;
   readonly checkOutDate?: string | null;
   readonly bookedSessionDuration?: string | null;
+  readonly isOfflineBooking?: boolean | null;
   readonly subscription?: boolean | null;
   readonly propertyType?: string | null;
   readonly accommodationType?: string | null;

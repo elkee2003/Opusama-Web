@@ -11,7 +11,7 @@
  * @param {Array} bookedSlots - Array of already booked slots with startTime
  * @returns {Array} slots - Array of slot objects
  */
-export function generateSlots(
+export function generateSlotsVendor(
   date, 
   openingHour, 
   closingHour, 

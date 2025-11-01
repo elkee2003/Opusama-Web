@@ -207,7 +207,8 @@ const ReviewClientDetails = () => {
           duration: String(duration),
           checkInDate: String(checkInDate),
           checkOutDate: String(checkOutDate),
-          bookedSessionDuration: bookedSessionDuration?.label || "",
+          bookedSessionDuration: bookedSessionDuration || "",
+          isOfflineBooking:false,
           subscription,
           propertyType,
           nameOfType,
@@ -441,7 +442,7 @@ const ReviewClientDetails = () => {
         {bookedSessionDuration && (
           <>
             <h4>Booked Session:</h4>
-            <p className="txtInputReview">{bookedSessionDuration.label}</p>
+            <p className="txtInputReview">{bookedSessionDuration}</p>
           </>
         )}
 

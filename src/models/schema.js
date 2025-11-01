@@ -1205,6 +1205,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "isOfflineBooking": {
+                    "name": "isOfflineBooking",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "subscription": {
                     "name": "subscription",
                     "isArray": false,
@@ -2648,5 +2655,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "658b5103d44dc569f553d83e97aaf8dd"
+    "version": "4f49dc463827ac194d19217cf443f9d7"
 };

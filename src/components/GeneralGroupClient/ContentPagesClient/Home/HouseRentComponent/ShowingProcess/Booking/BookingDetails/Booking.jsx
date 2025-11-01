@@ -8,9 +8,11 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import DatePicker from 'react-datepicker'; 
 import 'react-datepicker/dist/react-datepicker.css'; 
 import {generateSlots} from './SlotGenerator';
+import { DataStore } from "aws-amplify/datastore";
+import { Booking } from '../../../../../../../../models';
 
 
-const Booking = () => {
+const BookingPage = () => {
   const [range, setRange] = useState({
     startDate: null,
     endDate: null,
@@ -24,11 +26,8 @@ const Booking = () => {
   overAllPrice, setOverAllPrice, serviceCharge, setServiceCharge, checkInDate, setCheckInDate, setCheckOutDate, checkOutDate, 
   setDuration, setBookedSessionDuration } = useBookingShowingContext();
 
-  // console.log('Property Details:', propertyDetails.propertyType)
+  const [bookedSlots, setBookedSlots] = useState([]);
 
-  // console.log('Property Booking Mode:', propertyDetails.bookingMode)
-
-  // console.log('Property Session Duration:', propertyDetails.sessionDuration)
 
   const navigate = useNavigate();
 
@@ -138,7 +137,6 @@ const Booking = () => {
   // 🔹 Generate available slots if auto_datetime
   useEffect(() => {
     if (propertyDetails.bookingMode === "auto_datetime" && range.startDate) {
-      const bookedSlots = []; // TODO: fetch from DB for that date
       const slots = generateSlots(
         dayjs(range.startDate).format("YYYY-MM-DD"),
         propertyDetails.openingHour,
@@ -149,6 +147,34 @@ const Booking = () => {
       );
       setTimeSlots(slots);
     }
+  }, [range.startDate, propertyDetails, bookedSlots]);
+
+  // Fetch booked slots for this property and date
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      try {
+        // Only run if auto_datetime and date are chosen
+        if (propertyDetails.bookingMode !== "auto_datetime" || !range.startDate) return;
+
+        const selectedDate = dayjs(range.startDate).format("DD MMMM, YYYY");
+
+        const bookings = await DataStore.query(Booking, (b) =>
+          b.and((condition) => [
+            condition.PostID.eq(propertyDetails.id),
+            condition.checkInDate.eq(selectedDate),
+          ])
+        );
+
+        // Extract booked session durations (each saved slot label or startTime)
+        const booked = bookings.map((b) => b.bookedSessionDuration);
+        console.log("📅 Booked slots for date:", selectedDate, booked);
+        setBookedSlots(booked);
+      } catch (error) {
+        console.error("Error fetching booked slots:", error);
+      }
+    };
+
+    fetchBookedSlots();
   }, [range.startDate, propertyDetails]);
 
   // const checkDatesSelected = () => {
@@ -231,7 +257,7 @@ const Booking = () => {
                   className={`slotBtn ${selectedSlot?.startTime === slot.startTime ? "selected" : ""}`}
                   onClick={() =>{
                     setSelectedSlot(slot);
-                    setBookedSessionDuration(slot);
+                    setBookedSessionDuration(slot.label);
                   }}
                 >
                   {slot.label} {slot.available ? "" : "(Booked)"}
@@ -257,4 +283,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default BookingPage;
