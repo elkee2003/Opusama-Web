@@ -222,7 +222,6 @@ button {
 .countdown-boxes {
     display: flex;
     align-items: center;
-    gap: 5px;
 }
 
 .time-box {
