@@ -18,8 +18,14 @@ function UserDashboard() {
         setLoading(true);
         try {
             const result = await DataStore.query(User);
-            setUsers(result);
-            setFilteredUsers(result); // ✅ Keep filtered list synced
+
+            // ✅ Sort by creation date: newest first
+            const sorted = result.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+
+            setUsers(sorted);
+            setFilteredUsers(sorted);
         } catch (error) {
             console.error('Error fetching users:', error);
         } finally {

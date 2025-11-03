@@ -48,7 +48,7 @@ exports.handler = async (event) => {
     }
 
     const displayLabel =
-      propertyName === "Event" ? eventName : propertyName || "Your Booking";
+      propertyName === "Event" ? eventName : propertyName || "your service";
 
     const ticketPageUrl = `https://opusama.com/clientcontent/tickets/${ticketId}`;
 

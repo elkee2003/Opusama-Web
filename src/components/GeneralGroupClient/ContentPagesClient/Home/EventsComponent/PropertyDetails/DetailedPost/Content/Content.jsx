@@ -17,6 +17,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Countdown from "react-countdown";
 
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useBookingShowingContext } from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
@@ -478,7 +479,7 @@ function Content({post, realtor,}) {
 
         {/* Event Start Date and Time  */}
         {post?.eventDateTime ? (
-          <>
+          <div>
             <p className='subheader'> Start Date & Time</p>
             <p className='bedroom'>
               {new Date(post.eventDateTime).toLocaleString([], {
@@ -489,12 +490,48 @@ function Content({post, realtor,}) {
                 minute: "2-digit"
               })}
             </p>
-          </>
+
+            {/* Countdown timer */}
+            <div className="countdown-container">
+              <Countdown
+                date={new Date(post?.eventDateTime)}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  if (completed) {
+                    return <span className="event-started">🎉 Event Started</span>;
+                  } else {
+                    return (
+                      <div className="countdown-boxes">
+                        <div className="time-box">
+                          <span className="time-value">{days}</span>
+                          <span className="time-label">Days</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{hours}</span>
+                          <span className="time-label">Hours</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{minutes}</span>
+                          <span className="time-label">Minutes</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{seconds}</span>
+                          <span className="time-label">Seconds</span>
+                        </div>
+                      </div>
+                    );
+                  }
+                }}
+              />
+            </div>
+          </div>
         ) : ''}
 
         {/* Event End Date and Time */}
         {post?.eventEndDateTime ? (
-          <>
+          <div>
             <p className='subheader'>End Date & Time</p>
             <p className='bedroom'>
               {new Date(post.eventEndDateTime).toLocaleString([], {
@@ -505,7 +542,7 @@ function Content({post, realtor,}) {
                 minute: "2-digit"
               })}
             </p>
-          </>
+          </div>
         ) : ''}
 
         {/* Event Frequency */}

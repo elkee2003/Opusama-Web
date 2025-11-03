@@ -6,11 +6,13 @@ import { DataStore } from "aws-amplify/datastore";
 import { Booking, Notification } from "../../../../../../../../models";
 import "./ReviewShowing.css"; 
 import { useAuthContext } from "../../../../../../../../../Providers/ClientProvider/AuthProvider";
+import { useProfileContext } from "../../../../../../../../../Providers/ClientProvider/ProfileProvider";
 import { useBookingShowingContext } from "../../../../../../../../../Providers/ClientProvider/BookingShowingProvider";
 import { User } from "../../../../../../../../models";
 
 const ReviewClientDetails = () => {
   const navigate = useNavigate();
+  const {setPaymentPrice } = useProfileContext();
   const { dbUser, userMail } = useAuthContext();
   const {
     selectedOption, 
@@ -95,6 +97,7 @@ const ReviewClientDetails = () => {
     serviceCharge, 
     setServiceCharge,
     resetBookingState,
+    setCurrentBooking, //for dbuser 
     setCurrentBookingForGuest //for guest to update qrcode in particular booking
   } = useBookingShowingContext();
 
@@ -107,6 +110,17 @@ const ReviewClientDetails = () => {
   //     return "Price:";
   //   }
   // };
+
+  // Properties with inspection fee
+  const inspectionProperties = [
+    'House Rent',
+    'Student Accommodation',
+    'House Sale',
+    'Land Sale',
+    'Office Space',
+    'Commercial Space',
+    'Venue',
+  ];
 
   useEffect(() => {
     if (propertyDetails) {
@@ -129,7 +143,7 @@ const ReviewClientDetails = () => {
 
   console.log('post price:',postPrice, 'post total price:', postTotalPrice)
 
-  console.log('commision:', opusamaCommission)
+  console.log('commision:', opusamaCommission);
 
   const handleBooking = async () => {
     if (loading) return;
@@ -228,7 +242,8 @@ const ReviewClientDetails = () => {
       );
 
       // ✅ Save booking so verifyPayment can access it
-      setCurrentBookingForGuest(booking); 
+      setCurrentBookingForGuest(booking);
+      setCurrentBooking(booking);
 
       // Notify realtor
       await DataStore.save(
@@ -278,26 +293,35 @@ const ReviewClientDetails = () => {
       
       setBookings(booking);
 
+      // ✅ Guest users
       if (!dbUser) {
-        navigate('/clientcontent/payment');
-      } else {
-        alert("Booking was a success");
-        resetBookingState();
-        navigate("/clientcontent/home");
-        // Navigation logic
-        // if (propertyDetails?.bookingMode === "manual") {
-        //   navigate("/clientcontent/home");
-        // } else {
-        //   const needsPayment =
-        //     (parseFloat(postPrice) > 0) ||
-        //     (selectedOption?.optionPrice && parseFloat(selectedOption.optionPrice) > 0);
+        navigate("/clientcontent/payment");
+        return;
+      }
 
-        //   if (needsPayment) {
-        //     navigate("/clientcontent/payment", { state: { bookingId: booking.id } });
-        //   } else {
-        //     navigate("/clientcontent/home");
-        //   }
-        // }
+      // ✅ Logged-in users
+      if (dbUser) {
+        // If bookingMode is manual → follow normal flow
+        if (propertyDetails?.bookingMode === "manual") {
+          alert("Booking was a success");
+
+          navigate(`/clientcontent/bookingdetails/${booking.id}`);
+          resetBookingState();
+          // navigate("/clientcontent/home");
+        } else {
+          // Else (auto booking), go straight to payment
+          // 🔹 Determine what the user should pay
+          if (inspectionProperties.includes(propertyDetails?.propertyType)) {
+            setPaymentPrice(propertyDetails?.inspectionFee); 
+          } else {
+            setPaymentPrice(overAllPrice); 
+          }
+
+          // Short delay to ensure context syncs
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          navigate("/clientcontent/payment");
+        }
       }
     } catch (e) {
       alert(`Error: ${e.message}`);

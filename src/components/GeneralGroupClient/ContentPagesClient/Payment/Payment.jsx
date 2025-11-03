@@ -115,6 +115,7 @@ const PaymentComponent = () => {
                         guestEmail: dbUser ? userMail : guestEmail,
                         guestName: dbUser ? firstName : `${guestFirstName} ${guestLastName}`,
                         numberOfPeople: numberOfPeople || 1,
+                        propertyName: propertyType || accommodationType, 
                         ticketId,
                         qrUrl,
                     };

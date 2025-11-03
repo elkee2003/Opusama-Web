@@ -18,8 +18,14 @@ function RealtorDashboard() {
         setLoading(true);
         try {
             const result = await DataStore.query(Realtor);
-            setRealtors(result);
-            setFilteredRealtors(result); 
+
+            // ✅ Sort by creation date: newest first
+            const sorted = result.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+
+            setRealtors(sorted);
+            setFilteredRealtors(sorted); 
         } catch (error) {
         console.error('Error fetching realtors:', error);
         } finally {

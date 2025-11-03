@@ -17,6 +17,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Countdown from "react-countdown";
 
 import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import {useBookingShowingContext} from '../../../../../../../Providers/ClientProvider/BookingShowingProvider';
@@ -546,6 +547,42 @@ function Content({post, realtor,}) {
             <p className='bedroom'>
               {post.eventDateTime}
             </p>
+
+            {/* Countdown timer */}
+            <div className="countdown-container">
+              <Countdown
+                date={new Date(post?.eventDateTime)}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  if (completed) {
+                    return <span className="event-started">🎉 Event Started</span>;
+                  } else {
+                    return (
+                      <div className="countdown-boxes">
+                        <div className="time-box">
+                          <span className="time-value">{days}</span>
+                          <span className="time-label">Days</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{hours}</span>
+                          <span className="time-label">Hours</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{minutes}</span>
+                          <span className="time-label">Minutes</span>
+                        </div>
+                        <span className="colon">:</span>
+                        <div className="time-box">
+                          <span className="time-value">{seconds}</span>
+                          <span className="time-label">Seconds</span>
+                        </div>
+                      </div>
+                    );
+                  }
+                }}
+              />
+            </div>
           </>
         ) : ''}
 

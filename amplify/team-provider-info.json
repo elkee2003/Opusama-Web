@@ -21,7 +21,7 @@
       "function": {
         "sendGuestTicket": {
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
-          "s3Key": "amplify-builds/sendGuestTicket-6e774e413462656c4b6c-build.zip"
+          "s3Key": "amplify-builds/sendGuestTicket-4a424a532f3875504b51-build.zip"
         },
         "notifyVendorBooking": {
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
