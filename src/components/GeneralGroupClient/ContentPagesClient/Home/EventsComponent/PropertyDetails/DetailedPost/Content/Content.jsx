@@ -508,17 +508,17 @@ function Content({post, realtor,}) {
                         <span className="colon">:</span>
                         <div className="time-box">
                           <span className="time-value">{hours}</span>
-                          <span className="time-label">Hours</span>
+                          <span className="time-label">Hrs</span>
                         </div>
                         <span className="colon">:</span>
                         <div className="time-box">
                           <span className="time-value">{minutes}</span>
-                          <span className="time-label">Minutes</span>
+                          <span className="time-label">Mins</span>
                         </div>
                         <span className="colon">:</span>
                         <div className="time-box">
                           <span className="time-value">{seconds}</span>
-                          <span className="time-label">Seconds</span>
+                          <span className="time-label">Secs</span>
                         </div>
                       </div>
                     );
