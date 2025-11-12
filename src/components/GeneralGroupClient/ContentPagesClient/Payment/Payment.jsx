@@ -73,6 +73,23 @@ const PaymentComponent = () => {
             if (result.success && result.data.status === "success") {
                 console.log("Verified payment:", result.data);
 
+                // ✅ Update Booking status in Amplify
+                // try {
+                //     await API.graphql({
+                //     query: updateBooking,
+                //     variables: {
+                //         input: {
+                //         transactionReference: result.data.reference,
+                //         status: "PAID",
+                //         },
+                //     },
+                //     authMode: import.meta.env.COGNITO_USER_POOL_ID,
+                //     });
+                //     console.log("🟢 Booking updated to PAID in Amplify (frontend fallback)");
+                // } catch (err) {
+                //     console.error("❌ Failed to update Amplify booking:", err);
+                // }
+
                 const ticketId = `TICKET-${uuidv4()}`;
                 const ticketStatus = "unused";
 
