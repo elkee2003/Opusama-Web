@@ -60,7 +60,7 @@ const AcceptedDetailedAlert = () => {
               newStatus === "VIEWING" ||
               newStatus === "VISITING"
             ) {
-              updated.ticketStatus = "used";
+              updated.ticketStatus = "Used";
             }
           })
         );

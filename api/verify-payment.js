@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   // --- CORS HEADERS ---
-  res.setHeader("Access-Control-Allow-Origin", "https://opusama.com"); // Only allow your frontend domain
-  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
+  res.setHeader("Access-Control-Allow-Origin", "https://opusama.com"); // ✅ only allow your frontend
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   // Handle preflight OPTIONS request
@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // --- METHOD CHECK ---
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Only GET allowed" });
   }
@@ -20,12 +21,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: "Missing transaction reference" });
   }
 
+  // --- SELECT ENVIRONMENT KEY ---
   const isProduction = process.env.NODE_ENV === "production";
   const PAYSTACK_SECRET_KEY = isProduction
     ? process.env.PAYSTACK_SECRET_KEY_LIVE
     : process.env.PAYSTACK_SECRET_KEY_TEST;
 
   try {
+    // --- VERIFY PAYMENT WITH PAYSTACK ---
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
@@ -35,16 +38,19 @@ export default async function handler(req, res) {
       }
     );
 
+    const verificationData = response.data.data;
+
+    // --- SEND BACK CLEAN RESPONSE ---
     res.status(200).json({
       success: true,
-      data: response.data.data, // Paystack response
+      data: verificationData,
     });
   } catch (error) {
-    console.error("Error verifying payment:", error.response?.data || error);
+    console.error("❌ Error verifying payment:", error.response?.data || error);
     res.status(400).json({
       success: false,
       message: "Could not verify payment",
-      error: error.response?.data || error,
+      error: error.response?.data || error.message,
     });
   }
 }

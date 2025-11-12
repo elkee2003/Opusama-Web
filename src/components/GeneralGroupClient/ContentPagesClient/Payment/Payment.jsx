@@ -352,6 +352,7 @@ const PaymentComponent = () => {
             currency: 'NGN',
             ref: 'ps_' + Date.now(),
             metadata: {
+                
                 custom_fields: [
                     {
                         display_name: name || 'Guest',
