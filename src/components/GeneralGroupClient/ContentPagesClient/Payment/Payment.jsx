@@ -341,7 +341,7 @@ const PaymentComponent = () => {
     };
 
     
-    const payWithPaystack = () => {
+    const payWithPaystack = async () => {
         if (loading) return; 
         setLoading(true); 
 
@@ -354,6 +354,30 @@ const PaymentComponent = () => {
 
         if (!email || !phone) {
             alert('Please provide your email and phone number before continuing.');
+            setLoading(false);
+            return;
+        }
+
+        // ✅ STEP 1: Generate and save your custom reference before payment starts
+        const reference = `OPUSAMA_${Date.now()}`;
+
+        try {
+            const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
+            if (!bookingId) throw new Error("No booking found");
+
+            const booking = await DataStore.query(Booking, bookingId);
+            if (!booking) throw new Error("Booking not found");
+
+            await DataStore.save(
+            Booking.copyOf(booking, (updated) => {
+                updated.transactionReference = reference;
+                updated.status = "PENDING";
+            })
+            );
+
+            console.log("✅ Booking updated with pending transaction reference:", reference);
+        } catch (err) {
+            console.error("❌ Failed to update booking with reference:", err);
             setLoading(false);
             return;
         }
