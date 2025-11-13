@@ -121,9 +121,7 @@ const PaymentComponent = () => {
 
                 setIsPaymentSuccessful(true);
 
-                // ✅ Refresh DataStore to reflect backend updates
-                await DataStore.clear();
-                await DataStore.start();
+               
 
                 // ✅ 4. Call Lambda to send ticket email
                 try {
