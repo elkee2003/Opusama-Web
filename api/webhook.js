@@ -104,6 +104,7 @@ export default async function handler(req, res) {
         updateBooking(input: $input) {
           id
           status
+          transactionStatus
           transactionReference
         }
       }
@@ -113,6 +114,7 @@ export default async function handler(req, res) {
       input: {
         id: booking.id,
         status: "PAID",
+        transactionStatus: "Successful",
       },
     };
 

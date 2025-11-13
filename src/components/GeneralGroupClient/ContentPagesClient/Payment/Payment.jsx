@@ -121,6 +121,10 @@ const PaymentComponent = () => {
 
                 setIsPaymentSuccessful(true);
 
+                // ✅ Refresh DataStore to reflect backend updates
+                await DataStore.clear();
+                await DataStore.start();
+
                 // ✅ 4. Call Lambda to send ticket email
                 try {
                     const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket-staging";
@@ -320,6 +324,9 @@ const PaymentComponent = () => {
                 } catch (err) {
                     console.error("Error handling vendor payout:", err);
                 }
+
+                // await DataStore.clear();  // Clears stale cache
+                // await DataStore.start();  // Resyncs with backend
 
                 setTimeout(() => {
                     resetBookingState();
