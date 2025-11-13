@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const config = {
   api: {
-    bodyParser: false, // ❗Important for verifying Paystack's raw body signature
+    bodyParser: false, // Required for raw signature verification
   },
 };
 
@@ -12,63 +12,59 @@ export default async function handler(req, res) {
     return res.status(405).send("Method not allowed");
   }
 
-  // 🔐 Environment variables
   const PAYSTACK_SECRET_KEY =
     process.env.PAYSTACK_SECRET_KEY_LIVE || process.env.PAYSTACK_SECRET_KEY;
   const APPSYNC_API_URL = process.env.APPSYNC_API_URL;
   const APPSYNC_API_KEY = process.env.APPSYNC_API_KEY;
 
   try {
-    // ✅ 1. Read the raw body buffer (for signature verification)
+    // ✅ Read raw body buffer (to verify Paystack signature)
     const chunks = [];
     for await (const chunk of req) chunks.push(chunk);
     const rawBody = Buffer.concat(chunks).toString("utf8");
 
-    // ✅ 2. Verify Paystack signature
-    const computedHash = crypto
+    // ✅ Verify Paystack signature
+    const expectedHash = crypto
       .createHmac("sha512", PAYSTACK_SECRET_KEY)
       .update(rawBody)
       .digest("hex");
 
-    const receivedHash = req.headers["x-paystack-signature"];
-
-    if (computedHash !== receivedHash) {
-      console.error("❌ Invalid Paystack signature");
+    if (expectedHash !== req.headers["x-paystack-signature"]) {
+      console.error("❌ Invalid Paystack webhook signature");
       return res.status(400).send("Invalid signature");
     }
 
-    // ✅ 3. Parse the event payload
+    // ✅ Parse event data
     const event = JSON.parse(rawBody);
-    console.log(`📩 Webhook event received: ${event.event}`);
 
     if (event.event !== "charge.success") {
-      console.log("ℹ️ Not a charge.success event — ignoring.");
+      console.log(`ℹ️ Ignoring event type: ${event.event}`);
       return res.status(200).send("Ignored non-payment event");
     }
 
     const reference = event.data.reference;
-    console.log(`💰 Processing successful payment: ${reference}`);
+    console.log(`✅ Webhook received for payment reference: ${reference}`);
 
-    // ✅ 4. Double-verify payment directly from Paystack
-    const verifyResponse = await axios.get(
+    // --- Step 1: Verify with Paystack API again ---
+    const verifyRes = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: { Authorization: `Bearer ${PAYSTACK_SECRET_KEY}` },
       }
     );
 
-    const verifiedData = verifyResponse.data.data;
+    const verifiedData = verifyRes.data.data;
     if (!verifiedData || verifiedData.status !== "success") {
-      console.error("❌ Payment verification failed for:", reference);
-      return res.status(400).send("Verification failed");
+      console.error("❌ Payment verification failed or incomplete data.");
+      return res.status(400).send("Payment not verified");
     }
 
-    console.log("✅ Verified payment from Paystack:", verifiedData.reference);
+    console.log("✅ Verified successful payment:", verifiedData.reference);
 
-    // ✅ 5. Find booking in AppSync using the transactionReference
+    // --- Step 2: Find booking by transactionReference ---
     const findBookingQuery = `
-      query ListBookings {
-        listBookings(filter: { transactionReference: { eq: "${verifiedData.reference}" } }) {
+      query FindBooking($reference: String!) {
+        listBookings(filter: { transactionReference: { eq: $reference } }) {
           items {
             id
             status
@@ -78,9 +74,12 @@ export default async function handler(req, res) {
       }
     `;
 
-    const findResponse = await axios.post(
+    const findRes = await axios.post(
       APPSYNC_API_URL,
-      { query: findBookingQuery },
+      {
+        query: findBookingQuery,
+        variables: { reference: verifiedData.reference },
+      },
       {
         headers: {
           "x-api-key": APPSYNC_API_KEY,
@@ -89,27 +88,20 @@ export default async function handler(req, res) {
       }
     );
 
-    const bookingItems = findResponse.data?.data?.listBookings?.items || [];
+    const bookingItems = findRes.data?.data?.listBookings?.items || [];
 
     if (bookingItems.length === 0) {
-      console.error("❌ No booking found with transaction reference:", reference);
-      // ✅ Respond 200 so Paystack doesn't retry forever
-      return res.status(200).send("No matching booking found");
+      console.error("❌ No booking found with that transaction reference.");
+      return res.status(404).send("Booking not found");
     }
 
     const booking = bookingItems[0];
-    console.log(`🟢 Found booking ID: ${booking.id}, current status: ${booking.status}`);
+    console.log("🟢 Found booking:", booking.id, booking.status);
 
-    // ✅ 6. Update booking status in AppSync
-    const updateBookingMutation = `
-      mutation UpdateBooking {
-        updateBooking(input: {
-          id: "${booking.id}",
-          status: "PAID",
-          transactionAmount: ${verifiedData.amount / 100},
-          paymentMethod: "PAYSTACK",
-          paymentVerifiedAt: "${new Date().toISOString()}"
-        }) {
+    // --- Step 3: Update booking to PAID ---
+    const updateMutation = `
+      mutation UpdateBooking($input: UpdateBookingInput!) {
+        updateBooking(input: $input) {
           id
           status
           transactionReference
@@ -117,9 +109,19 @@ export default async function handler(req, res) {
       }
     `;
 
-    await axios.post(
+    const updateVars = {
+      input: {
+        id: booking.id,
+        status: "PAID",
+      },
+    };
+
+    const updateRes = await axios.post(
       APPSYNC_API_URL,
-      { query: updateBookingMutation },
+      {
+        query: updateMutation,
+        variables: updateVars,
+      },
       {
         headers: {
           "x-api-key": APPSYNC_API_KEY,
@@ -128,12 +130,12 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log(`✅ Booking (${booking.id}) updated to PAID successfully.`);
+    console.log("✅ Booking updated successfully:", updateRes.data.data);
 
-    // ✅ 7. Respond success to Paystack
-    return res.status(200).send("Webhook processed successfully");
-  } catch (error) {
-    console.error("❌ Webhook error:", error.message);
+    return res.status(200).send("OK");
+  } catch (err) {
+    console.error("❌ Webhook processing error:", err.message);
+    console.error(err.response?.data || err.stack);
     return res.status(500).send("Server Error");
   }
 }

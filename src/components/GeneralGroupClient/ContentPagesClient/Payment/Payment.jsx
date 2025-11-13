@@ -83,7 +83,7 @@ const PaymentComponent = () => {
                 //         status: "PAID",
                 //         },
                 //     },
-                //     authMode: import.meta.env.COGNITO_USER_POOL_ID,
+                //     authMode: "API_KEY",
                 //     });
                 //     console.log("🟢 Booking updated to PAID in Amplify (frontend fallback)");
                 // } catch (err) {
@@ -358,28 +358,28 @@ const PaymentComponent = () => {
             return;
         }
 
-        // ✅ STEP 1: Generate and save your custom reference before payment starts
-        const reference = `OPUSAMA_${Date.now()}`;
+        // ✅ Generate reference early
+        const generatedRef = 'ps_' + Date.now();
+        setTransactionReference(generatedRef);
 
+        // ✅ Save the reference immediately in DataStore
+        const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
+
+        if (bookingId) {
         try {
-            const bookingId = dbUser ? currentBooking?.id : currentBookingForGuest?.id;
-            if (!bookingId) throw new Error("No booking found");
-
-            const booking = await DataStore.query(Booking, bookingId);
-            if (!booking) throw new Error("Booking not found");
-
+            const bookingToUpdate = await DataStore.query(Booking, bookingId);
+            if (bookingToUpdate) {
             await DataStore.save(
-            Booking.copyOf(booking, (updated) => {
-                updated.transactionReference = reference;
-                updated.status = "PENDING";
-            })
+                Booking.copyOf(bookingToUpdate, updated => {
+                updated.transactionReference = generatedRef;
+                updated.status = "ACCEPTED";
+                })
             );
-
-            console.log("✅ Booking updated with pending transaction reference:", reference);
+            console.log("🟢 Saved booking with transaction reference:", generatedRef);
+            }
         } catch (err) {
-            console.error("❌ Failed to update booking with reference:", err);
-            setLoading(false);
-            return;
+            console.error("❌ Failed to save transaction reference to booking:", err);
+        }
         }
 
         paystack.newTransaction({
@@ -391,7 +391,7 @@ const PaymentComponent = () => {
             email,
             amount: (dbUser ? paymentPrice : overAllPrice) * 100, // Naira to Kobo
             currency: 'NGN',
-            ref: 'ps_' + Date.now(),
+            ref: generatedRef,
             metadata: {
                 
                 custom_fields: [
