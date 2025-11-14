@@ -99,7 +99,12 @@ export default async function handler(req, res) {
               status
               transactionReference
               transactionStatus
+              ticketID
+              qrCodeUrl
+              ticketStatus
               _version
+              createdAt
+              updatedAt
             }
           }
         `;
@@ -108,8 +113,15 @@ export default async function handler(req, res) {
           input: {
             id: booking.id,
             _version: booking._version,   // REQUIRED
+
+            // PAYMENT RESULT
             status: "PAID",
             transactionStatus: "Successful",
+
+            // NEW TICKET FIELDS
+            ticketID: verified.reference,       // or generate your own ID
+            qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${verified.reference}`,
+            ticketStatus: "UNUSED"
           },
         };
 
