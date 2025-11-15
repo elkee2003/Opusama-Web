@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.7.1",
+    "@aws-sdk/client-s3": "^3.931.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@ffmpeg/core": "^0.12.10",
@@ -24,7 +25,7 @@
     "@paystack/inline-js": "^2.22.6",
     "@react-google-maps/api": "^2.20.5",
     "aws-amplify": "^6.10.2",
-    "axios": "^1.9.0",
+    "axios": "^1.13.2",
     "browser-image-compression": "^2.0.2",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
