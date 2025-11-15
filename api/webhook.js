@@ -174,7 +174,10 @@ export default async function handler(req, res) {
         guestName: `${booking.clientFirstName} ${booking.clientLastName}`,
         numberOfPeople: booking.numberOfPeople,
         propertyName:
-          booking.propertyType || booking.accommodationType || "Accommodation",
+          booking?.propertyType?.trim() ||
+          booking?.accommodationType?.trim() ||
+          booking.eventName?.trim() ||
+          "Service",
         ticketId,
         qrUrl,
       });
