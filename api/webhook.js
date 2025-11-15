@@ -1,3 +1,5 @@
+// Note that in this webhook, qrcode is saved externally, and not in s3 (if page refreshes after debt of money from bank)
+
 import crypto from "crypto";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
