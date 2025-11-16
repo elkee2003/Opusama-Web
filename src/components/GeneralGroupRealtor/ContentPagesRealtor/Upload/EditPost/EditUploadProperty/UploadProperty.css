@@ -1,0 +1,71 @@
+.uploadPropContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+}
+
+.uploadPropHeader {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.uploadPropBckBtn {
+    position: absolute;
+    font-size: 40px;
+    left: 10px;
+}
+
+.uploadBtnCon {
+    display: flex;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.btnUpload {
+    display: flex;
+    margin:20px 0;
+    align-self: center;
+    padding:15px;
+    min-width: 300px;
+    background: green;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadTxt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+}
+
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .uploadPropContainer {
+        margin-bottom: 5rem;
+        width: 100vw;
+    }
+
+    .uploadPropHeader {
+        margin-top: 1.5rem;
+    }
+    
+}
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .uploadPropHeader {
+        font-size: 2rem;
+    }
+
+    .btnUpload {
+        min-width: 250px;
+    }
+}

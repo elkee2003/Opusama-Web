@@ -1,0 +1,79 @@
+.accommoContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.accommoDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown {
+    border: 2px solid #02061b;
+    border-radius: 10px;
+    padding:2px;
+    margin-bottom: 10px;
+    max-width: 600px;
+    min-width: 600px;
+}
+
+.inputField {
+    display: flex;
+    max-width: 600px;
+    min-width: 600px;
+    flex-direction: column;
+    border:2px solid #02061b;
+    border-radius: 20px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.accommoTxtArea {
+    padding: 8px;
+    max-width: 600px;
+    border-width: 2px;
+    border-color: #02061b;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 900px) {
+    .dropdown {
+        max-width: 500px;
+        min-width: 500px;
+    }
+
+    .accommoTxtArea {
+        max-width: 500px;
+    }
+
+    .inputField {
+        max-width: 500px;
+        min-width: 500px;
+    }
+}
+@media (max-width: 700px) {
+
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .dropdown {
+        max-width: 300px;
+        min-width: 300px;
+    }
+
+    .accommoTxtArea {
+        max-width: 300px;
+    }
+    
+    .inputField {
+        max-width: 300px;
+        min-width: 300px;
+    }
+}

@@ -9,6 +9,13 @@ enum TransactionStatus {
   FAILED
 }
 
+enum UploadStatus {
+  UPLOADING
+  COMPLETED
+  COMPLETED_EDITED
+  FAILED
+}
+
 type VendorBalance @model @auth(rules: [{ allow: public }]) {
   id: ID!
   realtorID: ID! @index(name: "byRealtor")
@@ -319,5 +326,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   openingHour: String
   closingHour: String
   realtorID: ID! @index(name: "byRealtor")
+  uploadStatus: UploadStatus  
+  uploadErrorMessage: String 
 }
  

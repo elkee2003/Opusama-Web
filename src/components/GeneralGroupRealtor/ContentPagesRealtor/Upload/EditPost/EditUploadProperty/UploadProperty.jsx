@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './UploadProperty.css'
 import { IoArrowBack } from "react-icons/io5";
 import browserImageCompression from "browser-image-compression"; 
-import ReviewUpload from "../ReviewUpload/ReviewUpload"; 
+import ReviewUpload from "../EditReviewUpload/ReviewUpload"; 
 import { useAuthContext } from "../../../../../../../Providers/ClientProvider/AuthProvider";
 import { useUploadContext } from "../../../../../../../Providers/RealtorProvider/UploadProvider";
 import { DataStore } from "aws-amplify/datastore";
@@ -232,46 +232,73 @@ const UploadProperty = () => {
     }
   };
 
-  // Handle the upload process for all media and save post in DataStore
-  const handleUpload = async () => {
+  // Handle the update process for all media and save post in DataStore
+  const handleUpdate = async () => {
     if (uploading) return;
     setUploading(true);
 
     if (!onValidateUpload()) {
-      setUploading(false); // Reset uploading state if validation fails
+      setUploading(false);
       return;
     }
 
-    let tempPost = null;
-
     try {
-      // 1️⃣ Create lightweight draft post FIRST
-      tempPost = await DataStore.save(
-        new Post({
-          realtorID: dbRealtor.id,
-          uploadStatus: "UPLOADING",
-          uploadErrorMessage: null,
-          propertyType: propertyType || "",
-          type: type || "",
-        })
-      );
+      // 1️⃣ Fetch EXISTING POST
+      const existingPost = await DataStore.query(Post, uploadPost.id);
+      if (!existingPost) throw new Error("Post not found");
 
-      setUploadPost(tempPost);
+      // 2️⃣ Separate OLD URLs and NEW Local Files
+      const oldUrls = media.filter(item => typeof item === "string");
+      const newFiles = media.filter(item => typeof item !== "string");
 
-      // 2️⃣ Upload media
-      const mediaUrls = await uploadMedia();
-      if (mediaUrls.length === 0) throw new Error("Media upload failed");
+      // 3️⃣ Upload NEW media files only
+      let uploadedNewFiles = [];
+      if (newFiles.length > 0) {
+        const uploadPromises = newFiles.map(async (item) => {
+          const response = await fetch(item.uri);
+          const fileBlob = await response.blob();
 
-      // 3️⃣ Update post with full content
-      const fullPost = await DataStore.save(
-        Post.copyOf(tempPost, (updated) => {
+          let compressedBlob = fileBlob;
+          if (item.type.startsWith("image")) {
+            compressedBlob = await compressImage(fileBlob, item.name);
+          }
+
+          const ext = item.type.startsWith("image") ? "jpg" : "mp4";
+          const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${ext}`;
+
+          const result = await uploadData({
+            path: fileKey,
+            data: compressedBlob,
+            options: {
+              contentType: item.type,
+              onProgress: ({ transferredBytes, totalBytes }) => {
+                if (totalBytes) {
+                  const prog = Math.round((transferredBytes / totalBytes) * 100);
+                  setUploadProgress(prog);
+                }
+              },
+            },
+          }).result;
+
+          return result.path;
+        });
+
+        uploadedNewFiles = await Promise.all(uploadPromises);
+      }
+
+      // 4️⃣ Combine Old + New media
+      const finalMediaUrls = [...oldUrls, ...uploadedNewFiles];
+
+      // 5️⃣ UPDATE THE EXISTING POST
+      const updatedPost = await DataStore.save(
+        Post.copyOf(existingPost, (updated) => {
           updated.propertyType = propertyType;
           updated.type = type;
           updated.packageType = packageType;
           updated.nameOfType = nameOfType;
           updated.availableDocs = availableDocs;
           updated.accommodationParts = accommodationParts;
-          updated.media = mediaUrls;
+          updated.media = finalMediaUrls;
           updated.description = description;
           updated.available = true;
 
@@ -282,6 +309,7 @@ const UploadProperty = () => {
           updated.recurrence = recurrence;
           updated.eventFrequency = eventFrequency;
           updated.dressCode = dressCode;
+
           updated.fullAddress = fullAddress;
           updated.generalLocation = generalLocation;
           updated.lat = parseFloat(lat);
@@ -304,6 +332,7 @@ const UploadProperty = () => {
           updated.bedrooms = bedrooms;
           updated.amenities = amenities;
           updated.policies = policies;
+
           updated.country = country;
           updated.state = state;
           updated.city = city;
@@ -311,25 +340,31 @@ const UploadProperty = () => {
           updated.isApproved = false;
           updated.isSubscription = isSubscription;
           updated.bookingMode = bookingMode;
-
           updated.allowMultiple = allowMultiple;
           updated.maxCapacity = maxCapacity;
           updated.sessionDuration = sessionDuration;
           updated.sessionGap = sessionGap;
-          updated.servicingDay = Array.isArray(servicingDay)
-            ? servicingDay
-            : [servicingDay];
+          updated.servicingDay = Array.isArray(servicingDay) ? servicingDay : [servicingDay];
           updated.openingHour = openingHour;
           updated.closingHour = closingHour;
+
+          updated.uploadStatus = "COMPLETED_EDITED"
+          updated.uploadErrorMessage = null;
         })
       );
 
-      // 4️⃣ Save BookingPostOptions
+      // 6️⃣ DELETE OLD BOOKING OPTIONS
+      const oldOptions = await DataStore.query(BookingPostOptions, (c) =>
+        c.postID.eq(existingPost.id)
+      );
+      await Promise.all(oldOptions.map(opt => DataStore.delete(opt)));
+
+      // 7️⃣ SAVE NEW BOOKING OPTIONS
       await Promise.all(
         options.map((opt) =>
           DataStore.save(
             new BookingPostOptions({
-              postID: fullPost.id,
+              postID: existingPost.id,
               bookingPostOptionType: opt.bookingPostOptionType,
               bookingName: opt.bookingName,
               optionPrice: parseFloat(opt.optionPrice) || 0,
@@ -340,31 +375,13 @@ const UploadProperty = () => {
         )
       );
 
-      // 5️⃣ Mark COMPLETED
-      await DataStore.save(
-        Post.copyOf(fullPost, (updated) => {
-          updated.uploadStatus = "COMPLETED";
-          updated.uploadErrorMessage = null;
-        })
-      );
-
-      alert("Post uploaded successfully!");
+      alert("Post updated successfully!");
 
       resetFormFields();
-      navigate("/realtorcontent/upload");
-      setTimeout(() => navigate("/realtorcontent/home"), 500);
+      navigate("/realtorcontent/home");
+
     } catch (e) {
-      console.error("Upload error:", e);
-
-      if (tempPost?.id) {
-        await DataStore.save(
-          Post.copyOf(tempPost, (updated) => {
-            updated.uploadStatus = "FAILED";
-            updated.uploadErrorMessage = e.message;
-          })
-        );
-      }
-
+      console.error("Update error:", e);
       alert(`Error: ${e.message}`);
     } finally {
       setUploading(false);
@@ -388,13 +405,13 @@ const UploadProperty = () => {
       <div className="uploadBtnCon">
         <button
           className="btnUpload"
-          onClick={handleUpload}
+          onClick={handleUpdate}
           disabled={uploading}
         >
           <p className="uploadTxt">
               {uploading
-              ? `Uploading... ${uploadProgress}%`
-              : "Upload!"}
+              ? `Updating... ${uploadProgress}%`
+              : "Update"}
           </p>
         </button>
       </div>

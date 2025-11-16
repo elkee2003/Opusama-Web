@@ -12,6 +12,7 @@ import LastReview from './LastReview';
 import RealtorNameRating from './RealtorNameRating';
 import {useAuthContext} from '../../../../../../../Providers/ClientProvider/AuthProvider';
 import { useProfileContext } from '../../../../../../../Providers/ClientProvider/ProfileProvider';
+import {useUploadContext} from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import VendorSlotManager from './VendorSlotManager/VendorSlotManager';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
@@ -22,6 +23,9 @@ function Content({post, setPost, realtor,}) {
     const {dbUser, authUser} = useAuthContext();
 
     const {setRealtorID,firstName} = useProfileContext();
+
+    const { loadExistingPost } = useUploadContext();
+
     const [readMore, setReadMore] = useState(false);
     const [readMoreLux, setReadMoreLux] = useState(false);
     const [readMorePol, setReadMorePol] 
@@ -213,6 +217,18 @@ function Content({post, setPost, realtor,}) {
         />
       </button>
 
+      {/* Full edit */}
+      <div
+        className='editPostBtnCon'
+        onClick={()=>{
+          loadExistingPost(post); 
+          navigate(`/realtorcontent/edit_form/${post.id}`);
+        }}
+      >
+        <p>Edit Full Post</p>
+      </div>
+
+      {/* Shallow edit */}
       <div 
         className='editPostBtnCon'
         onClick={()=>navigate(`/realtorcontent/edit_post/${post.id}`)}

@@ -8,11 +8,22 @@ import Upload from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/
 import Alert from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Alert/Alert';
 import RealtorCommunity from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Community/Community'
 import RealtorProfile from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Profile/Profile';
-import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
-import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
-import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
-import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
-import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
+
+// Upload Routes
+import EditDisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
+import EditViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
+import EditGooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
+import EditForms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
+import EditUploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
+
+// Edit Post Routes
+import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/DisplayMedia/DisplayMedia';
+import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/ViewMedia/ViewMedia';
+import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Googleautocomplete';
+import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Form';
+import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditUploadProperty/UploadProperty';
+
+// Other Routes
 import EditProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/EditProfile';
 import ReviewProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/ReviewProfile';
 import ProfileOptionsPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/MainProfile/ProfileOptions/ProifleOptions';
@@ -47,6 +58,7 @@ const RealtorRoutes = () => (
 
             <Route path="profile" element={<RealtorProfile />} />
 
+            {/* Upload Post Routes */}
             <Route path="displaymedia" element={<DisplayMedia />} />
 
             <Route path="view-media" element={<ViewMedia />} />
@@ -56,6 +68,19 @@ const RealtorRoutes = () => (
             <Route path="form" element={<Forms />} />
 
             <Route path="uploadproperty" element={<UploadProperty />} />
+
+            {/* Edit Post Routes */}
+            <Route path="edit_display_media" element={<EditDisplayMedia />} />
+
+            <Route path="edit_view_media" element={<EditViewMedia />} />
+
+            <Route path="edit_selectaddress" element={<EditGooglePlacesAutoCompleteCom />} />
+
+            <Route path="edit_form/:postId" element={<EditForms />} />
+
+            <Route path="edit_uploaded_post" element={<EditUploadProperty />} />
+
+            {/* Normal Post Routes */}
             <Route path="editprofile" element={<EditProfile />} />
 
             <Route path="reviewprofile" element={<ReviewProfile />} />
@@ -82,7 +107,7 @@ const RealtorRoutes = () => (
 
             <Route path="postgallery/:postId" element={<PostGallery/>} />
 
-            {/* Edit Post */}
+            {/* Edit Post Shallow*/}
             <Route path="edit_post/:postId" element={<EditPost />} />
 
             <Route path="pending_details/:alertId" element={<PendingDetailedAlert/>} />

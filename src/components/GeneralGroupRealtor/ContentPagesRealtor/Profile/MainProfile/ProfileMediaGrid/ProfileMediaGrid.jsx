@@ -111,6 +111,11 @@ const MediaGrid = ({ posts }) => {
               {!post.available && <div className='unavailableLabelRealtorProfile'>
                 <p>Unavailable</p>
               </div>}
+
+              {/* Interrupted */}
+              {post.uploadStatus !== "COMPLETED" && <div className='unavailableLabelRealtorProfile'>
+                <p>Continue Upload</p>
+              </div>}
             </div>
           </button>
         );

@@ -1,0 +1,86 @@
+.reviewUploadCon {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+}
+
+
+.reviewMediaFullDisplayContainer{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    height: 70vh;
+    overflow-y: auto; 
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    background-color: rgb(231, 229, 229);
+    border-radius: 30px;
+}
+
+/* The rest of media display is in DisplayMedia style component */
+
+/* .uploadPropRow{} */
+
+.displayLabel {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.inputDisplay {
+    padding-left: 20px;
+    width: 70vw;
+}
+.uploadPropDetails {
+    white-space: pre-wrap; /* Preserves whitespace, including newlines */
+    background-color: rgba(219, 219, 219, 0.4);
+    /* border-radius: 15px; */
+    box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 1.2rem;
+    color:rgb(0, 0, 0);
+    width:100%;
+}
+
+@media (max-width: 1300px) {
+    .reviewUploadCon {
+        width: 70vw;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .reviewUploadCon {
+        width: 100vw;
+        padding:20px;
+    }
+
+    .reviewMediaFullDisplayContainer {
+        width: 100%;
+        margin-right: 0rem;
+        margin-left: 0rem;
+    }
+
+    .inputDisplay {
+        padding-left: 0;
+        width: 100%;
+    }
+
+    
+}
+@media (max-width: 700px) {
+}
+@media (max-width: 600px) {
+}
+
+@media (max-width: 500px) {
+    .reviewMediaFullDisplayContainer {
+        height: 50vh;
+    }
+
+}

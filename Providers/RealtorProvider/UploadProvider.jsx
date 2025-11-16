@@ -312,6 +312,60 @@ const UploadContextProvider = ({children}) => {
       }
     }
 
+
+    // Helper function to load existing post for edit
+    const loadExistingPost = (post) => {
+      setPropertyType(post.propertyType || '');
+      setType(post.type || '');
+      setNameOfType(post.nameOfType || '');
+      setPackageType(post.packageType || '');
+      setCapacity(post.capacity || '');
+      setEventName(post.eventName || '');
+      setEventDateTime(post.eventDateTime || '');
+      setEventEndDateTime(post.eventEndDateTime || '');
+      setRecurrence(post.recurrence || '');
+      setEventFrequency(post.eventFrequency || '');
+      setDressCode(post.dressCode || '');
+      setAvailableDocs(post.availableDocs || '');
+      setCustomInput(post.customInput || '');
+      setAccommodationParts(post.accommodationParts || '');
+      setMedia(post.media ? [...post.media] : []);
+      setFullAddress(post.fullAddress || '');
+      setGeneralLocation(post.generalLocation || '');
+      setLat(post.lat || 0);
+      setLng(post.lng || 0);
+      setBedrooms(post.bedrooms || '');
+      setBed(post.bed || '');
+      setCautionFee(post.cautionFee || '');
+      setInspectionFee(post.inspectionFee || '');
+      setOtherFeesName(post.otherFeesName || '');
+      setOtherFeesName2(post.otherFeesName2 || '');
+      setOtherFeesPrice(post.otherFeesPrice || '');
+      setOtherFeesPrice2(post.otherFeesPrice2 || '');
+      setPrice(post.price || '');
+      setTotalPrice(post.totalPrice || '');
+      setTimeFrame(post.timeFrame || '');
+      setCountry(post.country || '');
+      setState(post.state || '');
+      setCity(post.city || '');
+      setIsSubscription(post.isSubscription || false);
+      setBookingMode(post.bookingMode || "manual");
+      setAllowMultiple(post.allowMultiple || false);
+      setMaxCapacity(post.maxCapacity || null);
+      setSessionDuration(post.sessionDuration || null);
+      setSessionGap(post.sessionGap || null);
+      setServicingDay(post.servicingDay ? [...post.servicingDay] : []);
+      setOpeningHour(post.openingHour || null);
+      setClosingHour(post.closingHour || null);
+      setDescription(post.description || '');
+      setAmenities(post.amenities || '');
+      setPolicies(post.policies || '');
+      setOptions(post.options ? post.options.map(opt => ({ ...opt })) : []);
+      
+      setUploadPost(post); // store the original for updating later
+    };
+
+
     // useEffect for commission etc
     useEffect(() => {
       const priceVal = parseFloat(price || 0);
@@ -394,7 +448,7 @@ const UploadContextProvider = ({children}) => {
         options, setOptions,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
-        removeMedia, addMedia, updateMedia
+        removeMedia, addMedia, updateMedia, loadExistingPost
     }}>
       {children}
     </UploadContext.Provider>
