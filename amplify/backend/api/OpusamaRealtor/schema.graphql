@@ -278,7 +278,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   availableDocs: String
   accommodationParts: String
   media: [String]
-  description: String!
+  description: String
   eventName: String
   eventDateTime: String
   eventEndDateTime: String
@@ -295,7 +295,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   lng: Float
   price: Float
   cautionFee: Float
-  totalPrice: Float!
+  totalPrice: Float
   inspectionFee: Float
   otherFeesName: String
   otherFeesPrice: Float
@@ -311,7 +311,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   amenities: String
   PostLikes: [PostLike] @hasMany(indexName: "byPost", fields: ["id"])
   policies: String
-  country: String!
+  country: String
   state: String
   city: String
   isApproved: Boolean

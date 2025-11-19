@@ -1,8 +1,12 @@
 import React from 'react';
+import { useEffect, useState } from "react";
 import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider'; 
 import'./ReviewUpload.css'; 
+import { getUrl } from "aws-amplify/storage";
 
 const ReviewUpload = () => {
+  const [existingMediaUrls, setExistingMediaUrls] = useState([]);
+
   const {
     propertyType,
     type,
@@ -48,6 +52,9 @@ const ReviewUpload = () => {
     options,
   } = useUploadContext();
 
+  console.log("media fetched:", media)
+
+
   const formatCurrency = (amount) => Number(amount)?.toLocaleString();
 
   const formatDuration = (minutes) => {
@@ -65,20 +72,87 @@ const ReviewUpload = () => {
     auto_event: "Automatic Acceptance (Client can book & Pay)"
   };
 
+  // Convert existing S3 keys into real HTTPS URLs
+  useEffect(() => {
+    const convertMedia = async () => {
+      if (!media || media.length === 0) {
+        setExistingMediaUrls([]);
+        return;
+      }
+
+      const results = [];
+
+      for (const item of media) {
+        let key = item.key || item.uri || item;
+
+        console.log("RAW KEY:", key);
+
+        // CASE 1 — LOCAL DEVICE MEDIA (blob:, file:)
+        if (key.startsWith("blob:") || key.startsWith("file:")) {
+          results.push({
+            uri: key,
+            type:
+              item.type ||
+              (key.match(/\.(mp4|mov|mkv)$/i) ? "video/mp4" : "image/jpeg"),
+          });
+          continue;
+        }
+
+        // CASE 2 — EXISTING S3 KEYS
+        // make sure the key starts with public/
+        let finalKey =
+          key.startsWith("public/") ? key : `public/${key.replace(/^\/+/, "")}`;
+
+        console.log("FINAL S3 KEY USED:", finalKey);
+
+        const out = await getUrl({
+          path: finalKey,
+          options: { validateObjectExistence: true },
+        });
+
+        results.push({
+          uri: out.url.toString(),
+          type:
+            (finalKey.match(/\.(mp4|mov|mkv)$/i) ? "video/mp4" : "image/jpeg"),
+        });
+      }
+
+      setExistingMediaUrls(results);
+    };
+
+    convertMedia();
+  }, [media]);
+
+  // Combine existing converted URLs + new device media
+  const combinedMedia = [
+    ...existingMediaUrls,
+    ...media
+      .filter((item) => item.uri && (item.uri.startsWith("blob:") || item.uri.startsWith("file:")))
+      .map((item) => ({
+        uri: item.uri,
+        type:
+          item.type ||
+          (item.uri.match(/\.(mp4|mov|mkv)$/i) ? "video/mp4" : "image/jpeg"),
+      })),
+  ];
+
   return (
     <div className='reviewUploadCon'>
       {/* Media Display */}
       <div className="reviewMediaFullDisplayContainer">
         <div className="mediaDivContainer">
-        {media.map((item, index) => (
+          {combinedMedia.length === 0 && (
+            <p>No media available</p>
+          )}
+
+          {combinedMedia.map((item, index) => (
             <div className="dispalyMediaContainer" key={index}>
-              {item.type === 'video' ? (
+              {item.type === "video" ? (
                 <video className="dispalyMedia" controls>
                   <source src={item.uri} type="video/mp4" />
-                  Your browser does not support the video tag.
                 </video>
               ) : (
-                <img src={item.uri} alt={`media-${index}`} className="dispalyMedia" />
+                <img src={item.uri} className="dispalyMedia" />
               )}
             </div>
           ))}

@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DefaultImage from '/defaultImage.png';
 import { getUrl } from 'aws-amplify/storage';
+import { useUploadContext } from '../../../../../../../Providers/RealtorProvider/UploadProvider';
 import './ProfileMediaGrid.css';
+import { DataStore } from "aws-amplify/datastore";
+import { Post, BookingPostOptions } from '../../../../../../models';
 
 const MediaGrid = ({ posts }) => {
+  const { loadExistingPost } = useUploadContext();
   const [mediaUris, setMediaUris] = useState({});
   const navigate = useNavigate();
 
@@ -62,7 +66,33 @@ const MediaGrid = ({ posts }) => {
         return (
           <button
             key={post.id}
-            onClick={() => navigate(`/realtorcontent/postdetails/${post.id}`)}
+            onClick={ async () =>{ 
+              if (
+                // post.uploadStatus !== "COMPLETED"
+                post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"   
+              ) {
+                // Fetch the REAL full post from DataStore
+                const fullPost = await DataStore.query(Post, post.id);
+                console.log('postid:', post.id)
+
+                // Also load BookingPostOptions
+                const bookingOptions = await DataStore.query(
+                  BookingPostOptions,
+                  (c) => c.postID.eq(post?.id)
+                );
+
+                const editablePost = {
+                  ...fullPost,
+                  BookingPostOptions: bookingOptions,
+                };
+
+                loadExistingPost(editablePost);
+
+                navigate("/realtorcontent/edit_selectaddress");
+              } else {
+                navigate(`/realtorcontent/postdetails/${post.id}`);
+              }
+            }}
             className="gridRealItem"
           >
             <div className="mediaImageRealContainer">
@@ -81,9 +111,29 @@ const MediaGrid = ({ posts }) => {
 
                     <div
                       className="proRealPostVideoOverlay"
-                      onClick={(e) => {
+                      onClick={ async (e) => {
                         e.stopPropagation();
-                        navigate(`/realtorcontent/postdetails/${post.id}`);
+                        if (post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED") {
+                          // Fetch the REAL full post from DataStore
+                          const fullPost = await DataStore.query(Post, post.id);
+                          
+                          // Also load BookingPostOptions
+                          const bookingOptions = await DataStore.query(
+                            BookingPostOptions,
+                            (c) => c.postID.eq(post.id)
+                          );
+
+                          const editablePost = {
+                            ...fullPost,
+                            BookingPostOptions: bookingOptions,
+                          };
+
+                          loadExistingPost(editablePost);
+
+                          navigate("/realtorcontent/edit_selectaddress");
+                        } else {
+                          navigate(`/realtorcontent/postdetails/${post.id}`);
+                        }
                       }}
                     />
                   </div>
@@ -113,7 +163,12 @@ const MediaGrid = ({ posts }) => {
               </div>}
 
               {/* Interrupted */}
-              {post.uploadStatus !== "COMPLETED" && <div className='unavailableLabelRealtorProfile'>
+              {/* {post.uploadStatus !== "COMPLETED" && <div className='unavailableLabelRealtorProfile'>
+                <p>Continue Upload</p>
+              </div>} */}
+
+              {/* To show Interrupted based on strict rule */}
+              {(post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED") && <div className='unavailableLabelRealtorProfile'>
                 <p>Continue Upload</p>
               </div>}
             </div>

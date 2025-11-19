@@ -58,6 +58,21 @@
     margin-right: 8px;
 }
 
+.fullEditPostBtnCon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:10px;
+    border-radius: 10px;
+    background-color: rgb(55, 73, 52);
+}
+
+.fullEditPostBtnCon p {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color:white;
+}
+
 .realtorSubheader {
     font-size: 19px;
     font-weight: bold;

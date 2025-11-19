@@ -92,9 +92,12 @@ const UploadContextProvider = ({children}) => {
           }
         }
         
-        if (price === '' || price === null || price === undefined || isNaN(price)) {
-          setErrors('Price is required');
-          return false;
+        // If options exist, skip the price check
+        if (!options.length) {
+          if (price === '' || price === null || price === undefined || isNaN(price)) {
+            setErrors('Price is required');
+            return false;
+          }
         }
         
         if (!totalPrice) {
@@ -229,14 +232,18 @@ const UploadContextProvider = ({children}) => {
         }
 
         // Price validations
-        if (isNaN(parseFloat(price))) {
-          setErrors('Price must be a number');
-          return false;
+        if (!options.length) {
+          if (isNaN(parseFloat(price))) {
+            setErrors('Price must be a number');
+            return false;
+          }
         }
-
-        if (isNaN(parseFloat(totalPrice))) {
-          setErrors('Total Price must be a number');
-          return false;
+        
+        if (!options.length) {
+          if (isNaN(parseFloat(totalPrice))) {
+            setErrors('Total Price must be a number');
+            return false;
+          }
         }
         
         return true;
@@ -289,10 +296,13 @@ const UploadContextProvider = ({children}) => {
         alert('Cannot upload empty fields');
         return false;
       }
-      if (price === null || price === undefined || price === '' || isNaN(price)) {
-        alert('Price is required');
-        return false;
+      if (!options.length) {
+        if (price === null || price === undefined || price === '' || isNaN(price)) {
+          alert('Price is required');
+          return false;
+        }
       }
+      
       if(!country){
         alert('Cannot upload empty fields');
         return false;
@@ -311,7 +321,7 @@ const UploadContextProvider = ({children}) => {
         return false;
       }
     }
-
+    
 
     // Helper function to load existing post for edit
     const loadExistingPost = (post) => {
@@ -329,7 +339,14 @@ const UploadContextProvider = ({children}) => {
       setAvailableDocs(post.availableDocs || '');
       setCustomInput(post.customInput || '');
       setAccommodationParts(post.accommodationParts || '');
-      setMedia(post.media ? [...post.media] : []);
+
+      setMedia(
+        post.media?.map(key => ({
+          key,
+          type: key.endsWith(".mp4") ? "video" : "image"
+        })) || []
+      );
+
       setFullAddress(post.fullAddress || '');
       setGeneralLocation(post.generalLocation || '');
       setLat(post.lat || 0);
@@ -360,7 +377,17 @@ const UploadContextProvider = ({children}) => {
       setDescription(post.description || '');
       setAmenities(post.amenities || '');
       setPolicies(post.policies || '');
-      setOptions(post.options ? post.options.map(opt => ({ ...opt })) : []);
+      setOptions(
+        post.BookingPostOptions
+          ? post.BookingPostOptions.map(opt => ({
+              id: opt.id,
+              bookingPostOptionType: opt.bookingPostOptionType || "", 
+              bookingName: opt.bookingName || "",
+              optionPrice: opt.optionPrice || 0,
+              minSpend: opt.minTime || null,   // match your UI’s field
+            }))
+          : []
+      );
       
       setUploadPost(post); // store the original for updating later
     };

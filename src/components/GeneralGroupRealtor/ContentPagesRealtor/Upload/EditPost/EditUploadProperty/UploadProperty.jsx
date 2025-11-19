@@ -10,6 +10,19 @@ import { DataStore } from "aws-amplify/datastore";
 import { uploadData } from "aws-amplify/storage";
 import { Post, BookingPostOptions } from "../../../../../../models";
 
+// Safely determine if a file is actually an image
+const isImageMime = (mime) => {
+  if (!mime) return false;
+  return mime.startsWith("image/");
+};
+
+// Determine file extension when type is missing
+const getFileExtensionFromURI = (uri) => {
+  if (!uri) return null;
+  const match = uri.match(/\.(jpg|jpeg|png|gif|webp|mp4|mov|mkv)$/i);
+  return match ? match[1].toLowerCase() : null;
+};
+
 const UploadProperty = () => {
   const navigate = useNavigate();
 
@@ -188,33 +201,34 @@ const UploadProperty = () => {
   // Function to upload media (images & videos)
   const uploadMedia = async () => {
     try {
-      let totalFiles = media.length;
-      let uploadedFiles = 0;
+      const newFiles = media.filter((item) => item.uri); // FIX ✔
 
-      const uploadPromises = media.map(async (item) => {
+      const uploadPromises = newFiles.map(async (item) => {
         const response = await fetch(item.uri);
-        const fileBlob = await response.blob();
-        let compressedBlob = fileBlob;
-        let fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
+        let fileBlob = await response.blob();
 
-        // Compress Image
-        if (item.type.startsWith("image")) {
-          compressedBlob = await compressImage(fileBlob, item.name);
+        const mime = fileBlob.type;
+        const isImage = isImageMime(mime);
+
+        let ext = getFileExtensionFromURI(item.uri);
+        if (!ext) ext = isImage ? "jpg" : "mp4";
+
+        let finalBlob = fileBlob;
+        if (isImage) {
+          finalBlob = await compressImage(fileBlob, item.name || "image.jpg");
         }
 
-        // Generate a unique file path
-        const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${fileExtension}`;
+        const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${ext}`;
 
-        // Upload to S3
         const result = await uploadData({
           path: fileKey,
-          data: compressedBlob,
+          data: finalBlob,
           options: {
-            contentType: item.type,
+            contentType: mime || (isImage ? "image/jpeg" : "video/mp4"),
             onProgress: ({ transferredBytes, totalBytes }) => {
               if (totalBytes) {
-                const progress = Math.round((transferredBytes / totalBytes) * 100);
-                setUploadProgress(progress); // Show progress per file (optional)
+                const prog = Math.round((transferredBytes / totalBytes) * 100);
+                setUploadProgress(prog);
               }
             },
           },
@@ -232,6 +246,7 @@ const UploadProperty = () => {
     }
   };
 
+
   // Handle the update process for all media and save post in DataStore
   const handleUpdate = async () => {
     if (uploading) return;
@@ -248,8 +263,11 @@ const UploadProperty = () => {
       if (!existingPost) throw new Error("Post not found");
 
       // 2️⃣ Separate OLD URLs and NEW Local Files
-      const oldUrls = media.filter(item => typeof item === "string");
-      const newFiles = media.filter(item => typeof item !== "string");
+      const oldUrls = media
+        .filter(item => item && !item.uri) // keep existing S3 media
+        .map(item => item.key || item);     // convert object → URL string
+      const newFiles = media.filter(item => item.uri && (item.uri.startsWith("blob:") || item.uri.startsWith("file:")));
+
 
       // 3️⃣ Upload NEW media files only
       let uploadedNewFiles = [];
@@ -353,27 +371,32 @@ const UploadProperty = () => {
         })
       );
 
-      // 6️⃣ DELETE OLD BOOKING OPTIONS
-      const oldOptions = await DataStore.query(BookingPostOptions, (c) =>
-        c.postID.eq(existingPost.id)
-      );
-      await Promise.all(oldOptions.map(opt => DataStore.delete(opt)));
-
-      // 7️⃣ SAVE NEW BOOKING OPTIONS
-      await Promise.all(
-        options.map((opt) =>
-          DataStore.save(
+      // Updating booking options
+      for (const opt of options) {
+        if (opt.id) {
+          await DataStore.save(
+            BookingPostOptions.copyOf(
+              await DataStore.query(BookingPostOptions, opt.id),
+              updated => {
+                updated.bookingPostOptionType = opt.bookingPostOptionType;
+                updated.bookingName = opt.bookingName;
+                updated.optionPrice = Number(opt.optionPrice);
+                updated.minTime = opt.minSpend;               
+              }
+            )
+          );
+        } else {
+          await DataStore.save(
             new BookingPostOptions({
-              postID: existingPost.id,
               bookingPostOptionType: opt.bookingPostOptionType,
-              bookingName: opt.bookingName,
-              optionPrice: parseFloat(opt.optionPrice) || 0,
-              minSpend: parseFloat(opt.minSpend) || 0,
-              maxGuests: opt.maxGuests || null,
+              optionName: opt.bookingName,
+              optionPrice: Number(opt.optionPrice),
+              minTime: opt.minSpend,
+              propertypostID: updatedPost.id,
             })
-          )
-        )
-      );
+          );
+        }
+      }
 
       alert("Post updated successfully!");
 

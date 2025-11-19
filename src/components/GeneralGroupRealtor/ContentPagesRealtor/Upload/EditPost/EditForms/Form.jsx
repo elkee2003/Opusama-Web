@@ -367,7 +367,13 @@ const Forms = () => {
           {/* Opening & Closing Time */}
           {propertyType !== 'House Rent' && propertyType !== 'House Sale' && propertyType !== 'Land Sale' && propertyType !== 'Student Accommodation' && propertyType !== 'Office Space' && propertyType !== 'Commercial Space' && !(propertyType === 'Event' && eventFrequency !== 'recurring')  && (
             <div className='openingClosingTimeCon'>
-              <label className="formLabel">Opening Hour {!sessionDuration && " (Opt)"}:</label>
+              <label className="formLabel">
+                Opening Hour {
+                  !sessionDuration && 
+                  !(propertyType === "Event" && eventFrequency === "recurring")&&
+                  " (Opt)"
+                }:
+              </label>
               <input
                 className='moneyInput'
                 type="time"
@@ -375,7 +381,13 @@ const Forms = () => {
                 onChange={(e) => setOpeningHour(e.target.value)}
               />
 
-              <label className="formLabel">Closing Hour {!sessionDuration && " (Opt)"}:</label>
+              <label className="formLabel">
+                Closing Hour {
+                  !sessionDuration && 
+                  !(propertyType === "Event" && eventFrequency === "recurring")&&
+                  " (Opt)"
+                }:
+              </label>
               <input
                 className='moneyInput'
                 type="time"

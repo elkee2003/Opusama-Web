@@ -114,7 +114,7 @@ const UploadProperty = () => {
     onValidateUpload,
   } = useUploadContext();
 
-  console.log('media:',media)
+  console.log('media:',media, 'desc:', description)
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -188,35 +188,35 @@ const UploadProperty = () => {
   // Function to upload media (images & videos)
   const uploadMedia = async () => {
     try {
-      let totalFiles = media.length;
-      let uploadedFiles = 0;
-
       const uploadPromises = media.map(async (item) => {
+        const isLocal =
+          item.uri.startsWith("blob:") || item.uri.startsWith("file:");
+        const isRemote = item.uri.startsWith("https://");
+
+        // 1️⃣ If remote (already in S3), DO NOT re-upload
+        if (isRemote) {
+          const key = item.key || extractKeyFromUrl(item.uri);
+          return key;
+        }
+
+        // 2️⃣ For device media — upload
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
-        let compressedBlob = fileBlob;
-        let fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
 
-        // Compress Image
-        if (item.type.startsWith("image")) {
+        let compressedBlob = fileBlob;
+
+        if (isLocal && item.type.startsWith("image")) {
           compressedBlob = await compressImage(fileBlob, item.name);
         }
 
-        // Generate a unique file path
+        const fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
         const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${fileExtension}`;
 
-        // Upload to S3
         const result = await uploadData({
           path: fileKey,
           data: compressedBlob,
           options: {
             contentType: item.type,
-            onProgress: ({ transferredBytes, totalBytes }) => {
-              if (totalBytes) {
-                const progress = Math.round((transferredBytes / totalBytes) * 100);
-                setUploadProgress(progress); // Show progress per file (optional)
-              }
-            },
           },
         }).result;
 
@@ -227,7 +227,7 @@ const UploadProperty = () => {
       return mediaUrls;
     } catch (e) {
       console.error("Error uploading files:", e);
-      alert("Failed to upload media. Please try again.");
+      alert("Failed to upload media.");
       return [];
     }
   };
@@ -251,8 +251,13 @@ const UploadProperty = () => {
           realtorID: dbRealtor.id,
           uploadStatus: "UPLOADING",
           uploadErrorMessage: null,
-          propertyType: propertyType || "",
-          type: type || "",
+          
+          // REQUIRED FIELDS
+          propertyType: propertyType || "TEMP",
+          type: type || "TEMP",
+          description: description || "TEMP",
+          totalPrice: parseFloat(totalPrice) || 0,
+          country: country || "TEMP",
         })
       );
 

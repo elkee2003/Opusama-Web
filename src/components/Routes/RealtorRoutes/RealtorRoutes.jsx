@@ -10,18 +10,18 @@ import RealtorCommunity from '../../../components/GeneralGroupRealtor/ContentPag
 import RealtorProfile from '../../../components/GeneralGroupRealtor/ContentPagesRealtor/Profile/Profile';
 
 // Upload Routes
-import EditDisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
-import EditViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
-import EditGooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
-import EditForms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
-import EditUploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
+import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
+import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
+import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
+import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
+import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
 
 // Edit Post Routes
-import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/DisplayMedia/DisplayMedia';
-import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/ViewMedia/ViewMedia';
-import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Googleautocomplete';
-import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Form';
-import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditUploadProperty/UploadProperty';
+import EditDisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/DisplayMedia/DisplayMedia';
+import EditViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/ViewMedia/ViewMedia';
+import EditGooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Googleautocomplete';
+import EditForms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Form';
+import EditUploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditUploadProperty/UploadProperty';
 
 // Other Routes
 import EditProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/EditProfile/EditProfile';
@@ -76,7 +76,7 @@ const RealtorRoutes = () => (
 
             <Route path="edit_selectaddress" element={<EditGooglePlacesAutoCompleteCom />} />
 
-            <Route path="edit_form/:postId" element={<EditForms />} />
+            <Route path="edit_form" element={<EditForms />} />
 
             <Route path="edit_uploaded_post" element={<EditUploadProperty />} />
 

@@ -217,17 +217,6 @@ function Content({post, setPost, realtor,}) {
         />
       </button>
 
-      {/* Full edit */}
-      <div
-        className='editPostBtnCon'
-        onClick={()=>{
-          loadExistingPost(post); 
-          navigate(`/realtorcontent/edit_form/${post.id}`);
-        }}
-      >
-        <p>Edit Full Post</p>
-      </div>
-
       {/* Shallow edit */}
       <div 
         className='editPostBtnCon'
@@ -294,6 +283,38 @@ function Content({post, setPost, realtor,}) {
             color="primary"
           />
         </div>
+
+        {/* Continue Editing button (Full Edit Button)*/}
+        {post?.uploadStatus !== "COMPLETED" && <div
+          className='fullEditPostBtnCon'
+          onClick={async () => {
+            if (
+              // post.uploadStatus !== "COMPLETED"
+              post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"  
+            ) {
+              // Fetch fresh full post from DataStore
+              const fullPost = await DataStore.query(Post, post.id);
+
+              // Fetch booking options
+              const bookingOptions = await DataStore.query(
+                BookingPostOptions,
+                (c) => c.postID.eq(post.id)
+              );
+
+              // Merge into one editable object
+              const editablePost = {
+                ...fullPost,
+                BookingPostOptions: bookingOptions,
+              };
+
+              loadExistingPost(editablePost);
+
+              navigate("/realtorcontent/edit_selectaddress");
+            }
+          }}
+        >
+          <p>Continue Editing</p>
+        </div>}
 
         {/* Realtor Info */}
         <RealtorNameRating realtor={realtor}/>
@@ -691,10 +712,10 @@ function Content({post, setPost, realtor,}) {
         <div>
           <h4 className='luxPolHeadTxt'> Luxuries</h4>
           <p className='luxPolTxt'>
-            {readMoreLux ||post.amenities.length <= 150 ? post.amenities : `${post.amenities.substring(0, 100)}...`}
+            {readMoreLux ||post.amenities?.length <= 150 ? post?.amenities : `${post.amenities?.substring(0, 100)}...`}
 
             {/* Button to toggle */}
-            { post.amenities.length > 100 &&(<button
+            { post.amenities?.length > 100 && (<button
                 className={readMoreLux ? 'readLessButton' : 'readMoreButton'}
                 onClick={() => setReadMoreLux(!readMoreLux)}
               >
@@ -711,10 +732,10 @@ function Content({post, setPost, realtor,}) {
         <div>
           <h4 className='luxPolHeadTxt'>Policies</h4>
           <p className='luxPolTxt'>
-            {readMorePol || post.policies.length <= 100 ? post.policies : `${post.policies.substring(0,100)}...`}
+            {readMorePol || post?.policies?.length <= 100 ? post.policies : `${post.policies?.substring(0,100)}...`}
 
             {/* Button to toggle */}
-            { post.policies.length > 100 &&(  <button
+            { post.policies?.length > 100 &&(  <button
                 className={readMorePol ? 'readLessButton' : 'readMoreButton'}
                 onClick={() => setReadMorePol(!readMorePol)}
                 >
