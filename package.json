@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.7.1",
-    "@aws-sdk/client-s3": "^3.931.0",
+    "@aws-sdk/client-s3": "^3.940.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@ffmpeg/core": "^0.12.10",

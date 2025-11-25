@@ -13,6 +13,13 @@ const TransactionStatus = {
   "FAILED": "FAILED"
 };
 
+const UploadStatus = {
+  "UPLOADING": "UPLOADING",
+  "COMPLETED": "COMPLETED",
+  "COMPLETED_EDITED": "COMPLETED_EDITED",
+  "FAILED": "FAILED"
+};
+
 const BookingStatus = {
   "PENDING": "PENDING",
   "ACCEPTED": "ACCEPTED",
@@ -67,6 +74,7 @@ export {
   Post,
   VendorTransactionType,
   TransactionStatus,
+  UploadStatus,
   BookingStatus,
   PickUpStatus,
   BookingPostOptionType

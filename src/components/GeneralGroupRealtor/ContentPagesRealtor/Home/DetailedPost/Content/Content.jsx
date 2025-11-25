@@ -218,12 +218,12 @@ function Content({post, setPost, realtor,}) {
       </button>
 
       {/* Shallow edit */}
-      <div 
+      {/* <div 
         className='editPostBtnCon'
         onClick={()=>navigate(`/realtorcontent/edit_post/${post.id}`)}
       >
         <p>Edit</p>
-      </div>
+      </div> */}
 
       {/* Scrollable Content */}
       <div className='scrollContainer'>
@@ -289,8 +289,8 @@ function Content({post, setPost, realtor,}) {
           className='fullEditPostBtnCon'
           onClick={async () => {
             if (
-              // post.uploadStatus !== "COMPLETED"
-              post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"  
+              post.uploadStatus !== "COMPLETED"
+              // post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"  
             ) {
               // Fetch fresh full post from DataStore
               const fullPost = await DataStore.query(Post, post.id);
@@ -313,7 +313,7 @@ function Content({post, setPost, realtor,}) {
             }
           }}
         >
-          <p>Continue Editing</p>
+          <p>Edit</p>
         </div>}
 
         {/* Realtor Info */}

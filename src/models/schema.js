@@ -2176,7 +2176,7 @@ export const schema = {
                     "name": "description",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "eventName": {
@@ -2304,7 +2304,7 @@ export const schema = {
                     "name": "totalPrice",
                     "isArray": false,
                     "type": "Float",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "inspectionFee": {
@@ -2434,7 +2434,7 @@ export const schema = {
                     "name": "country",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "state": {
@@ -2545,6 +2545,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "uploadStatus": {
+                    "name": "uploadStatus",
+                    "isArray": false,
+                    "type": {
+                        "enum": "UploadStatus"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "uploadErrorMessage": {
+                    "name": "uploadErrorMessage",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -2613,6 +2629,15 @@ export const schema = {
                 "FAILED"
             ]
         },
+        "UploadStatus": {
+            "name": "UploadStatus",
+            "values": [
+                "UPLOADING",
+                "COMPLETED",
+                "COMPLETED_EDITED",
+                "FAILED"
+            ]
+        },
         "BookingStatus": {
             "name": "BookingStatus",
             "values": [
@@ -2655,5 +2680,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "4f49dc463827ac194d19217cf443f9d7"
+    "version": "2a2c8ffade27cbc5c58c48b0843c5894"
 };

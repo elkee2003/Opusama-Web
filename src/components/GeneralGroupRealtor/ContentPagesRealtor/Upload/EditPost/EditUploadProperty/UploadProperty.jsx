@@ -366,8 +366,8 @@ const UploadProperty = () => {
           updated.openingHour = openingHour;
           updated.closingHour = closingHour;
 
-          updated.uploadStatus = "COMPLETED_EDITED"
-          updated.uploadErrorMessage = null;
+          updated.uploadStatus = "COMPLETED_EDITED";
+          updated.uploadErrorMessage = "";
         })
       );
 

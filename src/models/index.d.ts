@@ -13,6 +13,13 @@ export enum TransactionStatus {
   FAILED = "FAILED"
 }
 
+export enum UploadStatus {
+  UPLOADING = "UPLOADING",
+  COMPLETED = "COMPLETED",
+  COMPLETED_EDITED = "COMPLETED_EDITED",
+  FAILED = "FAILED"
+}
+
 export enum BookingStatus {
   PENDING = "PENDING",
   ACCEPTED = "ACCEPTED",
@@ -745,7 +752,7 @@ type EagerPost = {
   readonly availableDocs?: string | null;
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
-  readonly description: string;
+  readonly description?: string | null;
   readonly eventName?: string | null;
   readonly eventDateTime?: string | null;
   readonly eventEndDateTime?: string | null;
@@ -762,7 +769,7 @@ type EagerPost = {
   readonly lng?: number | null;
   readonly price?: number | null;
   readonly cautionFee?: number | null;
-  readonly totalPrice: number;
+  readonly totalPrice?: number | null;
   readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
@@ -778,7 +785,7 @@ type EagerPost = {
   readonly amenities?: string | null;
   readonly PostLikes?: (PostLike | null)[] | null;
   readonly policies?: string | null;
-  readonly country: string;
+  readonly country?: string | null;
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
@@ -793,6 +800,8 @@ type EagerPost = {
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
+  readonly uploadStatus?: UploadStatus | keyof typeof UploadStatus | null;
+  readonly uploadErrorMessage?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -810,7 +819,7 @@ type LazyPost = {
   readonly availableDocs?: string | null;
   readonly accommodationParts?: string | null;
   readonly media?: (string | null)[] | null;
-  readonly description: string;
+  readonly description?: string | null;
   readonly eventName?: string | null;
   readonly eventDateTime?: string | null;
   readonly eventEndDateTime?: string | null;
@@ -827,7 +836,7 @@ type LazyPost = {
   readonly lng?: number | null;
   readonly price?: number | null;
   readonly cautionFee?: number | null;
-  readonly totalPrice: number;
+  readonly totalPrice?: number | null;
   readonly inspectionFee?: number | null;
   readonly otherFeesName?: string | null;
   readonly otherFeesPrice?: number | null;
@@ -843,7 +852,7 @@ type LazyPost = {
   readonly amenities?: string | null;
   readonly PostLikes: AsyncCollection<PostLike>;
   readonly policies?: string | null;
-  readonly country: string;
+  readonly country?: string | null;
   readonly state?: string | null;
   readonly city?: string | null;
   readonly isApproved?: boolean | null;
@@ -858,6 +867,8 @@ type LazyPost = {
   readonly openingHour?: string | null;
   readonly closingHour?: string | null;
   readonly realtorID: string;
+  readonly uploadStatus?: UploadStatus | keyof typeof UploadStatus | null;
+  readonly uploadErrorMessage?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
