@@ -1,11 +1,13 @@
-// Note that in this webhook, qrcode is saved externally, and not in s3 (if page refreshes after debt of money from bank)
-
+// api/webhook.js
 import crypto from "crypto";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+// I am not saving in s3 again that is why I commented out the below
+// import QRCode from "qrcode";
+// import AWS from "aws-sdk";
 
 export const config = {
-  api: { bodyParser: false },
+  api: { bodyParser: false }, // keep raw body for signature verification
 };
 
 export default async function handler(req, res) {
@@ -14,61 +16,87 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ------------------------------------------------------------
-    // READ RAW BODY
-    // ------------------------------------------------------------
+    // -------------------------
+    // 1) Read raw body
+    // -------------------------
     const chunks = [];
     for await (const chunk of req) chunks.push(chunk);
-    const rawBody = Buffer.concat(chunks).toString("utf8");
+    const rawBodyBuffer = Buffer.concat(chunks);
+    const rawBodyString = rawBodyBuffer.toString("utf8");
 
-    console.log("Raw body:", rawBody);
-
-    // ------------------------------------------------------------
-    // VERIFY PAYSTACK SIGNATURE
-    // ------------------------------------------------------------
-    const secret =
+    // -------------------------
+    // 2) Load env vars
+    // -------------------------
+    const PAYSTACK_SECRET =
       process.env.PAYSTACK_SECRET_KEY_LIVE || process.env.PAYSTACK_SECRET_KEY;
+    const APPSYNC_API_URL = process.env.APPSYNC_API_URL;
+    const APPSYNC_API_KEY = process.env.APPSYNC_API_KEY;
+    // I am not saving in s3 again, that is why I commented out the below
+    // const S3_BUCKET = process.env.S3_BUCKET;
+    // const AWS_REGION = process.env.AWS_REGION || "eu-north-1";
+    const GUEST_EMAIL_LAMBDA = process.env.GUEST_EMAIL_LAMBDA;
+    const VENDOR_EMAIL_LAMBDA = process.env.VENDOR_EMAIL_LAMBDA;
 
-    const hash = crypto
-      .createHmac("sha512", secret)
-      .update(rawBody)
+    // Basic check for required envs
+    if (!PAYSTACK_SECRET) {
+      console.error("Missing PAYSTACK_SECRET_KEY_LIVE / PAYSTACK_SECRET_KEY");
+      return res.status(500).send("Server misconfigured");
+    }
+    if (!APPSYNC_API_URL || !APPSYNC_API_KEY) {
+      console.error("Missing APPSYNC_API_URL/APPSYNC_API_KEY");
+      return res.status(500).send("Server misconfigured");
+    }
+
+    // -------------------------
+    // 3) Verify Paystack signature
+    // -------------------------
+    const computedHash = crypto
+      .createHmac("sha512", PAYSTACK_SECRET)
+      .update(rawBodyBuffer)
       .digest("hex");
 
-    if (hash !== req.headers["x-paystack-signature"]) {
-      console.error("Invalid signature");
+    const incomingSignature = req.headers["x-paystack-signature"];
+    if (!incomingSignature || incomingSignature !== computedHash) {
+      console.error("Invalid Paystack signature", { incomingSignature, computedHash });
       return res.status(400).send("Invalid signature");
     }
 
-    const event = JSON.parse(rawBody);
-
+    // -------------------------
+    // 4) Parse event and check type
+    // -------------------------
+    const event = JSON.parse(rawBodyString);
     if (event.event !== "charge.success") {
-      return res.status(200).send("Ignored");
+      console.log("Ignored Paystack event:", event.event);
+      return res.status(200).send("Ignored non-charge.success event");
     }
 
-    const reference = event.data.reference;
+    const reference = event.data?.reference;
+    if (!reference) {
+      console.error("No reference in event");
+      return res.status(400).send("Bad payload");
+    }
 
     console.log("Webhook received for reference:", reference);
 
-    // ------------------------------------------------------------
-    // VERIFY PAYMENT WITH PAYSTACK
-    // ------------------------------------------------------------
+    // -------------------------
+    // 5) Re-verify payment with Paystack API
+    // -------------------------
     const verifyRes = await axios.get(
-      `https://api.paystack.co/transaction/verify/${reference}`,
-      { headers: { Authorization: `Bearer ${secret}` } }
+      `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+      { headers: { Authorization: `Bearer ${PAYSTACK_SECRET}` } }
     );
 
     const verified = verifyRes.data?.data;
-
     if (!verified || verified.status !== "success") {
-      console.error("Payment verification failed");
+      console.error("Paystack verification failed for", reference, verified);
       return res.status(400).send("Payment not verified");
     }
 
-    console.log("Paystack verification success:", verified.reference);
+    console.log("Paystack transaction verified:", verified.reference);
 
-    // ------------------------------------------------------------
-    // FIND BOOKING
-    // ------------------------------------------------------------
+    // -------------------------
+    // 6) Find booking in AppSync (include _version)
+    // -------------------------
     const findQuery = `
       query FindBooking($reference: String!) {
         listBookings(filter: { transactionReference: { eq: $reference } }) {
@@ -90,40 +118,32 @@ export default async function handler(req, res) {
     `;
 
     const findRes = await axios.post(
-      process.env.APPSYNC_API_URL,
-      {
-        query: findQuery,
-        variables: { reference },
-      },
-      {
-        headers: {
-          "x-api-key": process.env.APPSYNC_API_KEY,
-        },
-      }
+      APPSYNC_API_URL,
+      { query: findQuery, variables: { reference } },
+      { headers: { "x-api-key": APPSYNC_API_KEY, "Content-Type": "application/json" } }
     );
 
-    const items = findRes.data?.data?.listBookings?.items;
-    if (!items?.length) {
-      console.error("Booking not found for:", reference);
+    const bookingItems = findRes.data?.data?.listBookings?.items || [];
+    if (!bookingItems.length) {
+      console.error("No booking found for transactionReference:", reference);
       return res.status(404).send("Booking not found");
     }
 
-    const booking = items[0];
-    console.log("Booking found:", booking.id, "Version:", booking._version);
+    const booking = bookingItems[0];
+    console.log("Booking found:", booking.id, "version:", booking._version);
 
-    // ------------------------------------------------------------
-    // GENERATE NEW TICKET ID (UUID)
-    // ------------------------------------------------------------
+    // -------------------------
+    
+    // -------------------------
+    // 7) Generate ticket ID and external QR URL
+    // -------------------------
     const ticketId = `TICKET-${uuidv4()}`;
 
-    // ------------------------------------------------------------
-    // GENERATE QR CODE URL (no S3 upload)
-    // ------------------------------------------------------------
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${ticketId}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(ticketId)}`;
+    // -------------------------
 
-    // ------------------------------------------------------------
-    // UPDATE BOOKING
-    // ------------------------------------------------------------
+    // 8) Update booking via AppSync (must include _version)
+    // -------------------------
     const updateMutation = `
       mutation UpdateBooking($input: UpdateBookingInput!) {
         updateBooking(input: $input) {
@@ -142,12 +162,8 @@ export default async function handler(req, res) {
       input: {
         id: booking.id,
         _version: booking._version,
-
-        // Payment
         status: "PAID",
         transactionStatus: "Successful",
-
-        // Ticket fields
         ticketID: ticketId,
         qrCodeUrl: qrUrl,
         ticketStatus: "UNUSED",
@@ -155,80 +171,90 @@ export default async function handler(req, res) {
     };
 
     const updateRes = await axios.post(
-      process.env.APPSYNC_API_URL,
-      {
-        query: updateMutation,
-        variables: updateVars,
-      },
-      { headers: { "x-api-key": process.env.APPSYNC_API_KEY } }
+      APPSYNC_API_URL,
+      { query: updateMutation, variables: updateVars },
+      { headers: { "x-api-key": APPSYNC_API_KEY, "Content-Type": "application/json" } }
     );
 
-    console.log("Booking updated:", updateRes.data.data.updateBooking);
+    console.log("Booking updated in AppSync:", updateRes.data?.data?.updateBooking);
 
-    // ------------------------------------------------------------
-    // SEND GUEST EMAIL
-    // ------------------------------------------------------------
+    // -------------------------
+    // 9) Send guest email (lambda)
+    // -------------------------
     try {
-      await axios.post(process.env.GUEST_EMAIL_LAMBDA, {
-        guestEmail: booking.guestEmail,
-        guestName: `${booking.clientFirstName} ${booking.clientLastName}`,
-        numberOfPeople: booking.numberOfPeople,
-        propertyName:
-          booking.propertyType || booking.accommodationType || "Accommodation",
-        ticketId,
-        qrUrl,
-      });
+      if (GUEST_EMAIL_LAMBDA) {
+        const guestPayload = {
+          guestEmail: booking.guestEmail,
+          guestName: `${booking.clientFirstName || ""} ${booking.clientLastName || ""}`.trim() || "Guest",
+          numberOfPeople: booking.numberOfPeople || 1,
+          propertyName: booking.propertyType || booking.accommodationType || "Accommodation",
+          ticketId,
+          qrUrl,
+        };
 
-      console.log("Guest email sent");
-    } catch (e) {
-      console.error("Guest email error:", e.response?.data || e.message);
-    }
-
-    // ------------------------------------------------------------
-    // SEND VENDOR EMAIL
-    // ------------------------------------------------------------
-    try {
-      const realtorQuery = `
-        query GetRealtor($id: ID!) {
-          getRealtor(id: $id) {
-            firstName
-            email
-          }
-        }
-      `;
-
-      const realtorRes = await axios.post(
-        process.env.APPSYNC_API_URL,
-        {
-          query: realtorQuery,
-          variables: { id: booking.realtorID },
-        },
-        { headers: { "x-api-key": process.env.APPSYNC_API_KEY } }
-      );
-
-      const realtor = realtorRes.data.data.getRealtor;
-
-      if (realtor?.email) {
-        await axios.post(process.env.VENDOR_EMAIL_LAMBDA, {
-          realtorEmail: realtor.email,
-          realtorName: realtor.firstName,
-          guestName: `${booking.clientFirstName} ${booking.clientLastName}`,
-          propertyName:
-            booking.propertyType ||
-            booking.accommodationType ||
-            "Accommodation",
-          totalAmount: booking.realtorPrice || booking.overAllPrice,
+        const guestRes = await axios.post(GUEST_EMAIL_LAMBDA, guestPayload, {
+          headers: { "Content-Type": "application/json" },
         });
 
-        console.log("Vendor email sent");
+        console.log("Guest email lambda response:", guestRes.status);
+      } else {
+        console.warn("GUEST_EMAIL_LAMBDA not configured - skipping guest email");
       }
     } catch (e) {
-      console.error("Vendor email error:", e.response?.data || e.message);
+      console.error("Failed to send guest email:", e.response?.data || e.message || e);
     }
 
+    // -------------------------
+    // 10) Send vendor email (lambda) - fetch realtor first
+    // -------------------------
+    try {
+      if (VENDOR_EMAIL_LAMBDA && booking.realtorID) {
+        const realtorQuery = `
+          query GetRealtor($id: ID!) {
+            getRealtor(id: $id) {
+              firstName
+              email
+            }
+          }
+        `;
+
+        const realtorRes = await axios.post(
+          APPSYNC_API_URL,
+          { query: realtorQuery, variables: { id: booking.realtorID } },
+          { headers: { "x-api-key": APPSYNC_API_KEY, "Content-Type": "application/json" } }
+        );
+
+        const realtor = realtorRes.data?.data?.getRealtor;
+        if (realtor?.email) {
+          const vendorPayload = {
+            realtorEmail: realtor.email,
+            realtorName: realtor.firstName || "",
+            guestName: `${booking.clientFirstName || ""} ${booking.clientLastName || ""}`.trim() || "Guest",
+            propertyName: booking.propertyType || booking.accommodationType || "Accommodation",
+            totalAmount: booking.realtorPrice || booking.overAllPrice || 0,
+            ticketId,
+            qrUrl,
+          };
+
+          const vendorRes = await axios.post(VENDOR_EMAIL_LAMBDA, vendorPayload, {
+            headers: { "Content-Type": "application/json" },
+          });
+
+          console.log("Vendor email lambda response:", vendorRes.status);
+        } else {
+          console.warn("Realtor email not found - skipping vendor email");
+        }
+      } else {
+        console.warn("VENDOR_EMAIL_LAMBDA not configured or realtorID missing - skipping vendor email");
+      }
+    } catch (e) {
+      console.error("Failed to send vendor email:", e.response?.data || e.message || e);
+    }
+
+    // All done
     return res.status(200).send("OK");
   } catch (err) {
-    console.error("Webhook error:", err);
+    console.error("Webhook processing error:", err.response?.data || err.message || err);
     return res.status(500).send("Server Error");
   }
 }
