@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"; 
 import './UploadProperty.css'
 import { IoArrowBack } from "react-icons/io5";
@@ -9,6 +9,9 @@ import { useUploadContext } from "../../../../../../../Providers/RealtorProvider
 import { DataStore } from "aws-amplify/datastore";
 import { uploadData } from "aws-amplify/storage";
 import { Post, BookingPostOptions } from "../../../../../../models";
+
+const UPLOAD_DRAFT_ID_KEY = "uploadDraftPostId";
+const UPLOAD_DRAFT_KEY = "uploadDraft";
 
 const UploadProperty = () => {
   const navigate = useNavigate();
@@ -112,12 +115,27 @@ const UploadProperty = () => {
     uploadPost,
     setUploadPost,
     onValidateUpload,
+    // local draft helpers from provider:
+    saveDraftToLocal,
+    loadDraftFromLocal,
+    clearLocalDraft,
+    loadExistingPost,
   } = useUploadContext();
-
-  console.log('media:',media, 'desc:', description)
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+
+   // Cloud draft Id (persisted localStorage)
+  const [cloudDraftId, setCloudDraftId] = useState(
+    localStorage.getItem(UPLOAD_DRAFT_ID_KEY) || null
+  );
+
+  // Loading indicator for initial draft
+  const [loadingDraft, setLoadingDraft] = useState(true);
+
+  // Debounce refs
+  const draftSyncTimer = useRef(null);
+  const isMountedRef = useRef(false);
 
   // Reset form fields function
   const resetFormFields = () => {
@@ -185,46 +203,324 @@ const UploadProperty = () => {
     return new Blob([compressedFile], { type: "image/jpeg" });
   };
 
-  // Function to upload media (images & videos)
-  const uploadMedia = async () => {
-    try {
-      const uploadPromises = media.map(async (item) => {
-        const isLocal =
-          item.uri.startsWith("blob:") || item.uri.startsWith("file:");
-        const isRemote = item.uri.startsWith("https://");
+  // ---------- helper: extractKeyFromUrl (noop for now, keeps your existing behavior) ----------
+  const extractKeyFromUrl = (url) => url;
 
-        // 1️⃣ If remote (already in S3), DO NOT re-upload
-        if (isRemote) {
-          const key = item.key || extractKeyFromUrl(item.uri);
-          return key;
+  // ---------- Create or load cloud draft ----------
+  const createCloudDraftIfNotExists = async () => {
+    try {
+      const existingId = localStorage.getItem(UPLOAD_DRAFT_ID_KEY);
+      if (existingId) {
+        setCloudDraftId(existingId);
+        const existing = await DataStore.query(Post, existingId);
+        if (existing) {
+          setUploadPost(existing);
+          // If there is cloud data, prefer loading it into context (merge)
+          loadExistingPost(existing);
+        } else {
+          // remove invalid id
+          localStorage.removeItem(UPLOAD_DRAFT_ID_KEY);
+          setCloudDraftId(null);
+        }
+        return existing;
+      }
+
+      // create minimal cloud draft
+      const draft = await DataStore.save(
+        new Post({
+          realtorID: dbRealtor?.id || "UNKNOWN",
+          uploadStatus: "UPLOADING",
+          uploadErrorMessage: null,
+          propertyType: propertyType || "",
+          type: type || "",
+          description: description || "",
+          totalPrice: totalPrice ? parseFloat(totalPrice) : 0,
+          country: country || "",
+          media: [],
+        })
+      );
+
+      localStorage.setItem(UPLOAD_DRAFT_ID_KEY, draft.id);
+      setCloudDraftId(draft.id);
+      setUploadPost(draft);
+      return draft;
+    } catch (e) {
+      console.error("createCloudDraftIfNotExists error:", e);
+      return null;
+    }
+  };
+
+  // ---------- Debounced sync to cloud ----------
+  const syncDraftToCloud = async () => {
+    if (!cloudDraftId) return;
+    try {
+      const original = await DataStore.query(Post, cloudDraftId);
+      if (!original) return;
+
+      await DataStore.save(
+        Post.copyOf(original, (updated) => {
+          updated.propertyType = propertyType || updated.propertyType;
+          updated.type = type || updated.type;
+          updated.packageType = packageType || updated.packageType;
+          updated.nameOfType = nameOfType || updated.nameOfType;
+          updated.availableDocs = availableDocs || updated.availableDocs;
+          updated.accommodationParts = accommodationParts || updated.accommodationParts;
+
+          // For draft we can store URIs (these may be local blob/file paths or S3 paths)
+          updated.media = Array.isArray(media) ? media.map((m) => m.uri || m.key || m) : updated.media;
+
+          updated.description = description || updated.description;
+          updated.capacity = capacity || updated.capacity;
+          updated.eventName = eventName || updated.eventName;
+          updated.eventDateTime = eventDateTime || updated.eventDateTime;
+          updated.eventEndDateTime = eventEndDateTime || updated.eventEndDateTime;
+          updated.recurrence = recurrence || updated.recurrence;
+          updated.eventFrequency = eventFrequency || updated.eventFrequency;
+          updated.dressCode = dressCode || updated.dressCode;
+          updated.fullAddress = fullAddress || updated.fullAddress;
+          updated.generalLocation = generalLocation || updated.generalLocation;
+          updated.lat = lat !== null && lat !== undefined ? parseFloat(lat) : updated.lat;
+          updated.lng = lng !== null && lng !== undefined ? parseFloat(lng) : updated.lng;
+
+          updated.timeFrame = timeFrame || updated.timeFrame;
+          updated.inspectionFee = inspectionFee ? parseFloat(inspectionFee) : updated.inspectionFee;
+          updated.cautionFee = cautionFee ? parseFloat(cautionFee) : updated.cautionFee;
+          updated.otherFeesName = otherFeesName || updated.otherFeesName;
+          updated.otherFeesPrice = otherFeesPrice ? parseFloat(otherFeesPrice) : updated.otherFeesPrice;
+          updated.otherFeesName2 = otherFeesName2 || updated.otherFeesName2;
+          updated.otherFeesPrice2 = otherFeesPrice2 ? parseFloat(otherFeesPrice2) : updated.otherFeesPrice2;
+          updated.price = price ? parseFloat(price) : updated.price;
+          updated.totalPrice = totalPrice ? parseFloat(totalPrice) : updated.totalPrice;
+
+          updated.vendorCommissionAmount = vendorCommissionAmount || updated.vendorCommissionAmount;
+          try {
+            updated.vendorCommissionBreakdown = JSON.stringify(vendorCommissionBreakdown);
+          } catch (e) { /* ignore */ }
+
+          updated.bed = bed || updated.bed;
+          updated.bedrooms = bedrooms || updated.bedrooms;
+          updated.amenities = amenities || updated.amenities;
+          updated.policies = policies || updated.policies;
+          updated.country = country || updated.country;
+          updated.state = state || updated.state;
+          updated.city = city || updated.city;
+
+          updated.isSubscription = isSubscription || updated.isSubscription;
+          updated.bookingMode = bookingMode || updated.bookingMode;
+          updated.allowMultiple = allowMultiple || updated.allowMultiple;
+          updated.maxCapacity = maxCapacity || updated.maxCapacity;
+          updated.sessionDuration = sessionDuration || updated.sessionDuration;
+          updated.sessionGap = sessionGap || updated.sessionGap;
+          updated.servicingDay = Array.isArray(servicingDay) ? servicingDay : updated.servicingDay;
+          updated.openingHour = openingHour || updated.openingHour;
+          updated.closingHour = closingHour || updated.closingHour;
+        })
+      );
+
+      // refresh uploadPost
+      const refreshed = await DataStore.query(Post, cloudDraftId);
+      if (refreshed) setUploadPost(refreshed);
+    } catch (e) {
+      console.warn("syncDraftToCloud failed:", e);
+    }
+  };
+
+  // ---------- Save local draft directly (fallback if provider helper not present) ----------
+  const saveLocalDraftDirect = () => {
+    try {
+      const draftObj = {
+        propertyType,
+        type,
+        nameOfType,
+        packageType,
+        capacity,
+        eventName,
+        eventDateTime,
+        eventEndDateTime,
+        recurrence,
+        eventFrequency,
+        dressCode,
+        availableDocs,
+        accommodationParts,
+        media,
+        fullAddress,
+        generalLocation,
+        lat,
+        lng,
+        bedrooms,
+        bed,
+        cautionFee,
+        inspectionFee,
+        otherFeesName,
+        otherFeesName2,
+        otherFeesPrice,
+        otherFeesPrice2,
+        price,
+        totalPrice,
+        vendorCommissionAmount,
+        vendorCommissionBreakdown,
+        timeFrame,
+        country,
+        state,
+        city,
+        isSubscription,
+        bookingMode,
+        allowMultiple,
+        maxCapacity,
+        sessionDuration,
+        sessionGap,
+        servicingDay,
+        openingHour,
+        closingHour,
+        description,
+        amenities,
+        policies,
+        options,
+      };
+      localStorage.setItem(UPLOAD_DRAFT_KEY, JSON.stringify(draftObj));
+    } catch (e) {
+      console.warn("saveLocalDraftDirect failed", e);
+    }
+  };
+
+  // ---------- Load initial draft (local first, then cloud) ----------
+  useEffect(() => {
+    isMountedRef.current = true;
+
+    (async () => {
+      try {
+        // 1) load local draft into context (provider helper if available)
+        if (typeof loadDraftFromLocal === "function") {
+          loadDraftFromLocal();
+        } else {
+          const raw = localStorage.getItem(UPLOAD_DRAFT_KEY);
+          if (raw) {
+            const d = JSON.parse(raw);
+            if (d) loadExistingPost ? loadExistingPost(d) : null;
+          }
         }
 
-        // 2️⃣ For device media — upload
+        // 2) create or load cloud draft
+        await createCloudDraftIfNotExists();
+      } catch (e) {
+        console.warn("init draft error", e);
+      } finally {
+        setLoadingDraft(false);
+      }
+    })();
+
+    return () => {
+      isMountedRef.current = false;
+      if (draftSyncTimer.current) clearTimeout(draftSyncTimer.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ---------- watch core fields, save local instantly and schedule cloud sync ----------
+  useEffect(() => {
+    if (loadingDraft) return;
+
+    // Prefer provider helper
+    if (typeof saveDraftToLocal === "function") {
+      saveDraftToLocal();
+    } else {
+      saveLocalDraftDirect();
+    }
+
+    // Debounce cloud sync
+    if (draftSyncTimer.current) clearTimeout(draftSyncTimer.current);
+    draftSyncTimer.current = setTimeout(() => {
+      // call cloud sync (fire and forget)
+      syncDraftToCloud();
+    }, 1200);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    propertyType,
+    type,
+    packageType,
+    nameOfType,
+    description,
+    media,
+    fullAddress,
+    generalLocation,
+    lat,
+    lng,
+    price,
+    totalPrice,
+    country,
+    state,
+    city,
+    options,
+    bookingMode,
+    isSubscription,
+    openingHour,
+    closingHour,
+    sessionDuration,
+    sessionGap,
+    allowMultiple,
+    maxCapacity,
+    servicingDay,
+    eventName,
+    eventDateTime,
+    eventEndDateTime,
+    eventFrequency,
+    capacity,
+  ]);
+
+  // ---------- Upload media incremental (updates cloud draft after each success) ----------
+  const uploadMediaIncremental = async () => {
+    try {
+      const uploadedKeys = [];
+
+      for (let i = 0; i < media.length; i++) {
+        const item = media[i];
+        const isLocal = item?.uri?.startsWith("blob:") || item?.uri?.startsWith("file:");
+        const isRemote = item?.uri?.startsWith("https://");
+
+        if (isRemote) {
+          const key = item.key || extractKeyFromUrl(item.uri);
+          uploadedKeys.push(key);
+          // update cloud draft
+          await appendMediaToCloudDraft(uploadedKeys);
+          setUploadProgress(Math.round(((i + 1) / media.length) * 100));
+          continue;
+        }
+
+        // fetch blob and compress where needed
         const response = await fetch(item.uri);
         const fileBlob = await response.blob();
 
         let compressedBlob = fileBlob;
-
-        if (isLocal && item.type.startsWith("image")) {
-          compressedBlob = await compressImage(fileBlob, item.name);
+        if (isLocal && item.type && item.type.startsWith("image")) {
+          compressedBlob = await compressImage(fileBlob, item.name || `img-${Date.now()}.jpg`);
         }
 
-        const fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
+        const fileExtension = item.type && item.type.startsWith("image") ? "jpg" : "mp4";
         const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${fileExtension}`;
 
         const result = await uploadData({
           path: fileKey,
           data: compressedBlob,
           options: {
-            contentType: item.type,
+            contentType: item.type || (fileExtension === "jpg" ? "image/jpeg" : "video/mp4"),
           },
         }).result;
 
-        return result.path;
-      });
+        uploadedKeys.push(result.path);
 
-      const mediaUrls = await Promise.all(uploadPromises);
-      return mediaUrls;
+        // update context media so UI reflects uploaded url
+        setMedia((prev) =>
+          prev.map((m, idx) => (idx === i ? { ...m, uri: result.path, key: result.path } : m))
+        );
+
+        // update cloud draft after each file
+        await appendMediaToCloudDraft(uploadedKeys);
+
+        setUploadProgress(Math.round(((i + 1) / media.length) * 100));
+      }
+
+      return uploadedKeys;
     } catch (e) {
       console.error("Error uploading files:", e);
       alert("Failed to upload media.");
@@ -232,51 +528,72 @@ const UploadProperty = () => {
     }
   };
 
-  // Handle the upload process for all media and save post in DataStore
+  // ---------- append media helper ----------
+  const appendMediaToCloudDraft = async (mediaKeys) => {
+    if (!cloudDraftId) return;
+    try {
+      const original = await DataStore.query(Post, cloudDraftId);
+      if (!original) return;
+      await DataStore.save(
+        Post.copyOf(original, (updated) => {
+          updated.media = mediaKeys;
+        })
+      );
+      const refreshed = await DataStore.query(Post, cloudDraftId);
+      if (refreshed) setUploadPost(refreshed);
+    } catch (e) {
+      console.warn("appendMediaToCloudDraft failed", e);
+    }
+  };
+
+  // ---------- Main upload/publish handler (uses your existing logic, with cloud draft integration) ----------
   const handleUpload = async () => {
     if (uploading) return;
     setUploading(true);
 
     if (!onValidateUpload()) {
-      setUploading(false); // Reset uploading state if validation fails
+      setUploading(false);
       return;
     }
 
-    let tempPost = null;
+    let tempPost = uploadPost;
 
     try {
-      // 1️⃣ Create lightweight draft post FIRST
-      tempPost = await DataStore.save(
-        new Post({
-          realtorID: dbRealtor.id,
-          uploadStatus: "UPLOADING",
-          uploadErrorMessage: null,
-          
-          // REQUIRED FIELDS
-          propertyType: propertyType || "TEMP",
-          type: type || "TEMP",
-          description: description || "TEMP",
-          totalPrice: parseFloat(totalPrice) || 0,
-          country: country || "TEMP",
-        })
-      );
+      // ensure cloud draft exists
+      if (!tempPost || !tempPost.id) {
+        tempPost = await createCloudDraftIfNotExists();
+      }
 
-      setUploadPost(tempPost);
+      // mark draft as UPLOADING on cloud
+      if (tempPost?.id) {
+        const original = await DataStore.query(Post, tempPost.id);
+        if (original) {
+          await DataStore.save(
+            Post.copyOf(original, (d) => {
+              d.uploadStatus = "UPLOADING";
+              d.uploadErrorMessage = null;
+            })
+          );
+        }
+      }
 
-      // 2️⃣ Upload media
-      const mediaUrls = await uploadMedia();
-      if (mediaUrls.length === 0) throw new Error("Media upload failed");
+      // upload media incrementally (updates cloud after each file)
+      const mediaUrls = await uploadMediaIncremental();
+      if (media.length > 0 && mediaUrls.length === 0) {
+        throw new Error("Media upload failed");
+      }
 
-      // 3️⃣ Update post with full content
+      // Finalize post with full content
+      const finalPostSource = await DataStore.query(Post, tempPost.id);
       const fullPost = await DataStore.save(
-        Post.copyOf(tempPost, (updated) => {
+        Post.copyOf(finalPostSource, (updated) => {
           updated.propertyType = propertyType;
           updated.type = type;
           updated.packageType = packageType;
           updated.nameOfType = nameOfType;
           updated.availableDocs = availableDocs;
           updated.accommodationParts = accommodationParts;
-          updated.media = mediaUrls;
+          updated.media = mediaUrls.length ? mediaUrls : updated.media || [];
           updated.description = description;
           updated.available = true;
 
@@ -289,21 +606,23 @@ const UploadProperty = () => {
           updated.dressCode = dressCode;
           updated.fullAddress = fullAddress;
           updated.generalLocation = generalLocation;
-          updated.lat = parseFloat(lat);
-          updated.lng = parseFloat(lng);
+          updated.lat = lat ? parseFloat(lat) : updated.lat;
+          updated.lng = lng ? parseFloat(lng) : updated.lng;
 
           updated.timeFrame = timeFrame;
-          updated.inspectionFee = parseFloat(inspectionFee);
-          updated.cautionFee = parseFloat(cautionFee);
+          updated.inspectionFee = inspectionFee ? parseFloat(inspectionFee) : updated.inspectionFee;
+          updated.cautionFee = cautionFee ? parseFloat(cautionFee) : updated.cautionFee;
           updated.otherFeesName = otherFeesName;
-          updated.otherFeesPrice = parseFloat(otherFeesPrice);
+          updated.otherFeesPrice = otherFeesPrice ? parseFloat(otherFeesPrice) : updated.otherFeesPrice;
           updated.otherFeesName2 = otherFeesName2;
-          updated.otherFeesPrice2 = parseFloat(otherFeesPrice2);
-          updated.price = parseFloat(price);
-          updated.totalPrice = parseFloat(totalPrice);
+          updated.otherFeesPrice2 = otherFeesPrice2 ? parseFloat(otherFeesPrice2) : updated.otherFeesPrice2;
+          updated.price = price ? parseFloat(price) : updated.price;
+          updated.totalPrice = totalPrice ? parseFloat(totalPrice) : updated.totalPrice;
 
-          updated.vendorCommissionAmount = parseFloat(vendorCommissionAmount);
-          updated.vendorCommissionBreakdown = JSON.stringify(vendorCommissionBreakdown);
+          updated.vendorCommissionAmount = vendorCommissionAmount ? parseFloat(vendorCommissionAmount) : updated.vendorCommissionAmount;
+          try {
+            updated.vendorCommissionBreakdown = JSON.stringify(vendorCommissionBreakdown);
+          } catch (e) {}
 
           updated.bed = bed;
           updated.bedrooms = bedrooms;
@@ -321,11 +640,12 @@ const UploadProperty = () => {
           updated.maxCapacity = maxCapacity;
           updated.sessionDuration = sessionDuration;
           updated.sessionGap = sessionGap;
-          updated.servicingDay = Array.isArray(servicingDay)
-            ? servicingDay
-            : [servicingDay];
+          updated.servicingDay = Array.isArray(servicingDay) ? servicingDay : updated.servicingDay;
           updated.openingHour = openingHour;
           updated.closingHour = closingHour;
+
+          updated.uploadStatus = "COMPLETED";
+          updated.uploadErrorMessage = null;
         })
       );
 
@@ -345,13 +665,11 @@ const UploadProperty = () => {
         )
       );
 
-      // 5️⃣ Mark COMPLETED
-      await DataStore.save(
-        Post.copyOf(fullPost, (updated) => {
-          updated.uploadStatus = "COMPLETED";
-          updated.uploadErrorMessage = null;
-        })
-      );
+      // Clear local/coud draft now that it's published
+      try {
+        localStorage.removeItem(UPLOAD_DRAFT_KEY);
+        localStorage.removeItem(UPLOAD_DRAFT_ID_KEY);
+      } catch (e) { /* ignore */ }
 
       alert("Post uploaded successfully!");
 
@@ -361,18 +679,53 @@ const UploadProperty = () => {
     } catch (e) {
       console.error("Upload error:", e);
 
-      if (tempPost?.id) {
-        await DataStore.save(
-          Post.copyOf(tempPost, (updated) => {
-            updated.uploadStatus = "FAILED";
-            updated.uploadErrorMessage = e.message;
-          })
-        );
+      // mark failed on cloud draft if exists
+      try {
+        const id = (uploadPost && uploadPost.id) || cloudDraftId || localStorage.getItem(UPLOAD_DRAFT_ID_KEY);
+        if (id) {
+          const original = await DataStore.query(Post, id);
+          if (original) {
+            await DataStore.save(
+              Post.copyOf(original, (updated) => {
+                updated.uploadStatus = "FAILED";
+                updated.uploadErrorMessage = e.message;
+              })
+            );
+          }
+        }
+      } catch (saveErr) {
+        console.warn("Failed to mark draft failed", saveErr);
       }
 
       alert(`Error: ${e.message}`);
     } finally {
       setUploading(false);
+    }
+  };
+
+  // ---------- Discard draft (delete cloud + local) ----------
+  const discardDraft = async () => {
+    const ok = window.confirm("Discard this draft and delete everything?");
+    if (!ok) return;
+
+    try {
+      const id = cloudDraftId || localStorage.getItem(UPLOAD_DRAFT_ID_KEY);
+      if (id) {
+        // delete cloud post
+        await DataStore.delete(Post, id);
+      }
+    } catch (e) {
+      console.warn("Failed to delete cloud draft", e);
+    } finally {
+      // clear local
+      try {
+        localStorage.removeItem(UPLOAD_DRAFT_KEY);
+        localStorage.removeItem(UPLOAD_DRAFT_ID_KEY);
+      } catch (e) { /* ignore */ }
+
+      if (typeof clearLocalDraft === "function") clearLocalDraft();
+      resetFormFields();
+      navigate("/realtorcontent/upload");
     }
   };
 
@@ -401,6 +754,11 @@ const UploadProperty = () => {
               ? `Uploading... ${uploadProgress}%`
               : "Upload!"}
           </p>
+        </button>
+
+        {/* Discard Draft */}
+        <button className="btnUpload" onClick={discardDraft} style={{ backgroundColor: "#bbb" }}>
+          <p className="uploadTxt">Discard Draft</p>
         </button>
       </div>
     </div>

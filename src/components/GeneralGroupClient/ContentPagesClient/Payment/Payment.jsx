@@ -127,21 +127,34 @@ const PaymentComponent = () => {
                 try {
                     const lambdaUrl = "https://qti5lr8sb2.execute-api.eu-north-1.amazonaws.com/staging/sendGuestTicket-staging";
 
-                    // Safe check using propertyType from context
-                    const isEvent = (propertyType || currentBooking?.propertyType || currentBookingForGuest?.propertyType)?.toLowerCase() === "event";
+                    // Determine propertyType consistently
+                    const realPropertyType =
+                        propertyType ||
+                        currentBooking?.propertyType ||
+                        currentBookingForGuest?.propertyType;
 
+                    // Determine event
+                    const isEvent = realPropertyType?.toLowerCase().includes("event");
+                    
+                    // Build payload
                     const payload = {
                         guestEmail: dbUser ? userMail : guestEmail,
                         guestName: dbUser ? firstName : `${guestFirstName} ${guestLastName}`,
                         numberOfPeople: numberOfPeople || 1,
-                        propertyName: propertyType || accommodationType, 
                         ticketId,
                         qrUrl,
                     };
 
-                    // ✅ Only include eventName if property type is "Event"
-                    if (isEvent && guestEventName) {
-                        payload.eventName = guestEventName;
+                    // If it's an event → send event name
+                    if (isEvent) {
+                        payload.propertyName = "Event";        // Tells the Lambda to use eventName
+                        payload.eventName = guestEventName;    // The event title
+                    } else {
+                        // Not an event → send property type instead of propertyName (you don't have propertyName in DB)
+                        payload.propertyName =
+                            realPropertyType ||
+                            accommodationType ||
+                            "Property";
                     }
 
                      const response = await fetch(lambdaUrl, {
