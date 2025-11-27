@@ -1,9 +1,6 @@
 import React,{useState, useEffect,  createContext, useContext} from 'react'
 
-const UploadContext = createContext({});
-
-const UPLOAD_DRAFT_KEY = "uploadDraft";
-const UPLOAD_DRAFT_ID_KEY = "uploadDraftPostId";
+const UploadContext = createContext({})
 
 const UploadContextProvider = ({children}) => {
 
@@ -324,146 +321,7 @@ const UploadContextProvider = ({children}) => {
         return false;
       }
     }
-
-    // helper: construct a minimal draft object from current state
-    const _buildDraftObject = () => {
-      return {
-        propertyType,
-        type,
-        nameOfType,
-        packageType,
-        capacity,
-        eventName,
-        eventDateTime,
-        eventEndDateTime,
-        recurrence,
-        eventFrequency,
-        dressCode,
-        availableDocs,
-        customInput,
-        accommodationParts,
-        media,
-        fullAddress,
-        generalLocation,
-        lat,
-        lng,
-        bedrooms,
-        bed,
-        cautionFee,
-        inspectionFee,
-        otherFeesName,
-        otherFeesName2,
-        otherFeesPrice,
-        otherFeesPrice2,
-        price,
-        totalPrice,
-        vendorCommissionAmount,
-        vendorCommissionBreakdown,
-        timeFrame,
-        country,
-        state,
-        city,
-        isSubscription,
-        bookingMode,
-        allowMultiple,
-        maxCapacity,
-        sessionDuration,
-        sessionGap,
-        servicingDay,
-        openingHour,
-        closingHour,
-        description,
-        amenities,
-        policies,
-        options,
-      };
-    };
-
-    // --- Local draft helpers (exposed) ---
-    const saveDraftToLocal = () => {
-      try {
-        const draft = _buildDraftObject();
-        localStorage.setItem(UPLOAD_DRAFT_KEY, JSON.stringify(draft));
-      } catch (e) {
-        console.warn("Failed to save local draft", e);
-      }
-    };
-
-    const loadDraftFromLocal = () => {
-      try {
-        const raw = localStorage.getItem(UPLOAD_DRAFT_KEY);
-        if (!raw) return null;
-        const draft = JSON.parse(raw);
-        // apply fields to context using your existing setter pattern
-        setPropertyType(draft.propertyType || "");
-        setType(draft.type || "");
-        setNameOfType(draft.nameOfType || "");
-        setPackageType(draft.packageType || "");
-        setCapacity(draft.capacity || "");
-        setEventName(draft.eventName || "");
-        setEventDateTime(draft.eventDateTime || "");
-        setEventEndDateTime(draft.eventEndDateTime || "");
-        setRecurrence(draft.recurrence || "");
-        setEventFrequency(draft.eventFrequency || "");
-        setDressCode(draft.dressCode || "");
-        setAvailableDocs(draft.availableDocs || "");
-        setCustomInput(draft.customInput || "");
-        setAccommodationParts(draft.accommodationParts || "");
-        setMedia(draft.media || []);
-        setFullAddress(draft.fullAddress || "");
-        setGeneralLocation(draft.generalLocation || "");
-        setLat(draft.lat || 0);
-        setLng(draft.lng || 0);
-        setBedrooms(draft.bedrooms || "");
-        setBed(draft.bed || "");
-        setCautionFee(draft.cautionFee || "");
-        setInspectionFee(draft.inspectionFee || "");
-        setOtherFeesName(draft.otherFeesName || "");
-        setOtherFeesName2(draft.otherFeesName2 || "");
-        setOtherFeesPrice(draft.otherFeesPrice || "");
-        setOtherFeesPrice2(draft.otherFeesPrice2 || "");
-        setPrice(draft.price || null);
-        setTotalPrice(draft.totalPrice || "");
-        setVendorCommissionAmount(draft.vendorCommissionAmount || 0);
-        setVendorCommissionBreakdown(draft.vendorCommissionBreakdown || {
-          price: 0,
-          inspection: 0,
-          other1: 0,
-          other2: 0,
-          total: 0,
-        });
-        setTimeFrame(draft.timeFrame || "");
-        setCountry(draft.country || "");
-        setState(draft.state || "");
-        setCity(draft.city || "");
-        setIsSubscription(draft.isSubscription || false);
-        setBookingMode(draft.bookingMode || "manual");
-        setAllowMultiple(draft.allowMultiple || false);
-        setMaxCapacity(draft.maxCapacity || null);
-        setSessionDuration(draft.sessionDuration || null);
-        setSessionGap(draft.sessionGap || null);
-        setServicingDay(draft.servicingDay || []);
-        setOpeningHour(draft.openingHour || null);
-        setClosingHour(draft.closingHour || null);
-        setDescription(draft.description || "");
-        setAmenities(draft.amenities || "");
-        setPolicies(draft.policies || "");
-        setOptions(draft.options || []);
-        return draft;
-      } catch (e) {
-        console.warn("Failed to load local draft", e);
-        return null;
-      }
-    };
-
-    const clearLocalDraft = () => {
-      try {
-        localStorage.removeItem(UPLOAD_DRAFT_KEY);
-        localStorage.removeItem(UPLOAD_DRAFT_ID_KEY);
-      } catch (e) {
-        console.warn("Failed to clear local draft", e);
-      }
-    };
+    
 
     // Helper function to load existing post for edit
     const loadExistingPost = (post) => {
@@ -617,11 +475,7 @@ const UploadContextProvider = ({children}) => {
         options, setOptions,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
-        removeMedia, addMedia, updateMedia, loadExistingPost, 
-        // new helpers:
-        saveDraftToLocal,
-        loadDraftFromLocal,
-        clearLocalDraft,
+        removeMedia, addMedia, updateMedia, loadExistingPost
     }}>
       {children}
     </UploadContext.Provider>
