@@ -67,6 +67,11 @@ import FoodDrinksDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Ho
 // Venue DetailedPost 
 import VenueDetailedPost from '../../GeneralGroupAdmin/ContentPagesAdmin/Home/Approved/VenuesComponent/DetailedPost/DetailedPost';
 
+// Vendor Details
+import VendorEditProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorProfile/EditProfile/EditProfile';
+
+import VendorReviewProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorProfile/EditProfile/ReviewProfile';
+
 const AdminRoutes = () => (
     <Routes>
         <Route path="/" element={<AdminLayout />}>
@@ -195,6 +200,12 @@ const AdminRoutes = () => (
 
             {/* Venue Detailed Route */}
             <Route path="venue_detailedpost/:postId" element={<VenueDetailedPost />} />
+
+            {/* Vendor Edit Profile*/}
+            <Route path="vendor_edit_profile" element={<VendorEditProfile />} />
+
+            {/* Vendor Review Profile*/}
+            <Route path="vendor_review_profile" element={<VendorReviewProfile />} />
 
             {/* for invalid route */}
             <Route 

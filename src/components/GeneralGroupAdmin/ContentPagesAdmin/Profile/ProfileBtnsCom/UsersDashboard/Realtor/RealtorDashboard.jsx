@@ -175,6 +175,7 @@ function RealtorDashboard() {
                         <p><strong>First Name:</strong> {realtor?.firstName}</p>
                         <p><strong>Last Name:</strong> {realtor?.lastName}</p>
                         <p><strong>Username:</strong> {realtor?.username}</p>
+                        <p><strong>Email:</strong> {realtor?.email}</p>
                         <p><strong>Phone Number:</strong> {realtor?.phoneNumber}</p>
                         <p><strong>Bank Name:</strong> {realtor?.bankName}</p>
                         <p><strong>Account Name:</strong> {realtor?.accountName}</p>

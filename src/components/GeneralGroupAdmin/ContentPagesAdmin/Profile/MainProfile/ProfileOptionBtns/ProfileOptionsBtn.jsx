@@ -37,6 +37,13 @@ function ProfileOptionsBtn() {
             <MdNavigateNext size={24} />
         </button>
 
+        <button onClick={() => navigate('/admin/vendor_edit_profile')} className='btnCard'>
+            <p className='proBtnTxt'>
+                Edit Vendor Profile
+            </p>
+            <MdNavigateNext size={24} />
+        </button>
+
         <button onClick={() => window.open('https://sites.google.com/view/opusama-termsofservice/home', '_blank')} className='btnCard'>
             <p className='proBtnTxt'>
             Terms and Conditions

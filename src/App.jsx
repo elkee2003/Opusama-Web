@@ -40,7 +40,7 @@ function App() {
                   {/* Realtor Providers */}
                   <RealtorProfileProvider>
                     <UploadContextProvider>
-                      <GoogleMapsProvider>
+                      {/* <GoogleMapsProvider> */}
                         <Routes>
                           <Route path="/*" element={<AuthRoutes />} />
 
@@ -53,7 +53,7 @@ function App() {
                           {/* Admin Route */}
                           <Route path="/admin/*" element={<AdminRoutes />} />
                         </Routes>
-                      </GoogleMapsProvider>
+                      {/* </GoogleMapsProvider> */}
                     </UploadContextProvider>
                   </RealtorProfileProvider>
                 </BookingShowingProvider>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../../TabStyles/PropertyDetailsMap.css';
 import { useParams } from 'react-router-dom';
+import GoogleMapsProvider from '../../../../../../../../Providers/ClientProvider/GoogleMapsProvider';
 import { DataStore } from "aws-amplify/datastore";
 import { GoogleMap, Marker, Circle, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import { Post } from '../../../../../../../models';
@@ -84,78 +85,80 @@ function PropertyDetailsMap() {
   if (!post || !displayCoords) return <p>Loading property location...</p>;
 
   return (
-    <div className='propertyDetailsMapCon'>
-      <GoogleMap
-        mapContainerClassName="propertyDetailsGoogleMapContainer"
-        center={displayCoords}
-        zoom={14}
-        onLoad={setMap}
-        onUnmount={() => setMap(null)}
-      >
-        {/* Marker or Circle */}
-        {Number(post.totalPrice) > 0 ? (
-          <Circle
-            center={displayCoords}
-            radius={700} // ~700m blur
-            options={{
-              strokeColor: "#4A90E2",
-              strokeOpacity: 0.5,
-              strokeWeight: 2,
-              fillColor: "#4A90E2",
-              fillOpacity: 0.2,
-            }}
-          />
-        ) : (
-          <>
-            <Marker position={displayCoords}/>
-          </>
-        )}
+    <GoogleMapsProvider>
+      <div className='propertyDetailsMapCon'>
+        <GoogleMap
+          mapContainerClassName="propertyDetailsGoogleMapContainer"
+          center={displayCoords}
+          zoom={14}
+          onLoad={setMap}
+          onUnmount={() => setMap(null)}
+        >
+          {/* Marker or Circle */}
+          {Number(post.totalPrice) > 0 ? (
+            <Circle
+              center={displayCoords}
+              radius={700} // ~700m blur
+              options={{
+                strokeColor: "#4A90E2",
+                strokeOpacity: 0.5,
+                strokeWeight: 2,
+                fillColor: "#4A90E2",
+                fillOpacity: 0.2,
+              }}
+            />
+          ) : (
+            <>
+              <Marker position={displayCoords}/>
+            </>
+          )}
 
-        {/* Directions service + renderer (only if free post) */}
-        {currentPosition && post && Number(post?.totalPrice) === 0 && (
-          <DirectionsService
-            options={{
-              origin: currentPosition,
-              destination: { lat: post.lat, lng: post.lng },
-              travelMode: window.google.maps.TravelMode.DRIVING,
-            }}
-            callback={(result, status) => {
-              if (status === "OK") {
-                setDirections(result);
-              } else {
-                console.error("Directions request failed:", status);
-              }
-            }}
-          />
-        )}
+          {/* Directions service + renderer (only if free post) */}
+          {currentPosition && post && Number(post?.totalPrice) === 0 && (
+            <DirectionsService
+              options={{
+                origin: currentPosition,
+                destination: { lat: post.lat, lng: post.lng },
+                travelMode: window.google.maps.TravelMode.DRIVING,
+              }}
+              callback={(result, status) => {
+                if (status === "OK") {
+                  setDirections(result);
+                } else {
+                  console.error("Directions request failed:", status);
+                }
+              }}
+            />
+          )}
 
-        {directions && (
-          <DirectionsRenderer
-            options={{
-              directions: directions,
-              suppressMarkers: false,
-              polylineOptions: {
-                strokeColor: "#4285F4",
-                strokeWeight: 5,
-              },
-            }}
-          />
-        )}
-      </GoogleMap>
+          {directions && (
+            <DirectionsRenderer
+              options={{
+                directions: directions,
+                suppressMarkers: false,
+                polylineOptions: {
+                  strokeColor: "#4285F4",
+                  strokeWeight: 5,
+                },
+              }}
+            />
+          )}
+        </GoogleMap>
 
-      {/* Floating My Location button */}
-      <button
-        className='myLocationButton'
-        onClick={() => {
-          if (map && currentPosition) {
-            map.panTo(currentPosition);
-            map.setZoom(14);
-          }
-        }}
-      >
-        📍
-      </button>
-    </div>
+        {/* Floating My Location button */}
+        <button
+          className='myLocationButton'
+          onClick={() => {
+            if (map && currentPosition) {
+              map.panTo(currentPosition);
+              map.setZoom(14);
+            }
+          }}
+        >
+          📍
+        </button>
+      </div>
+    </GoogleMapsProvider>
   );
 }
 
