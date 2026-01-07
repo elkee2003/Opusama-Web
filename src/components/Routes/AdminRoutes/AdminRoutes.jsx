@@ -72,6 +72,33 @@ import VendorEditProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile
 
 import VendorReviewProfile from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorProfile/EditProfile/ReviewProfile';
 
+// Vendor Upload
+import VendorSelectMedia from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/SelectMedia';
+
+// Vendor Display Media 
+import VendorDisplayMedia from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
+
+// Vendor Google AutoComplete
+import VendorGoogleAutoComplete from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/UploadCom/Forms/Googleautocomplete';
+
+// Vendor Form
+import VendorUploadForm from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/UploadCom/Forms/Form';
+
+// Vendor Upload Property
+import VendorUploadProperty from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/UploadCom/UploadProperty/UploadProperty';
+
+// Vendor Edit Display Media 
+import VendorEditDisplayMedia from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/EditPost/EditPickedMedia/DisplayMedia/DisplayMedia';
+
+// Vendor Edit Google AutoComplete
+import VendorEditGoogleAutoComplete from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/EditPost/EditForms/Googleautocomplete';
+
+// Vendor Edit Form
+import VendorEditUploadForm from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/EditPost/EditForms/Form';
+
+// Vendor Edit Upload Property
+import VendorEditUploadProperty from '../../GeneralGroupAdmin/ContentPagesAdmin/Profile/ProfileBtnsCom/VendorDetails/VendorUpload/EditPost/EditUploadProperty/UploadProperty';
+
 const AdminRoutes = () => (
     <Routes>
         <Route path="/" element={<AdminLayout />}>
@@ -206,6 +233,33 @@ const AdminRoutes = () => (
 
             {/* Vendor Review Profile*/}
             <Route path="vendor_review_profile" element={<VendorReviewProfile />} />
+
+            {/* Vendor Select Media Page*/}
+            <Route path="vendor_select_media" element={<VendorSelectMedia />} />
+
+            {/* Vendor Display Media*/}
+            <Route path="displaymedia" element={<VendorDisplayMedia />} />
+
+            {/* Vendor Google AutoComplete*/}
+            <Route path="vendor_select_address" element={<VendorGoogleAutoComplete />} />
+
+            {/* Vendor Upload Form*/}
+            <Route path="vendor_upload_form" element={<VendorUploadForm />} />
+
+            {/* Vendor Upload Property*/}
+            <Route path="vendor_upload_property" element={<VendorUploadProperty />} />
+
+            {/* Vendor Edit Display Media*/}
+            <Route path="edit_displaymedia" element={<VendorEditDisplayMedia />} />
+
+            {/* Vendor Edit Google AutoComplete*/}
+            <Route path="vendor_edit_selected_address" element={<VendorEditGoogleAutoComplete />} />
+
+            {/* Vendor Edit Upload Form*/}
+            <Route path="vendor_edit_upload_form" element={<VendorEditUploadForm />} />
+
+            {/* Vendor Edit Upload Property*/}
+            <Route path="vendor_edit_upload_property" element={<VendorEditUploadProperty />} />
 
             {/* for invalid route */}
             <Route 

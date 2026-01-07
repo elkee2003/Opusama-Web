@@ -1,0 +1,12 @@
+[
+  {
+    "Effect": "Allow",
+    "Action": [
+      "cognito-idp:ListUsersInGroup",
+      "cognito-idp:ListUsers"
+    ],
+    "Resource": [
+      "arn:aws:cognito-idp:eu-north-1:*:userpool/eu-north-1_B3oOi9duo"
+    ]
+  }
+]

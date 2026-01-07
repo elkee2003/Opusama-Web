@@ -66,6 +66,12 @@
     }
   },
   "function": {
+    "listRealtorUsers": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "notifyVendorBooking": {
       "build": true,
       "dependsOn": [
@@ -89,6 +95,30 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_listRealtorUsers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "listRealtorUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_listRealtorUsers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "listRealtorUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_listRealtorUsers_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "listRealtorUsers"
+        }
+      ]
+    },
     "AMPLIFY_function_notifyVendorBooking_deploymentBucketName": {
       "usedBy": [
         {

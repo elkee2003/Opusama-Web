@@ -30,11 +30,11 @@ import ProfileOptionsPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Pr
 import UserReviewsProfile from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/UsersReview/UsersReview';
 import DeleteAcccount from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/DeleteAccount/DeleteAccount';
 import Support from '../../GeneralGroupRealtor/ContentPagesRealtor/Profile/ProfileBtnsCom/Support/Support';
-import DetailedPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/DetailedPost';
+import PropertyDetails from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PropertyDetails/PropertyDetails';
 import EditPost from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/EditPost/EditPost';
-import ReviewComment from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/TopTab';
-import DetailResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/Response';
-import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/DetailedPost/Content/ReviewComment/Content/UsersReviews'
+import ReviewComment from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PropertyDetails/DetailedPost/Content/ReviewComment/TopTab';
+import DetailResponse from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PropertyDetails/DetailedPost/Content/ReviewComment/Content/Response';
+import UsersReview from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PropertyDetails/DetailedPost/Content/ReviewComment/Content/UsersReviews'
 import PostGallery from '../../GeneralGroupRealtor/ContentPagesRealtor/Home/PostGallery/PostGallery';
 import PendingDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/PendingAlerts/DetailedAlert/DetailedAlert';
 import AcceptedDetailedAlert from '../../GeneralGroupRealtor/ContentPagesRealtor/Alert/AcceptedAlerts/DetailedAlert/DetailedAlert';
@@ -95,7 +95,7 @@ const RealtorRoutes = () => (
 
             <Route path="support" element={<Support />} />
             
-            <Route path="postdetails/:postId" element={<DetailedPost/>} />
+            <Route path="postdetails/:postId" element={<PropertyDetails/>} />
 
             {/* ReviewComment Post */}
             <Route path="reviews_comments/:postId" element={<ReviewComment />} />

@@ -385,6 +385,38 @@ function Content({post, realtor,}) {
           />
         </div>
 
+        {/* Editbutton */}
+        <div
+          className='fullEditPostBtnCon'
+          onClick={async () => {
+            if (
+              post.uploadStatus !== "COMPLETED"
+              // post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"  
+            ) {
+              // Fetch fresh full post from DataStore
+              const fullPost = await DataStore.query(Post, post.id);
+
+              // Fetch booking options
+              const bookingOptions = await DataStore.query(
+                BookingPostOptions,
+                (c) => c.postID.eq(post.id)
+              );
+
+              // Merge into one editable object
+              const editablePost = {
+                ...fullPost,
+                BookingPostOptions: bookingOptions,
+              };
+
+              loadExistingPost(editablePost);
+
+              navigate("/admin/vendor_edit_selected_address");
+            }
+          }}
+        >
+          <p>Edit</p>
+        </div>
+
         {/* Realtor Info */}
         <RealtorNameRating realtor={realtor}/>
 

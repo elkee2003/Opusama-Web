@@ -177,7 +177,7 @@ function Post({post}) {
 
         <div 
           className='clientSummaryContainer'
-          onClick={navigate(`/admin/exploredetailedpost/${post?.id}`)}
+          onClick={() => navigate(`/admin/exploredetailedpost/${post?.id}`)}
         >
           {/* Event Name */}
           {post?.eventName && (

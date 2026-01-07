@@ -26,6 +26,11 @@
         "notifyVendorBooking": {
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
           "s3Key": "amplify-builds/notifyVendorBooking-58516a63477748445957-build.zip"
+        },
+        "listRealtorUsers": {
+          "userPoolId": "eu-north-1_B3oOi9duo",
+          "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
+          "s3Key": "amplify-builds/listRealtorUsers-64702f76305046796f57-build.zip"
         }
       },
       "api": {
