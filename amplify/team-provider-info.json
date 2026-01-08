@@ -31,7 +31,7 @@
         "listRealtorUsers": {
           "userPoolId": "eu-north-1_B3oOi9duo",
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
-          "s3Key": "amplify-builds/listRealtorUsers-64702f76305046796f57-build.zip"
+          "s3Key": "amplify-builds/listRealtorUsers-54345141306f6d767a43-build.zip"
         }
       },
       "api": {

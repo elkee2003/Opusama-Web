@@ -303,12 +303,40 @@ const EditProfile = () => {
 
           <Autocomplete
             options={realtors}
-            getOptionLabel={(option) => option.email || ""}
             loading={loadingRealtors}
             value={selectedRealtor}
+
+            getOptionLabel={(option) => option.email || ""}
+
+            renderOption={(props, option) => {
+              const isRealtor = option.groups?.includes("realtor");
+              const isUser = option.groups?.includes("user");
+
+              return (
+                <li {...props} style={{ display: "flex", gap: 8 }}>
+                  <span>{option.email}</span>
+
+                  {isRealtor && (
+                    <span
+                      className="adminSearchRealtor"
+                    >
+                      REALTOR
+                    </span>
+                  )}
+
+                  {isUser && (
+                    <span
+                      className="adminSearchUser"
+                    >
+                      USER
+                    </span>
+                  )}
+                </li>
+              );
+            }}
+
             onChange={(event, newValue) => {
               if (!newValue) {
-                // 👇 Realtor cleared — reset form safely
                 setSelectedRealtor(null);
                 setDbRealtor(null);
 
@@ -319,13 +347,12 @@ const EditProfile = () => {
                 setAddress("");
                 setPhoneNumber("");
                 setProfilePic(null);
-
                 return;
               }
 
-              // 👇 Realtor selected
-              setSelectedRealtor(newValue ?? null);
+              setSelectedRealtor(newValue);
             }}
+
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -334,10 +361,12 @@ const EditProfile = () => {
                 className="realtorProfileInput"
               />
             )}
+
             isOptionEqualToValue={(option, value) =>
               option?.sub === value?.sub
             }
           />
+
 
 
           {!isRealtorSelected && (

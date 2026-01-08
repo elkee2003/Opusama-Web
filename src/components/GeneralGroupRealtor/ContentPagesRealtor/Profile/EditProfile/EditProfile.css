@@ -329,6 +329,33 @@
   color: #e9e6e6;
 }
 
+/* Admin Styles */
+
+.adminSearchRealtor {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #E6F4EA;
+  color: #1B5E20;
+  font-weight: 600;
+}
+
+.adminSearchUser {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #E3F2FD;
+  color: #0D47A1;
+  font-weight: 600;
+}
+
+.realtorHint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #6b7280; /* neutral grey */
+  line-height: 1.4;
+}
+
 @media (max-width: 1300px) {
 
   .realtorProfileInput{
