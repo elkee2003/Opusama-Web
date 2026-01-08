@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdCancel } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5"; 
 import { useProfileContext } from '../../../../../../Providers/RealtorProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
@@ -11,11 +10,14 @@ import { uploadData, remove } from 'aws-amplify/storage';
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const {firstName, lastName, username, myDescription, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
+  const {firstName, lastName, username, myDescription, profilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
 
-  const { dbRealtor, setDbRealtor, sub, realtorMail, userMail } = useAuthContext();
+  const { dbRealtor, setDbRealtor, sub, userMail } = useAuthContext();
 
-  console.log('realtor Email:', userMail)
+  const isLocalImage = (value) =>
+    typeof value === "string" &&
+    (value.startsWith("blob:") || value.startsWith("file:"));
+
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -51,38 +53,44 @@ const ReviewDetails = () => {
   };
 
   // Function to upload image
-  async function uploadImage() {
-    try {
-      if (!profilePic) return null;
+  async function uploadImageIfChanged() {
+    // 1️⃣ No image at all
+    if (!profilePic) return null;
 
-      if (dbRealtor?.profilePic) {
-        await remove({ path: dbRealtor?.profilePic });
-      }
-
-      const response = await fetch(profilePic);
-      const blob = await response.blob();
-
-      const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
-
-      const result = await uploadData({
-        path: fileKey,
-        data: blob,
-        options: {
-          contentType: "image/jpeg",
-          onProgress: ({ transferredBytes, totalBytes }) => {
-            if (totalBytes) {
-              const progress = Math.round((transferredBytes / totalBytes) * 100);
-              setUploadProgress(progress);
-            }
-          },
-        },
-      }).result;
-
-      return result.path;
-    } catch (err) {
-      console.error("Error uploading file:", err);
+    // 2️⃣ Image NOT changed → reuse existing S3 key
+    if (!isLocalImage(profilePic)) {
+      return profilePic;
     }
+
+    // 3️⃣ Image WAS changed → upload new one
+    const response = await fetch(profilePic);
+    const blob = await response.blob();
+
+    const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
+
+    const result = await uploadData({
+      path: fileKey,
+      data: blob,
+      options: {
+        contentType: "image/jpeg",
+        onProgress: ({ transferredBytes, totalBytes }) => {
+          if (totalBytes) {
+            setUploadProgress(
+              Math.round((transferredBytes / totalBytes) * 100)
+            );
+          }
+        },
+      },
+    }).result;
+
+    // 4️⃣ Delete OLD image only if it was replaced
+    if (dbRealtor?.profilePic) {
+      await remove({ path: dbRealtor.profilePic });
+    }
+
+    return result.path;
   }
+
 
   // This function is to delete profile picture. A Realtor is not meant to be without a profile pic
   // const deleteProfilePic = async () => {
@@ -113,7 +121,8 @@ const ReviewDetails = () => {
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
+
       const user = await DataStore.save(
         new Realtor({
           profilePic: uploadedImagePath,
@@ -127,6 +136,8 @@ const ReviewDetails = () => {
       setDbRealtor(user);
     } catch (e) {
       alert(`Error: ${e.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -135,7 +146,8 @@ const ReviewDetails = () => {
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
+
       const user = await DataStore.save(
         Realtor.copyOf(dbRealtor, (updated) => {
           updated.firstName = firstName;

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './RealtorDashboard.css';
+import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
 import { list, remove } from 'aws-amplify/storage';
 import { deleteUser } from 'aws-amplify/auth';
 import { Realtor, Post } from '../../../../../../../models';
 
 function RealtorDashboard() {
+    const navigate = useNavigate();
     const [realtors, setRealtors] = useState([]);
     const [filteredRealtors, setFilteredRealtors] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -171,7 +173,10 @@ function RealtorDashboard() {
             ) : (
                 <div className="realtor-cards">
                 {filteredRealtors.map((realtor) => (
-                    <div key={realtor.id} className="realtor-card">
+                    <div 
+                        key={realtor.id} className="realtor-card"
+                        onClick={() => navigate(`/admin/realtorprofile/${realtor.id}`)}
+                    >
                         <p><strong>First Name:</strong> {realtor?.firstName}</p>
                         <p><strong>Last Name:</strong> {realtor?.lastName}</p>
                         <p><strong>Username:</strong> {realtor?.username}</p>
@@ -183,7 +188,10 @@ function RealtorDashboard() {
 
                         <button
                             className="delete-btn"
-                            onClick={() => handleDeleteRealtor(realtor)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteRealtor(realtor);
+                            }}
                             disabled={loadingId === realtor.id}
                         >
                             {loadingId === realtor.id ? 'Deleting...' : 'Delete Realtor'}

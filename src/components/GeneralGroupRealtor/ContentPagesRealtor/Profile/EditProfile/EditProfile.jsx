@@ -9,6 +9,7 @@ import { useAuthContext } from "../../../../../../Providers/ClientProvider/AuthP
 import { useProfileContext } from "../../../../../../Providers/RealtorProvider/ProfileProvider";
 import { FiArrowRightCircle, FiCheckCircle, FiXCircle  } from "react-icons/fi"; 
 import { DataStore } from "aws-amplify/datastore";
+import { getUrl } from "aws-amplify/storage";
 import { User, Realtor } from '../../../../../models';
 
 
@@ -17,6 +18,7 @@ const EditProfile = () => {
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(null); 
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [usernameError, setUsernameError] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
   const { authUser, dbRealtor } = useAuthContext();
   const {
     firstName,
@@ -113,6 +115,50 @@ const EditProfile = () => {
     }
   };
 
+  // useEffect to display profile picture
+  useEffect(() => {
+    const resolveProfilePic = async () => {
+      if (!profilePic) {
+        setProfilePicUrl(null);
+        return;
+      }
+
+      // NEW image (picked locally)
+      if (
+        profilePic.startsWith("blob:") ||
+        profilePic.startsWith("file:")
+      ) {
+        setProfilePicUrl(profilePic);
+        return;
+      }
+
+      // EXISTING image from S3
+      try {
+        const result = await getUrl({
+          path: profilePic,
+          options: { validateObjectExistence: true },
+        });
+
+        setProfilePicUrl(result.url.toString());
+      } catch (err) {
+        console.error("Failed to load profile image", err);
+        setProfilePicUrl(null);
+      }
+    };
+
+    resolveProfilePic();
+  }, [profilePic]);
+
+  // 👇 CLEANUP EFFECT (PUT IT HERE)
+  useEffect(() => {
+    return () => {
+      if (profilePic?.startsWith("blob:")) {
+        URL.revokeObjectURL(profilePic);
+      }
+    };
+  }, [profilePic]);
+
+  // useEffect to checkUserName
   useEffect(() => {
     const checkUsername = async () => {
       if (!username || username.trim().length < 3) {
@@ -195,7 +241,10 @@ const EditProfile = () => {
 
           {/* Upload Profile Picture */}
           <div className="profilePicContainerEdit">
-            {profilePic && <img src={profilePic} alt="Profile" className="img" />}
+            {profilePicUrl && (
+              <img src={profilePicUrl} alt="Profile" className="img" />
+            )}
+            
             <div className="plusIconContainer">
               <input
                 type="file"

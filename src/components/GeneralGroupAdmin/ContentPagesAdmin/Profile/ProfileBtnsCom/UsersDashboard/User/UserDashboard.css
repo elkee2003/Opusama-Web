@@ -34,6 +34,7 @@
   padding: 15px;
   flex: 1 1 250px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
 }
 
 .user-card p {

@@ -16,6 +16,10 @@ const ReviewDetails = () => {
 
   const { dbUser, setDbUser, sub, userMail } = useAuthContext();
 
+  const isLocalImage = (value) =>
+    typeof value === "string" &&
+    (value.startsWith("blob:") || value.startsWith("file:"));
+
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -50,33 +54,43 @@ const ReviewDetails = () => {
   };
 
   // Function to upload image
-  async function uploadImage() {
-    try {
-      if (dbUser?.profilePic) {
-        await remove({ path: dbUser.profilePic });
-      }
 
-      const manipulatedBlob = await manipulateImage(profilePic);
-      const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
+  async function uploadImageIfChanged() {
+    // 1️⃣ No image at all
+    if (!profilePic) return null;
 
-      const result = await uploadData({
-        path: fileKey,
-        data: manipulatedBlob,
-        options: {
-          contentType: "image/jpeg",
-          onProgress: ({ transferredBytes, totalBytes }) => {
-            if (totalBytes) {
-              const progress = Math.round((transferredBytes / totalBytes) * 100);
-              setUploadProgress(progress);
-            }
-          },
-        },
-      }).result;
-
-      return result.path;
-    } catch (err) {
-      console.error("Error uploading file:", err);
+    // 2️⃣ Image NOT changed → reuse existing S3 key
+    if (!isLocalImage(profilePic)) {
+      return profilePic;
     }
+
+    // 3️⃣ Image WAS changed → upload new one
+    const response = await fetch(profilePic);
+    const blob = await response.blob();
+
+    const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
+
+    const result = await uploadData({
+      path: fileKey,
+      data: blob,
+      options: {
+        contentType: "image/jpeg",
+        onProgress: ({ transferredBytes, totalBytes }) => {
+          if (totalBytes) {
+            setUploadProgress(
+              Math.round((transferredBytes / totalBytes) * 100)
+            );
+          }
+        },
+      },
+    }).result;
+
+    // 4️⃣ Delete OLD image only if it was replaced
+    if (dbUser?.profilePic) {
+      await remove({ path: dbUser.profilePic });
+    }
+
+    return result.path;
   }
 
   const deleteProfilePic = async () => {
@@ -107,7 +121,7 @@ const ReviewDetails = () => {
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
       const user = await DataStore.save(
         new User({
           profilePic: uploadedImagePath,
@@ -123,6 +137,8 @@ const ReviewDetails = () => {
       setDbUser(user);
     } catch (e) {
       alert(`Error: ${e.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -131,16 +147,20 @@ const ReviewDetails = () => {
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
       const user = await DataStore.save(
         User.copyOf(dbUser, (updated) => {
           updated.firstName = firstName;
           updated.lastName = lastName;
           updated.username = username;
           updated.email = userMail;
-          updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
+
+          // ✅ ONLY update profilePic if it actually exists
+          if (uploadedImagePath) {
+            updated.profilePic = uploadedImagePath;
+          }
         })
       );
       setDbUser(user);

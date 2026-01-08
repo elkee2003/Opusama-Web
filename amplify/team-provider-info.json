@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-opusamarealtor-staging-b73ca-unauthRole",
       "StackName": "amplify-opusamarealtor-staging-b73ca",
       "StackId": "arn:aws:cloudformation:eu-north-1:533267162650:stack/amplify-opusamarealtor-staging-b73ca/9a37a2d0-619a-11ef-8943-0e9f263c2757",
-      "AmplifyAppId": "d8g63pie0uwz7"
+      "AmplifyAppId": "d8g63pie0uwz7",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-opusamarealtor-staging-b73ca-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -35,7 +36,8 @@
       },
       "api": {
         "OpusamaRealtor": {},
-        "sendGuestTicketApi": {}
+        "sendGuestTicketApi": {},
+        "realtorAdminApi": {}
       }
     }
   }

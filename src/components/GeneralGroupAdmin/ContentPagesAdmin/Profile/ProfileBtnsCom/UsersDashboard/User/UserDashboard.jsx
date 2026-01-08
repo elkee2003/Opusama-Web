@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './UserDashboard.css';
+import { useNavigate } from 'react-router-dom';
 import { DataStore } from 'aws-amplify/datastore';
 import { list, remove } from 'aws-amplify/storage';
 import { deleteUser } from 'aws-amplify/auth';
 import { User } from '../../../../../../../models';
 
 function UserDashboard() {
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -167,7 +169,11 @@ function UserDashboard() {
             ) : (
                 <div className="user-cards">
                     {filteredUsers.map((user) => (
-                        <div key={user.id} className="user-card">
+                        <div 
+                            key={user.id} 
+                            className="user-card"
+                            onClick={() => navigate(`/admin/userprofile/${user?.id}`)}
+                        >
                             <p><strong>First Name:</strong> {user?.firstName}</p>
                             <p><strong>Last Name:</strong> {user?.lastName}</p>
                             <p><strong>Username:</strong> {user?.username}</p>
@@ -176,7 +182,10 @@ function UserDashboard() {
                             {/* Delete Btn */}
                             <button
                                 className="delete-btn"
-                                onClick={() => handleDeleteUser(user)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeleteUser(user);
+                                }}
                                 disabled={loadingId === user.id}
                             >
                                 {loadingId === user.id ? 'Deleting...' : 'Delete User'}

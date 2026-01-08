@@ -21,6 +21,20 @@
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
     },
+    "realtorAdminApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "listRealtorUsers"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "sendGuestTicketApi": {
       "dependsOn": [
         {

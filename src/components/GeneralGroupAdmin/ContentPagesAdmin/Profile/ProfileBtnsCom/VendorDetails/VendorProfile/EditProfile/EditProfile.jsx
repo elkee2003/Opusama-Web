@@ -2,21 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Autocomplete, TextField } from "@mui/material";
 import BankDetails from "./BankDetails";
 import { signOut } from "aws-amplify/auth";
 import { useAuthContext } from "../../../../../../../../../Providers/ClientProvider/AuthProvider";
 import { useProfileContext } from "../../../../../../../../../Providers/RealtorProvider/ProfileProvider";
 import { FiArrowRightCircle, FiCheckCircle, FiXCircle  } from "react-icons/fi"; 
 import { DataStore } from "aws-amplify/datastore";
+import { getUrl } from "aws-amplify/storage";
+import { get } from 'aws-amplify/api';
 import { User, Realtor } from '../../../../../../../../models';
 
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(null); 
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [usernameError, setUsernameError] = useState("");
-  const { authUser, dbRealtor } = useAuthContext();
+  const { authUser, dbUser, dbRealtor, setDbRealtor } = useAuthContext();
   const {
     firstName,
     setFirstName,
@@ -40,10 +44,17 @@ const EditProfile = () => {
     setAccountNumber,
     errorMessage,
     onValidateInput,
+
+    // For admin
+    selectedRealtor, 
+    setSelectedRealtor,
   } = useProfileContext();
   
+  const isRealtorSelected = Boolean(selectedRealtor);
 
-  // const [loading, setLoading] = useState(false);
+  const [realtors, setRealtors] = useState([]);
+  const [loadingRealtors, setLoadingRealtors] = useState(true);
+
 
   const [remainingWords, setRemainingWords] = useState(150);
 
@@ -59,6 +70,7 @@ const EditProfile = () => {
 
   // Navigation Function
   const goToNxtPage = () => {
+    if (!selectedRealtor) return;
 
     if (!isUsernameAvailable) {
       setUsernameError("Please choose a unique username before proceeding");
@@ -83,8 +95,7 @@ const EditProfile = () => {
   };
 
   const onSignIn = () => {
-    navigate('/realtorcontent/home');
-    
+    navigate('/admin/home');
   };
 
   // Signout function
@@ -112,26 +123,124 @@ const EditProfile = () => {
     }
   };
 
+  // useEffect for converting S3key to URL
   useEffect(() => {
+    const resolveProfilePic = async () => {
+      if (!profilePic) {
+        setProfilePicUrl(null);
+        return;
+      }
+
+      // NEW image (blob/file) → use directly
+      if (
+        profilePic.startsWith("blob:") ||
+        profilePic.startsWith("file:")
+      ) {
+        setProfilePicUrl(profilePic);
+        return;
+      }
+
+      // EXISTING S3 image → convert to URL
+      try {
+        const result = await getUrl({
+          path: profilePic,
+          options: { validateObjectExistence: true },
+        });
+        setProfilePicUrl(result.url.toString());
+      } catch (err) {
+        console.error("Failed to load profile image", err);
+        setProfilePicUrl(null);
+      }
+    };
+
+    resolveProfilePic();
+  }, [profilePic]);
+
+  // For fetching realtors to select for admin
+  useEffect(() => {
+    const fetchRealtors = async () => {
+      try {
+        const response = await get({
+          apiName: 'realtorAdminApi',
+          path: '/realtors',
+        }).response;
+
+        const data = await response.body.json();
+        setRealtors(data);
+      } catch (err) {
+        console.error("Failed to load realtors", err);
+      } finally {
+        setLoadingRealtors(false);
+      }
+    };
+
+    fetchRealtors();
+  }, []);
+
+
+  // useEffect for checks on existing profile
+  useEffect(() => {
+    if (!selectedRealtor) return;
+
+    const loadProfile = async () => {
+      const existing = await DataStore.query(
+        Realtor,
+        r => r.sub.eq(selectedRealtor.sub)
+      );
+
+      if (existing.length > 0) {
+        const profile = existing[0];
+        setDbRealtor(profile);
+
+        setFirstName(profile.firstName || "");
+        setLastName(profile.lastName || "");
+        setUsername(profile.username || "");
+        setMyDescription(profile.myDescription || "");
+        setAddress(profile.address || "");
+        setPhoneNumber(profile.phoneNumber || "");
+        setBankName(profile.bankName || "");
+        setAccountName(profile.accountName || "");
+        setAccountNumber(profile.accountNumber || "");
+        setProfilePic(profile.profilePic || null);
+      } else {
+        setDbRealtor(null);
+        // reset form
+      }
+    };
+
+    loadProfile();
+  }, [selectedRealtor]);
+
+
+
+  // useEffect for username check
+  useEffect(() => {
+    if (!selectedRealtor) return; // 🚫 no realtor selected
+
     const checkUsername = async () => {
       if (!username || username.trim().length < 3) {
         setIsUsernameAvailable(null);
         setUsernameError("");
         return;
       }
-  
+
       setCheckingUsername(true);
       try {
         const trimmed = username.trim();
-        
+
         const [userResults, realtorResults] = await Promise.all([
           DataStore.query(User, (u) => u.username.eq(trimmed)),
           DataStore.query(Realtor, (r) => r.username.eq(trimmed)),
         ]);
-  
-        const otherUser = userResults.find((user) => user.id !== dbRealtor?.id);
-        const otherRealtor = realtorResults.find((realtor) => realtor.id !== dbRealtor?.id);
-  
+
+        const otherUser = userResults.find(
+          (user) => user.id !== dbRealtor?.id
+        );
+
+        const otherRealtor = realtorResults.find(
+          (realtor) => realtor.id !== dbRealtor?.id
+        );
+
         if (otherUser || otherRealtor) {
           setIsUsernameAvailable(false);
           setUsernameError("Username already taken");
@@ -139,7 +248,7 @@ const EditProfile = () => {
           setIsUsernameAvailable(true);
           setUsernameError("");
         }
-  
+
       } catch (error) {
         console.error("Error checking username:", error);
         setIsUsernameAvailable(null);
@@ -148,13 +257,11 @@ const EditProfile = () => {
         setCheckingUsername(false);
       }
     };
-  
-    const timeoutId = setTimeout(() => {
-      checkUsername();
-    }, 500); // debounce
-  
+
+    const timeoutId = setTimeout(checkUsername, 500);
     return () => clearTimeout(timeoutId);
-  }, [username, dbRealtor?.id]);
+
+  }, [username, selectedRealtor, dbRealtor]);
 
   if (!authUser) {
     return (
@@ -186,15 +293,66 @@ const EditProfile = () => {
     );
   };
 
+
+
   return (
     <div className="realtorProfContainer">
       {authUser && (
         <div>
           <h1 className="title">Edit Profile</h1>
 
+          <Autocomplete
+            options={realtors}
+            getOptionLabel={(option) => option.email || ""}
+            loading={loadingRealtors}
+            value={selectedRealtor}
+            onChange={(event, newValue) => {
+              if (!newValue) {
+                // 👇 Realtor cleared — reset form safely
+                setSelectedRealtor(null);
+                setDbRealtor(null);
+
+                setFirstName("");
+                setLastName("");
+                setUsername("");
+                setMyDescription("");
+                setAddress("");
+                setPhoneNumber("");
+                setProfilePic(null);
+
+                return;
+              }
+
+              // 👇 Realtor selected
+              setSelectedRealtor(newValue ?? null);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select a vendor / realtor"
+                placeholder="Type email to search..."
+                className="realtorProfileInput"
+              />
+            )}
+            isOptionEqualToValue={(option, value) =>
+              option?.sub === value?.sub
+            }
+          />
+
+
+          {!isRealtorSelected && (
+            <p className="realtorHint">
+              Please select a vendor / realtor to begin editing their profile
+            </p>
+          )}
+
           {/* Upload Profile Picture */}
           <div className="profilePicContainerEdit">
-            {profilePic && <img src={profilePic} alt="Profile" className="img" />}
+            {profilePicUrl && (
+              <img src={profilePicUrl} alt="Profile" className="img" />
+            )}
+
+            {/* Plus Icon */}
             <div className="plusIconContainer">
               <input
                 type="file"
@@ -202,11 +360,14 @@ const EditProfile = () => {
                 onChange={pickImage}
                 className="fileInput"
                 style={{ display: "none" }} // Hide the default file input button
+                disabled={!isRealtorSelected}
                 id="fileInput"
               />
-              <label htmlFor="fileInput" className="plusIconLabel">
-                <span className="plusIcon">+</span>
-              </label>
+              {isRealtorSelected && (
+                <label htmlFor="fileInput" className="plusIconLabel">
+                  <span className="plusIcon">+</span>
+                </label>
+              )}
             </div>
           </div>
 
@@ -236,6 +397,7 @@ const EditProfile = () => {
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name / Company name"
               className="realtorProfileInput"
+              disabled={!isRealtorSelected}
               // rows={2} 
             />
 
@@ -244,6 +406,7 @@ const EditProfile = () => {
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name (Optional)"
               className="realtorProfileInput"
+              disabled={!isRealtorSelected}
               // rows={2} 
             />
 
@@ -258,6 +421,7 @@ const EditProfile = () => {
                 autoCapitalize="none"
                 autoCorrect="off"
                 className= {`profileInputRealtorUsername ${isUsernameAvailable === false ? "errorInput" : ""}`}
+                disabled={!isRealtorSelected}
               />
 
               {checkingUsername ? (
@@ -274,6 +438,7 @@ const EditProfile = () => {
               onChange={(e) => handleDescriptionChange(e.target.value)}
               placeholder="A description of yourself(Optional)"
               className="realtorProfileInput"
+              disabled={!isRealtorSelected}
             />
             <p className="wordCount">{remainingWords}</p>
 
@@ -282,6 +447,7 @@ const EditProfile = () => {
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Phone Number"
               className="realtorProfileInput"
+              disabled={!isRealtorSelected}
               // rows={2} 
             />
 
@@ -290,6 +456,7 @@ const EditProfile = () => {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Input Address"
               className="realtorProfileInput"
+              disabled={!isRealtorSelected}
             />
 
             <BankDetails/>
@@ -299,7 +466,11 @@ const EditProfile = () => {
           <p className="realtorError">{errorMessage}</p>
           {usernameError && <p className="realtorError">{usernameError}</p>}
 
-          <button onClick={goToNxtPage} className="profileNxtBtn">
+          <button 
+            onClick={goToNxtPage} 
+            className="profileNxtBtn"
+            disabled={!isRealtorSelected || checkingUsername || !isUsernameAvailable}
+          >
             <FiArrowRightCircle
               className="nxtBtnIcon"
             />

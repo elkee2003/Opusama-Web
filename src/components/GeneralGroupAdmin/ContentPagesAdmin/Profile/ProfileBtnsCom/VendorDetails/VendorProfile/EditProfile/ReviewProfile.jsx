@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdCancel } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5"; 
 import { useProfileContext } from '../../../../../../../../../Providers/RealtorProvider/ProfileProvider';
 import { useAuthContext } from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from 'aws-amplify/datastore';
 import { Realtor } from '../../../../../../../../models';
-import { uploadData, remove } from 'aws-amplify/storage';
+import { getUrl, uploadData, remove } from 'aws-amplify/storage';
 
 const ReviewDetails = () => {
   const navigate = useNavigate();
 
-  const {firstName, lastName, username, myDescription, profilePic, setProfilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
+  const {firstName, lastName, username, myDescription, profilePic, address, phoneNumber, bankName, accountName, accountNumber,
+    // For admin
+    selectedRealtor,
+  } = useProfileContext()
 
-  const { dbRealtor, setDbRealtor, sub, realtorMail, userMail } = useAuthContext();
+  const { dbRealtor, setDbRealtor, } = useAuthContext();
 
-  console.log('realtor Email:', userMail)
+  const isLocalImage = (value) =>
+    typeof value === "string" &&
+    (value.startsWith("blob:") || value.startsWith("file:"));
+
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -51,38 +57,45 @@ const ReviewDetails = () => {
   };
 
   // Function to upload image
-  async function uploadImage() {
-    try {
-      if (!profilePic) return null;
+  async function uploadImageIfChanged() {
+    // 1️⃣ No image at all
+    if (!profilePic) return null;
 
-      if (dbRealtor?.profilePic) {
-        await remove({ path: dbRealtor?.profilePic });
-      }
-
-      const response = await fetch(profilePic);
-      const blob = await response.blob();
-
-      const fileKey = `public/profilePhoto/${sub}/${crypto.randomUUID()}.jpg`;
-
-      const result = await uploadData({
-        path: fileKey,
-        data: blob,
-        options: {
-          contentType: "image/jpeg",
-          onProgress: ({ transferredBytes, totalBytes }) => {
-            if (totalBytes) {
-              const progress = Math.round((transferredBytes / totalBytes) * 100);
-              setUploadProgress(progress);
-            }
-          },
-        },
-      }).result;
-
-      return result.path;
-    } catch (err) {
-      console.error("Error uploading file:", err);
+    // 2️⃣ Image NOT changed → return existing S3 key
+    if (!isLocalImage(profilePic)) {
+      return profilePic;
     }
+
+    // 3️⃣ Image WAS changed → upload new one
+    const response = await fetch(profilePic);
+    const blob = await response.blob();
+
+    const ownerSub = selectedRealtor?.sub;
+    const fileKey = `public/profilePhoto/${ownerSub}/${crypto.randomUUID()}.jpg`;
+
+    const result = await uploadData({
+      path: fileKey,
+      data: blob,
+      options: {
+        contentType: "image/jpeg",
+        onProgress: ({ transferredBytes, totalBytes }) => {
+          if (totalBytes) {
+            setUploadProgress(
+              Math.round((transferredBytes / totalBytes) * 100)
+            );
+          }
+        },
+      },
+    }).result;
+
+    // 4️⃣ Delete OLD image only if it was replaced
+    if (dbRealtor?.profilePic) {
+      await remove({ path: dbRealtor.profilePic });
+    }
+
+    return result.path;
   }
+
 
   // This function is to delete profile picture. A Realtor is not meant to be without a profile pic
   // const deleteProfilePic = async () => {
@@ -108,49 +121,71 @@ const ReviewDetails = () => {
   //   }
   // };
 
+  // To create a new Vendor
   const createUser = async () => {
+    if (!selectedRealtor) return alert("Select a realtor first");
     if (uploading) return;
+
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
+
       const user = await DataStore.save(
         new Realtor({
+          sub: selectedRealtor.sub,
+          email: selectedRealtor.email,
+
+          firstName,
+          lastName,
+          username,
+          myDescription,
+          address,
+          phoneNumber,
+          bankName,
+          accountName,
+          accountNumber,
+
           profilePic: uploadedImagePath,
           directPayment: false,
-          firstName, lastName, username,
-          email: userMail,
-          myDescription, address, phoneNumber, bankName, accountName, accountNumber,
-          sub
         })
       );
+
       setDbRealtor(user);
     } catch (e) {
       alert(`Error: ${e.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
+  // To update Vendor
   const updateUser = async () => {
-    if (uploading) return;
+    if (!dbRealtor || !selectedRealtor || uploading) return;
     setUploading(true);
 
     try {
-      const uploadedImagePath = await uploadImage();
+      const uploadedImagePath = await uploadImageIfChanged();
+
       const user = await DataStore.save(
         Realtor.copyOf(dbRealtor, (updated) => {
           updated.firstName = firstName;
           updated.lastName = lastName;
           updated.username = username;
-          updated.email = userMail;
+          updated.email = selectedRealtor.email;
           updated.myDescription = myDescription;
-          updated.profilePic = uploadedImagePath;
           updated.address = address;
           updated.phoneNumber = phoneNumber;
           updated.bankName = bankName;
-          updated.accountName = accountName,
+          updated.accountName = accountName;
           updated.accountNumber = accountNumber;
+
+          if (uploadedImagePath) {
+            updated.profilePic = uploadedImagePath;
+          }
         })
       );
+
       setDbRealtor(user);
     } catch (e) {
       alert(`Error: ${e.message}`);
@@ -162,18 +197,38 @@ const ReviewDetails = () => {
   const handleSave = async () => {
     if (dbRealtor) {
       await updateUser();
-      navigate("/realtorcontent/profile"); 
+      navigate("/admin/profile"); 
       setTimeout(() => {
-        navigate('/realtorcontent/home');
+        navigate('/admin/home');
       }, 1000);
     } else {
       await createUser();
-      navigate("/realtorcontent/profile");
+      navigate("/admin/profile");
       setTimeout(() => {
-        navigate('/realtorcontent/home');
+        navigate('/admin/home');
       }, 1000);
     }
   };
+
+  // useEffect for converting S3key to URL
+  useEffect(() => {
+    const resolveImage = async () => {
+      if (!profilePic) {
+        setProfilePicUrl(null);
+        return;
+      }
+
+      if (isLocalImage(profilePic)) {
+        setProfilePicUrl(profilePic);
+        return;
+      }
+
+      const result = await getUrl({ path: profilePic });
+      setProfilePicUrl(result.url.toString());
+    };
+
+    resolveImage();
+  }, [profilePic]);
 
   return (
     <div className='realtorReviewProContainer'>

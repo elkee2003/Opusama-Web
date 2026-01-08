@@ -22,6 +22,9 @@ const ProfileContextProvider = ({children}) => {
     const [directPayment, setDirectPayment] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    // For admin
+    const [selectedRealtor, setSelectedRealtor] = useState(null);
+
     // Scan State
     const [name, setName] = useState("");
     const [scanToken, setScanToken] = useState("");
@@ -90,7 +93,7 @@ const ProfileContextProvider = ({children}) => {
 
 
   return (
-    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, email, setEmail, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput, name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt}}>
+    <ProfileContext.Provider value={{firstName,setFirstName, lastName, setLastName, username, setUsername, email, setEmail, address, setAddress, phoneNumber, setPhoneNumber, bankName, setBankName, bankCode, setBankCode,  accountName, setAccountName, accountNumber, setAccountNumber, directPayment, setDirectPayment, errorMessage, setErrorMessage, profilePic, setProfilePic, myDescription, setMyDescription, onValidateInput, selectedRealtor, setSelectedRealtor, name, setName, scanToken, setScanToken, isActive, setIsActive, expiresAt, setExpiresAt}}>
         {children}
     </ProfileContext.Provider>
   )

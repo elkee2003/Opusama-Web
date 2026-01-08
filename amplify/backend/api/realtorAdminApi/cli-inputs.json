@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/realtors": {
+      "name": "/realtors",
+      "lambdaFunction": "listRealtorUsers",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}

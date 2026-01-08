@@ -5,6 +5,11 @@ export type AmplifyDependentResourcesAttributes = {
       "GraphQLAPIIdOutput": "string",
       "GraphQLAPIKeyOutput": "string"
     },
+    "realtorAdminApi": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "sendGuestTicketApi": {
       "ApiId": "string",
       "ApiName": "string",
