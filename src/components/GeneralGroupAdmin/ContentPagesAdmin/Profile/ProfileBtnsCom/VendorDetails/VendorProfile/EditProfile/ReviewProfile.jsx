@@ -199,13 +199,13 @@ const ReviewDetails = () => {
       await updateUser();
       navigate("/admin/profile"); 
       setTimeout(() => {
-        navigate('/admin/home');
+        navigate('/admin/profile');
       }, 1000);
     } else {
       await createUser();
       navigate("/admin/profile");
       setTimeout(() => {
-        navigate('/admin/home');
+        navigate('/admin/profile');
       }, 1000);
     }
   };

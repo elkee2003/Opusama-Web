@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/vendor-media": {
+      "name": "/vendor-media",
+      "lambdaFunction": "listVendorMedia",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}

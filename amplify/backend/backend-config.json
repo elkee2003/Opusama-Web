@@ -48,6 +48,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "vendorMediaApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "listVendorMedia"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -83,6 +97,20 @@
     "listRealtorUsers": {
       "build": true,
       "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "listVendorMedia": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "s3opusamastoragef8b382aa"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -130,6 +158,22 @@
         {
           "category": "function",
           "resourceName": "listRealtorUsers"
+        }
+      ]
+    },
+    "AMPLIFY_function_listVendorMedia_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "listVendorMedia"
+        }
+      ]
+    },
+    "AMPLIFY_function_listVendorMedia_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "listVendorMedia"
         }
       ]
     },

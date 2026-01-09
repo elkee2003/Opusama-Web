@@ -12,14 +12,14 @@ import RealtorProfile from '../../../components/GeneralGroupRealtor/ContentPages
 // Upload Routes
 import DisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/DisplayMedia/DisplayMedia';
 import ViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/PickedMedia/ViewMedia/ViewMedia';
-import GooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Googleautocomplete';
+import UploadAddressPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/UploadAddressPage';
 import Forms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/Forms/Form';
 import UploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/UploadCom/UploadProperty/UploadProperty';
 
 // Edit Post Routes
 import EditDisplayMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/DisplayMedia/DisplayMedia';
 import EditViewMedia from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditPickedMedia/ViewMedia/ViewMedia';
-import EditGooglePlacesAutoCompleteCom from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Googleautocomplete';
+import EditUploadAddressPage from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Googleautocomplete';
 import EditForms from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditForms/Form';
 import EditUploadProperty from '../../GeneralGroupRealtor/ContentPagesRealtor/Upload/EditPost/EditUploadProperty/UploadProperty';
 
@@ -63,7 +63,7 @@ const RealtorRoutes = () => (
 
             <Route path="view-media" element={<ViewMedia />} />
 
-            <Route path="selectaddress" element={<GooglePlacesAutoCompleteCom />} />
+            <Route path="selectaddress" element={<UploadAddressPage/>} />
 
             <Route path="form" element={<Forms />} />
 
@@ -74,7 +74,7 @@ const RealtorRoutes = () => (
 
             <Route path="edit_view_media" element={<EditViewMedia />} />
 
-            <Route path="edit_selectaddress" element={<EditGooglePlacesAutoCompleteCom />} />
+            <Route path="edit_selectaddress" element={<EditUploadAddressPage />} />
 
             <Route path="edit_form" element={<EditForms />} />
 

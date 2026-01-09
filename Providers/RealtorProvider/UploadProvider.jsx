@@ -63,7 +63,12 @@ const UploadContextProvider = ({children}) => {
 
     const [uploadPost, setUploadPost] = useState(null);
 
+    // For admin
+    const [selectedRealtor, setSelectedRealtor] = useState(null);
+    const [existingMedia, setExistingMedia] = useState([]);
+
     const [errors, setErrors] = useState('');
+    
 
     // Validation of Inputs
     const validateInput = ()=>{
@@ -475,7 +480,9 @@ const UploadContextProvider = ({children}) => {
         options, setOptions,
         uploadPost, setUploadPost,
         onValidate, onValidateUpload,
-        removeMedia, addMedia, updateMedia, loadExistingPost
+        removeMedia, addMedia, updateMedia, loadExistingPost,
+        selectedRealtor, setSelectedRealtor,
+        existingMedia, setExistingMedia,
     }}>
       {children}
     </UploadContext.Provider>

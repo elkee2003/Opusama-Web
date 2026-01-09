@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './SelectMedia.css'
 import { useNavigate } from 'react-router-dom';
+import { Autocomplete, TextField } from "@mui/material";
 import { FaCamera } from 'react-icons/fa'; 
 import { useUploadContext } from '../../../../../../../../Providers/RealtorProvider/UploadProvider';
 
@@ -7,16 +9,19 @@ import { useAuthContext } from '../../../../../../../../Providers/ClientProvider
 
 import * as ffmpeg from '@ffmpeg/ffmpeg';
 const { createFFmpeg, fetchFile } = ffmpeg;
+import { DataStore } from "aws-amplify/datastore";
+import { Realtor } from '../../../../../../../models';
 
 const SelectMedia = () => {
-  const {setMedia, media} = useUploadContext();
   const navigate = useNavigate();
 
-  const {dbRealtor, authUser} = useAuthContext();
+  const {setMedia, media, selectedRealtor, setSelectedRealtor,} = useUploadContext();
+
+  const [realtors, setRealtors] = useState([]);
+
+  // const {dbRealtor, authUser} = useAuthContext();
 
   
-
-  // Pick Multiple Media Function (Images and Videos)
   // Pick Multiple Media Function (Images and Videos)
   const pickMediaAsync = async (event) => {
     const files = Array.from(event.target.files);
@@ -89,25 +94,78 @@ const SelectMedia = () => {
     navigate('/admin/displaymedia');
   };
 
+  // useEffect to fetch Realtors
+  useEffect(() => {
+    const fetchRealtors = async () => {
+      const result = await DataStore.query(Realtor);
+      setRealtors(result);
+    };
+
+    fetchRealtors();
+  }, []);
+
   return (
-    <div className="selectMContainer">
-      <label className="upload-label">
-        <FaCamera className="selectMIcon" />
-        <input
-          type="file"
-          accept="image/*,video/*"
-          multiple
-          className="file-input"
-          onChange={pickMediaAsync}
-          style={{ display: 'none' }}
-        />
-        <p>Click here</p>
-        <span>Upload Images of Property</span>
-        
-      </label>
-      <p className="disclaimer">
-        Only property owners or authorized representatives may upload listings. Misrepresentation may lead to account suspension or deletion.
-      </p>
+    <div className="selectMContainerAdmin">
+      <Autocomplete
+        className="realtor-autocomplete"
+        options={realtors}
+        value={selectedRealtor}
+        loading={!realtors.length}
+
+        getOptionLabel={(option) =>
+          option
+            ? `${option.firstName} ${option.lastName} (${option.email})`
+            : ""
+        }
+
+        isOptionEqualToValue={(option, value) =>
+          option.id === value.id
+        }
+
+        onChange={(event, newValue) => {
+          setSelectedRealtor(newValue);
+        }}
+
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Select vendor / realtor"
+            placeholder="Search by name or email"
+          />
+        )}
+      />
+
+      {selectedRealtor && (
+        <div className="media-actions">
+          <button
+            type="button"
+            className="existing-media-btn"
+            onClick={() => {
+              navigate(
+                `/admin/existing_media?vendorSub=${selectedRealtor.sub}`
+              );
+            }}
+          >
+            Pick existing media
+          </button>
+
+          <label className="upload-label-admin">
+            <FaCamera className="selectMIconAdmin" />
+            <input
+              type="file"
+              accept="image/*,video/*"
+              multiple
+              className="file-input"
+              onChange={pickMediaAsync}
+              style={{ display: "none" }}
+            />
+            Upload new media
+          </label>
+          <p className="disclaimer-admin">
+            Only property owners or authorized representatives may upload listings. Misrepresentation may lead to account suspension or deletion.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

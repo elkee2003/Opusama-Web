@@ -175,7 +175,7 @@ function RealtorDashboard() {
                 {filteredRealtors.map((realtor) => (
                     <div 
                         key={realtor.id} className="realtor-card"
-                        onClick={() => navigate(`/admin/realtorprofile/${realtor.id}`)}
+                        onClick={() => navigate(`/admin/realtorprofile/${realtor?.id}`)}
                     >
                         <p><strong>First Name:</strong> {realtor?.firstName}</p>
                         <p><strong>Last Name:</strong> {realtor?.lastName}</p>
@@ -185,6 +185,7 @@ function RealtorDashboard() {
                         <p><strong>Bank Name:</strong> {realtor?.bankName}</p>
                         <p><strong>Account Name:</strong> {realtor?.accountName}</p>
                         <p><strong>Account Number:</strong> {realtor?.accountNumber}</p>
+                        <p><strong>Address:</strong> {realtor?.address}</p>
 
                         <button
                             className="delete-btn"

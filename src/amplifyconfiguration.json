@@ -10,6 +10,11 @@
       "name": "realtorAdminApi",
       "endpoint": "https://qg5bisde0l.execute-api.eu-north-1.amazonaws.com/staging",
       "region": "eu-north-1"
+    },
+    {
+      "name": "vendorMediaApi",
+      "endpoint": "https://za4qmrpqnd.execute-api.eu-north-1.amazonaws.com/staging",
+      "region": "eu-north-1"
     }
   ],
   "aws_appsync_graphqlEndpoint": "https://6dyppfgfizevtgyrodnf72law4.appsync-api.eu-north-1.amazonaws.com/graphql",

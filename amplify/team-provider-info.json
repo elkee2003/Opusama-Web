@@ -32,12 +32,17 @@
           "userPoolId": "eu-north-1_B3oOi9duo",
           "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
           "s3Key": "amplify-builds/listRealtorUsers-54345141306f6d767a43-build.zip"
+        },
+        "listVendorMedia": {
+          "deploymentBucketName": "amplify-opusamarealtor-staging-b73ca-deployment",
+          "s3Key": "amplify-builds/listVendorMedia-473743374a7962545378-build.zip"
         }
       },
       "api": {
         "OpusamaRealtor": {},
         "sendGuestTicketApi": {},
-        "realtorAdminApi": {}
+        "realtorAdminApi": {},
+        "vendorMediaApi": {}
       }
     }
   }
