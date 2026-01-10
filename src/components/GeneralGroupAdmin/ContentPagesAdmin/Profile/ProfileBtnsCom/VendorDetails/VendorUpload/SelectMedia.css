@@ -1,6 +1,3 @@
-/* =====================
-   Container
-===================== */
 .selectMContainerAdmin {
   display: flex;
   width: 80vw;
@@ -13,47 +10,36 @@
   margin: 0 auto;
 }
 
-/* =====================
-   Autocomplete
-===================== */
 .realtor-autocomplete {
   width: 100%;
 }
 
-/* Input wrapper */
 .realtor-autocomplete .MuiOutlinedInput-root {
   width: 100%;
   background-color: #fff;
 }
 
-/* Input text */
 .realtor-autocomplete .MuiOutlinedInput-input {
   padding: 14px;
   font-size: 15px;
 }
 
-/* Dropdown popper */
 .MuiAutocomplete-popper {
   max-width: 100vw !important;
   min-width: unset !important;
 }
 
-/* Dropdown list */
 .MuiAutocomplete-listbox {
   max-height: 300px;
   overflow-y: auto;
 }
 
-/* Each option */
 .MuiAutocomplete-option {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* =====================
-   Action Buttons
-===================== */
 .media-actions {
   margin-top: 20px;
   display: flex;
@@ -76,7 +62,6 @@
   opacity: 0.9;
 }
 
-/* Upload button */
 .upload-label-admin {
   display: flex;
   align-items: center;
@@ -92,7 +77,7 @@
   font-size: 18px;
 }
 
-/* Disclaimer */
+
 .disclaimer-admin {
   width: 100%;
   font-size: 12px;
@@ -101,9 +86,63 @@
   text-align: center;
 }
 
-/* =====================
-   Responsive
-===================== */
+/* Media Grid */
+.media-grid-admin {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+    padding:10px;
+}
+
+.media-item-admin {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: #f5f5f5;
+}
+
+.media-item-admin img,
+.media-item-admin video {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Selected state */
+.media-item-admin.selected {
+  border-color: #2563eb;
+}
+
+.media-item-admin.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 50%;
+}
+
+/* Video play overlay */
+.media-item-admin.video::before {
+  content: "▶";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: white;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
 @media (max-width: 900px) {
   .selectMContainerAdmin {
     width: 100vw;
@@ -114,11 +153,22 @@
     flex-direction: column;
     align-items: stretch;
   }
+
+  /* Media Grid */
+  .media-grid-admin {
+    margin-bottom: 8rem;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
 }
 
 @media (max-width: 500px) {
   .realtor-autocomplete .MuiOutlinedInput-input {
     font-size: 14px;
     padding: 12px;
+  }
+
+  /* Media Grid */
+  .media-grid-admin {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
 }

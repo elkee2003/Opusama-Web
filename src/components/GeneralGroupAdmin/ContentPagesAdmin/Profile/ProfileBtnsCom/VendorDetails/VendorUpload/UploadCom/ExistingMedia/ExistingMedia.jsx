@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import '../../SelectMedia.css';
 import { fetchAuthSession } from "aws-amplify/auth";
 import { useUploadContext } from "../../../../../../../../../../Providers/RealtorProvider/UploadProvider";
 import { useSearchParams } from "react-router-dom";
@@ -16,27 +17,39 @@ const ExistingMedia = () => {
 
     const fetchMedia = async () => {
       setLoading(true);
+
       try {
+        // 1️⃣ Get Cognito token
         const session = await fetchAuthSession();
         const token = session.tokens.idToken.toString();
 
-        const res = await fetch(
-          `${import.meta.env.VITE_REALTOR_ADMIN_API}/vendor-media?vendorSub=${vendorSub}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        // 2️⃣ Call API
+        const url = `${import.meta.env.VITE_REALTOR_ADMIN_API}/vendor-media?vendorSub=${vendorSub}`;
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch media");
+        const res = await fetch(url, {
+          headers: {
+            Authorization: token,
+          },
+        });
+
+        // 3️⃣ Validate response type
+        const contentType = res.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+          const text = await res.text();
+          throw new Error("Non-JSON response: " + text);
         }
 
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+
+        // 4️⃣ Parse data
         const data = await res.json();
         setExistingMedia(data);
+
       } catch (err) {
-        console.error("Failed to fetch existing media", err);
+        console.error("Failed to fetch existing media:", err.message);
       } finally {
         setLoading(false);
       }
