@@ -24,7 +24,7 @@ import {useBookingShowingContext} from '../../../../../../../../../Providers/Cli
 import { useProfileContext } from '../../../../../../../../../Providers/ClientProvider/ProfileProvider';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
-import {PostReview, Post as PostModel, PostLike, User} from '../../../../../../../../models';
+import {PostReview, Post as PostModel, PostLike, User, BookingPostOptions} from '../../../../../../../../models';
 
 function Content({post, realtor,}) {
     const navigate = useNavigate();
@@ -395,12 +395,9 @@ function Content({post, realtor,}) {
         <div
           className='fullEditPostBtnCon'
           onClick={async () => {
-            if (
-              post.uploadStatus !== "COMPLETED"
-              // post.uploadStatus === "UPLOADING" || post.uploadStatus === "FAILED"  
-            ) {
+            try {
               // Fetch fresh full post from DataStore
-              const fullPost = await DataStore.query(Post, post.id);
+              const fullPost = await DataStore.query(PostModel, post.id);
 
               // Fetch booking options
               const bookingOptions = await DataStore.query(
@@ -417,6 +414,9 @@ function Content({post, realtor,}) {
               loadExistingPost(editablePost);
 
               navigate("/admin/vendor_edit_selected_address");
+            } catch (err) {
+              console.error("Failed to load post for editing:", err);
+              alert("Failed to load post for editing");
             }
           }}
         >
@@ -492,8 +492,8 @@ function Content({post, realtor,}) {
         <div className='topBorderLine' />
 
         {/* Location */}
-        {post.generalLocation && (
-          <p className='location'>{post.generalLocation}</p>
+        {post?.fullAddress && (
+          <p className='location'>{post?.fullAddress}</p>
         )}
 
         {/* City, State, Country, */}

@@ -240,6 +240,9 @@ const AdminRoutes = () => (
             {/* Vendor Select Media Page*/}
             <Route path="vendor_select_media" element={<VendorSelectMedia />} />
 
+            {/* Existing Media*/}
+            <Route path="existing_media" element={<ExistingMedia />} />
+
             {/* Vendor Display Media*/}
             <Route path="displaymedia" element={<VendorDisplayMedia />} />
 
@@ -264,8 +267,6 @@ const AdminRoutes = () => (
             {/* Vendor Edit Upload Property*/}
             <Route path="vendor_edit_upload_property" element={<VendorEditUploadProperty />} />
 
-            {/* Existing Media*/}
-            <Route path="existing_media" element={<ExistingMedia />} />
 
             {/* for invalid route */}
             <Route 

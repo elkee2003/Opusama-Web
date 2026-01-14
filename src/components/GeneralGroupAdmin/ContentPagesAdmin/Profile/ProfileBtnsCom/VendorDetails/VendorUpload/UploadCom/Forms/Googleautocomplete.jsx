@@ -17,7 +17,8 @@ const GooglePlacesAutoCompleteCom = () => {
     generalLocation, 
     setGeneralLocation, 
     setLat, 
-    setLng 
+    setLng,
+    media,
   } = useUploadContext();
   
   const navigate = useNavigate();

@@ -42,6 +42,7 @@ const UploadProperty = () => {
     setAccommodationParts,
     media,
     setMedia,
+    setExistingMedia,
     description,
     setDescription,
     bedrooms,
@@ -111,9 +112,14 @@ const UploadProperty = () => {
     uploadPost,
     setUploadPost,
     onValidateUpload,
+
+    // Admin states
+    selectedRealtor,
+    setSelectedRealtor,
   } = useUploadContext();
 
-  console.log('media:',media, 'desc:', description)
+  const realtorIdToUse = selectedRealtor?.id;
+  const realtorSubToUse = selectedRealtor?.sub;
 
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -127,6 +133,11 @@ const UploadProperty = () => {
     setAvailableDocs("");
     setAccommodationParts("");
     setMedia([]);
+    
+    // ✅ Clear selection state ONLY
+    setExistingMedia(prev =>
+      prev.map(m => ({ ...m, selected: false }))
+    );
     setDescription("");
     setFullAddress("");
     setGeneralLocation("");
@@ -172,6 +183,9 @@ const UploadProperty = () => {
     // setOptionPrice(null);
     // setMinSpend(null);
     setOptions([]);
+
+    // Admin state
+    setSelectedRealtor("");
   };
 
   // Function to compress images
@@ -209,7 +223,7 @@ const UploadProperty = () => {
         }
 
         const fileExtension = item.type.startsWith("image") ? "jpg" : "mp4";
-        const fileKey = `public/media/${sub}/${crypto.randomUUID()}.${fileExtension}`;
+        const fileKey = `public/media/${realtorSubToUse}/${crypto.randomUUID()}.${fileExtension}`;
 
         const result = await uploadData({
           path: fileKey,
@@ -247,7 +261,7 @@ const UploadProperty = () => {
       // 1️⃣ Create lightweight draft post FIRST
       tempPost = await DataStore.save(
         new Post({
-          realtorID: dbRealtor.id,
+          realtorID: realtorIdToUse,
           uploadStatus: "UPLOADING",
           uploadErrorMessage: null,
           
@@ -355,8 +369,8 @@ const UploadProperty = () => {
       alert("Post uploaded successfully!");
 
       resetFormFields();
-      navigate("/realtorcontent/upload");
-      setTimeout(() => navigate("/realtorcontent/home"), 500);
+      navigate("/admin/upload");
+      setTimeout(() => navigate("/admin/home"), 500);
     } catch (e) {
       console.error("Upload error:", e);
 

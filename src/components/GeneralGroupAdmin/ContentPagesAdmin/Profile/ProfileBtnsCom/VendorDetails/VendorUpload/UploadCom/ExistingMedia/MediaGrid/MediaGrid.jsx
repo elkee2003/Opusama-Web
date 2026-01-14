@@ -4,41 +4,55 @@ import { useUploadContext } from "../../../../../../../../../../../Providers/Rea
 const MediaGrid = () => {
   const { existingMedia, setExistingMedia } = useUploadContext();
 
-  const toggleSelect = (item) => {
-    setExistingMedia((prev) =>
-      prev.map((m) =>
-        m.key === item.key
-          ? { ...m, selected: !m.selected }
-          : m
+  const toggleSelect = (key) => {
+    setExistingMedia(prev =>
+      prev.map(m =>
+        m.key === key ? { ...m, selected: !m.selected } : m
       )
     );
   };
 
-  const handleVideoClick = (e) => {
-    e.stopPropagation();
-    if (e.target.paused) {
-      e.target.play();
-    } else {
-      e.target.pause();
-    }
+  const toggleVideoPlayback = (e) => {
+    e.stopPropagation(); // prevent selection
+    const video = e.currentTarget;
+    video.paused ? video.play() : video.pause();
   };
 
   return (
     <div className="media-grid-admin">
-      {existingMedia.map((item) => (
+      {existingMedia.map(item => (
         <div
           key={item.key}
-          className={`media-item-admin ${item.selected ? "selected" : ""} ${item.type === "video" ? "video" : ""}`}
-          onClick={() => toggleSelect(item)}
+          className={`media-item-admin ${item.selected ? "selected" : ""}`}
         >
+          {/* SELECTION LAYER */}
+          <div
+            className="media-select-layer"
+            onClick={() => toggleSelect(item.key)}
+          />
+
           {item.type === "image" ? (
             <img src={item.url} alt="" />
           ) : (
-            <video
-              src={item.url}
-              muted
-              onClick={handleVideoClick}
-            />
+            <div className="video-wrapper">
+                <video
+                    src={item.url}
+                    muted
+                    playsInline
+                />
+
+                {/* PLAY BUTTON */}
+                <button
+                    className="video-play-btn"
+                    onClick={(e) => {
+                    e.stopPropagation();
+                    const video = e.currentTarget.previousSibling;
+                    video.paused ? video.play() : video.pause();
+                    }}
+                >
+                    ▶
+                </button>
+            </div>
           )}
         </div>
       ))}

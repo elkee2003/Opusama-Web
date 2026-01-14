@@ -109,7 +109,7 @@ function PostList() {
     };
 
   return (
-    <div className='exploreContainer' >
+    <div className='postListContainer' >
 
         <div 
             className='realtorLogoForSmallScreen'  
