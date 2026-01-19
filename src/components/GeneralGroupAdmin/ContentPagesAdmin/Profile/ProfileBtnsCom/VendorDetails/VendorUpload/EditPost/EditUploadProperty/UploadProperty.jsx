@@ -400,7 +400,7 @@ const UploadProperty = () => {
       alert("Post updated successfully!");
 
       resetFormFields();
-      navigate("/realtorcontent/home");
+      navigate("/admin/home");
 
     } catch (e) {
       console.error("Update error:", e);

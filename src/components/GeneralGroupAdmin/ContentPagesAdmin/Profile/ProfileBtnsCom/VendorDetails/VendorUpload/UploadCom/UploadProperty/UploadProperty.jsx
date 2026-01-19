@@ -369,7 +369,7 @@ const UploadProperty = () => {
       alert("Post uploaded successfully!");
 
       resetFormFields();
-      navigate("/admin/upload");
+      navigate("/admin/profile");
       setTimeout(() => navigate("/admin/home"), 500);
     } catch (e) {
       console.error("Upload error:", e);

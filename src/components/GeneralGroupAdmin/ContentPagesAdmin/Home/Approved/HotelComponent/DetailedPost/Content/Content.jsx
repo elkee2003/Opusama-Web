@@ -22,6 +22,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import {useAuthContext} from '../../../../../../../../../Providers/ClientProvider/AuthProvider';
 import {useBookingShowingContext} from '../../../../../../../../../Providers/ClientProvider/BookingShowingProvider';
 import { useProfileContext } from '../../../../../../../../../Providers/ClientProvider/ProfileProvider';
+import { useUploadContext } from '../../../../../../../../../Providers/RealtorProvider/UploadProvider';
 import { getUrl, remove } from "aws-amplify/storage";
 import { DataStore } from "aws-amplify/datastore";
 import {PostReview, Post as PostModel, PostLike, User, BookingPostOptions} from '../../../../../../../../models';
@@ -33,6 +34,7 @@ function Content({post, realtor,}) {
 
     const {dbUser, authUser} = useAuthContext();
     const {setRealtorID} = useProfileContext();
+    const { loadExistingPost } = useUploadContext();
     const [readMore, setReadMore] = useState(false);
     const [readMoreLux, setReadMoreLux] = useState(false);
     const [readMorePol, setReadMorePol] = useState(false);
