@@ -5,10 +5,13 @@ import { useProfileContext } from '../../../../../../Providers/RealtorProvider/P
 import { useAuthContext } from '../../../../../../Providers/ClientProvider/AuthProvider';
 import { DataStore } from 'aws-amplify/datastore';
 import { Realtor } from '../../../../../models';
+import { getUrl } from "aws-amplify/storage";
 import { uploadData, remove } from 'aws-amplify/storage';
 
 const ReviewDetails = () => {
   const navigate = useNavigate();
+
+  const [resolvedProfilePic, setResolvedProfilePic] = useState(null);
 
   const {firstName, lastName, username, myDescription, profilePic, address, phoneNumber, bankName, accountName, accountNumber, directPayment, setDirectPayment} = useProfileContext()
 
@@ -84,11 +87,20 @@ const ReviewDetails = () => {
     }).result;
 
     // 4️⃣ Delete OLD image only if it was replaced
-    if (dbRealtor?.profilePic) {
+    if (
+      dbRealtor?.profilePic &&
+      isLocalImage(profilePic) &&
+      dbRealtor.profilePic !== result.path
+    ) {
       await remove({ path: dbRealtor.profilePic });
     }
 
-    return result.path;
+    // 5️⃣ Revoke blob safely
+    if (profilePic.startsWith("blob:")) {
+      URL.revokeObjectURL(profilePic);
+    }
+
+    return result.path; // ✅ THIS WAS MISSING
   }
 
 
@@ -187,6 +199,40 @@ const ReviewDetails = () => {
     }
   };
 
+  // useEffect to show profile picture
+  useEffect(() => {
+    const resolveImage = async () => {
+      if (!profilePic) {
+        setResolvedProfilePic(null);
+        return;
+      }
+
+      // Local image (new upload)
+      if (
+        profilePic.startsWith("blob:") ||
+        profilePic.startsWith("file:")
+      ) {
+        setResolvedProfilePic(profilePic);
+        return;
+      }
+
+      // S3 image
+      try {
+        const result = await getUrl({
+          path: profilePic,
+          options: { validateObjectExistence: true },
+        });
+
+        setResolvedProfilePic(result.url.toString());
+      } catch (err) {
+        console.error("Failed to resolve profile image", err);
+        setResolvedProfilePic(null);
+      }
+    };
+
+    resolveImage();
+  }, [profilePic]);
+
   return (
     <div className='realtorReviewProContainer'>
       <h1 className='title'>Review Profile</h1>
@@ -196,10 +242,10 @@ const ReviewDetails = () => {
       </button>
 
       <div className='scrollContainer'>
-        {profilePic && (
+        {resolvedProfilePic && (
           <div className="profilePicContainerFull">
-            <div className='profilePicContainer'>
-              <img src={profilePic} alt="Profile" className='img' />
+            <div className="profilePicContainer">
+              <img src={resolvedProfilePic} alt="Profile" className="img" />
             </div>
           </div>
         )}
