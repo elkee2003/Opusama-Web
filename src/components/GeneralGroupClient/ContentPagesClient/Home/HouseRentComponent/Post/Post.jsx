@@ -21,6 +21,8 @@ function Post({post}) {
     const [liked, setLiked] = useState(false);
     const formattedPrice = Number(post.price)?.toLocaleString();
 
+    console.log('post:', post)
+
     // Fetch ONLY the first media item
     const fetchFirstMediaUrl = async () => {
       if (!post.media?.length) return;
